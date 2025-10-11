@@ -13,6 +13,9 @@ void main() async {
   // Load environment variables
   await dotenv.load(fileName: '.env');
 
+debugPrint('URL=${const String.fromEnvironment('SUPABASE_URL')} '
+           'KEY=${const String.fromEnvironment('SUPABASE_ANON_KEY').isNotEmpty}');
+
   // Initialize Supabase
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL'] ?? '',
