@@ -1,0 +1,37 @@
+{
+    "name": "SelfMap - Discover Your Future",
+    "short_name": "SelfMap",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0A0E1A",
+    "theme_color": "#00FFF0",
+    "description": "A self-discovery platform for high-school students to explore careers and plan their future.",
+    "orientation": "any",
+    "prefer_related_applications": false,
+    "categories": ["education", "lifestyle"],
+    "lang": "en",
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

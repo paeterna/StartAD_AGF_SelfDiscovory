@@ -1,0 +1,20 @@
+# This file configures the analyzer, which statically analyzes Dart code to
+# check for errors, warnings, and lints.
+#
+# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
+# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
+# invoked from the command line by running `flutter analyze`.
+
+# Using very_good_analysis for strict linting
+include: package:very_good_analysis/analysis_options.yaml
+
+linter:
+  rules:
+    # Allow print for analytics/debugging
+    avoid_print: false
+    # Disable overly strict rules for development
+    public_member_api_docs: false
+    lines_longer_than_80_chars: false
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options

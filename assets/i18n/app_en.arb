@@ -1,0 +1,192 @@
+{
+  "@@locale": "en",
+
+  "appName": "SelfMap",
+  "@appName": {
+    "description": "Application name"
+  },
+
+  "welcomeMessage": "Welcome to SelfMap",
+  "@welcomeMessage": {
+    "description": "Welcome message on splash"
+  },
+
+  "tagline": "Discover Your Future",
+  "@tagline": {
+    "description": "App tagline"
+  },
+
+  "authLoginTitle": "Sign In",
+  "authSignupTitle": "Create Account",
+  "authEmailLabel": "Email Address",
+  "authPasswordLabel": "Password",
+  "authConfirmPasswordLabel": "Confirm Password",
+  "authDisplayNameLabel": "Display Name",
+  "authLoginButton": "Sign In",
+  "authSignupButton": "Sign Up",
+  "authForgotPassword": "Forgot Password?",
+  "authResetPassword": "Reset Password",
+  "authSwitchToSignup": "Don't have an account? Sign up",
+  "authSwitchToLogin": "Already have an account? Sign in",
+  "authLogoutButton": "Log Out",
+  "authLoggingIn": "Signing in...",
+  "authSigningUp": "Creating account...",
+
+  "onboardingTitle": "Let's Get Started!",
+  "onboardingSubtitle": "Answer a few questions to personalize your journey",
+  "onboardingQuestionPrefix": "Question {current} of {total}",
+  "@onboardingQuestionPrefix": {
+    "placeholders": {
+      "current": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "onboardingNextButton": "Next",
+  "onboardingBackButton": "Back",
+  "onboardingFinishButton": "Finish",
+  "onboardingSkipButton": "Skip",
+
+  "dashboardTitle": "Dashboard",
+  "dashboardWelcome": "Welcome back, {name}!",
+  "@dashboardWelcome": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "dashboardProgressLabel": "Discovery Progress",
+  "dashboardProgressPercent": "{percent}%",
+  "@dashboardProgressPercent": {
+    "placeholders": {
+      "percent": {"type": "int"}
+    }
+  },
+  "dashboardStreakLabel": "Day Streak",
+  "dashboardStreakDays": "{days} days",
+  "@dashboardStreakDays": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "dashboardContinueDiscovery": "Continue Discovery",
+  "dashboardViewCareers": "Explore Careers",
+  "dashboardStartRoadmap": "View Roadmap",
+  "dashboardWhatsNext": "What's Next?",
+
+  "discoverTitle": "Discover",
+  "discoverSubtitle": "Take quizzes and play games to learn more about yourself",
+  "discoverQuizzesTab": "Quizzes",
+  "discoverGamesTab": "Games",
+  "discoverStartButton": "Start",
+  "discoverResumeButton": "Resume",
+  "discoverCompletedBadge": "Completed",
+  "discoverLockedBadge": "Locked",
+  "discoverProgressLabel": "{completed} of {total} completed",
+  "@discoverProgressLabel": {
+    "placeholders": {
+      "completed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+
+  "careersTitle": "Careers",
+  "careersSubtitle": "Explore careers that match your interests",
+  "careersFilterLabel": "Filter by",
+  "careersFilterAll": "All",
+  "careersSearchHint": "Search careers...",
+  "careersMatchScoreLabel": "Match Score",
+  "careersMatchScoreValue": "{score}%",
+  "@careersMatchScoreValue": {
+    "placeholders": {
+      "score": {"type": "int"}
+    }
+  },
+  "careersHighMatch": "High Match",
+  "careersMediumMatch": "Medium Match",
+  "careersLowMatch": "Explore More",
+  "careersAddToRoadmapButton": "Add to Roadmap",
+  "careersViewDetailsButton": "View Details",
+  "careersEmptyState": "No careers found. Try adjusting your filters.",
+
+  "roadmapTitle": "Roadmap",
+  "roadmapSubtitle": "Your personalized path to success",
+  "roadmapSelectCareer": "Select a career to see your roadmap",
+  "roadmapProgressLabel": "Progress",
+  "roadmapProgressValue": "{completed} of {total} steps",
+  "@roadmapProgressValue": {
+    "placeholders": {
+      "completed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "roadmapMarkCompleteButton": "Mark Complete",
+  "roadmapMarkIncompleteButton": "Mark Incomplete",
+  "roadmapEmptyState": "Add careers to your roadmap to get started",
+
+  "settingsTitle": "Settings",
+  "settingsProfileSection": "Profile",
+  "settingsDisplayName": "Display Name",
+  "settingsEmail": "Email",
+  "settingsAppearanceSection": "Appearance",
+  "settingsLanguage": "Language",
+  "settingsLanguageEnglish": "English",
+  "settingsLanguageArabic": "العربية",
+  "settingsTheme": "Theme",
+  "settingsThemeLight": "Light",
+  "settingsThemeDark": "Dark",
+  "settingsThemeSystem": "System",
+  "settingsNotificationsSection": "Notifications",
+  "settingsNotificationsEnabled": "Enable Notifications",
+  "settingsPrivacySection": "Privacy & Legal",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsTermsOfUse": "Terms of Use",
+  "settingsAbout": "About SelfMap",
+  "settingsSupportSection": "Support",
+  "settingsFeedback": "Send Feedback",
+  "settingsReportIssue": "Report an Issue",
+  "settingsVersion": "Version {version}",
+  "@settingsVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+
+  "privacyTitle": "Privacy Policy",
+  "privacyConsentTitle": "Privacy & Consent",
+  "privacyConsentMessage": "We value your privacy. This app collects minimal data to provide you with personalized recommendations. Your data is never shared with third parties.",
+  "privacyConsentAccept": "I Accept",
+  "privacyConsentDecline": "Decline",
+
+  "termsTitle": "Terms of Use",
+  "termsAccept": "I agree to the Terms of Use",
+
+  "aboutTitle": "About SelfMap",
+  "aboutDescription": "SelfMap is a self-discovery platform designed to help high school students explore their interests, discover careers, and plan their future.",
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+
+  "errorTitle": "Oops!",
+  "errorGeneric": "Something went wrong. Please try again.",
+  "errorNetwork": "Network error. Please check your connection.",
+  "errorInvalidCredentials": "Invalid email or password.",
+  "errorEmailInUse": "This email is already in use.",
+  "errorWeakPassword": "Password is too weak.",
+  "errorRetryButton": "Try Again",
+  "errorGoBackButton": "Go Back",
+
+  "emptyStateTitle": "Nothing here yet",
+  "emptyStateMessage": "Check back later for more content",
+
+  "loadingMessage": "Loading...",
+  "savingMessage": "Saving...",
+  "successMessage": "Success!",
+
+  "cancelButton": "Cancel",
+  "saveButton": "Save",
+  "continueButton": "Continue",
+  "doneButton": "Done",
+  "closeButton": "Close"
+}
