@@ -1,0 +1,51 @@
+# Netlify headers file for cache control
+
+# Main HTML - no cache
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+
+# Service Worker - no cache
+/flutter_service_worker.js
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+
+# Flutter Bootstrap - no cache
+/flutter_bootstrap.js
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+
+# Main Dart compiled code - no cache
+/main.dart.js
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+
+# Version file - no cache
+/version.txt
+  Cache-Control: no-cache, no-store, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+
+# Flutter JS - short cache with revalidation
+/flutter.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# Assets - long cache (content-addressed by Flutter)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# CanvasKit - long cache
+/canvaskit/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Icons - long cache
+/icons/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Manifest - 1 week cache
+/manifest.json
+  Cache-Control: public, max-age=604800

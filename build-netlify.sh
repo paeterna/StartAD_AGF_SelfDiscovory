@@ -33,5 +33,15 @@ flutter pub get
 echo "🏗️  Building Flutter web app..."
 flutter build web --release
 
+# Add cache busting timestamp to index.html
+echo "🔄 Adding cache busting timestamp..."
+TIMESTAMP=$(date +%s)
+sed -i.bak "s/{{TIMESTAMP}}/$TIMESTAMP/g" build/web/index.html
+rm -f build/web/index.html.bak
+
+# Create a version file for reference
+echo "$TIMESTAMP" > build/web/version.txt
+echo "📝 Build version: $TIMESTAMP"
+
 echo "✅ Build complete!"
 echo "📁 Output directory: build/web"

@@ -40,12 +40,12 @@
 [[headers]]
   for = "/*.js"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=3600, must-revalidate"
 
 [[headers]]
   for = "/*.css"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=3600, must-revalidate"
 
 [[headers]]
   for = "/assets/*"
@@ -57,17 +57,37 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Service worker caching
+# Service worker caching - force fresh download on each deployment
 [[headers]]
   for = "/flutter_service_worker.js"
   [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# Bootstrap script - force fresh download
+[[headers]]
+  for = "/flutter_bootstrap.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# Main Dart app file - force fresh download
+[[headers]]
+  for = "/main.dart.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Pragma = "no-cache"
+    Expires = "0"
 
 # Main HTML file - no cache for dynamic routing
 [[headers]]
   for = "/index.html"
   [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Pragma = "no-cache"
+    Expires = "0"
 
 # Plugin configuration
 [[plugins]]
