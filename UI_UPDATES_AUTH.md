@@ -74,7 +74,7 @@ The Google Sign-In button is implemented correctly in the code, but requires:
 ```
 [Email Input]
 [Password Input]
-                              
+
 [Sign In Button]
 [Sign up link]
 ```
@@ -84,7 +84,7 @@ The Google Sign-In button is implemented correctly in the code, but requires:
 [Email Input]
 [Password Input]
                     [Forgot Password?]  ← NEW!
-                              
+
 [Sign In Button]
 [Sign up link]
 

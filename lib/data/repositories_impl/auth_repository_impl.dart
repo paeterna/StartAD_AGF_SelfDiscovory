@@ -24,10 +24,10 @@ class AuthRepositoryImpl implements AuthRepository {
 
   final LocalPrefs _localPrefs;
   final _authStateController = StreamController<User?>.broadcast();
-  
+
   // Get Supabase client instance
   SupabaseClient get _supabase => Supabase.instance.client;
-  
+
   User? _currentUser;
 
   /// Convert Supabase User to domain User entity
@@ -36,8 +36,8 @@ class AuthRepositoryImpl implements AuthRepository {
     return User(
       id: supabaseUser.id,
       email: supabaseUser.email ?? '',
-      displayName: metadata['display_name'] as String? ?? 
-                   supabaseUser.email?.split('@').first ?? 
+      displayName: metadata['display_name'] as String? ??
+                   supabaseUser.email?.split('@').first ??
                    'User',
       onboardingComplete: metadata['onboarding_complete'] as bool? ?? false,
       locale: metadata['locale'] as String? ?? 'en',
@@ -60,7 +60,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       _currentUser = _toDomainUser(supabaseUser);
       await _localPrefs.setUserId(_currentUser!.id);
-      
+
       return _currentUser;
     } catch (e) {
       debugPrint('Error getting current user: $e');
@@ -102,6 +102,8 @@ class AuthRepositoryImpl implements AuthRepository {
     required String displayName,
   }) async {
     try {
+      debugPrint('🔵 [AUTH_REPO] Calling Supabase signUp for: $email');
+
       final response = await _supabase.auth.signUp(
         email: email,
         password: password,
@@ -113,9 +115,16 @@ class AuthRepositoryImpl implements AuthRepository {
         },
       );
 
+      debugPrint('🔵 [AUTH_REPO] Supabase response received');
+      debugPrint('🔵 [AUTH_REPO] User: ${response.user?.id}');
+      debugPrint('🔵 [AUTH_REPO] Session: ${response.session?.accessToken != null ? "present" : "null"}');
+
       if (response.user == null) {
-        throw Exception('Sign up failed');
+        debugPrint('🔴 [AUTH_REPO] No user in response - sign up may require email confirmation');
+        throw Exception('Sign up failed - please check your email for confirmation link');
       }
+
+      debugPrint('✅ [AUTH_REPO] User created successfully: ${response.user!.email}');
 
       _currentUser = _toDomainUser(response.user!);
       await _localPrefs.setUserId(_currentUser!.id);
@@ -123,8 +132,11 @@ class AuthRepositoryImpl implements AuthRepository {
 
       return _currentUser!;
     } on AuthException catch (e) {
+      debugPrint('🔴 [AUTH_REPO] AuthException: ${e.message} (status: ${e.statusCode})');
       throw Exception(e.message);
     } catch (e) {
+      debugPrint('🔴 [AUTH_REPO] Unknown error: $e');
+      debugPrint('🔴 [AUTH_REPO] Error type: ${e.runtimeType}');
       throw Exception('Sign up failed: ${e.toString()}');
     }
   }
@@ -197,7 +209,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     try {
       final currentMetadata = _supabase.auth.currentUser?.userMetadata ?? {};
-      
+
       final updates = <String, dynamic>{
         ...currentMetadata,
         if (displayName != null) 'display_name': displayName,
@@ -228,7 +240,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<User> completeOnboarding({required String userId}) async {
     try {
       final currentMetadata = _supabase.auth.currentUser?.userMetadata ?? {};
-      
+
       final response = await _supabase.auth.updateUser(
         UserAttributes(
           data: {

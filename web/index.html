@@ -63,7 +63,7 @@
   <script>
     // Cache busting - force reload of service worker and assets on new deployment
     const CACHE_VERSION = 'v1.0.0-{{TIMESTAMP}}';
-    
+
     // Clear old caches
     if ('caches' in window) {
       caches.keys().then(function(cacheNames) {

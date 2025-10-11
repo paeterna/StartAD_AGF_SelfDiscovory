@@ -71,11 +71,11 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
   Future<void> _handleGoogleSignIn() async {
     debugPrint('🔵 [SIGNUP_GOOGLE] Starting Google OAuth sign in from signup page...');
-    
+
     try {
       debugPrint('🔵 [SIGNUP_GOOGLE] Calling auth controller signInWithGoogle...');
       await ref.read(authControllerProvider.notifier).signInWithGoogle();
-      
+
       debugPrint('✅ [SIGNUP_GOOGLE] OAuth request initiated successfully');
       debugPrint('🔵 [SIGNUP_GOOGLE] User will be redirected to Google consent screen');
       // The OAuth flow will redirect the user, so no need to manually navigate

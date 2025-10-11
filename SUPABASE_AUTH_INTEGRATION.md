@@ -332,7 +332,7 @@ ref.read(authRepositoryProvider).authStateChanges.listen((user) {
 **Solution:** Check email/password in Supabase Dashboard → Authentication → Users
 
 ### Issue: "Google OAuth not working"
-**Solution:** 
+**Solution:**
 1. Verify Google credentials in Supabase
 2. Check redirect URL matches exactly
 3. Ensure Google Cloud Console has correct origins
