@@ -66,6 +66,81 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     }
   }
 
+  Future<void> _showForgotPasswordDialog() async {
+    final emailController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Reset Password'),
+        content: Form(
+          key: formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Enter your email address and we\'ll send you a link to reset your password.',
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  prefixIcon: Icon(Icons.email_outlined),
+                ),
+                validator: Validators.email,
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              if (formKey.currentState!.validate()) {
+                Navigator.pop(context, true);
+              }
+            },
+            child: const Text('Send Reset Link'),
+          ),
+        ],
+      ),
+    );
+
+    if (result == true && mounted) {
+      try {
+        await ref
+            .read(authControllerProvider.notifier)
+            .resetPassword(email: emailController.text.trim());
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Password reset link sent! Check your email.'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(e.toString().replaceAll('Exception: ', '')),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    }
+
+    emailController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider);
@@ -136,7 +211,19 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       validator: Validators.password,
                       enabled: !authState.isLoading,
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 8),
+
+                    // Forgot password link
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: authState.isLoading
+                            ? null
+                            : () => _showForgotPasswordDialog(),
+                        child: const Text('Forgot Password?'),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
 
                     // Login button
                     ElevatedButton(
