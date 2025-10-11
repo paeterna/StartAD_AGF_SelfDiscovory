@@ -1,4 +1,25 @@
-# SelfMap - Deployment Guide
+# SelfMap Deployment Guide
+
+## 🚨 Issue Encountered: Flutter Not Found on Netlify
+
+### The Problem
+Your first deployment failed with:
+```
+bash: line 1: flutter: command not found
+```
+
+**Root Cause**: Netlify doesn't have Flutter SDK installed by default.
+
+### ✅ The Solution
+We've added a build script (`build-netlify.sh`) that:
+1. Installs Flutter SDK during build
+2. Configures Flutter for web
+3. Gets dependencies
+4. Builds your app
+
+---
+
+# SelfMap Deployment Guide
 
 ## 🚀 Live Deployment
 

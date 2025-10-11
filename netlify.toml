@@ -1,15 +1,15 @@
 # Netlify configuration for SelfMap Flutter Web App
 
 [build]
-  # Build command for CI/CD
-  command = "flutter build web --release"
+  # Build command - Use custom build script
+  command = "./build-netlify.sh"
 
   # Directory to publish (output directory)
   publish = "build/web"
 
   # Environment variables
   [build.environment]
-    FLUTTER_VERSION = "3.32.5"
+    FLUTTER_VERSION = "3.24.5"
 
 # Redirect rules for Flutter's client-side routing
 [[redirects]]

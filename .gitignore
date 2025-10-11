@@ -119,3 +119,8 @@ app.*.symbols
 !/dev/ci/**/Gemfile.lock
 # Local Netlify folder
 .netlify
+
+# Environment variables (contains secrets)
+.env
+.env.local
+.env.*.local
