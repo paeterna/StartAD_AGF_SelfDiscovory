@@ -4,7 +4,7 @@ Your Supabase credentials are now configured! Follow these steps to migrate from
 
 ## ✅ Current Status
 
-**Supabase Project**: https://twolnvofpdhfakafdsla.supabase.co
+**Supabase Project**: https://YOUR-PROJECT-REF.supabase.co
 **Environment Variables**: Already configured in `.env`
 
 ---
@@ -122,8 +122,8 @@ Check:
 ### 5.1 Set Environment Variables in Netlify
 
 ```bash
-netlify env:set SUPABASE_URL "https://twolnvofpdhfakafdsla.supabase.co"
-netlify env:set SUPABASE_ANON_KEY "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd4anVxYWJ0c2JycHNqeGxiZGV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg2NTIyMjUsImV4cCI6MjA0NDIyODIyNX0.sb_publishable_8Lu2J0uNePESMHfBKgDlCA_x635K6q6"
+netlify env:set SUPABASE_URL "https://YOUR-PROJECT-REF.supabase.co"
+netlify env:set SUPABASE_ANON_KEY "your_supabase_anon_key"
 ```
 
 Or set them in the Netlify dashboard:

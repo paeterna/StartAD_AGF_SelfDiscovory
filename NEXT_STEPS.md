@@ -18,7 +18,7 @@ Before you can use Supabase authentication with real data, you need to set up th
 
 **Action Items:**
 1. Open your Supabase dashboard: https://app.supabase.com
-2. Select your project (URL: https://twolnvofpdhfakafdsla.supabase.co)
+2. Select your project (URL: https://YOUR-PROJECT-REF.supabase.co)
 3. Go to **SQL Editor**
 4. Open `supabase/migrations/00001_init_schema.sql` in VS Code
 5. Copy the entire SQL script
@@ -94,7 +94,7 @@ Set up Google OAuth for a better user experience.
 2. Or use `SUPABASE_CONFIG_CHECKLIST.md` for a step-by-step checklist
 3. Main steps:
    - Create Google OAuth credentials in Google Cloud Console
-   - Add redirect URIs: `https://twolnvofpdhfakafdsla.supabase.co/auth/v1/callback`
+   - Add redirect URIs: `https://YOUR-PROJECT-REF.supabase.co/auth/v1/callback`
    - Enable Google provider in Supabase
    - Add Client ID and Secret to Supabase
 

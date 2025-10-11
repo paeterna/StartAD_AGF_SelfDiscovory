@@ -11,7 +11,7 @@
 - ✅ **Dependencies Installed**: Ran `flutter pub get` successfully
 - ✅ **Environment Variables**: Configured `.env` with Supabase credentials
   - SUPABASE_URL
-  - SUPABASE_ANON_KEY  
+  - SUPABASE_ANON_KEY
   - SUPABASE_SECRET_KEY
 
 ### 2. Supabase Initialization
@@ -73,7 +73,7 @@ Google Sign-In is already coded! Just needs OAuth configuration.
 
 **Action Required:**
 1. Create OAuth credentials in Google Cloud Console
-2. Add redirect URI: `https://twolnvofpdhfakafdsla.supabase.co/auth/v1/callback`
+2. Add redirect URI: `https://YOUR-PROJECT-REF.supabase.co/auth/v1/callback`
 3. Enable Google provider in Supabase Dashboard
 4. Add Client ID and Secret
 
@@ -93,7 +93,7 @@ Currently using mock data. Need to switch to Supabase.
 **Repositories to Update:**
 - [ ] Auth Repository (highest priority)
 - [ ] Progress Repository
-- [ ] Career Repository  
+- [ ] Career Repository
 - [ ] Activities Repository
 - [ ] Assessment Repository
 - [ ] Roadmap Repository
@@ -150,7 +150,7 @@ If you have existing mock data to preserve, migrate it to Supabase.
 **Goal:** See Supabase working immediately!
 
 1. ✅ Run database migrations
-2. ✅ Configure Google OAuth  
+2. ✅ Configure Google OAuth
 3. ✅ Test Google Sign-In
 4. ✅ Celebrate! 🎉
 
@@ -355,7 +355,7 @@ A: Check Supabase Dashboard → Authentication → Users after signup.
 
 ## 🎉 Conclusion
 
-You've completed about **40% of Phase-2 integration**! 
+You've completed about **40% of Phase-2 integration**!
 
 The foundation is solid:
 - ✅ Supabase is connected

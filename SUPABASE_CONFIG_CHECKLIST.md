@@ -28,13 +28,13 @@ Use this checklist to ensure your Google Sign-In is properly configured.
 - [ ] Add **Authorized JavaScript origins**:
   ```
   http://localhost:3000
-  https://twolnvofpdhfakafdsla.supabase.co
+  https://YOUR-PROJECT-REF.supabase.co
   https://your-site.netlify.app (when you deploy)
   ```
 - [ ] Add **Authorized redirect URIs**:
   ```
   http://localhost:3000/auth/v1/callback
-  https://twolnvofpdhfakafdsla.supabase.co/auth/v1/callback
+  https://YOUR-PROJECT-REF.supabase.co/auth/v1/callback
   https://your-site.netlify.app/auth/v1/callback (when you deploy)
   ```
 - [ ] Click **Create**
@@ -72,9 +72,9 @@ Use this checklist to ensure your Google Sign-In is properly configured.
 Verify your `.env` file has all required values:
 
 ```env
-SUPABASE_URL=https://twolnvofpdhfakafdsla.supabase.co
+SUPABASE_URL=https://YOUR-PROJECT-REF.supabase.co
 SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-SUPABASE_SECRET_KEY=sb_secret_Hq360I0Mas3dg6Yas_9AKA_GHgkEKmO
+SUPABASE_SECRET_KEY=your_supabase_secret_key
 ```
 
 - [ ] SUPABASE_URL is set
@@ -139,4 +139,4 @@ You'll know it's working when:
 ---
 
 **Last Updated**: Based on implementation completed on ${new Date().toLocaleDateString()}
-**Supabase Project URL**: https://twolnvofpdhfakafdsla.supabase.co
+**Supabase Project URL**: https://YOUR-PROJECT-REF.supabase.co

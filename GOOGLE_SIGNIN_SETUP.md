@@ -78,7 +78,7 @@ http://127.0.0.1:3000/auth/v1/callback
 
 For **Production** (replace with your Supabase project URL):
 ```
-https://twolnvofpdhfakafdsla.supabase.co/auth/v1/callback
+https://YOUR-PROJECT-REF.supabase.co/auth/v1/callback
 ```
 
 For **Netlify** (when you deploy):
@@ -105,7 +105,7 @@ https://YOUR-SITE.netlify.app/auth/v1/callback
 
 1. Start your Flutter web app:
 ```bash
-flutter run -d chrome --dart-define=SUPABASE_URL=https://twolnvofpdhfakafdsla.supabase.co --dart-define=SUPABASE_ANON_KEY=your_anon_key
+flutter run -d chrome --dart-define=SUPABASE_URL=https://YOUR-PROJECT-REF.supabase.co --dart-define=SUPABASE_ANON_KEY=your_anon_key
 ```
 
 2. Navigate to the login page
@@ -119,9 +119,9 @@ For web deployment on Netlify:
 
 1. Your `.env` file should contain:
 ```env
-SUPABASE_URL=https://twolnvofpdhfakafdsla.supabase.co
+SUPABASE_URL=https://YOUR-PROJECT-REF.supabase.co
 SUPABASE_ANON_KEY=your_anon_key
-SUPABASE_SECRET_KEY=sb_secret_Hq360I0Mas3dg6Yas_9AKA_GHgkEKmO
+SUPABASE_SECRET_KEY=your_supabase_secret_key
 ```
 
 2. Build for web:

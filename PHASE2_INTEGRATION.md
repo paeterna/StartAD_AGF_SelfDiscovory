@@ -75,9 +75,9 @@ flutter pub get  # ✅ Completed
 
 ```env
 # Supabase Configuration (Phase-2)
-SUPABASE_URL=https://twolnvofpdhfakafdsla.supabase.co  # ✅ Set
+SUPABASE_URL=https://YOUR-PROJECT-REF.supabase.co  # ✅ Set
 SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...  # ✅ Set
-SUPABASE_SECRET_KEY=sb_secret_Hq360I0Mas3dg6Yas_9AKA_GHgkEKmO  # ✅ Set
+SUPABASE_SECRET_KEY=your_supabase_secret_key  # ✅ Set
 
 # Feature Flags
 AI_RECO_ENABLED=false

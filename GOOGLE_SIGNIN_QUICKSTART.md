@@ -18,7 +18,7 @@
 4. Create OAuth 2.0 credentials
 5. Add these redirect URIs:
    ```
-   https://twolnvofpdhfakafdsla.supabase.co/auth/v1/callback
+   https://YOUR-PROJECT-REF.supabase.co/auth/v1/callback
    http://localhost:3000/auth/v1/callback
    ```
 
