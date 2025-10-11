@@ -66,5 +66,5 @@ flutter:
 
   assets:
     - assets/i18n/
-    - assets/graphics/
-    - .env
+    # Note: .env should NOT be an asset - it's for local dev only
+    # Environment variables are set in Netlify dashboard
