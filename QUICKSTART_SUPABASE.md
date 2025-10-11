@@ -12,7 +12,7 @@ Your Supabase credentials are now configured! Follow these steps to migrate from
 ## 🚀 Step 1: Run Database Migration (5 minutes)
 
 ### 1.1 Open Supabase SQL Editor
-Go to: https://supabase.com/dashboard/project/twolnvofpdhfakafdsla/sql/new
+Go to: https://supabase.com/dashboard/project/YOUR-PROJECT-ID/sql/new
 
 ### 1.2 Copy & Paste Migration
 Copy the entire contents of `supabase/migrations/00001_init_schema.sql` and paste into the SQL editor.
@@ -25,7 +25,7 @@ Click "Run" or press `Cmd+Enter`. You should see:
 - ✅ Seed data inserted (3 activities, 5 careers)
 
 ### 1.4 Verify Tables
-Go to: https://supabase.com/dashboard/project/twolnvofpdhfakafdsla/editor
+Go to: https://supabase.com/dashboard/project/YOUR-PROJECT-ID/editor
 
 You should see these tables:
 - `profiles`
@@ -109,7 +109,7 @@ flutter run -d chrome
 
 ### 4.4 Verify Database
 
-Go to: https://supabase.com/dashboard/project/twolnvofpdhfakafdsla/editor
+Go to: https://supabase.com/dashboard/project/YOUR-PROJECT-ID/editor
 
 Check:
 - `profiles` table has your user
@@ -241,7 +241,7 @@ Environment variables are set separately in Netlify dashboard, so your secrets a
 
 ## 📞 Help & Resources
 
-- **Supabase Dashboard**: https://supabase.com/dashboard/project/twolnvofpdhfakafdsla
+- **Supabase Dashboard**: https://supabase.com/dashboard/project/YOUR-PROJECT-ID
 - **Supabase Docs**: https://supabase.com/docs
 - **Flutter Docs**: https://supabase.com/docs/reference/dart/introduction
 - **Phase-2 Guide**: [PHASE2_INTEGRATION.md](PHASE2_INTEGRATION.md)

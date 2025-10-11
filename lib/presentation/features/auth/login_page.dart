@@ -27,18 +27,30 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   Future<void> _handleLogin() async {
-    if (!_formKey.currentState!.validate()) return;
+    if (!_formKey.currentState!.validate()) {
+      debugPrint('🔴 [LOGIN] Validation failed');
+      return;
+    }
 
+    final email = _emailController.text.trim();
+    debugPrint('🔵 [LOGIN] Starting login for: $email');
+    
     try {
+      debugPrint('🔵 [LOGIN] Calling auth controller signIn...');
       await ref.read(authControllerProvider.notifier).signIn(
-            email: _emailController.text.trim(),
+            email: email,
             password: _passwordController.text,
           );
 
+      debugPrint('✅ [LOGIN] Sign in successful for: $email');
+      
       if (mounted) {
+        debugPrint('🔵 [LOGIN] Navigating to dashboard...');
         context.go(AppRoutes.dashboard);
+        debugPrint('✅ [LOGIN] Navigation complete');
       }
     } catch (e) {
+      debugPrint('🔴 [LOGIN] Error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -51,10 +63,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   Future<void> _handleGoogleSignIn() async {
+    debugPrint('🔵 [GOOGLE_SIGNIN] Starting Google OAuth sign in...');
+    
     try {
+      debugPrint('🔵 [GOOGLE_SIGNIN] Calling auth controller signInWithGoogle...');
       await ref.read(authControllerProvider.notifier).signInWithGoogle();
+      
+      debugPrint('✅ [GOOGLE_SIGNIN] OAuth request initiated successfully');
+      debugPrint('🔵 [GOOGLE_SIGNIN] User will be redirected to Google consent screen');
       // The OAuth flow will redirect the user, so no need to manually navigate
     } catch (e) {
+      debugPrint('🔴 [GOOGLE_SIGNIN] Error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -67,6 +86,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   Future<void> _showForgotPasswordDialog() async {
+    debugPrint('🔵 [FORGOT_PASSWORD] Opening forgot password dialog...');
+    
     final emailController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
@@ -113,11 +134,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
 
     if (result == true && mounted) {
+      final email = emailController.text.trim();
+      debugPrint('🔵 [FORGOT_PASSWORD] User confirmed, sending reset link to: $email');
+      
       try {
+        debugPrint('🔵 [FORGOT_PASSWORD] Calling auth controller resetPassword...');
         await ref
             .read(authControllerProvider.notifier)
-            .resetPassword(email: emailController.text.trim());
+            .resetPassword(email: email);
 
+        debugPrint('✅ [FORGOT_PASSWORD] Reset email sent successfully to: $email');
+        
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -127,6 +154,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           );
         }
       } catch (e) {
+        debugPrint('🔴 [FORGOT_PASSWORD] Error: $e');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -136,6 +164,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           );
         }
       }
+    } else {
+      debugPrint('🔵 [FORGOT_PASSWORD] User cancelled the dialog');
     }
 
     emailController.dispose();

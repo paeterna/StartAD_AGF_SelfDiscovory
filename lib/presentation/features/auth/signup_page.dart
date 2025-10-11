@@ -32,19 +32,32 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   }
 
   Future<void> _handleSignup() async {
-    if (!_formKey.currentState!.validate()) return;
+    if (!_formKey.currentState!.validate()) {
+      debugPrint('🔴 [SIGNUP] Validation failed');
+      return;
+    }
+
+    final email = _emailController.text.trim();
+    final displayName = _displayNameController.text.trim();
+    debugPrint('🔵 [SIGNUP] Starting signup for: $email (Display Name: $displayName)');
 
     try {
+      debugPrint('🔵 [SIGNUP] Calling auth controller signUp...');
       await ref.read(authControllerProvider.notifier).signUp(
-            email: _emailController.text.trim(),
+            email: email,
             password: _passwordController.text,
-            displayName: _displayNameController.text.trim(),
+            displayName: displayName,
           );
 
+      debugPrint('✅ [SIGNUP] Sign up successful for: $email');
+
       if (mounted) {
+        debugPrint('🔵 [SIGNUP] Navigating to onboarding...');
         context.go(AppRoutes.onboarding);
+        debugPrint('✅ [SIGNUP] Navigation complete');
       }
     } catch (e) {
+      debugPrint('🔴 [SIGNUP] Error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -57,10 +70,17 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   }
 
   Future<void> _handleGoogleSignIn() async {
+    debugPrint('🔵 [SIGNUP_GOOGLE] Starting Google OAuth sign in from signup page...');
+    
     try {
+      debugPrint('🔵 [SIGNUP_GOOGLE] Calling auth controller signInWithGoogle...');
       await ref.read(authControllerProvider.notifier).signInWithGoogle();
+      
+      debugPrint('✅ [SIGNUP_GOOGLE] OAuth request initiated successfully');
+      debugPrint('🔵 [SIGNUP_GOOGLE] User will be redirected to Google consent screen');
       // The OAuth flow will redirect the user, so no need to manually navigate
     } catch (e) {
+      debugPrint('🔴 [SIGNUP_GOOGLE] Error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

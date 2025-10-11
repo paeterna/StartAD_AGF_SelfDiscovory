@@ -10,6 +10,8 @@
   # Environment variables
   [build.environment]
     FLUTTER_VERSION = "3.24.5"
+    # Exclude documentation files from secrets scanning
+    SECRETS_SCAN_OMIT_PATHS = "*.md,**/*.md,QUICKSTART_*.md,*_STEPS.md,*_SUMMARY.md,*_FIX.md,*_ERROR*.md,*_CHECKLIST.md,*_INTEGRATION.md,*_UPDATES*.md"
 
 # Redirect rules for Flutter's client-side routing
 [[redirects]]

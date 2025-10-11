@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/providers/providers.dart';
@@ -53,12 +54,16 @@ class AuthController extends StateNotifier<AuthState> {
     required String email,
     required String password,
   }) async {
+    debugPrint('🔵 [AUTH_CONTROLLER] signIn called for: $email');
     state = state.copyWith(isLoading: true, error: null);
     try {
       final authRepo = _ref.read(authRepositoryProvider);
+      debugPrint('🔵 [AUTH_CONTROLLER] Calling repository signIn...');
       final user = await authRepo.signIn(email: email, password: password);
+      debugPrint('✅ [AUTH_CONTROLLER] Repository signIn successful. User ID: ${user.id}');
       state = AuthState(user: user, isLoading: false);
     } catch (e) {
+      debugPrint('🔴 [AUTH_CONTROLLER] signIn error: $e');
       state = state.copyWith(
         isLoading: false,
         error: e.toString().replaceAll('Exception: ', ''),
@@ -72,16 +77,20 @@ class AuthController extends StateNotifier<AuthState> {
     required String password,
     required String displayName,
   }) async {
+    debugPrint('🔵 [AUTH_CONTROLLER] signUp called for: $email (Display: $displayName)');
     state = state.copyWith(isLoading: true, error: null);
     try {
       final authRepo = _ref.read(authRepositoryProvider);
+      debugPrint('🔵 [AUTH_CONTROLLER] Calling repository signUp...');
       final user = await authRepo.signUp(
         email: email,
         password: password,
         displayName: displayName,
       );
+      debugPrint('✅ [AUTH_CONTROLLER] Repository signUp successful. User ID: ${user.id}');
       state = AuthState(user: user, isLoading: false);
     } catch (e) {
+      debugPrint('🔴 [AUTH_CONTROLLER] signUp error: $e');
       state = state.copyWith(
         isLoading: false,
         error: e.toString().replaceAll('Exception: ', ''),
@@ -91,14 +100,19 @@ class AuthController extends StateNotifier<AuthState> {
   }
 
   Future<void> signInWithGoogle() async {
+    debugPrint('🔵 [AUTH_CONTROLLER] signInWithGoogle called');
     state = state.copyWith(isLoading: true, error: null);
     try {
       final authRepo = _ref.read(authRepositoryProvider);
+      debugPrint('🔵 [AUTH_CONTROLLER] Calling repository signInWithGoogle...');
       await authRepo.signInWithGoogle();
+      debugPrint('✅ [AUTH_CONTROLLER] Repository signInWithGoogle initiated');
+      debugPrint('🔵 [AUTH_CONTROLLER] OAuth flow started - user will be redirected');
       // The actual user session will be handled by Supabase auth state changes
       // So we just clear loading state here
       state = state.copyWith(isLoading: false);
     } catch (e) {
+      debugPrint('🔴 [AUTH_CONTROLLER] signInWithGoogle error: $e');
       state = state.copyWith(
         isLoading: false,
         error: e.toString().replaceAll('Exception: ', ''),
@@ -119,12 +133,16 @@ class AuthController extends StateNotifier<AuthState> {
   }
 
   Future<void> resetPassword({required String email}) async {
+    debugPrint('🔵 [AUTH_CONTROLLER] resetPassword called for: $email');
     state = state.copyWith(isLoading: true, error: null);
     try {
       final authRepo = _ref.read(authRepositoryProvider);
+      debugPrint('🔵 [AUTH_CONTROLLER] Calling repository resetPassword...');
       await authRepo.resetPassword(email: email);
+      debugPrint('✅ [AUTH_CONTROLLER] Repository resetPassword successful. Email sent to: $email');
       state = state.copyWith(isLoading: false);
     } catch (e) {
+      debugPrint('🔴 [AUTH_CONTROLLER] resetPassword error: $e');
       state = state.copyWith(
         isLoading: false,
         error: e.toString().replaceAll('Exception: ', ''),

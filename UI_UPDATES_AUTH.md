@@ -47,8 +47,8 @@ The Google Sign-In button is implemented correctly in the code, but requires:
    - Get Client ID and Client Secret
    - Add authorized redirect URIs:
      ```
-     https://twolnvofpdhfakafdsla.supabase.co/auth/v1/callback
-     https://selfmap-startad.netlify.app/auth/callback
+     https://YOUR-PROJECT.supabase.co/auth/v1/callback
+     https://YOUR-SITE.netlify.app/auth/callback
      ```
 
 2. **Supabase Dashboard** (https://supabase.com/dashboard)
