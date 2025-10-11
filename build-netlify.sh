@@ -31,7 +31,7 @@ flutter pub get
 
 # Build for web
 echo "🏗️  Building Flutter web app..."
-flutter build web --release --web-renderer auto
+flutter build web --release
 
 echo "✅ Build complete!"
 echo "📁 Output directory: build/web"
