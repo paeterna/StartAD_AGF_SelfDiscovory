@@ -1,42 +1,71 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
+import 'package:supabase_flutter/supabase_flutter.dart' as supabase show User;
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../sources/local_prefs.dart';
 
-/// Mock implementation of AuthRepository
-/// Extension point: Replace with Firebase Auth/Supabase in Phase-2
+/// Supabase implementation of AuthRepository
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl(this._localPrefs);
+  AuthRepositoryImpl(this._localPrefs) {
+    // Listen to Supabase auth state changes
+    _supabase.auth.onAuthStateChange.listen((data) {
+      final supabaseUser = data.session?.user;
+      if (supabaseUser != null) {
+        _currentUser = _toDomainUser(supabaseUser);
+        _authStateController.add(_currentUser);
+      } else {
+        _currentUser = null;
+        _authStateController.add(null);
+      }
+    });
+  }
 
   final LocalPrefs _localPrefs;
   final _authStateController = StreamController<User?>.broadcast();
-
-  // Mock in-memory user database
-  final Map<String, _MockUser> _users = {};
+  
+  // Get Supabase client instance
+  SupabaseClient get _supabase => Supabase.instance.client;
+  
   User? _currentUser;
+
+  /// Convert Supabase User to domain User entity
+  User _toDomainUser(supabase.User supabaseUser) {
+    final metadata = supabaseUser.userMetadata ?? {};
+    return User(
+      id: supabaseUser.id,
+      email: supabaseUser.email ?? '',
+      displayName: metadata['display_name'] as String? ?? 
+                   supabaseUser.email?.split('@').first ?? 
+                   'User',
+      onboardingComplete: metadata['onboarding_complete'] as bool? ?? false,
+      locale: metadata['locale'] as String? ?? 'en',
+      theme: ThemeModePreference.fromJson(
+        metadata['theme'] as String? ?? 'system',
+      ),
+      createdAt: DateTime.parse(supabaseUser.createdAt),
+      lastLoginAt: DateTime.now(),
+    );
+  }
 
   @override
   Future<User?> getCurrentUser() async {
-    final userId = _localPrefs.getUserId();
-    if (userId == null) return null;
+    try {
+      final supabaseUser = _supabase.auth.currentUser;
+      if (supabaseUser == null) {
+        await _localPrefs.clearUserId();
+        return null;
+      }
 
-    if (_currentUser == null && _users.containsKey(userId)) {
-      final mockUser = _users[userId]!;
-      _currentUser = User(
-        id: userId,
-        email: mockUser.email,
-        displayName: mockUser.displayName,
-        onboardingComplete: mockUser.onboardingComplete,
-        locale: mockUser.locale,
-        theme: mockUser.theme,
-        createdAt: mockUser.createdAt,
-        lastLoginAt: DateTime.now(),
-      );
+      _currentUser = _toDomainUser(supabaseUser);
+      await _localPrefs.setUserId(_currentUser!.id);
+      
+      return _currentUser;
+    } catch (e) {
+      debugPrint('Error getting current user: $e');
+      return null;
     }
-
-    return _currentUser;
   }
 
   @override
@@ -44,40 +73,26 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
   }) async {
-    // Simulate network delay
-    await Future<void>.delayed(const Duration(milliseconds: 800));
+    try {
+      final response = await _supabase.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
 
-    // Find user by email
-    final entry = _users.entries.firstWhere(
-      (e) => e.value.email == email,
-      orElse: () => throw Exception('Invalid credentials'),
-    );
+      if (response.user == null) {
+        throw Exception('Sign in failed');
+      }
 
-    final mockUser = entry.value;
+      _currentUser = _toDomainUser(response.user!);
+      await _localPrefs.setUserId(_currentUser!.id);
+      _authStateController.add(_currentUser);
 
-    // Check password
-    if (mockUser.password != password) {
-      throw Exception('Invalid credentials');
+      return _currentUser!;
+    } on AuthException catch (e) {
+      throw Exception(e.message);
+    } catch (e) {
+      throw Exception('Sign in failed: ${e.toString()}');
     }
-
-    // Update last login
-    mockUser.lastLoginAt = DateTime.now();
-
-    _currentUser = User(
-      id: entry.key,
-      email: mockUser.email,
-      displayName: mockUser.displayName,
-      onboardingComplete: mockUser.onboardingComplete,
-      locale: mockUser.locale,
-      theme: mockUser.theme,
-      createdAt: mockUser.createdAt,
-      lastLoginAt: mockUser.lastLoginAt,
-    );
-
-    await _localPrefs.setUserId(entry.key);
-    _authStateController.add(_currentUser);
-
-    return _currentUser!;
   }
 
   @override
@@ -86,88 +101,91 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
     required String displayName,
   }) async {
-    // Simulate network delay
-    await Future<void>.delayed(const Duration(milliseconds: 1000));
+    try {
+      final response = await _supabase.auth.signUp(
+        email: email,
+        password: password,
+        data: {
+          'display_name': displayName,
+          'onboarding_complete': false,
+          'locale': 'en',
+          'theme': 'system',
+        },
+      );
 
-    // Check if email already exists
-    if (_users.values.any((u) => u.email == email)) {
-      throw Exception('Email already in use');
+      if (response.user == null) {
+        throw Exception('Sign up failed');
+      }
+
+      _currentUser = _toDomainUser(response.user!);
+      await _localPrefs.setUserId(_currentUser!.id);
+      _authStateController.add(_currentUser);
+
+      return _currentUser!;
+    } on AuthException catch (e) {
+      throw Exception(e.message);
+    } catch (e) {
+      throw Exception('Sign up failed: ${e.toString()}');
     }
-
-    // Check password strength
-    if (password.length < 8) {
-      throw Exception('Password too weak');
-    }
-
-    // Create new user
-    final userId = 'user_${DateTime.now().millisecondsSinceEpoch}';
-    final now = DateTime.now();
-
-    _users[userId] = _MockUser(
-      email: email,
-      password: password,
-      displayName: displayName,
-      onboardingComplete: false,
-      locale: 'en',
-      theme: ThemeModePreference.system,
-      createdAt: now,
-      lastLoginAt: now,
-    );
-
-    _currentUser = User(
-      id: userId,
-      email: email,
-      displayName: displayName,
-      onboardingComplete: false,
-      locale: 'en',
-      theme: ThemeModePreference.system,
-      createdAt: now,
-      lastLoginAt: now,
-    );
-
-    await _localPrefs.setUserId(userId);
-    _authStateController.add(_currentUser);
-
-    return _currentUser!;
   }
 
   @override
   Future<bool> signInWithGoogle() async {
     try {
-      final supabase = Supabase.instance.client;
-      await supabase.auth.signInWithOAuth(
+      await _supabase.auth.signInWithOAuth(
         OAuthProvider.google,
-        redirectTo: kIsWeb
-            ? null // Will use the URL configured in Supabase dashboard
-            : null, // For mobile, Supabase handles this automatically
-        authScreenLaunchMode: LaunchMode.platformDefault,
+        redirectTo: kIsWeb ? '${Uri.base.origin}/auth/callback' : null,
+        queryParams: {
+          'access_type': 'offline',
+          'prompt': 'consent',
+        },
       );
+
+      // For web, this will redirect and the session will be picked up on return
+      // For mobile, check if we got a user
+      if (!kIsWeb && _supabase.auth.currentUser != null) {
+        _currentUser = _toDomainUser(_supabase.auth.currentUser!);
+        await _localPrefs.setUserId(_currentUser!.id);
+        _authStateController.add(_currentUser);
+        return true;
+      }
+
       return true;
+    } on AuthException catch (e) {
+      debugPrint('Google sign-in error: ${e.message}');
+      throw Exception(e.message);
     } catch (e) {
-      throw Exception('Failed to sign in with Google: $e');
+      debugPrint('Google sign-in error: $e');
+      throw Exception('Google sign-in failed');
     }
   }
 
   @override
   Future<void> signOut() async {
-    _currentUser = null;
-    await _localPrefs.clearUserId();
-    _authStateController.add(null);
+    try {
+      await _supabase.auth.signOut();
+      _currentUser = null;
+      await _localPrefs.clearUserId();
+      _authStateController.add(null);
+    } on AuthException catch (e) {
+      throw Exception(e.message);
+    } catch (e) {
+      throw Exception('Sign out failed: ${e.toString()}');
+    }
   }
 
   @override
   Future<void> resetPassword({required String email}) async {
-    // Simulate network delay
-    await Future<void>.delayed(const Duration(milliseconds: 500));
-
-    // Check if user exists
-    final userExists = _users.values.any((u) => u.email == email);
-    if (!userExists) {
-      throw Exception('User not found');
+    try {
+      await _supabase.auth.resetPasswordForEmail(
+        email,
+        redirectTo: kIsWeb ? '${Uri.base.origin}/reset-password' : null,
+      );
+    } on AuthException catch (e) {
+      throw Exception(e.message);
+    } catch (e) {
+      throw Exception('Password reset failed: ${e.toString()}');
     }
-
-    // In a real implementation, this would send an email
-    // For now, just return success
   }
 
   @override
@@ -177,53 +195,62 @@ class AuthRepositoryImpl implements AuthRepository {
     String? locale,
     ThemeModePreference? theme,
   }) async {
-    // Simulate network delay
-    await Future<void>.delayed(const Duration(milliseconds: 300));
+    try {
+      final currentMetadata = _supabase.auth.currentUser?.userMetadata ?? {};
+      
+      final updates = <String, dynamic>{
+        ...currentMetadata,
+        if (displayName != null) 'display_name': displayName,
+        if (locale != null) 'locale': locale,
+        if (theme != null) 'theme': theme.toJson(),
+      };
 
-    if (!_users.containsKey(userId)) {
-      throw Exception('User not found');
+      final response = await _supabase.auth.updateUser(
+        UserAttributes(data: updates),
+      );
+
+      if (response.user == null) {
+        throw Exception('Failed to update profile');
+      }
+
+      _currentUser = _toDomainUser(response.user!);
+      _authStateController.add(_currentUser);
+
+      return _currentUser!;
+    } on AuthException catch (e) {
+      throw Exception(e.message);
+    } catch (e) {
+      throw Exception('Profile update failed: ${e.toString()}');
     }
-
-    final mockUser = _users[userId]!;
-
-    if (displayName != null) {
-      mockUser.displayName = displayName;
-    }
-    if (locale != null) {
-      mockUser.locale = locale;
-      await _localPrefs.setLocale(locale);
-    }
-    if (theme != null) {
-      mockUser.theme = theme;
-      await _localPrefs.setTheme(theme.toJson());
-    }
-
-    _currentUser = _currentUser?.copyWith(
-      displayName: mockUser.displayName,
-      locale: mockUser.locale,
-      theme: mockUser.theme,
-    );
-
-    _authStateController.add(_currentUser);
-
-    return _currentUser!;
   }
 
   @override
   Future<User> completeOnboarding({required String userId}) async {
-    if (!_users.containsKey(userId)) {
-      throw Exception('User not found');
+    try {
+      final currentMetadata = _supabase.auth.currentUser?.userMetadata ?? {};
+      
+      final response = await _supabase.auth.updateUser(
+        UserAttributes(
+          data: {
+            ...currentMetadata,
+            'onboarding_complete': true,
+          },
+        ),
+      );
+
+      if (response.user == null) {
+        throw Exception('Failed to complete onboarding');
+      }
+
+      _currentUser = _toDomainUser(response.user!);
+      _authStateController.add(_currentUser);
+
+      return _currentUser!;
+    } on AuthException catch (e) {
+      throw Exception(e.message);
+    } catch (e) {
+      throw Exception('Onboarding completion failed: ${e.toString()}');
     }
-
-    final mockUser = _users[userId]!;
-    mockUser.onboardingComplete = true;
-
-    _currentUser = _currentUser?.copyWith(onboardingComplete: true);
-    await _localPrefs.setOnboardingComplete(true);
-
-    _authStateController.add(_currentUser);
-
-    return _currentUser!;
   }
 
   @override
@@ -232,27 +259,4 @@ class AuthRepositoryImpl implements AuthRepository {
   void dispose() {
     _authStateController.close();
   }
-}
-
-/// Mock user data class
-class _MockUser {
-  _MockUser({
-    required this.email,
-    required this.password,
-    required this.displayName,
-    required this.onboardingComplete,
-    required this.locale,
-    required this.theme,
-    required this.createdAt,
-    required this.lastLoginAt,
-  });
-
-  final String email;
-  final String password;
-  String displayName;
-  bool onboardingComplete;
-  String locale;
-  ThemeModePreference theme;
-  final DateTime createdAt;
-  DateTime? lastLoginAt;
 }
