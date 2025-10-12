@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../application/auth/auth_controller.dart';
 import '../../../core/router/app_router.dart';
+import '../../../core/theme/app_colors.dart';
+import 'widgets/welcome_screen.dart';
 
 class OnboardingPage extends ConsumerStatefulWidget {
   const OnboardingPage({super.key});
@@ -13,6 +15,7 @@ class OnboardingPage extends ConsumerStatefulWidget {
 }
 
 class _OnboardingPageState extends ConsumerState<OnboardingPage> {
+  bool _showWelcome = true;
   int _currentStep = 0;
   final int _totalSteps = 5;
 
@@ -72,15 +75,31 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Show welcome screen first
+    if (_showWelcome) {
+      return WelcomeScreen(
+        onGetStarted: () {
+          setState(() {
+            _showWelcome = false;
+          });
+        },
+      );
+    }
+
+    // Show questionnaire
     final currentQuestion = _questions[_currentStep];
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: AppColors.backgroundGradient,
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
               // Progress indicator
               LinearProgressIndicator(
                 value: (_currentStep + 1) / _totalSteps,
@@ -183,6 +202,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                 ],
               ),
             ],
+            ),
           ),
         ),
       ),

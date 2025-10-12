@@ -133,6 +133,14 @@ class AuthRepositoryImpl implements AuthRepository {
       return _currentUser!;
     } on AuthException catch (e) {
       debugPrint('🔴 [AUTH_REPO] AuthException: ${e.message} (status: ${e.statusCode})');
+
+      // Provide user-friendly error messages
+      if (e.message.contains('email_address_invalid')) {
+        throw Exception('This email is already registered. Please sign in instead or use a different email.');
+      } else if (e.message.contains('User already registered')) {
+        throw Exception('This email is already registered. Please sign in instead.');
+      }
+
       throw Exception(e.message);
     } catch (e) {
       debugPrint('🔴 [AUTH_REPO] Unknown error: $e');
