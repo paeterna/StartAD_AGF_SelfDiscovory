@@ -6,6 +6,7 @@ import '../../../application/auth/auth_controller.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/router/app_router.dart';
 import '../../../domain/entities/user.dart';
+import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 
 class SettingsPage extends ConsumerWidget {
@@ -15,50 +16,51 @@ class SettingsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authControllerProvider);
     final user = authState.user;
+    final l10n = AppLocalizations.of(context)!;
 
     return GradientBackground(
       child: Scaffold(
-        appBar: AppBar(title: const Text('Settings')),
+        appBar: AppBar(title: Text(l10n.settingsTitle)),
         body: ListView(
           children: [
             // Profile section
-            const _SectionHeader(title: 'Profile'),
+            _SectionHeader(title: l10n.settingsProfileSection),
             ListTile(
               leading: const Icon(Icons.person),
-              title: const Text('Display Name'),
-              subtitle: Text(user?.displayName ?? 'Not set'),
+              title: Text(l10n.settingsDisplayName),
+              subtitle: Text(user?.displayName ?? l10n.emptyStateMessage),
             ),
             ListTile(
               leading: const Icon(Icons.email),
-              title: const Text('Email'),
-              subtitle: Text(user?.email ?? 'Not set'),
+              title: Text(l10n.settingsEmail),
+              subtitle: Text(user?.email ?? l10n.emptyStateMessage),
             ),
 
             const Divider(),
 
             // Appearance section
-            const _SectionHeader(title: 'Appearance'),
+            _SectionHeader(title: l10n.settingsAppearanceSection),
             ListTile(
               leading: const Icon(Icons.language),
-              title: const Text('Language'),
-              subtitle: Text(user?.locale == 'ar' ? 'العربية' : 'English'),
+              title: Text(l10n.settingsLanguage),
+              subtitle: Text(user?.locale == 'ar' ? l10n.settingsLanguageArabic : l10n.settingsLanguageEnglish),
               onTap: () => _showLanguageDialog(context, ref, user),
             ),
             ListTile(
               leading: const Icon(Icons.brightness_6),
-              title: const Text('Theme'),
-              subtitle: Text(_getThemeLabel(user?.theme)),
+              title: Text(l10n.settingsTheme),
+              subtitle: Text(_getThemeLabel(user?.theme, l10n)),
               onTap: () => _showThemeDialog(context, ref, user),
             ),
 
             const Divider(),
 
             // Notifications section
-            const _SectionHeader(title: 'Notifications'),
+            _SectionHeader(title: l10n.settingsNotificationsSection),
             SwitchListTile(
               secondary: const Icon(Icons.notifications),
-              title: const Text('Enable Notifications'),
-              subtitle: const Text('Receive updates and reminders'),
+              title: Text(l10n.settingsNotificationsEnabled),
+              subtitle: Text(l10n.settingsNotificationsEnabled),
               value: false,
               onChanged: (value) {},
             ),
@@ -66,22 +68,22 @@ class SettingsPage extends ConsumerWidget {
             const Divider(),
 
             // Privacy & Legal section
-            const _SectionHeader(title: 'Privacy & Legal'),
+            _SectionHeader(title: l10n.settingsPrivacySection),
             ListTile(
               leading: const Icon(Icons.privacy_tip),
-              title: const Text('Privacy Policy'),
+              title: Text(l10n.settingsPrivacyPolicy),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () => context.push(AppRoutes.privacy),
             ),
             ListTile(
               leading: const Icon(Icons.description),
-              title: const Text('Terms of Use'),
+              title: Text(l10n.settingsTermsOfUse),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () => context.push(AppRoutes.terms),
             ),
             ListTile(
               leading: const Icon(Icons.info),
-              title: const Text('About SelfMap'),
+              title: Text(l10n.settingsAbout),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () => context.push(AppRoutes.about),
             ),
@@ -89,16 +91,16 @@ class SettingsPage extends ConsumerWidget {
             const Divider(),
 
             // Support section
-            const _SectionHeader(title: 'Support'),
+            _SectionHeader(title: l10n.settingsSupportSection),
             ListTile(
               leading: const Icon(Icons.feedback),
-              title: const Text('Send Feedback'),
+              title: Text(l10n.settingsFeedback),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {},
             ),
             ListTile(
               leading: const Icon(Icons.bug_report),
-              title: const Text('Report an Issue'),
+              title: Text(l10n.settingsReportIssue),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {},
             ),
@@ -110,7 +112,7 @@ class SettingsPage extends ConsumerWidget {
               padding: const EdgeInsets.all(16),
               child: Center(
                 child: Text(
-                  'Version ${AppConstants.appVersion}',
+                  l10n.settingsVersion(AppConstants.appVersion),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -131,7 +133,7 @@ class SettingsPage extends ConsumerWidget {
                   side: const BorderSide(color: Colors.red),
                   foregroundColor: Colors.red,
                 ),
-                child: const Text('Log Out'),
+                child: Text(l10n.authLogoutButton),
               ),
             ),
             const SizedBox(height: 32),
@@ -141,28 +143,29 @@ class SettingsPage extends ConsumerWidget {
     );
   }
 
-  String _getThemeLabel(ThemeModePreference? theme) {
+  String _getThemeLabel(ThemeModePreference? theme, AppLocalizations l10n) {
     switch (theme) {
       case ThemeModePreference.light:
-        return 'Light';
+        return l10n.settingsThemeLight;
       case ThemeModePreference.dark:
-        return 'Dark';
+        return l10n.settingsThemeDark;
       case ThemeModePreference.system:
       case null:
-        return 'System';
+        return l10n.settingsThemeSystem;
     }
   }
 
   void _showLanguageDialog(BuildContext context, WidgetRef ref, User? user) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Select Language'),
+        title: Text(l10n.settingsLanguage),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: const Text('English'),
+              title: Text(l10n.settingsLanguageEnglish),
               leading: Radio<String>(
                 value: 'en',
                 groupValue: user?.locale,
@@ -177,7 +180,7 @@ class SettingsPage extends ConsumerWidget {
               ),
             ),
             ListTile(
-              title: const Text('العربية'),
+              title: Text(l10n.settingsLanguageArabic),
               leading: Radio<String>(
                 value: 'ar',
                 groupValue: user?.locale,
@@ -198,15 +201,16 @@ class SettingsPage extends ConsumerWidget {
   }
 
   void _showThemeDialog(BuildContext context, WidgetRef ref, User? user) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Select Theme'),
+        title: Text(l10n.settingsTheme),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: const Text('System'),
+              title: Text(l10n.settingsThemeSystem),
               leading: Radio<ThemeModePreference>(
                 value: ThemeModePreference.system,
                 groupValue: user?.theme,
@@ -221,7 +225,7 @@ class SettingsPage extends ConsumerWidget {
               ),
             ),
             ListTile(
-              title: const Text('Light'),
+              title: Text(l10n.settingsThemeLight),
               leading: Radio<ThemeModePreference>(
                 value: ThemeModePreference.light,
                 groupValue: user?.theme,
@@ -236,7 +240,7 @@ class SettingsPage extends ConsumerWidget {
               ),
             ),
             ListTile(
-              title: const Text('Dark'),
+              title: Text(l10n.settingsThemeDark),
               leading: Radio<ThemeModePreference>(
                 value: ThemeModePreference.dark,
                 groupValue: user?.theme,

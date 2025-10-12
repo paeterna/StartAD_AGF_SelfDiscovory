@@ -15,11 +15,18 @@
   "authSignupButton": "إنشاء حساب",
   "authForgotPassword": "نسيت كلمة المرور؟",
   "authResetPassword": "إعادة تعيين كلمة المرور",
+  "authResetPasswordMessage": "أدخل عنوان بريدك الإلكتروني وسنرسل لك رابط إعادة تعيين كلمة المرور.",
+  "authResetPasswordSuccess": "تم إرسال رابط إعادة تعيين كلمة المرور! تحقق من بريدك الإلكتروني.",
+  "authSendResetLink": "إرسال رابط الإعادة",
   "authSwitchToSignup": "ليس لديك حساب؟ سجل الآن",
   "authSwitchToLogin": "لديك حساب؟ سجل الدخول",
   "authLogoutButton": "تسجيل الخروج",
   "authLoggingIn": "جارٍ تسجيل الدخول...",
   "authSigningUp": "جارٍ إنشاء الحساب...",
+  "authGoogleSignIn": "متابعة مع Google",
+  "authDividerOr": "أو",
+  "authPrivacyLink": "الخصوصية",
+  "authTermsLink": "الشروط",
 
   "onboardingTitle": "لنبدأ!",
   "onboardingSubtitle": "أجب عن بعض الأسئلة لتخصيص رحلتك",
@@ -28,6 +35,37 @@
   "onboardingBackButton": "السابق",
   "onboardingFinishButton": "إنهاء",
   "onboardingSkipButton": "تخطي",
+
+  "welcomeTitle": "مرحباً بك في خريطة الذات! 🚀",
+  "welcomeSubtitle": "اكتشف من أنت وإلى أين تتجه",
+  "welcomeGetStartedButton": "لنبدأ! ✨",
+  "welcomeQuickTitle": "سريع وممتع",
+  "welcomeQuickDescription": "يستغرق دقيقتين فقط!",
+  "welcomeDiscoverTitle": "اكتشف نفسك",
+  "welcomeDiscoverDescription": "اعثر على نقاط قوتك الفريدة",
+  "welcomePlanTitle": "خطط لمستقبلك",
+  "welcomePlanDescription": "احصل على مسارات مهنية مخصصة",
+
+  "onboardingQuestion1": "عندما أواجه مشكلة، أفضل أن:",
+  "onboardingQ1Option1": "أحللها منطقياً",
+  "onboardingQ1Option2": "أفكر بطريقة إبداعية",
+  "onboardingQ1Option3": "أناقشها مع الآخرين",
+  "onboardingQuestion2": "أشعر بأكبر قدر من الطاقة عندما:",
+  "onboardingQ2Option1": "أعمل بشكل مستقل",
+  "onboardingQ2Option2": "أتعاون مع فريق",
+  "onboardingQ2Option3": "أقود الأنشطة الجماعية",
+  "onboardingQuestion3": "عند بدء مشروع جديد، أنا:",
+  "onboardingQ3Option1": "أتبع الطرق المجربة",
+  "onboardingQ3Option2": "أجرب مناهج جديدة",
+  "onboardingQ3Option3": "أدمج الأفكار المجربة والجديدة",
+  "onboardingQuestion4": "أنا مهتم أكثر بـ:",
+  "onboardingQ4Option1": "تعلم مهارات جديدة",
+  "onboardingQ4Option2": "إتقان ما أعرفه",
+  "onboardingQ4Option3": "تطبيق المعرفة عملياً",
+  "onboardingQuestion5": "عند العمل على المهام، أنا:",
+  "onboardingQ5Option1": "أركز على الصورة الكبيرة",
+  "onboardingQ5Option2": "أنتبه للتفاصيل",
+  "onboardingQ5Option3": "أوازن بين الطريقتين",
 
   "dashboardTitle": "لوحة المعلومات",
   "dashboardWelcome": "مرحباً بعودتك، {name}!",
@@ -39,6 +77,9 @@
   "dashboardViewCareers": "استكشاف المهن",
   "dashboardStartRoadmap": "عرض خارطة الطريق",
   "dashboardWhatsNext": "ما التالي؟",
+  "dashboardContinueDiscoverySubtitle": "خذ الاختبارات والعب الألعاب",
+  "dashboardViewCareersSubtitle": "ابحث عن المهن التي تناسبك",
+  "dashboardStartRoadmapSubtitle": "خطط طريقك نحو النجاح",
 
   "discoverTitle": "اكتشف",
   "discoverSubtitle": "خذ الاختبارات والعب الألعاب لتتعرف على نفسك أكثر",
@@ -49,6 +90,19 @@
   "discoverCompletedBadge": "مكتمل",
   "discoverLockedBadge": "مقفل",
   "discoverProgressLabel": "{completed} من {total} مكتمل",
+
+  "discoverDurationMinutes": "{minutes} دقيقة",
+
+  "quizPersonalityTitle": "اكتشاف الشخصية",
+  "quizPersonalityDescription": "اكتشف سمات شخصيتك الأساسية",
+  "quizInterestTitle": "مستكشف الاهتمامات",
+  "quizInterestDescription": "حدد اهتماماتك الرئيسية",
+  "quizSkillsTitle": "تقييم المهارات",
+  "quizSkillsDescription": "قيم مهاراتك الحالية",
+  "gamePatternTitle": "التعرف على الأنماط",
+  "gamePatternDescription": "اختبر مهاراتك التحليلية",
+  "gameCreativeTitle": "التحدي الإبداعي", 
+  "gameCreativeDescription": "استكشف إبداعك",
 
   "careersTitle": "المهن",
   "careersSubtitle": "استكشف المهن التي تناسب اهتماماتك",
@@ -64,6 +118,20 @@
   "careersViewDetailsButton": "عرض التفاصيل",
   "careersEmptyState": "لم يتم العثور على مهن. جرب تعديل الفلاتر.",
 
+  "careerSoftwareEngineerTitle": "مهندس برمجيات",
+  "careerSoftwareEngineerDescription": "تصميم وتطوير وصيانة تطبيقات البرمجيات",
+  "careerDataScientistTitle": "عالم بيانات",
+  "careerDataScientistDescription": "تحليل البيانات المعقدة لمساعدة المؤسسات على اتخاذ القرارات",
+  "careerGraphicDesignerTitle": "مصمم جرافيك",
+  "careerGraphicDesignerDescription": "إنشاء مفاهيم بصرية لتوصيل الأفكار",
+  "careerMarketingManagerTitle": "مدير التسويق",
+  "careerMarketingManagerDescription": "تخطيط وتنفيذ استراتيجيات التسويق",
+  
+  "clusterTechnology": "التكنولوجيا",
+  "clusterSTEM": "العلوم والتكنولوجيا",
+  "clusterArtsHumanities": "الفنون والعلوم الإنسانية",
+  "clusterBusinessFinance": "الأعمال والمالية",
+
   "roadmapTitle": "خارطة الطريق",
   "roadmapSubtitle": "مسارك الشخصي نحو النجاح",
   "roadmapSelectCareer": "اختر مهنة لرؤية خارطة الطريق",
@@ -72,6 +140,23 @@
   "roadmapMarkCompleteButton": "وضع علامة مكتمل",
   "roadmapMarkIncompleteButton": "وضع علامة غير مكتمل",
   "roadmapEmptyState": "أضف مهناً إلى خارطة الطريق للبدء",
+
+  "roadmapSoftwareEngineerTitle": "خارطة طريق مهندس البرمجيات",
+  "roadmapStepProgrammingTitle": "إتقان أساسيات البرمجة",
+  "roadmapStepProgrammingDescription": "تعلم أساسيات البرمجة باستخدام Python أو JavaScript",
+  "roadmapStepProjectsTitle": "بناء مشاريع شخصية",
+  "roadmapStepProjectsDescription": "إنشاء 3-5 مشاريع تعرض مهارات مختلفة",
+  "roadmapStepAlgorithmsTitle": "تعلم هياكل البيانات والخوارزميات",
+  "roadmapStepAlgorithmsDescription": "دراسة هياكل البيانات والخوارزميات الشائعة",
+  "roadmapStepOpenSourceTitle": "المساهمة في المصادر المفتوحة",
+  "roadmapStepOpenSourceDescription": "العثور على مشاريع مفتوحة المصدر والمساهمة فيها",
+  "roadmapStepInternshipTitle": "إكمال التدريب",
+  "roadmapStepInternshipDescription": "التقدم لتدريب هندسة البرمجيات",
+  
+  "roadmapCategorySubject": "موضوع",
+  "roadmapCategoryProject": "مشروع",
+  "roadmapCategorySkill": "مهارة", 
+  "roadmapCategoryExperience": "خبرة",
 
   "settingsTitle": "الإعدادات",
   "settingsProfileSection": "الملف الشخصي",
@@ -87,6 +172,7 @@
   "settingsThemeSystem": "النظام",
   "settingsNotificationsSection": "الإشعارات",
   "settingsNotificationsEnabled": "تفعيل الإشعارات",
+  "settingsNotificationsDescription": "تلقي التحديثات والتذكيرات",
   "settingsPrivacySection": "الخصوصية والقانون",
   "settingsPrivacyPolicy": "سياسة الخصوصية",
   "settingsTermsOfUse": "شروط الاستخدام",
@@ -95,6 +181,10 @@
   "settingsFeedback": "إرسال ملاحظات",
   "settingsReportIssue": "الإبلاغ عن مشكلة",
   "settingsVersion": "الإصدار {version}",
+
+  "selectLanguageTitle": "اختر اللغة",
+  "selectThemeTitle": "اختر السمة",
+  "notSetLabel": "غير محدد",
 
   "privacyTitle": "سياسة الخصوصية",
   "privacyConsentTitle": "الخصوصية والموافقة",

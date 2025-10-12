@@ -44,6 +44,12 @@ class AuthController extends StateNotifier<AuthState> {
     try {
       final authRepo = _ref.read(authRepositoryProvider);
       final user = await authRepo.getCurrentUser();
+
+      // Sync locale from user profile
+      if (user != null) {
+        _ref.read(localeProvider.notifier).syncFromUser(user.locale);
+      }
+
       state = AuthState(user: user, isLoading: false);
     } catch (e) {
       state = AuthState(error: e.toString(), isLoading: false);
@@ -57,6 +63,12 @@ class AuthController extends StateNotifier<AuthState> {
       final authRepo = _ref.read(authRepositoryProvider);
       final user = await authRepo.getCurrentUser();
       debugPrint('✅ [AUTH_CONTROLLER] User refreshed: ${user?.id}');
+
+      // Sync locale from user profile
+      if (user != null) {
+        _ref.read(localeProvider.notifier).syncFromUser(user.locale);
+      }
+
       state = AuthState(user: user, isLoading: false);
     } catch (e) {
       debugPrint('🔴 [AUTH_CONTROLLER] refreshUser error: $e');
@@ -75,6 +87,10 @@ class AuthController extends StateNotifier<AuthState> {
       debugPrint('🔵 [AUTH_CONTROLLER] Calling repository signIn...');
       final user = await authRepo.signIn(email: email, password: password);
       debugPrint('✅ [AUTH_CONTROLLER] Repository signIn successful. User ID: ${user.id}');
+
+      // Sync locale from user profile
+      _ref.read(localeProvider.notifier).syncFromUser(user.locale);
+
       state = AuthState(user: user, isLoading: false);
     } catch (e) {
       debugPrint('🔴 [AUTH_CONTROLLER] signIn error: $e');
@@ -102,6 +118,10 @@ class AuthController extends StateNotifier<AuthState> {
         displayName: displayName,
       );
       debugPrint('✅ [AUTH_CONTROLLER] Repository signUp successful. User ID: ${user.id}');
+
+      // Sync locale from user profile
+      _ref.read(localeProvider.notifier).syncFromUser(user.locale);
+
       state = AuthState(user: user, isLoading: false);
     } catch (e) {
       debugPrint('🔴 [AUTH_CONTROLLER] signUp error: $e');
@@ -181,24 +201,36 @@ class AuthController extends StateNotifier<AuthState> {
         locale: locale,
         theme: theme,
       );
+
+      // Update locale provider if locale changed
+      if (locale != null) {
+        await _ref.read(localeProvider.notifier).setLocale(locale);
+      }
+
       state = AuthState(user: user, isLoading: false);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 
-  Future<void> completeOnboarding() async {
+  Future<void> completeOnboarding({Map<String, String>? answers}) async {
     if (state.user == null) return;
 
     try {
       final authRepo = _ref.read(authRepositoryProvider);
       final analytics = _ref.read(analyticsServiceProvider);
 
-      final user = await authRepo.completeOnboarding(userId: state.user!.id);
+      final user = await authRepo.completeOnboarding(
+        userId: state.user!.id,
+        onboardingAnswers: answers,
+      );
       state = state.copyWith(user: user);
 
       await analytics.logOnboardingComplete(userId: user.id);
+      
+      debugPrint('✅ [AUTH_CONTROLLER] Onboarding completed for user: ${user.id}');
     } catch (e) {
+      debugPrint('🔴 [AUTH_CONTROLLER] Onboarding completion error: $e');
       state = state.copyWith(error: e.toString());
     }
   }

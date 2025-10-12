@@ -48,6 +48,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authResetPassword => 'Reset Password';
 
   @override
+  String get authResetPasswordMessage =>
+      'Enter your email address and we\'ll send you a link to reset your password.';
+
+  @override
+  String get authResetPasswordSuccess =>
+      'Password reset link sent! Check your email.';
+
+  @override
+  String get authSendResetLink => 'Send Reset Link';
+
+  @override
   String get authSwitchToSignup => 'Don\'t have an account? Sign up';
 
   @override
@@ -61,6 +72,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authSigningUp => 'Creating account...';
+
+  @override
+  String get authGoogleSignIn => 'Continue with Google';
+
+  @override
+  String get authDividerOr => 'OR';
+
+  @override
+  String get authPrivacyLink => 'Privacy';
+
+  @override
+  String get authTermsLink => 'Terms';
 
   @override
   String get onboardingTitle => 'Let\'s Get Started!';
@@ -85,6 +108,93 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingSkipButton => 'Skip';
+
+  @override
+  String get welcomeTitle => 'Welcome to SelfMap! 🚀';
+
+  @override
+  String get welcomeSubtitle => 'Discover who you are and where you\'re going';
+
+  @override
+  String get welcomeGetStartedButton => 'Let\'s Get Started! ✨';
+
+  @override
+  String get welcomeQuickTitle => 'Quick & Fun';
+
+  @override
+  String get welcomeQuickDescription => 'Takes just 2 minutes!';
+
+  @override
+  String get welcomeDiscoverTitle => 'Discover Yourself';
+
+  @override
+  String get welcomeDiscoverDescription => 'Find your unique strengths';
+
+  @override
+  String get welcomePlanTitle => 'Plan Your Future';
+
+  @override
+  String get welcomePlanDescription => 'Get personalized career paths';
+
+  @override
+  String get onboardingQuestion1 => 'When faced with a problem, I prefer to:';
+
+  @override
+  String get onboardingQ1Option1 => 'Analyze it logically';
+
+  @override
+  String get onboardingQ1Option2 => 'Think creatively';
+
+  @override
+  String get onboardingQ1Option3 => 'Discuss with others';
+
+  @override
+  String get onboardingQuestion2 => 'I feel most energized when:';
+
+  @override
+  String get onboardingQ2Option1 => 'Working independently';
+
+  @override
+  String get onboardingQ2Option2 => 'Collaborating with a team';
+
+  @override
+  String get onboardingQ2Option3 => 'Leading group activities';
+
+  @override
+  String get onboardingQuestion3 => 'When starting a new project, I:';
+
+  @override
+  String get onboardingQ3Option1 => 'Follow established methods';
+
+  @override
+  String get onboardingQ3Option2 => 'Experiment with new approaches';
+
+  @override
+  String get onboardingQ3Option3 => 'Combine proven and new ideas';
+
+  @override
+  String get onboardingQuestion4 => 'I am most interested in:';
+
+  @override
+  String get onboardingQ4Option1 => 'Learning new skills';
+
+  @override
+  String get onboardingQ4Option2 => 'Mastering what I know';
+
+  @override
+  String get onboardingQ4Option3 => 'Applying knowledge practically';
+
+  @override
+  String get onboardingQuestion5 => 'When working on tasks, I:';
+
+  @override
+  String get onboardingQ5Option1 => 'Focus on the big picture';
+
+  @override
+  String get onboardingQ5Option2 => 'Pay attention to details';
+
+  @override
+  String get onboardingQ5Option3 => 'Balance both approaches';
 
   @override
   String get dashboardTitle => 'Dashboard';
@@ -123,6 +233,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardWhatsNext => 'What\'s Next?';
 
   @override
+  String get dashboardContinueDiscoverySubtitle => 'Take quizzes and games';
+
+  @override
+  String get dashboardViewCareersSubtitle => 'Find careers that match you';
+
+  @override
+  String get dashboardStartRoadmapSubtitle => 'Plan your path to success';
+
+  @override
   String get discoverTitle => 'Discover';
 
   @override
@@ -151,6 +270,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String discoverProgressLabel(int completed, int total) {
     return '$completed of $total completed';
   }
+
+  @override
+  String discoverDurationMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get quizPersonalityTitle => 'Personality Discovery';
+
+  @override
+  String get quizPersonalityDescription =>
+      'Discover your core personality traits';
+
+  @override
+  String get quizInterestTitle => 'Interest Explorer';
+
+  @override
+  String get quizInterestDescription => 'Identify your key interests';
+
+  @override
+  String get quizSkillsTitle => 'Skills Assessment';
+
+  @override
+  String get quizSkillsDescription => 'Evaluate your current skills';
+
+  @override
+  String get gamePatternTitle => 'Pattern Recognition';
+
+  @override
+  String get gamePatternDescription => 'Test your analytical skills';
+
+  @override
+  String get gameCreativeTitle => 'Creative Challenge';
+
+  @override
+  String get gameCreativeDescription => 'Explore your creativity';
 
   @override
   String get careersTitle => 'Careers';
@@ -195,6 +350,46 @@ class AppLocalizationsEn extends AppLocalizations {
       'No careers found. Try adjusting your filters.';
 
   @override
+  String get careerSoftwareEngineerTitle => 'Software Engineer';
+
+  @override
+  String get careerSoftwareEngineerDescription =>
+      'Design, develop, and maintain software applications';
+
+  @override
+  String get careerDataScientistTitle => 'Data Scientist';
+
+  @override
+  String get careerDataScientistDescription =>
+      'Analyze complex data to help organizations make decisions';
+
+  @override
+  String get careerGraphicDesignerTitle => 'Graphic Designer';
+
+  @override
+  String get careerGraphicDesignerDescription =>
+      'Create visual concepts to communicate ideas';
+
+  @override
+  String get careerMarketingManagerTitle => 'Marketing Manager';
+
+  @override
+  String get careerMarketingManagerDescription =>
+      'Plan and execute marketing strategies';
+
+  @override
+  String get clusterTechnology => 'Technology';
+
+  @override
+  String get clusterSTEM => 'STEM';
+
+  @override
+  String get clusterArtsHumanities => 'Arts & Humanities';
+
+  @override
+  String get clusterBusinessFinance => 'Business & Finance';
+
+  @override
   String get roadmapTitle => 'Roadmap';
 
   @override
@@ -219,6 +414,56 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get roadmapEmptyState => 'Add careers to your roadmap to get started';
+
+  @override
+  String get roadmapSoftwareEngineerTitle => 'Software Engineer Roadmap';
+
+  @override
+  String get roadmapStepProgrammingTitle => 'Master Programming Fundamentals';
+
+  @override
+  String get roadmapStepProgrammingDescription =>
+      'Learn programming basics with Python or JavaScript';
+
+  @override
+  String get roadmapStepProjectsTitle => 'Build Personal Projects';
+
+  @override
+  String get roadmapStepProjectsDescription =>
+      'Create 3-5 projects showcasing different skills';
+
+  @override
+  String get roadmapStepAlgorithmsTitle => 'Learn Data Structures & Algorithms';
+
+  @override
+  String get roadmapStepAlgorithmsDescription =>
+      'Study common data structures and algorithms';
+
+  @override
+  String get roadmapStepOpenSourceTitle => 'Contribute to Open Source';
+
+  @override
+  String get roadmapStepOpenSourceDescription =>
+      'Find open source projects and make contributions';
+
+  @override
+  String get roadmapStepInternshipTitle => 'Complete Internship';
+
+  @override
+  String get roadmapStepInternshipDescription =>
+      'Apply for software engineering internships';
+
+  @override
+  String get roadmapCategorySubject => 'Subject';
+
+  @override
+  String get roadmapCategoryProject => 'Project';
+
+  @override
+  String get roadmapCategorySkill => 'Skill';
+
+  @override
+  String get roadmapCategoryExperience => 'Experience';
 
   @override
   String get settingsTitle => 'Settings';
@@ -263,6 +508,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsNotificationsEnabled => 'Enable Notifications';
 
   @override
+  String get settingsNotificationsDescription =>
+      'Receive updates and reminders';
+
+  @override
   String get settingsPrivacySection => 'Privacy & Legal';
 
   @override
@@ -287,6 +536,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String settingsVersion(String version) {
     return 'Version $version';
   }
+
+  @override
+  String get selectLanguageTitle => 'Select Language';
+
+  @override
+  String get selectThemeTitle => 'Select Theme';
+
+  @override
+  String get notSetLabel => 'Not set';
 
   @override
   String get privacyTitle => 'Privacy Policy';

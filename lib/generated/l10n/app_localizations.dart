@@ -176,6 +176,24 @@ abstract class AppLocalizations {
   /// **'Reset Password'**
   String get authResetPassword;
 
+  /// No description provided for @authResetPasswordMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email address and we\'ll send you a link to reset your password.'**
+  String get authResetPasswordMessage;
+
+  /// No description provided for @authResetPasswordSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset link sent! Check your email.'**
+  String get authResetPasswordSuccess;
+
+  /// No description provided for @authSendResetLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Reset Link'**
+  String get authSendResetLink;
+
   /// No description provided for @authSwitchToSignup.
   ///
   /// In en, this message translates to:
@@ -205,6 +223,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Creating account...'**
   String get authSigningUp;
+
+  /// No description provided for @authGoogleSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get authGoogleSignIn;
+
+  /// No description provided for @authDividerOr.
+  ///
+  /// In en, this message translates to:
+  /// **'OR'**
+  String get authDividerOr;
+
+  /// No description provided for @authPrivacyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get authPrivacyLink;
+
+  /// No description provided for @authTermsLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms'**
+  String get authTermsLink;
 
   /// No description provided for @onboardingTitle.
   ///
@@ -247,6 +289,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Skip'**
   String get onboardingSkipButton;
+
+  /// No description provided for @welcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to SelfMap! 🚀'**
+  String get welcomeTitle;
+
+  /// No description provided for @welcomeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover who you are and where you\'re going'**
+  String get welcomeSubtitle;
+
+  /// No description provided for @welcomeGetStartedButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s Get Started! ✨'**
+  String get welcomeGetStartedButton;
+
+  /// No description provided for @welcomeQuickTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick & Fun'**
+  String get welcomeQuickTitle;
+
+  /// No description provided for @welcomeQuickDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Takes just 2 minutes!'**
+  String get welcomeQuickDescription;
+
+  /// No description provided for @welcomeDiscoverTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover Yourself'**
+  String get welcomeDiscoverTitle;
+
+  /// No description provided for @welcomeDiscoverDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Find your unique strengths'**
+  String get welcomeDiscoverDescription;
+
+  /// No description provided for @welcomePlanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan Your Future'**
+  String get welcomePlanTitle;
+
+  /// No description provided for @welcomePlanDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Get personalized career paths'**
+  String get welcomePlanDescription;
+
+  /// No description provided for @onboardingQuestion1.
+  ///
+  /// In en, this message translates to:
+  /// **'When faced with a problem, I prefer to:'**
+  String get onboardingQuestion1;
+
+  /// No description provided for @onboardingQ1Option1.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze it logically'**
+  String get onboardingQ1Option1;
+
+  /// No description provided for @onboardingQ1Option2.
+  ///
+  /// In en, this message translates to:
+  /// **'Think creatively'**
+  String get onboardingQ1Option2;
+
+  /// No description provided for @onboardingQ1Option3.
+  ///
+  /// In en, this message translates to:
+  /// **'Discuss with others'**
+  String get onboardingQ1Option3;
+
+  /// No description provided for @onboardingQuestion2.
+  ///
+  /// In en, this message translates to:
+  /// **'I feel most energized when:'**
+  String get onboardingQuestion2;
+
+  /// No description provided for @onboardingQ2Option1.
+  ///
+  /// In en, this message translates to:
+  /// **'Working independently'**
+  String get onboardingQ2Option1;
+
+  /// No description provided for @onboardingQ2Option2.
+  ///
+  /// In en, this message translates to:
+  /// **'Collaborating with a team'**
+  String get onboardingQ2Option2;
+
+  /// No description provided for @onboardingQ2Option3.
+  ///
+  /// In en, this message translates to:
+  /// **'Leading group activities'**
+  String get onboardingQ2Option3;
+
+  /// No description provided for @onboardingQuestion3.
+  ///
+  /// In en, this message translates to:
+  /// **'When starting a new project, I:'**
+  String get onboardingQuestion3;
+
+  /// No description provided for @onboardingQ3Option1.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow established methods'**
+  String get onboardingQ3Option1;
+
+  /// No description provided for @onboardingQ3Option2.
+  ///
+  /// In en, this message translates to:
+  /// **'Experiment with new approaches'**
+  String get onboardingQ3Option2;
+
+  /// No description provided for @onboardingQ3Option3.
+  ///
+  /// In en, this message translates to:
+  /// **'Combine proven and new ideas'**
+  String get onboardingQ3Option3;
+
+  /// No description provided for @onboardingQuestion4.
+  ///
+  /// In en, this message translates to:
+  /// **'I am most interested in:'**
+  String get onboardingQuestion4;
+
+  /// No description provided for @onboardingQ4Option1.
+  ///
+  /// In en, this message translates to:
+  /// **'Learning new skills'**
+  String get onboardingQ4Option1;
+
+  /// No description provided for @onboardingQ4Option2.
+  ///
+  /// In en, this message translates to:
+  /// **'Mastering what I know'**
+  String get onboardingQ4Option2;
+
+  /// No description provided for @onboardingQ4Option3.
+  ///
+  /// In en, this message translates to:
+  /// **'Applying knowledge practically'**
+  String get onboardingQ4Option3;
+
+  /// No description provided for @onboardingQuestion5.
+  ///
+  /// In en, this message translates to:
+  /// **'When working on tasks, I:'**
+  String get onboardingQuestion5;
+
+  /// No description provided for @onboardingQ5Option1.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus on the big picture'**
+  String get onboardingQ5Option1;
+
+  /// No description provided for @onboardingQ5Option2.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay attention to details'**
+  String get onboardingQ5Option2;
+
+  /// No description provided for @onboardingQ5Option3.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance both approaches'**
+  String get onboardingQ5Option3;
 
   /// No description provided for @dashboardTitle.
   ///
@@ -308,6 +524,24 @@ abstract class AppLocalizations {
   /// **'What\'s Next?'**
   String get dashboardWhatsNext;
 
+  /// No description provided for @dashboardContinueDiscoverySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Take quizzes and games'**
+  String get dashboardContinueDiscoverySubtitle;
+
+  /// No description provided for @dashboardViewCareersSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find careers that match you'**
+  String get dashboardViewCareersSubtitle;
+
+  /// No description provided for @dashboardStartRoadmapSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan your path to success'**
+  String get dashboardStartRoadmapSubtitle;
+
   /// No description provided for @discoverTitle.
   ///
   /// In en, this message translates to:
@@ -361,6 +595,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{completed} of {total} completed'**
   String discoverProgressLabel(int completed, int total);
+
+  /// No description provided for @discoverDurationMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String discoverDurationMinutes(int minutes);
+
+  /// No description provided for @quizPersonalityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personality Discovery'**
+  String get quizPersonalityTitle;
+
+  /// No description provided for @quizPersonalityDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover your core personality traits'**
+  String get quizPersonalityDescription;
+
+  /// No description provided for @quizInterestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Interest Explorer'**
+  String get quizInterestTitle;
+
+  /// No description provided for @quizInterestDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Identify your key interests'**
+  String get quizInterestDescription;
+
+  /// No description provided for @quizSkillsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Skills Assessment'**
+  String get quizSkillsTitle;
+
+  /// No description provided for @quizSkillsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Evaluate your current skills'**
+  String get quizSkillsDescription;
+
+  /// No description provided for @gamePatternTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pattern Recognition'**
+  String get gamePatternTitle;
+
+  /// No description provided for @gamePatternDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Test your analytical skills'**
+  String get gamePatternDescription;
+
+  /// No description provided for @gameCreativeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creative Challenge'**
+  String get gameCreativeTitle;
+
+  /// No description provided for @gameCreativeDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore your creativity'**
+  String get gameCreativeDescription;
 
   /// No description provided for @careersTitle.
   ///
@@ -440,6 +740,78 @@ abstract class AppLocalizations {
   /// **'No careers found. Try adjusting your filters.'**
   String get careersEmptyState;
 
+  /// No description provided for @careerSoftwareEngineerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Software Engineer'**
+  String get careerSoftwareEngineerTitle;
+
+  /// No description provided for @careerSoftwareEngineerDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Design, develop, and maintain software applications'**
+  String get careerSoftwareEngineerDescription;
+
+  /// No description provided for @careerDataScientistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Scientist'**
+  String get careerDataScientistTitle;
+
+  /// No description provided for @careerDataScientistDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze complex data to help organizations make decisions'**
+  String get careerDataScientistDescription;
+
+  /// No description provided for @careerGraphicDesignerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Graphic Designer'**
+  String get careerGraphicDesignerTitle;
+
+  /// No description provided for @careerGraphicDesignerDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create visual concepts to communicate ideas'**
+  String get careerGraphicDesignerDescription;
+
+  /// No description provided for @careerMarketingManagerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketing Manager'**
+  String get careerMarketingManagerTitle;
+
+  /// No description provided for @careerMarketingManagerDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan and execute marketing strategies'**
+  String get careerMarketingManagerDescription;
+
+  /// No description provided for @clusterTechnology.
+  ///
+  /// In en, this message translates to:
+  /// **'Technology'**
+  String get clusterTechnology;
+
+  /// No description provided for @clusterSTEM.
+  ///
+  /// In en, this message translates to:
+  /// **'STEM'**
+  String get clusterSTEM;
+
+  /// No description provided for @clusterArtsHumanities.
+  ///
+  /// In en, this message translates to:
+  /// **'Arts & Humanities'**
+  String get clusterArtsHumanities;
+
+  /// No description provided for @clusterBusinessFinance.
+  ///
+  /// In en, this message translates to:
+  /// **'Business & Finance'**
+  String get clusterBusinessFinance;
+
   /// No description provided for @roadmapTitle.
   ///
   /// In en, this message translates to:
@@ -487,6 +859,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add careers to your roadmap to get started'**
   String get roadmapEmptyState;
+
+  /// No description provided for @roadmapSoftwareEngineerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Software Engineer Roadmap'**
+  String get roadmapSoftwareEngineerTitle;
+
+  /// No description provided for @roadmapStepProgrammingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Programming Fundamentals'**
+  String get roadmapStepProgrammingTitle;
+
+  /// No description provided for @roadmapStepProgrammingDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn programming basics with Python or JavaScript'**
+  String get roadmapStepProgrammingDescription;
+
+  /// No description provided for @roadmapStepProjectsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Build Personal Projects'**
+  String get roadmapStepProjectsTitle;
+
+  /// No description provided for @roadmapStepProjectsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create 3-5 projects showcasing different skills'**
+  String get roadmapStepProjectsDescription;
+
+  /// No description provided for @roadmapStepAlgorithmsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn Data Structures & Algorithms'**
+  String get roadmapStepAlgorithmsTitle;
+
+  /// No description provided for @roadmapStepAlgorithmsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Study common data structures and algorithms'**
+  String get roadmapStepAlgorithmsDescription;
+
+  /// No description provided for @roadmapStepOpenSourceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Contribute to Open Source'**
+  String get roadmapStepOpenSourceTitle;
+
+  /// No description provided for @roadmapStepOpenSourceDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Find open source projects and make contributions'**
+  String get roadmapStepOpenSourceDescription;
+
+  /// No description provided for @roadmapStepInternshipTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Internship'**
+  String get roadmapStepInternshipTitle;
+
+  /// No description provided for @roadmapStepInternshipDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply for software engineering internships'**
+  String get roadmapStepInternshipDescription;
+
+  /// No description provided for @roadmapCategorySubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get roadmapCategorySubject;
+
+  /// No description provided for @roadmapCategoryProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Project'**
+  String get roadmapCategoryProject;
+
+  /// No description provided for @roadmapCategorySkill.
+  ///
+  /// In en, this message translates to:
+  /// **'Skill'**
+  String get roadmapCategorySkill;
+
+  /// No description provided for @roadmapCategoryExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience'**
+  String get roadmapCategoryExperience;
 
   /// No description provided for @settingsTitle.
   ///
@@ -572,6 +1034,12 @@ abstract class AppLocalizations {
   /// **'Enable Notifications'**
   String get settingsNotificationsEnabled;
 
+  /// No description provided for @settingsNotificationsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive updates and reminders'**
+  String get settingsNotificationsDescription;
+
   /// No description provided for @settingsPrivacySection.
   ///
   /// In en, this message translates to:
@@ -619,6 +1087,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Version {version}'**
   String settingsVersion(String version);
+
+  /// No description provided for @selectLanguageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get selectLanguageTitle;
+
+  /// No description provided for @selectThemeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Theme'**
+  String get selectThemeTitle;
+
+  /// No description provided for @notSetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get notSetLabel;
 
   /// No description provided for @privacyTitle.
   ///

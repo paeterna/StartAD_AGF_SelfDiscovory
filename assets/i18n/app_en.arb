@@ -26,11 +26,18 @@
   "authSignupButton": "Sign Up",
   "authForgotPassword": "Forgot Password?",
   "authResetPassword": "Reset Password",
+  "authResetPasswordMessage": "Enter your email address and we'll send you a link to reset your password.",
+  "authResetPasswordSuccess": "Password reset link sent! Check your email.",
+  "authSendResetLink": "Send Reset Link",
   "authSwitchToSignup": "Don't have an account? Sign up",
   "authSwitchToLogin": "Already have an account? Sign in",
   "authLogoutButton": "Log Out",
   "authLoggingIn": "Signing in...",
   "authSigningUp": "Creating account...",
+  "authGoogleSignIn": "Continue with Google",
+  "authDividerOr": "OR",
+  "authPrivacyLink": "Privacy",
+  "authTermsLink": "Terms",
 
   "onboardingTitle": "Let's Get Started!",
   "onboardingSubtitle": "Answer a few questions to personalize your journey",
@@ -45,6 +52,37 @@
   "onboardingBackButton": "Back",
   "onboardingFinishButton": "Finish",
   "onboardingSkipButton": "Skip",
+
+  "welcomeTitle": "Welcome to SelfMap! 🚀",
+  "welcomeSubtitle": "Discover who you are and where you're going",
+  "welcomeGetStartedButton": "Let's Get Started! ✨",
+  "welcomeQuickTitle": "Quick & Fun",
+  "welcomeQuickDescription": "Takes just 2 minutes!",
+  "welcomeDiscoverTitle": "Discover Yourself", 
+  "welcomeDiscoverDescription": "Find your unique strengths",
+  "welcomePlanTitle": "Plan Your Future",
+  "welcomePlanDescription": "Get personalized career paths",
+
+  "onboardingQuestion1": "When faced with a problem, I prefer to:",
+  "onboardingQ1Option1": "Analyze it logically",
+  "onboardingQ1Option2": "Think creatively", 
+  "onboardingQ1Option3": "Discuss with others",
+  "onboardingQuestion2": "I feel most energized when:",
+  "onboardingQ2Option1": "Working independently",
+  "onboardingQ2Option2": "Collaborating with a team",
+  "onboardingQ2Option3": "Leading group activities",
+  "onboardingQuestion3": "When starting a new project, I:",
+  "onboardingQ3Option1": "Follow established methods",
+  "onboardingQ3Option2": "Experiment with new approaches",
+  "onboardingQ3Option3": "Combine proven and new ideas",
+  "onboardingQuestion4": "I am most interested in:",
+  "onboardingQ4Option1": "Learning new skills",
+  "onboardingQ4Option2": "Mastering what I know",
+  "onboardingQ4Option3": "Applying knowledge practically",
+  "onboardingQuestion5": "When working on tasks, I:",
+  "onboardingQ5Option1": "Focus on the big picture",
+  "onboardingQ5Option2": "Pay attention to details",
+  "onboardingQ5Option3": "Balance both approaches",
 
   "dashboardTitle": "Dashboard",
   "dashboardWelcome": "Welcome back, {name}!",
@@ -71,6 +109,9 @@
   "dashboardViewCareers": "Explore Careers",
   "dashboardStartRoadmap": "View Roadmap",
   "dashboardWhatsNext": "What's Next?",
+  "dashboardContinueDiscoverySubtitle": "Take quizzes and games",
+  "dashboardViewCareersSubtitle": "Find careers that match you", 
+  "dashboardStartRoadmapSubtitle": "Plan your path to success",
 
   "discoverTitle": "Discover",
   "discoverSubtitle": "Take quizzes and play games to learn more about yourself",
@@ -87,6 +128,23 @@
       "total": {"type": "int"}
     }
   },
+  "discoverDurationMinutes": "{minutes} min",
+  "@discoverDurationMinutes": {
+    "placeholders": {
+      "minutes": {"type": "int"}
+    }
+  },
+
+  "quizPersonalityTitle": "Personality Discovery",
+  "quizPersonalityDescription": "Discover your core personality traits",
+  "quizInterestTitle": "Interest Explorer", 
+  "quizInterestDescription": "Identify your key interests",
+  "quizSkillsTitle": "Skills Assessment",
+  "quizSkillsDescription": "Evaluate your current skills",
+  "gamePatternTitle": "Pattern Recognition",
+  "gamePatternDescription": "Test your analytical skills",
+  "gameCreativeTitle": "Creative Challenge",
+  "gameCreativeDescription": "Explore your creativity",
 
   "careersTitle": "Careers",
   "careersSubtitle": "Explore careers that match your interests",
@@ -107,6 +165,20 @@
   "careersViewDetailsButton": "View Details",
   "careersEmptyState": "No careers found. Try adjusting your filters.",
 
+  "careerSoftwareEngineerTitle": "Software Engineer",
+  "careerSoftwareEngineerDescription": "Design, develop, and maintain software applications",
+  "careerDataScientistTitle": "Data Scientist", 
+  "careerDataScientistDescription": "Analyze complex data to help organizations make decisions",
+  "careerGraphicDesignerTitle": "Graphic Designer",
+  "careerGraphicDesignerDescription": "Create visual concepts to communicate ideas",
+  "careerMarketingManagerTitle": "Marketing Manager",
+  "careerMarketingManagerDescription": "Plan and execute marketing strategies",
+  
+  "clusterTechnology": "Technology",
+  "clusterSTEM": "STEM",
+  "clusterArtsHumanities": "Arts & Humanities", 
+  "clusterBusinessFinance": "Business & Finance",
+
   "roadmapTitle": "Roadmap",
   "roadmapSubtitle": "Your personalized path to success",
   "roadmapSelectCareer": "Select a career to see your roadmap",
@@ -122,6 +194,23 @@
   "roadmapMarkIncompleteButton": "Mark Incomplete",
   "roadmapEmptyState": "Add careers to your roadmap to get started",
 
+  "roadmapSoftwareEngineerTitle": "Software Engineer Roadmap",
+  "roadmapStepProgrammingTitle": "Master Programming Fundamentals",
+  "roadmapStepProgrammingDescription": "Learn programming basics with Python or JavaScript",
+  "roadmapStepProjectsTitle": "Build Personal Projects", 
+  "roadmapStepProjectsDescription": "Create 3-5 projects showcasing different skills",
+  "roadmapStepAlgorithmsTitle": "Learn Data Structures & Algorithms",
+  "roadmapStepAlgorithmsDescription": "Study common data structures and algorithms",
+  "roadmapStepOpenSourceTitle": "Contribute to Open Source",
+  "roadmapStepOpenSourceDescription": "Find open source projects and make contributions",
+  "roadmapStepInternshipTitle": "Complete Internship",
+  "roadmapStepInternshipDescription": "Apply for software engineering internships",
+  
+  "roadmapCategorySubject": "Subject",
+  "roadmapCategoryProject": "Project", 
+  "roadmapCategorySkill": "Skill",
+  "roadmapCategoryExperience": "Experience",
+
   "settingsTitle": "Settings",
   "settingsProfileSection": "Profile",
   "settingsDisplayName": "Display Name",
@@ -136,6 +225,7 @@
   "settingsThemeSystem": "System",
   "settingsNotificationsSection": "Notifications",
   "settingsNotificationsEnabled": "Enable Notifications",
+  "settingsNotificationsDescription": "Receive updates and reminders",
   "settingsPrivacySection": "Privacy & Legal",
   "settingsPrivacyPolicy": "Privacy Policy",
   "settingsTermsOfUse": "Terms of Use",
@@ -149,6 +239,10 @@
       "version": {"type": "String"}
     }
   },
+
+  "selectLanguageTitle": "Select Language",
+  "selectThemeTitle": "Select Theme",
+  "notSetLabel": "Not set",
 
   "privacyTitle": "Privacy Policy",
   "privacyConsentTitle": "Privacy & Consent",

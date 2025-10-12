@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 
 class CareersPage extends StatelessWidget {
@@ -6,9 +7,11 @@ class CareersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return GradientBackground(
       child: Scaffold(
-        appBar: AppBar(title: const Text('Careers')),
+        appBar: AppBar(title: Text(l10n.careersTitle)),
         body: Column(
           children: [
             // Search bar
@@ -16,7 +19,7 @@ class CareersPage extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: 'Search careers...',
+                  hintText: l10n.careersSearchHint,
                   prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -31,33 +34,31 @@ class CareersPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 children: [
                   _CareerCard(
-                    title: 'Software Engineer',
-                    description:
-                        'Design, develop, and maintain software applications',
+                    title: l10n.careerSoftwareEngineerTitle,
+                    description: l10n.careerSoftwareEngineerDescription,
                     matchScore: 85,
-                    cluster: 'Technology',
+                    cluster: l10n.clusterTechnology,
                   ),
                   const SizedBox(height: 12),
                   _CareerCard(
-                    title: 'Data Scientist',
-                    description:
-                        'Analyze complex data to help organizations make decisions',
+                    title: l10n.careerDataScientistTitle,
+                    description: l10n.careerDataScientistDescription,
                     matchScore: 78,
-                    cluster: 'STEM',
+                    cluster: l10n.clusterSTEM,
                   ),
                   const SizedBox(height: 12),
                   _CareerCard(
-                    title: 'Graphic Designer',
-                    description: 'Create visual concepts to communicate ideas',
+                    title: l10n.careerGraphicDesignerTitle,
+                    description: l10n.careerGraphicDesignerDescription,
                     matchScore: 65,
-                    cluster: 'Arts & Humanities',
+                    cluster: l10n.clusterArtsHumanities,
                   ),
                   const SizedBox(height: 12),
                   _CareerCard(
-                    title: 'Marketing Manager',
-                    description: 'Plan and execute marketing strategies',
+                    title: l10n.careerMarketingManagerTitle,
+                    description: l10n.careerMarketingManagerDescription,
                     matchScore: 72,
-                    cluster: 'Business & Finance',
+                    cluster: l10n.clusterBusinessFinance,
                   ),
                 ],
               ),
@@ -84,11 +85,12 @@ class _CareerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final matchLevel = matchScore >= 70
-        ? 'High Match'
+        ? l10n.careersHighMatch
         : matchScore >= 40
-        ? 'Medium Match'
-        : 'Explore More';
+        ? l10n.careersMediumMatch
+        : l10n.careersLowMatch;
 
     final matchColor = matchScore >= 70
         ? Colors.green
@@ -176,7 +178,7 @@ class _CareerCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                TextButton(onPressed: () {}, child: const Text('View Details')),
+                TextButton(onPressed: () {}, child: Text(l10n.careersViewDetailsButton)),
               ],
             ),
           ],

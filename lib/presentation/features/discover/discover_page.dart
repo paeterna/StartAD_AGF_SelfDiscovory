@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 
 class DiscoverPage extends StatelessWidget {
@@ -6,22 +7,24 @@ class DiscoverPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return GradientBackground(
       child: Scaffold(
-        appBar: AppBar(title: const Text('Discover')),
+        appBar: AppBar(title: Text(l10n.discoverTitle)),
         body: DefaultTabController(
           length: 2,
           child: Column(
             children: [
-              const TabBar(
+              TabBar(
                 tabs: [
-                  Tab(text: 'Quizzes'),
-                  Tab(text: 'Games'),
+                  Tab(text: l10n.discoverQuizzesTab),
+                  Tab(text: l10n.discoverGamesTab),
                 ],
               ),
               Expanded(
                 child: TabBarView(
-                  children: [_buildQuizzesList(), _buildGamesList()],
+                  children: [_buildQuizzesList(l10n), _buildGamesList(l10n)],
                 ),
               ),
             ],
@@ -31,30 +34,30 @@ class DiscoverPage extends StatelessWidget {
     );
   }
 
-  Widget _buildQuizzesList() {
+  Widget _buildQuizzesList(AppLocalizations l10n) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         _AssessmentCard(
-          title: 'Personality Discovery',
-          description: 'Discover your core personality traits',
-          duration: '5 min',
+          title: l10n.quizPersonalityTitle,
+          description: l10n.quizPersonalityDescription,
+          duration: l10n.discoverDurationMinutes(5),
           progress: 0.0,
           onTap: () {},
         ),
         const SizedBox(height: 12),
         _AssessmentCard(
-          title: 'Interest Explorer',
-          description: 'Identify your key interests',
-          duration: '4 min',
+          title: l10n.quizInterestTitle,
+          description: l10n.quizInterestDescription,
+          duration: l10n.discoverDurationMinutes(4),
           progress: 0.0,
           onTap: () {},
         ),
         const SizedBox(height: 12),
         _AssessmentCard(
-          title: 'Skills Assessment',
-          description: 'Evaluate your current skills',
-          duration: '6 min',
+          title: l10n.quizSkillsTitle,
+          description: l10n.quizSkillsDescription,
+          duration: l10n.discoverDurationMinutes(6),
           progress: 0.5,
           onTap: () {},
         ),
@@ -62,22 +65,22 @@ class DiscoverPage extends StatelessWidget {
     );
   }
 
-  Widget _buildGamesList() {
+  Widget _buildGamesList(AppLocalizations l10n) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         _AssessmentCard(
-          title: 'Pattern Recognition',
-          description: 'Test your analytical skills',
-          duration: '3 min',
+          title: l10n.gamePatternTitle,
+          description: l10n.gamePatternDescription,
+          duration: l10n.discoverDurationMinutes(3),
           progress: 0.0,
           onTap: () {},
         ),
         const SizedBox(height: 12),
         _AssessmentCard(
-          title: 'Creative Challenge',
-          description: 'Explore your creativity',
-          duration: '5 min',
+          title: l10n.gameCreativeTitle,
+          description: l10n.gameCreativeDescription,
+          duration: l10n.discoverDurationMinutes(5),
           progress: 0.0,
           onTap: () {},
         ),
@@ -103,6 +106,7 @@ class _AssessmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isCompleted = progress >= 1.0;
     final isStarted = progress > 0 && progress < 1.0;
 
@@ -143,14 +147,14 @@ class _AssessmentCard extends StatelessWidget {
                         color: Colors.green,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Text(
-                        'Completed',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
+                      child: Text(
+                          l10n.discoverCompletedBadge,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
                     ),
                 ],
               ),
@@ -172,7 +176,7 @@ class _AssessmentCard extends StatelessWidget {
                         vertical: 8,
                       ),
                     ),
-                    child: Text(isStarted ? 'Resume' : 'Start'),
+                    child: Text(isStarted ? l10n.discoverResumeButton : l10n.discoverStartButton),
                   ),
                 ],
               ),

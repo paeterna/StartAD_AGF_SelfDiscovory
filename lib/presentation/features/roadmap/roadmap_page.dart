@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 
 class RoadmapPage extends StatelessWidget {
@@ -6,21 +7,23 @@ class RoadmapPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Roadmap'),
+          title: Text(l10n.roadmapTitle),
         ),
         body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const Text(
-            'Software Engineer Roadmap',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          Text(
+            l10n.roadmapSoftwareEngineerTitle,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           Text(
-            'Your personalized path to success',
+            l10n.roadmapSubtitle,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 24),
@@ -34,12 +37,12 @@ class RoadmapPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Progress',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                      Text(
+                        l10n.roadmapProgressLabel,
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        '2 of 5 steps',
+                        l10n.roadmapProgressValue(2, 5),
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ],
@@ -54,34 +57,34 @@ class RoadmapPage extends StatelessWidget {
 
           // Steps
           _RoadmapStep(
-            title: 'Master Programming Fundamentals',
-            description: 'Learn programming basics with Python or JavaScript',
+            title: l10n.roadmapStepProgrammingTitle,
+            description: l10n.roadmapStepProgrammingDescription,
             completed: true,
-            category: 'Subject',
+            category: l10n.roadmapCategorySubject,
           ),
           _RoadmapStep(
-            title: 'Build Personal Projects',
-            description: 'Create 3-5 projects showcasing different skills',
+            title: l10n.roadmapStepProjectsTitle,
+            description: l10n.roadmapStepProjectsDescription,
             completed: true,
-            category: 'Project',
+            category: l10n.roadmapCategoryProject,
           ),
           _RoadmapStep(
-            title: 'Learn Data Structures & Algorithms',
-            description: 'Study common data structures and algorithms',
+            title: l10n.roadmapStepAlgorithmsTitle,
+            description: l10n.roadmapStepAlgorithmsDescription,
             completed: false,
-            category: 'Skill',
+            category: l10n.roadmapCategorySkill,
           ),
           _RoadmapStep(
-            title: 'Contribute to Open Source',
-            description: 'Find open source projects and make contributions',
+            title: l10n.roadmapStepOpenSourceTitle,
+            description: l10n.roadmapStepOpenSourceDescription,
             completed: false,
-            category: 'Experience',
+            category: l10n.roadmapCategoryExperience,
           ),
           _RoadmapStep(
-            title: 'Complete Internship',
-            description: 'Apply for software engineering internships',
+            title: l10n.roadmapStepInternshipTitle,
+            description: l10n.roadmapStepInternshipDescription,
             completed: false,
-            category: 'Experience',
+            category: l10n.roadmapCategoryExperience,
           ),
         ],
         ),

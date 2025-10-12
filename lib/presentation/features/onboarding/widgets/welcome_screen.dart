@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:startad_agf_selfdiscovery/core/theme/app_colors.dart';
 import 'package:startad_agf_selfdiscovery/core/theme/app_theme.dart';
+import 'package:startad_agf_selfdiscovery/generated/l10n/app_localizations.dart';
 import 'package:startad_agf_selfdiscovery/presentation/widgets/enhanced_glassy_card.dart';
 import 'package:startad_agf_selfdiscovery/presentation/widgets/gradient_background.dart';
 
@@ -12,6 +13,8 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return GradientBackground(
       animated: true,
       child: SafeArea(
@@ -54,7 +57,7 @@ class WelcomeScreen extends StatelessWidget {
 
               // Welcome title
               Text(
-                'Welcome to SelfMap! 🚀',
+                l10n.welcomeTitle,
                 style: Theme.of(context).textTheme.displaySmall?.copyWith(
                   fontWeight: FontWeight.w800,
                   height: 1.1,
@@ -65,7 +68,7 @@ class WelcomeScreen extends StatelessWidget {
 
               // Subtitle
               Text(
-                "Discover who you are and where you're going",
+                l10n.welcomeSubtitle,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Theme.of(
                     context,
@@ -100,11 +103,11 @@ class WelcomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Quick & Fun',
+                            l10n.welcomeQuickTitle,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           Text(
-                            'Takes just 2 minutes!',
+                            l10n.welcomeQuickDescription,
                             style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
                                   color: Theme.of(context).colorScheme.onSurface
@@ -141,11 +144,11 @@ class WelcomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Discover Yourself',
+                            l10n.welcomeDiscoverTitle,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           Text(
-                            'Find your unique strengths',
+                            l10n.welcomeDiscoverDescription,
                             style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
                                   color: Theme.of(context).colorScheme.onSurface
@@ -181,11 +184,11 @@ class WelcomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Plan Your Future',
+                            l10n.welcomePlanTitle,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           Text(
-                            'Get personalized career paths',
+                            l10n.welcomePlanDescription,
                             style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
                                   color: Theme.of(context).colorScheme.onSurface
@@ -205,7 +208,7 @@ class WelcomeScreen extends StatelessWidget {
                 onTap: onGetStarted,
                 child: Center(
                   child: Text(
-                    "Let's Get Started! ✨",
+                    l10n.welcomeGetStartedButton,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,

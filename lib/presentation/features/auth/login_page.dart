@@ -94,28 +94,27 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Future<void> _showForgotPasswordDialog() async {
     debugPrint('🔵 [FORGOT_PASSWORD] Opening forgot password dialog...');
 
+    final l10n = AppLocalizations.of(context)!;
     final emailController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Reset Password'),
+        title: Text(l10n.authResetPassword),
         content: Form(
           key: formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'Enter your email address and we\'ll send you a link to reset your password.',
-              ),
+              Text(l10n.authResetPasswordMessage),
               const SizedBox(height: 16),
               TextFormField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  prefixIcon: Icon(Icons.email_outlined),
+                decoration: InputDecoration(
+                  labelText: l10n.authEmailLabel,
+                  prefixIcon: const Icon(Icons.email_outlined),
                 ),
                 validator: Validators.email,
               ),
@@ -125,7 +124,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancelButton),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -133,7 +132,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 Navigator.pop(context, true);
               }
             },
-            child: const Text('Send Reset Link'),
+            child: Text(l10n.authSendResetLink),
           ),
         ],
       ),
@@ -159,8 +158,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Password reset link sent! Check your email.'),
+            SnackBar(
+              content: Text(l10n.authResetPasswordSuccess),
               backgroundColor: Colors.green,
             ),
           );
@@ -304,14 +303,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       const SizedBox(height: 24),
 
                       // Divider
-                      const Row(
+                      Row(
                         children: [
-                          Expanded(child: Divider()),
+                          const Expanded(child: Divider()),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            child: Text('OR'),
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(l10n.authDividerOr),
                           ),
-                          Expanded(child: Divider()),
+                          const Expanded(child: Divider()),
                         ],
                       ),
 
@@ -323,7 +322,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             ? null
                             : _handleGoogleSignIn,
                         icon: const Icon(Icons.g_mobiledata, size: 24),
-                        label: const Text('Continue with Google'),
+                        label: Text(l10n.authGoogleSignIn),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                         ),
@@ -337,12 +336,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         children: [
                           TextButton(
                             onPressed: () => context.push(AppRoutes.privacy),
-                            child: const Text('Privacy'),
+                            child: Text(l10n.authPrivacyLink),
                           ),
                           const Text(' • '),
                           TextButton(
                             onPressed: () => context.push(AppRoutes.terms),
-                            child: const Text('Terms'),
+                            child: Text(l10n.authTermsLink),
                           ),
                         ],
                       ),

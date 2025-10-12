@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../application/auth/auth_controller.dart';
 import '../../../core/router/app_router.dart';
+import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 
 class DashboardPage extends ConsumerWidget {
@@ -13,11 +14,12 @@ class DashboardPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authControllerProvider);
     final user = authState.user;
+    final l10n = AppLocalizations.of(context)!;
 
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Dashboard'),
+          title: Text(l10n.dashboardTitle),
           actions: [
             IconButton(
               icon: const Icon(Icons.settings),
@@ -32,7 +34,7 @@ class DashboardPage extends ConsumerWidget {
             children: [
               // Welcome message
               Text(
-                'Welcome back, ${user?.displayName ?? "Student"}!',
+                l10n.dashboardWelcome(user?.displayName ?? 'Student'),
                 style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -46,9 +48,9 @@ class DashboardPage extends ConsumerWidget {
                   padding: const EdgeInsets.all(24),
                   child: Column(
                     children: [
-                      const Text(
-                        'Discovery Progress',
-                        style: TextStyle(
+                      Text(
+                        l10n.dashboardProgressLabel,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
@@ -84,7 +86,7 @@ class DashboardPage extends ConsumerWidget {
                           const Icon(Icons.local_fire_department, size: 20),
                           const SizedBox(width: 8),
                           Text(
-                            '3 day streak',
+                            l10n.dashboardStreakDays(3),
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ],
@@ -96,32 +98,32 @@ class DashboardPage extends ConsumerWidget {
               const SizedBox(height: 24),
 
               // Quick actions
-              const Text(
-                "What's Next?",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Text(
+                l10n.dashboardWhatsNext,
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
 
               _QuickActionCard(
                 icon: Icons.explore,
-                title: 'Continue Discovery',
-                subtitle: 'Take quizzes and games',
+                title: l10n.dashboardContinueDiscovery,
+                subtitle: l10n.dashboardContinueDiscoverySubtitle,
                 onTap: () => context.push(AppRoutes.discover),
               ),
               const SizedBox(height: 12),
 
               _QuickActionCard(
                 icon: Icons.work_outline,
-                title: 'Explore Careers',
-                subtitle: 'Find careers that match you',
+                title: l10n.dashboardViewCareers,
+                subtitle: l10n.dashboardViewCareersSubtitle,
                 onTap: () => context.push(AppRoutes.careers),
               ),
               const SizedBox(height: 12),
 
               _QuickActionCard(
                 icon: Icons.map_outlined,
-                title: 'View Roadmap',
-                subtitle: 'Plan your path to success',
+                title: l10n.dashboardStartRoadmap,
+                subtitle: l10n.dashboardStartRoadmapSubtitle,
                 onTap: () => context.push(AppRoutes.roadmap),
               ),
             ],

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../application/auth/auth_controller.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../generated/l10n/app_localizations.dart';
 import 'widgets/welcome_screen.dart';
 
 class OnboardingPage extends ConsumerStatefulWidget {
@@ -21,60 +22,92 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
 
   final Map<int, String> _selectedAnswers = {};
 
-  final List<Map<String, dynamic>> _questions = [
-    {
-      'question': 'When faced with a problem, I prefer to:',
-      'options': [
-        'Analyze it logically',
-        'Think creatively',
-        'Discuss with others',
-      ],
-    },
-    {
-      'question': 'I feel most energized when:',
-      'options': [
-        'Working independently',
-        'Collaborating with a team',
-        'Leading group activities',
-      ],
-    },
-    {
-      'question': 'When starting a new project, I:',
-      'options': [
-        'Follow established methods',
-        'Experiment with new approaches',
-        'Combine proven and new ideas',
-      ],
-    },
-    {
-      'question': 'I am most interested in:',
-      'options': [
-        'Learning new skills',
-        'Mastering what I know',
-        'Applying knowledge practically',
-      ],
-    },
-    {
-      'question': 'When working on tasks, I:',
-      'options': [
-        'Focus on the big picture',
-        'Pay attention to details',
-        'Balance both approaches',
-      ],
-    },
-  ];
+  List<Map<String, dynamic>> _getLocalizedQuestions(AppLocalizations l10n) {
+    return [
+      {
+        'question': l10n.onboardingQuestion1,
+        'options': [
+          l10n.onboardingQ1Option1,
+          l10n.onboardingQ1Option2,
+          l10n.onboardingQ1Option3,
+        ],
+      },
+      {
+        'question': l10n.onboardingQuestion2,
+        'options': [
+          l10n.onboardingQ2Option1,
+          l10n.onboardingQ2Option2,
+          l10n.onboardingQ2Option3,
+        ],
+      },
+      {
+        'question': l10n.onboardingQuestion3,
+        'options': [
+          l10n.onboardingQ3Option1,
+          l10n.onboardingQ3Option2,
+          l10n.onboardingQ3Option3,
+        ],
+      },
+      {
+        'question': l10n.onboardingQuestion4,
+        'options': [
+          l10n.onboardingQ4Option1,
+          l10n.onboardingQ4Option2,
+          l10n.onboardingQ4Option3,
+        ],
+      },
+      {
+        'question': l10n.onboardingQuestion5,
+        'options': [
+          l10n.onboardingQ5Option1,
+          l10n.onboardingQ5Option2,
+          l10n.onboardingQ5Option3,
+        ],
+      },
+    ];
+  }
 
   Future<void> _completeOnboarding() async {
-    // In a real app, save the answers and generate initial trait scores
-    await ref.read(authControllerProvider.notifier).completeOnboarding();
+    try {
+      // Convert selected answers to a format suitable for the database
+      // Map question indices to question keys and answers
+      final answers = <String, String>{};
+      
+      for (int i = 0; i < _selectedAnswers.length; i++) {
+        final questionKey = 'question_${i + 1}';
+        final answer = _selectedAnswers[i];
+        if (answer != null) {
+          answers[questionKey] = answer;
+        }
+      }
 
-    if (mounted) {
-      context.go(AppRoutes.dashboard);
+      debugPrint('📝 [ONBOARDING] Saving ${answers.length} answers to database');
+      
+      // Save the answers and complete onboarding in the database
+      await ref.read(authControllerProvider.notifier).completeOnboarding(answers: answers);
+
+      if (mounted) {
+        // Navigate to dashboard - router will handle the redirect based on onboarding status
+        context.go(AppRoutes.dashboard);
+      }
+    } catch (e) {
+      // Handle error if needed
+      debugPrint('🔴 [ONBOARDING] Error completing onboarding: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error completing onboarding: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     // Show welcome screen first
     if (_showWelcome) {
       return WelcomeScreen(
@@ -87,7 +120,8 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
     }
 
     // Show questionnaire
-    final currentQuestion = _questions[_currentStep];
+    final questions = _getLocalizedQuestions(l10n);
+    final currentQuestion = questions[_currentStep];
 
     return Scaffold(
       body: Container(
@@ -106,7 +140,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
 
                 // Step indicator
                 Text(
-                  'Question ${_currentStep + 1} of $_totalSteps',
+                  l10n.onboardingQuestionPrefix(_currentStep + 1, _totalSteps),
                   style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -180,7 +214,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                               _currentStep--;
                             });
                           },
-                          child: const Text('Back'),
+                          child: Text(l10n.onboardingBackButton),
                         ),
                       ),
                     if (_currentStep > 0) const SizedBox(width: 16),
@@ -199,7 +233,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                               }
                             : null,
                         child: Text(
-                          _currentStep < _totalSteps - 1 ? 'Next' : 'Finish',
+                          _currentStep < _totalSteps - 1 ? l10n.onboardingNextButton : l10n.onboardingFinishButton,
                         ),
                       ),
                     ),

@@ -71,11 +71,21 @@ class LocaleNotifier extends StateNotifier<Locale> {
   Future<void> setLocale(String languageCode) async {
     await _localPrefs.setLocale(languageCode);
     state = Locale(languageCode);
+    debugPrint('🔵 [LOCALE] Locale changed to: $languageCode');
   }
 
   void toggleLocale() {
     final newLocale = state.languageCode == 'en' ? 'ar' : 'en';
     setLocale(newLocale);
+  }
+
+  /// Sync locale from user profile (when user logs in or updates profile)
+  void syncFromUser(String? userLocale) {
+    if (userLocale != null && userLocale != state.languageCode) {
+      state = Locale(userLocale);
+      _localPrefs.setLocale(userLocale);
+      debugPrint('🔵 [LOCALE] Synced locale from user profile: $userLocale');
+    }
   }
 }
 

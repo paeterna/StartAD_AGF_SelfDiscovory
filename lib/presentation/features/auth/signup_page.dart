@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../application/auth/auth_controller.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/utils/validators.dart';
+import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 import '../../widgets/language_switcher.dart';
 
@@ -107,6 +108,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return GradientBackground(
       child: Scaffold(
@@ -134,9 +136,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       // Title
-                      const Text(
-                        'Create Account',
-                        style: TextStyle(
+                      Text(
+                        l10n.authSignupTitle,
+                        style: const TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
                         ),
@@ -144,7 +146,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Join SelfMap and start your journey',
+                        l10n.tagline,
                         style: Theme.of(context).textTheme.titleMedium,
                         textAlign: TextAlign.center,
                       ),
@@ -153,9 +155,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       // Display name field
                       TextFormField(
                         controller: _displayNameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Display Name',
-                          prefixIcon: Icon(Icons.person_outline),
+                        decoration: InputDecoration(
+                          labelText: l10n.authDisplayNameLabel,
+                          prefixIcon: const Icon(Icons.person_outline),
                         ),
                         validator: Validators.displayName,
                         enabled: !authState.isLoading,
@@ -166,9 +168,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       TextFormField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                          prefixIcon: Icon(Icons.email_outlined),
+                        decoration: InputDecoration(
+                          labelText: l10n.authEmailLabel,
+                          prefixIcon: const Icon(Icons.email_outlined),
                         ),
                         validator: Validators.email,
                         enabled: !authState.isLoading,
@@ -180,7 +182,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                         controller: _passwordController,
                         obscureText: _obscurePassword,
                         decoration: InputDecoration(
-                          labelText: 'Password',
+                          labelText: l10n.authPasswordLabel,
                           prefixIcon: const Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -205,7 +207,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                         controller: _confirmPasswordController,
                         obscureText: _obscureConfirmPassword,
                         decoration: InputDecoration(
-                          labelText: 'Confirm Password',
+                          labelText: l10n.authConfirmPasswordLabel,
                           prefixIcon: const Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -240,7 +242,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                                   strokeWidth: 2,
                                 ),
                               )
-                            : const Text('Sign Up'),
+                            : Text(l10n.authSignupButton),
                       ),
                       const SizedBox(height: 16),
 
@@ -249,20 +251,20 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                         onPressed: authState.isLoading
                             ? null
                             : () => context.go(AppRoutes.login),
-                        child: const Text('Already have an account? Sign in'),
+                        child: Text(l10n.authSwitchToLogin),
                       ),
 
                       const SizedBox(height: 24),
 
                       // Divider
-                      const Row(
+                      Row(
                         children: [
-                          Expanded(child: Divider()),
+                          const Expanded(child: Divider()),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            child: Text('OR'),
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(l10n.authDividerOr),
                           ),
-                          Expanded(child: Divider()),
+                          const Expanded(child: Divider()),
                         ],
                       ),
 
@@ -274,7 +276,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             ? null
                             : _handleGoogleSignIn,
                         icon: const Icon(Icons.g_mobiledata, size: 24),
-                        label: const Text('Continue with Google'),
+                        label: Text(l10n.authGoogleSignIn),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                         ),

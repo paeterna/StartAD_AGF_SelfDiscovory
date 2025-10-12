@@ -37,7 +37,10 @@ abstract class AuthRepository {
   });
 
   /// Mark onboarding as complete
-  Future<User> completeOnboarding({required String userId});
+  Future<User> completeOnboarding({
+    required String userId,
+    Map<String, String>? onboardingAnswers,
+  });
 
   /// Stream of authentication state changes
   Stream<User?> get authStateChanges;
