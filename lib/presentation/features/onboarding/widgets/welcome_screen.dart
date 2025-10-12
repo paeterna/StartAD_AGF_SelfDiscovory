@@ -6,10 +6,7 @@ import 'package:startad_agf_selfdiscovery/presentation/widgets/gradient_backgrou
 
 /// Welcome screen for onboarding - Friendly introduction for teens
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({
-    required this.onGetStarted,
-    super.key,
-  });
+  const WelcomeScreen({required this.onGetStarted, super.key});
 
   final VoidCallback onGetStarted;
 
@@ -31,10 +28,7 @@ class WelcomeScreen extends StatelessWidget {
                 duration: const Duration(milliseconds: 800),
                 curve: Curves.elasticOut,
                 builder: (context, value, child) {
-                  return Transform.scale(
-                    scale: value,
-                    child: child,
-                  );
+                  return Transform.scale(scale: value, child: child);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(AppTheme.spaceXLarge),
@@ -43,7 +37,7 @@ class WelcomeScreen extends StatelessWidget {
                     gradient: AppColors.primaryGradient,
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.gradientBlue.withValues(alpha: 0.4),
+                        color: AppColors.warmOrange.withValues(alpha: 0.4),
                         blurRadius: 40,
                         spreadRadius: 10,
                       ),
@@ -62,9 +56,9 @@ class WelcomeScreen extends StatelessWidget {
               Text(
                 'Welcome to SelfMap! 🚀',
                 style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      height: 1.1,
-                    ),
+                  fontWeight: FontWeight.w800,
+                  height: 1.1,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: AppTheme.spaceMedium),
@@ -73,11 +67,10 @@ class WelcomeScreen extends StatelessWidget {
               Text(
                 "Discover who you are and where you're going",
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withValues(alpha: 0.7),
-                    ),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withValues(alpha: 0.7),
+                ),
                 textAlign: TextAlign.center,
               ),
               const Spacer(),
@@ -91,8 +84,9 @@ class WelcomeScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(AppTheme.spaceSmall),
                       decoration: BoxDecoration(
                         gradient: AppColors.primaryGradient,
-                        borderRadius:
-                            BorderRadius.circular(AppTheme.radiusMedium),
+                        borderRadius: BorderRadius.circular(
+                          AppTheme.radiusMedium,
+                        ),
                       ),
                       child: const Icon(
                         Icons.timer_outlined,
@@ -111,10 +105,9 @@ class WelcomeScreen extends StatelessWidget {
                           ),
                           Text(
                             'Takes just 2 minutes!',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurface
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.onSurface
                                       .withValues(alpha: 0.6),
                                 ),
                           ),
@@ -131,9 +124,10 @@ class WelcomeScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(AppTheme.spaceSmall),
                       decoration: BoxDecoration(
-                        gradient: AppColors.successGradient,
-                        borderRadius:
-                            BorderRadius.circular(AppTheme.radiusMedium),
+                        gradient: AppColors.accentGradient,
+                        borderRadius: BorderRadius.circular(
+                          AppTheme.radiusMedium,
+                        ),
                       ),
                       child: const Icon(
                         Icons.psychology_outlined,
@@ -152,10 +146,9 @@ class WelcomeScreen extends StatelessWidget {
                           ),
                           Text(
                             'Find your unique strengths',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurface
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.onSurface
                                       .withValues(alpha: 0.6),
                                 ),
                           ),
@@ -171,9 +164,10 @@ class WelcomeScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(AppTheme.spaceSmall),
                       decoration: BoxDecoration(
-                        gradient: AppColors.secondaryGradient,
-                        borderRadius:
-                            BorderRadius.circular(AppTheme.radiusMedium),
+                        gradient: AppColors.primaryGradient,
+                        borderRadius: BorderRadius.circular(
+                          AppTheme.radiusMedium,
+                        ),
                       ),
                       child: const Icon(
                         Icons.rocket_launch,
@@ -192,10 +186,9 @@ class WelcomeScreen extends StatelessWidget {
                           ),
                           Text(
                             'Get personalized career paths',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurface
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.onSurface
                                       .withValues(alpha: 0.6),
                                 ),
                           ),
@@ -214,9 +207,9 @@ class WelcomeScreen extends StatelessWidget {
                   child: Text(
                     "Let's Get Started! ✨",
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ),

@@ -88,8 +88,8 @@ class _GlassyCardState extends State<GlassyCard>
             child: Material(
               elevation: widget.enableHoverEffect ? _elevationAnimation.value : widget.elevation,
               shadowColor: widget.shadowColor ??
-                  (isDark ? AppColors.gradientCyan.withValues(alpha: 0.3)
-                         : AppColors.gradientBlue.withValues(alpha: 0.2)),
+                  (isDark ? AppColors.warmAmber.withValues(alpha: 0.3)
+                         : AppColors.warmOrange.withValues(alpha: 0.2)),
               borderRadius: borderRadius,
               color: Colors.transparent,
               child: ClipRRect(
@@ -174,7 +174,7 @@ class GradientGlassyCard extends StatelessWidget {
       margin: margin,
       onTap: onTap,
       enableHoverEffect: enableHoverEffect,
-      gradient: isDark ? AppColors.holographicGradient : AppColors.primaryGradient,
+      gradient: isDark ? AppColors.darkBackgroundGradient : AppColors.primaryGradient,
       child: child,
     );
   }

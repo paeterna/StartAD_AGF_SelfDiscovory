@@ -1,140 +1,183 @@
 import 'package:flutter/material.dart';
 
-/// Modern futuristic color palette with AI-era aesthetics
+/// Warm glassmorphic color palette with soft gradients
+/// Design: Futuristic yet friendly, balancing technology with human warmth
 class AppColors {
   AppColors._();
 
-  // === Modern Gradient Colors (Futuristic & Friendly) ===
+  // === Warm Gradient Colors (Orange → Amber → Beige → Sky Blue) ===
 
-  // Primary gradient (Digital Sky)
-  static const Color gradientDeepBlue = Color(0xFF1E3A8A);
-  static const Color gradientBlue = Color(0xFF3B82F6);
-  static const Color gradientCyan = Color(0xFF06B6D4);
-  static const Color gradientTeal = Color(0xFF0D9488);
+  // Primary warm gradient
+  static const Color warmOrange = Color(0xFFFF8C42);      // Soft orange
+  static const Color warmAmber = Color(0xFFFFB366);       // Light amber
+  static const Color warmPeach = Color(0xFFFFD4A3);       // Warm peach
+  static const Color warmBeige = Color(0xFFFFF3E0);       // Soft beige
+  static const Color warmSkyBlue = Color(0xFFB8D4F1);     // Faint sky blue
+  static const Color warmLightBlue = Color(0xFFD4E7F7);   // Very light blue
 
-  // Secondary gradient (Neural Purple)
-  static const Color gradientPurple = Color(0xFF7C3AED);
-  static const Color gradientIndigo = Color(0xFF4F46E5);
-  static const Color gradientViolet = Color(0xFF8B5CF6);
-  static const Color gradientPink = Color(0xFFEC4899);
+  // Accent colors (Muted & Warm)
+  static const Color accentCoral = Color(0xFFFF8A80);     // Muted coral
+  static const Color accentPeach = Color(0xFFFFAB91);     // Soft peach highlight
+  static const Color accentRose = Color(0xFFFFCDD2);      // Light rose
+  static const Color accentBlush = Color(0xFFFFF0E8);     // Pale blush
 
-  // Accent gradient (Soft Neons)
-  static const Color gradientEmerald = Color(0xFF059669);
-  static const Color gradientLime = Color(0xFF65A30D);
-  static const Color gradientRose = Color(0xFFF43F5E);
-  static const Color gradientAmber = Color(0xFFF59E0B);
+  // === Text Colors (Soft, Never Harsh) ===
 
-  // Accent colors (Modern & Expressive)
-  static const Color accentElectric = Color(0xFF3B82F6);
-  static const Color accentNeon = Color(0xFF06B6D4);
-  static const Color accentMatrix = Color(0xFF10B981);
-  static const Color accentCobalt = Color(0xFF1E40AF);
-  static const Color accentSlate = Color(0xFF475569);
+  // Light mode text (warm charcoal, not black)
+  static const Color textPrimary = Color(0xFF1A1A1A);     // Soft charcoal
+  static const Color textSecondary = Color(0xFF5A5A5A);   // Medium gray
+  static const Color textTertiary = Color(0xFF8A8A8A);    // Light gray
+  static const Color textOnGlass = Color(0xFF2D2D2D);     // Slightly darker for glass
 
-  // === Light Theme (Bright & Airy) ===
-  static const Color lightBackground = Color(0xFFFAFBFF);
-  static const Color lightSurface = Color(0xFFFFFFFF);
-  static const Color lightSurfaceVariant = Color(0xFFF8F9FF);
-  static const Color lightOnBackground = Color(0xFF1E1E2E);
-  static const Color lightOnSurface = Color(0xFF2D2D3A);
+  // Dark mode text (warm white, not pure white)
+  static const Color textDarkPrimary = Color(0xFFF5F5F5); // Warm white
+  static const Color textDarkSecondary = Color(0xFFE0E0E0); // Light gray
+  static const Color textDarkTertiary = Color(0xFFC0C0C0); // Medium gray
 
-  // === Dark Theme (Soft & Warm) ===
-  static const Color darkBackground = Color(0xFF0F0F1E);
-  static const Color darkSurface = Color(0xFF1A1A2E);
-  static const Color darkSurfaceVariant = Color(0xFF25253A);
-  static const Color darkOnBackground = Color(0xFFF0F0F7);
-  static const Color darkOnSurface = Color(0xFFE0E0EB);
+  // === Background Colors ===
 
-  // === Status & Feedback (Modern & Clear) ===
-  static const Color success = Color(0xFF10B981);
-  static const Color warning = Color(0xFFF59E0B);
-  static const Color error = Color(0xFFEF4444);
-  static const Color info = Color(0xFF3B82F6);
+  // Light theme backgrounds
+  static const Color lightBackground = Color(0xFFFFF8F0);  // Very light beige
+  static const Color lightSurface = Color(0xFFFFFFFF);     // Pure white
+  static const Color lightCard = Color(0xFFFFFAF5);        // Soft cream
 
-  // === Progress Colors (Motivational) ===
-  static const Color progressLow = Color(0xFFEF4444);
-  static const Color progressMedium = Color(0xFFF59E0B);
-  static const Color progressHigh = Color(0xFF10B981);
+  // Dark theme backgrounds (warm-toned, not cold)
+  static const Color darkBackground = Color(0xFF1F1F1F);   // Warm dark gray
+  static const Color darkSurface = Color(0xFF2A2A2A);      // Slightly lighter
+  static const Color darkCard = Color(0xFF353535);         // Medium dark
 
-  // === Glassmorphism Effects ===
+  // === Glassmorphism Effects (15-25% opacity) ===
+
   static Color glassLight = Colors.white.withValues(alpha: 0.15);
-  static Color glassDark = Colors.white.withValues(alpha: 0.08);
-  static Color glassBlur = Colors.white.withValues(alpha: 0.05);
-  static Color glassBorder = Colors.white.withValues(alpha: 0.2);
+  static Color glassMedium = Colors.white.withValues(alpha: 0.20);
+  static Color glassHeavy = Colors.white.withValues(alpha: 0.25);
 
-  // === Gradient Presets (Dynamic & Modern) ===
+  // Glass borders (semi-transparent white)
+  static Color glassBorderLight = Colors.white.withValues(alpha: 0.2);
+  static Color glassBorderMedium = Colors.white.withValues(alpha: 0.3);
+
+  // Inner glow for glass surfaces
+  static Color glassGlow = Colors.white.withValues(alpha: 0.4);
+  static Color glassHighlight = Colors.white.withValues(alpha: 0.6);
+
+  // Dark mode glass (slightly different)
+  static Color glassDark = Colors.white.withValues(alpha: 0.1);
+  static Color glassDarkBorder = Colors.white.withValues(alpha: 0.15);
+
+  // === Status Colors (Soft, Not Harsh) ===
+
+  static const Color success = Color(0xFF81C784);      // Soft green
+  static const Color warning = Color(0xFFFFB74D);      // Soft amber
+  static const Color error = Color(0xFFE57373);        // Soft red
+  static const Color info = Color(0xFF64B5F6);         // Soft blue
+
+  // === Progress Colors (Warm Tones) ===
+
+  static const Color progressLow = Color(0xFFFFAB91);   // Warm orange
+  static const Color progressMedium = Color(0xFFFFD54F); // Warm yellow
+  static const Color progressHigh = Color(0xFF81C784);  // Soft green
+
+  // === Gradient Definitions ===
+
+  /// Primary background gradient: Orange → Amber → Beige → Sky Blue
+  /// Diagonal from bottom-left to top-right
   static const LinearGradient primaryGradient = LinearGradient(
-    colors: [gradientPurple, gradientBlue, gradientCyan],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
-
-  static const LinearGradient secondaryGradient = LinearGradient(
-    colors: [gradientPink, gradientViolet, gradientPurple],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
-
-  static const LinearGradient successGradient = LinearGradient(
-    colors: [gradientTeal, gradientEmerald, gradientLime],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
-
-  // Futuristic gradients for special effects
-  static const LinearGradient neonGradient = LinearGradient(
-    colors: [gradientCyan, gradientPink, gradientAmber],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
-
-  static const LinearGradient holographicGradient = LinearGradient(
-    colors: [gradientIndigo, gradientCyan, gradientViolet, gradientPink],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    stops: [0.0, 0.3, 0.7, 1.0],
-  );
-
-  // === Dynamic Background Gradients ===
-  static const LinearGradient backgroundGradient = LinearGradient(
     colors: [
-      Color(0xFFFAFBFF), // Very light blue
-      Color(0xFFF0F4FF), // Light lavender
-      Color(0xFFF8FAFC), // Slate-50
+      warmOrange,      // Bottom-left: warm orange
+      warmAmber,       //
+      warmPeach,       //
+      warmBeige,       //
+      warmSkyBlue,     // Top-right: faint sky blue
     ],
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
+    begin: Alignment.bottomLeft,
+    end: Alignment.topRight,
+    stops: [0.0, 0.25, 0.5, 0.75, 1.0],
+  );
+
+  /// Subtle background gradient for light mode
+  static const LinearGradient lightBackgroundGradient = LinearGradient(
+    colors: [
+      Color(0xFFFFE0B2),  // Light orange
+      Color(0xFFFFF8E1),  // Pale amber
+      Color(0xFFE1F5FE),  // Very light blue
+    ],
+    begin: Alignment.bottomLeft,
+    end: Alignment.topRight,
     stops: [0.0, 0.5, 1.0],
   );
 
+  /// Dark mode gradient (warmer tones)
   static const LinearGradient darkBackgroundGradient = LinearGradient(
     colors: [
-      Color(0xFF0F0F23), // Deep navy
-      Color(0xFF1A1A2E), // Dark slate
-      Color(0xFF16213E), // Midnight blue
+      Color(0xFF2D1F1A),  // Warm dark brown
+      Color(0xFF1F1F1F),  // Neutral dark
+      Color(0xFF1A2332),  // Warm dark blue
     ],
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
+    begin: Alignment.bottomLeft,
+    end: Alignment.topRight,
     stops: [0.0, 0.5, 1.0],
   );
 
-  // Hero section gradients
-  static const LinearGradient heroGradient = LinearGradient(
-    colors: [gradientPurple, gradientBlue, gradientCyan, gradientTeal],
+  /// Accent gradient for highlights (coral/peach)
+  static const LinearGradient accentGradient = LinearGradient(
+    colors: [
+      accentCoral,     // Muted coral
+      accentPeach,     // Soft peach
+      warmAmber,       // Light amber
+    ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    stops: [0.0, 0.3, 0.7, 1.0],
   );
 
-  static const LinearGradient darkHeroGradient = LinearGradient(
-    colors: [gradientIndigo, gradientPurple, gradientViolet, gradientPink],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    stops: [0.0, 0.3, 0.7, 1.0],
-  );
+  /// Radial glow effect for depth
+  static RadialGradient radialGlow({
+    required Color centerColor,
+    required Color edgeColor,
+  }) {
+    return RadialGradient(
+      colors: [centerColor, edgeColor],
+      center: Alignment.center,
+      radius: 1.2,
+      stops: const [0.0, 1.0],
+    );
+  }
 
-  // === Overlay & Scrim ===
-  static Color scrimLight = Colors.black.withValues(alpha: 0.2);
+  /// Soft shadow gradient for floating elements
+  static BoxShadow softShadow({
+    Color? color,
+    double opacity = 0.1,
+    double blurRadius = 20.0,
+    Offset offset = const Offset(0, 8),
+  }) {
+    return BoxShadow(
+      color: (color ?? Colors.black).withValues(alpha: opacity),
+      blurRadius: blurRadius,
+      offset: offset,
+    );
+  }
+
+  /// Glass shadow for glassmorphic cards
+  static List<BoxShadow> glassShadow = [
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.05),
+      blurRadius: 10,
+      offset: const Offset(0, 4),
+    ),
+    BoxShadow(
+      color: Colors.white.withValues(alpha: 0.5),
+      blurRadius: 10,
+      offset: const Offset(-2, -2),
+      blurStyle: BlurStyle.inner,
+    ),
+  ];
+
+  // === Overlay Colors ===
+
+  static Color scrimLight = Colors.black.withValues(alpha: 0.15);
+  static Color scrimMedium = Colors.black.withValues(alpha: 0.3);
   static Color scrimDark = Colors.black.withValues(alpha: 0.5);
-  static Color shimmer = Colors.white.withValues(alpha: 0.3);
+
+  // Shimmer effect for loading states
+  static Color shimmerBase = Colors.white.withValues(alpha: 0.2);
+  static Color shimmerHighlight = Colors.white.withValues(alpha: 0.4);
 }

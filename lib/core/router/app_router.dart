@@ -13,6 +13,7 @@ import '../../presentation/features/settings/settings_page.dart';
 import '../../presentation/features/static_pages/about_page.dart';
 import '../../presentation/features/static_pages/privacy_page.dart';
 import '../../presentation/features/static_pages/terms_page.dart';
+import '../../presentation/widgets/gradient_background.dart';
 import '../providers/providers.dart';
 
 /// App routes
@@ -158,10 +159,46 @@ final routerProvider = Provider<GoRouter>((ref) {
         ),
       ),
     ],
-    errorBuilder: (context, state) => Scaffold(
-      body: Center(
-        child: Text('Page not found: ${state.matchedLocation}'),
-      ),
-    ),
+    errorBuilder: (context, state) {
+      // Check if this is an OAuth callback with auth tokens in the URL
+      final uri = state.uri;
+      final fragment = uri.fragment;
+
+      // If URL contains auth tokens (from OAuth redirect), show a loading screen
+      // Supabase will automatically process these tokens
+      if (fragment.contains('access_token=') || fragment.contains('error=')) {
+        debugPrint('🔵 [ROUTER] OAuth callback detected, processing auth tokens...');
+        return GradientBackground(
+          child: const Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text('Completing sign in...'),
+                ],
+              ),
+            ),
+          ),
+        );
+      }
+
+      // Regular 404 page
+      return GradientBackground(
+        child: Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                const SizedBox(height: 16),
+                Text('Page not found: ${state.matchedLocation}'),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
   );
 });

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,4 +51,35 @@ final roadmapRepositoryProvider = Provider<RoadmapRepository>((ref) {
 
 final progressRepositoryProvider = Provider<ProgressRepository>((ref) {
   return ProgressRepositoryImpl();
+});
+
+/// Locale provider - manages app language (en/ar)
+class LocaleNotifier extends StateNotifier<Locale> {
+  LocaleNotifier(this._localPrefs) : super(const Locale('en')) {
+    _loadLocale();
+  }
+
+  final LocalPrefs _localPrefs;
+
+  Future<void> _loadLocale() async {
+    final savedLocale = _localPrefs.getLocale();
+    if (savedLocale != null) {
+      state = Locale(savedLocale);
+    }
+  }
+
+  Future<void> setLocale(String languageCode) async {
+    await _localPrefs.setLocale(languageCode);
+    state = Locale(languageCode);
+  }
+
+  void toggleLocale() {
+    final newLocale = state.languageCode == 'en' ? 'ar' : 'en';
+    setLocale(newLocale);
+  }
+}
+
+final localeProvider = StateNotifierProvider<LocaleNotifier, Locale>((ref) {
+  final localPrefs = ref.watch(localPrefsProvider);
+  return LocaleNotifier(localPrefs);
 });

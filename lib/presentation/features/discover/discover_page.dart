@@ -1,33 +1,31 @@
 import 'package:flutter/material.dart';
+import '../../widgets/gradient_background.dart';
 
 class DiscoverPage extends StatelessWidget {
   const DiscoverPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Discover'),
-      ),
-      body: DefaultTabController(
-        length: 2,
-        child: Column(
-          children: [
-            const TabBar(
-              tabs: [
-                Tab(text: 'Quizzes'),
-                Tab(text: 'Games'),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  _buildQuizzesList(),
-                  _buildGamesList(),
+    return GradientBackground(
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Discover')),
+        body: DefaultTabController(
+          length: 2,
+          child: Column(
+            children: [
+              const TabBar(
+                tabs: [
+                  Tab(text: 'Quizzes'),
+                  Tab(text: 'Games'),
                 ],
               ),
-            ),
-          ],
+              Expanded(
+                child: TabBarView(
+                  children: [_buildQuizzesList(), _buildGamesList()],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -137,7 +135,10 @@ class _AssessmentCard extends StatelessWidget {
                   ),
                   if (isCompleted)
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.green,
                         borderRadius: BorderRadius.circular(12),
@@ -166,7 +167,10 @@ class _AssessmentCard extends StatelessWidget {
                   ElevatedButton(
                     onPressed: onTap,
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 8,
+                      ),
                     ),
                     child: Text(isStarted ? 'Resume' : 'Start'),
                   ),

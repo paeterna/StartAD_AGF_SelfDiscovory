@@ -91,117 +91,121 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
 
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: AppColors.backgroundGradient,
-        ),
+        decoration: const BoxDecoration(gradient: AppColors.primaryGradient),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-              // Progress indicator
-              LinearProgressIndicator(
-                value: (_currentStep + 1) / _totalSteps,
-              ),
-              const SizedBox(height: 16),
-
-              // Step indicator
-              Text(
-                'Question ${_currentStep + 1} of $_totalSteps',
-                style: Theme.of(context).textTheme.titleMedium,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 32),
-
-              // Question
-              Text(
-                currentQuestion['question'] as String,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+                // Progress indicator
+                LinearProgressIndicator(
+                  value: (_currentStep + 1) / _totalSteps,
                 ),
-              ),
-              const SizedBox(height: 32),
+                const SizedBox(height: 16),
 
-              // Options
-              Expanded(
-                child: ListView.builder(
-                  itemCount: (currentQuestion['options'] as List).length,
-                  itemBuilder: (context, index) {
-                    final option = currentQuestion['options'][index] as String;
-                    final isSelected = _selectedAnswers[_currentStep] == option;
-
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: OutlinedButton(
-                        onPressed: () {
-                          setState(() {
-                            _selectedAnswers[_currentStep] = option;
-                          });
-                        },
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.all(20),
-                          side: BorderSide(
-                            width: isSelected ? 2 : 1,
-                            color: isSelected
-                                ? Theme.of(context).colorScheme.primary
-                                : Theme.of(context).colorScheme.outline,
-                          ),
-                          backgroundColor: isSelected
-                              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
-                              : null,
-                        ),
-                        child: Text(
-                          option,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+                // Step indicator
+                Text(
+                  'Question ${_currentStep + 1} of $_totalSteps',
+                  style: Theme.of(context).textTheme.titleMedium,
+                  textAlign: TextAlign.center,
                 ),
-              ),
+                const SizedBox(height: 32),
 
-              // Navigation buttons
-              Row(
-                children: [
-                  if (_currentStep > 0)
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {
-                          setState(() {
-                            _currentStep--;
-                          });
-                        },
-                        child: const Text('Back'),
-                      ),
-                    ),
-                  if (_currentStep > 0) const SizedBox(width: 16),
-                  Expanded(
-                    flex: 2,
-                    child: ElevatedButton(
-                      onPressed: _selectedAnswers.containsKey(_currentStep)
-                          ? () {
-                              if (_currentStep < _totalSteps - 1) {
-                                setState(() {
-                                  _currentStep++;
-                                });
-                              } else {
-                                _completeOnboarding();
-                              }
-                            }
-                          : null,
-                      child: Text(
-                        _currentStep < _totalSteps - 1 ? 'Next' : 'Finish',
-                      ),
-                    ),
+                // Question
+                Text(
+                  currentQuestion['question'] as String,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-              ),
-            ],
+                ),
+                const SizedBox(height: 32),
+
+                // Options
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: (currentQuestion['options'] as List).length,
+                    itemBuilder: (context, index) {
+                      final option =
+                          currentQuestion['options'][index] as String;
+                      final isSelected =
+                          _selectedAnswers[_currentStep] == option;
+
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: OutlinedButton(
+                          onPressed: () {
+                            setState(() {
+                              _selectedAnswers[_currentStep] = option;
+                            });
+                          },
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.all(20),
+                            side: BorderSide(
+                              width: isSelected ? 2 : 1,
+                              color: isSelected
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(context).colorScheme.outline,
+                            ),
+                            backgroundColor: isSelected
+                                ? Theme.of(
+                                    context,
+                                  ).colorScheme.primary.withValues(alpha: 0.1)
+                                : null,
+                          ),
+                          child: Text(
+                            option,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: isSelected
+                                  ? FontWeight.w600
+                                  : FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+
+                // Navigation buttons
+                Row(
+                  children: [
+                    if (_currentStep > 0)
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            setState(() {
+                              _currentStep--;
+                            });
+                          },
+                          child: const Text('Back'),
+                        ),
+                      ),
+                    if (_currentStep > 0) const SizedBox(width: 16),
+                    Expanded(
+                      flex: 2,
+                      child: ElevatedButton(
+                        onPressed: _selectedAnswers.containsKey(_currentStep)
+                            ? () {
+                                if (_currentStep < _totalSteps - 1) {
+                                  setState(() {
+                                    _currentStep++;
+                                  });
+                                } else {
+                                  _completeOnboarding();
+                                }
+                              }
+                            : null,
+                        child: Text(
+                          _currentStep < _totalSteps - 1 ? 'Next' : 'Finish',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),

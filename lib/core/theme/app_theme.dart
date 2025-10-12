@@ -6,10 +6,10 @@ import 'app_colors.dart';
 class AppTheme {
   AppTheme._();
 
-  // Border radius constants (rounded for friendly feel)
-  static const double radiusSmall = 12.0;
-  static const double radiusMedium = 16.0;
-  static const double radiusLarge = 24.0;
+  // Border radius constants (warm, rounded feel: 20-32px)
+  static const double radiusSmall = 20.0;
+  static const double radiusMedium = 24.0;
+  static const double radiusLarge = 28.0;
   static const double radiusXLarge = 32.0;
 
   // Spacing constants
@@ -19,21 +19,23 @@ class AppTheme {
   static const double spaceLarge = 24.0;
   static const double spaceXLarge = 32.0;
 
-  // Glassmorphism constants
+  // Glassmorphism constants (15-25% opacity)
   static const double glassBlur = 20.0;
-  static const double glassOpacity = 0.1;
+  static const double glassOpacity = 0.15;       // Light glass
+  static const double glassOpacityMedium = 0.20; // Medium glass
+  static const double glassOpacityHeavy = 0.25;  // Heavy glass
   static const double glassBorderOpacity = 0.2;
 
-  /// Light theme - Futuristic, friendly, and optimistic
+  /// Light theme - Warm, friendly, and optimistic
   static ThemeData get lightTheme {
     final colorScheme = ColorScheme.light(
-      primary: AppColors.gradientBlue,
-      secondary: AppColors.gradientCyan,
-      tertiary: AppColors.gradientPurple,
+      primary: AppColors.warmOrange,
+      secondary: AppColors.warmAmber,
+      tertiary: AppColors.warmPeach,
       error: AppColors.error,
       surface: AppColors.lightSurface,
-      onSurface: AppColors.lightOnSurface,
-      surfaceContainerHighest: AppColors.lightSurfaceVariant,
+      onSurface: AppColors.textPrimary,
+      surfaceContainerHighest: AppColors.lightCard,
       outline: Colors.white.withValues(alpha: glassBorderOpacity),
     );
 
@@ -44,7 +46,7 @@ class AppTheme {
       scaffoldBackgroundColor: Colors.transparent,
 
       // Typography - Poppins for approachable, rounded feel
-      textTheme: _buildTextTheme(AppColors.lightOnBackground),
+      textTheme: _buildTextTheme(AppColors.textPrimary),
 
       // Card theme - Glassmorphism style
       cardTheme: CardThemeData(
@@ -57,7 +59,7 @@ class AppTheme {
           ),
         ),
         color: Colors.white.withValues(alpha: glassOpacity),
-        shadowColor: AppColors.gradientBlue.withValues(alpha: 0.1),
+        shadowColor: AppColors.warmOrange.withValues(alpha: 0.1),
       ),
 
       // AppBar theme - Transparent with glassmorphism
@@ -65,11 +67,11 @@ class AppTheme {
         elevation: 0,
         centerTitle: false,
         backgroundColor: Colors.white.withValues(alpha: glassOpacity),
-        foregroundColor: AppColors.lightOnBackground,
+        foregroundColor: AppColors.textPrimary,
         titleTextStyle: GoogleFonts.poppins(
           fontSize: 22,
           fontWeight: FontWeight.w700,
-          color: AppColors.lightOnBackground,
+          color: AppColors.textPrimary,
           letterSpacing: 0.3,
         ),
       ),
@@ -84,32 +86,32 @@ class AppTheme {
 
       // Icon theme
       iconTheme: IconThemeData(
-        color: AppColors.lightOnSurface,
+        color: AppColors.textSecondary,
         size: 24,
       ),
 
       // Focus theme
-      focusColor: AppColors.gradientBlue.withValues(alpha: 0.2),
+      focusColor: AppColors.warmOrange.withValues(alpha: 0.2),
 
       // Divider with subtle transparency
       dividerTheme: DividerThemeData(
-        color: AppColors.lightOnSurface.withValues(alpha: 0.1),
+        color: AppColors.textSecondary.withValues(alpha: 0.1),
         thickness: 1,
         space: 1,
       ),
     );
   }
 
-  /// Dark theme - Sophisticated, immersive, and futuristic
+  /// Dark theme - Warm, sophisticated, and immersive
   static ThemeData get darkTheme {
     final colorScheme = ColorScheme.dark(
-      primary: AppColors.gradientCyan,
-      secondary: AppColors.gradientViolet,
-      tertiary: AppColors.gradientPink,
+      primary: AppColors.warmAmber,
+      secondary: AppColors.warmPeach,
+      tertiary: AppColors.accentCoral,
       error: AppColors.error,
       surface: AppColors.darkSurface,
-      onSurface: AppColors.darkOnSurface,
-      surfaceContainerHighest: AppColors.darkSurfaceVariant,
+      onSurface: AppColors.textDarkPrimary,
+      surfaceContainerHighest: AppColors.darkCard,
       outline: Colors.white.withValues(alpha: glassBorderOpacity),
     );
 
@@ -120,7 +122,7 @@ class AppTheme {
       scaffoldBackgroundColor: Colors.transparent,
 
       // Typography - Poppins for approachable feel
-      textTheme: _buildTextTheme(AppColors.darkOnBackground),
+      textTheme: _buildTextTheme(AppColors.textDarkPrimary),
 
       // Card theme - Dark glassmorphism
       cardTheme: CardThemeData(
@@ -133,7 +135,7 @@ class AppTheme {
           ),
         ),
         color: Colors.black.withValues(alpha: glassOpacity),
-        shadowColor: AppColors.gradientCyan.withValues(alpha: 0.2),
+        shadowColor: AppColors.warmAmber.withValues(alpha: 0.2),
       ),
 
       // AppBar theme - Dark glassmorphism
@@ -141,11 +143,11 @@ class AppTheme {
         elevation: 0,
         centerTitle: false,
         backgroundColor: Colors.black.withValues(alpha: glassOpacity),
-        foregroundColor: AppColors.darkOnBackground,
+        foregroundColor: AppColors.textDarkPrimary,
         titleTextStyle: GoogleFonts.poppins(
           fontSize: 22,
           fontWeight: FontWeight.w700,
-          color: AppColors.darkOnBackground,
+          color: AppColors.textDarkPrimary,
           letterSpacing: 0.3,
         ),
       ),
@@ -159,14 +161,14 @@ class AppTheme {
       inputDecorationTheme: _inputDecorationTheme(colorScheme, true),
 
       // Icon theme
-      iconTheme: const IconThemeData(color: AppColors.darkOnSurface),
+      iconTheme: IconThemeData(color: AppColors.textDarkSecondary),
 
       // Focus theme
-      focusColor: AppColors.gradientPurple.withValues(alpha: 0.3),
+      focusColor: AppColors.warmAmber.withValues(alpha: 0.3),
 
       // Divider
       dividerTheme: DividerThemeData(
-        color: AppColors.darkOnSurface.withValues(alpha: 0.1),
+        color: AppColors.textDarkSecondary.withValues(alpha: 0.1),
         thickness: 1,
       ),
     );
@@ -353,8 +355,8 @@ class AppTheme {
     return InputDecorationTheme(
       filled: true,
       fillColor: isDark
-          ? AppColors.darkSurfaceVariant
-          : AppColors.lightSurfaceVariant,
+          ? AppColors.darkCard
+          : AppColors.lightCard,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusMedium),
         borderSide: BorderSide.none,

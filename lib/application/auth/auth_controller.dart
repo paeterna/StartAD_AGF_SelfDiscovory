@@ -50,6 +50,20 @@ class AuthController extends StateNotifier<AuthState> {
     }
   }
 
+  /// Refresh user state (called after OAuth callback)
+  Future<void> refreshUser() async {
+    debugPrint('🔵 [AUTH_CONTROLLER] refreshUser called');
+    try {
+      final authRepo = _ref.read(authRepositoryProvider);
+      final user = await authRepo.getCurrentUser();
+      debugPrint('✅ [AUTH_CONTROLLER] User refreshed: ${user?.id}');
+      state = AuthState(user: user, isLoading: false);
+    } catch (e) {
+      debugPrint('🔴 [AUTH_CONTROLLER] refreshUser error: $e');
+      state = AuthState(error: e.toString(), isLoading: false);
+    }
+  }
+
   Future<void> signIn({
     required String email,
     required String password,

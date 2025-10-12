@@ -55,10 +55,10 @@ class _GradientBackgroundState extends State<GradientBackground>
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Default gradient based on theme
+    // Default gradient based on theme (warm orange → beige → sky blue)
     final defaultGradient = isDark
         ? AppColors.darkBackgroundGradient
-        : AppColors.backgroundGradient;
+        : AppColors.primaryGradient;
 
     final selectedGradient = widget.gradient ?? defaultGradient;
 
@@ -110,13 +110,15 @@ class HeroGradientBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final heroGradient = isDark ? AppColors.darkHeroGradient : AppColors.heroGradient;
+    final heroGradient = isDark
+        ? AppColors.darkBackgroundGradient
+        : AppColors.accentGradient;
 
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: heroGradient.colors
-              .map((color) => color.withValues(alpha: opacity))
+              .map((Color color) => color.withValues(alpha: opacity))
               .toList(),
           begin: heroGradient.begin,
           end: heroGradient.end,

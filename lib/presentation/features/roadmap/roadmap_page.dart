@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import '../../widgets/gradient_background.dart';
 
 class RoadmapPage extends StatelessWidget {
   const RoadmapPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Roadmap'),
-      ),
-      body: ListView(
+    return GradientBackground(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Roadmap'),
+        ),
+        body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           const Text(
@@ -82,6 +84,7 @@ class RoadmapPage extends StatelessWidget {
             category: 'Experience',
           ),
         ],
+        ),
       ),
     );
   }
