@@ -15,14 +15,14 @@ class RoadmapRepositoryImpl implements RoadmapRepository {
     required String userId,
     required String careerId,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
     final key = '${userId}_$careerId';
     return _roadmaps[key];
   }
 
   @override
   Future<List<Roadmap>> getUserRoadmaps({required String userId}) async {
-    await Future.delayed(const Duration(milliseconds: 250));
+    await Future<void>.delayed(const Duration(milliseconds: 250));
 
     return _roadmaps.values
         .where((roadmap) => roadmap.userId == userId)
@@ -34,7 +34,7 @@ class RoadmapRepositoryImpl implements RoadmapRepository {
     required String userId,
     required String careerId,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 400));
+    await Future<void>.delayed(const Duration(milliseconds: 400));
 
     // Get template steps for this career
     final templateSteps = await getRoadmapTemplate(careerId: careerId);
@@ -62,7 +62,7 @@ class RoadmapRepositoryImpl implements RoadmapRepository {
     required String stepId,
     required bool completed,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 150));
+    await Future<void>.delayed(const Duration(milliseconds: 150));
 
     // Find the roadmap containing this step
     for (final entry in _roadmaps.entries) {
@@ -92,14 +92,14 @@ class RoadmapRepositoryImpl implements RoadmapRepository {
     required String userId,
     required String careerId,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future<void>.delayed(const Duration(milliseconds: 100));
     final key = '${userId}_$careerId';
     _roadmaps.remove(key);
   }
 
   @override
   Future<List<RoadmapStep>> getRoadmapTemplate({required String careerId}) async {
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
 
     // Return template from mock data, or generate a generic one
     if (MockData.roadmapTemplates.containsKey(careerId)) {

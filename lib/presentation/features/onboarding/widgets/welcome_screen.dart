@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:startad_agf_selfdiscovery/core/theme/app_colors.dart';
 import 'package:startad_agf_selfdiscovery/core/theme/app_theme.dart';
-import 'package:startad_agf_selfdiscovery/presentation/widgets/glassy_card.dart';
+import 'package:startad_agf_selfdiscovery/presentation/widgets/enhanced_glassy_card.dart';
+import 'package:startad_agf_selfdiscovery/presentation/widgets/gradient_background.dart';
 
 /// Welcome screen for onboarding - Friendly introduction for teens
 class WelcomeScreen extends StatelessWidget {
@@ -14,10 +15,8 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: AppColors.backgroundGradient,
-      ),
+    return GradientBackground(
+      animated: true,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(AppTheme.spaceLarge),
@@ -44,7 +43,7 @@ class WelcomeScreen extends StatelessWidget {
                     gradient: AppColors.primaryGradient,
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.gradientPink.withValues(alpha: 0.4),
+                        color: AppColors.gradientBlue.withValues(alpha: 0.4),
                         blurRadius: 40,
                         spreadRadius: 10,
                       ),

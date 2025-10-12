@@ -15,6 +15,28 @@ linter:
     # Disable overly strict rules for development
     public_member_api_docs: false
     lines_longer_than_80_chars: false
+    # Disable pedantic style rules
+    always_use_package_imports: false
+    prefer_const_constructors: false
+    prefer_const_literals_to_create_immutables: false
+    avoid_redundant_argument_values: false
+    prefer_int_literals: false
+    unnecessary_raw_strings: false
+    cascade_invocations: false
+    omit_local_variable_types: false
+    unnecessary_breaks: false
+    sort_constructors_first: false
+    directives_ordering: false
+    prefer_if_elements_to_conditional_expressions: false
+    always_put_required_named_parameters_first: false
+    noop_primitive_operations: false
+    avoid_dynamic_calls: false
+    avoid_escaping_inner_quotes: false
+    use_if_null_to_convert_nulls_to_bools: false
+    unnecessary_lambdas: false
+    sort_pub_dependencies: false
+    flutter_style_todos: false
+    avoid_positional_boolean_parameters: false
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

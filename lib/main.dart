@@ -12,16 +12,18 @@ void main() async {
 
   // Load environment variables from .env file (local development)
   // For production builds, we use --dart-define instead
+  bool envLoaded = false;
   try {
     await dotenv.load(fileName: '.env');
+    envLoaded = true;
   } catch (e) {
     debugPrint('⚠️ .env file not found, using dart-define values');
   }
 
   // Get Supabase config from .env (local) or --dart-define (production)
-  final supabaseUrl = dotenv.env['SUPABASE_URL'] ??
+  final supabaseUrl = (envLoaded ? dotenv.env['SUPABASE_URL'] : null) ??
                       const String.fromEnvironment('SUPABASE_URL');
-  final supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'] ??
+  final supabaseAnonKey = (envLoaded ? dotenv.env['SUPABASE_ANON_KEY'] : null) ??
                           const String.fromEnvironment('SUPABASE_ANON_KEY');
 
   debugPrint('URL=${supabaseUrl.isNotEmpty ? supabaseUrl.substring(0, 20) : "EMPTY"} '

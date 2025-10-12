@@ -13,7 +13,7 @@ class AssessmentRepositoryImpl implements AssessmentRepository {
 
   @override
   Future<List<Assessment>> getUserAssessments({required String userId}) async {
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
 
     final assessmentIds = _userAssessments[userId] ?? [];
     return assessmentIds
@@ -24,7 +24,7 @@ class AssessmentRepositoryImpl implements AssessmentRepository {
 
   @override
   Future<Assessment?> getAssessment({required String assessmentId}) async {
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future<void>.delayed(const Duration(milliseconds: 100));
     return _assessments[assessmentId];
   }
 
@@ -34,7 +34,7 @@ class AssessmentRepositoryImpl implements AssessmentRepository {
     required Map<String, int> traitScores,
     required AssessmentType type,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future<void>.delayed(const Duration(milliseconds: 300));
 
     // Calculate progress boost based on assessment type
     int deltaProgress = 0;
@@ -74,7 +74,7 @@ class AssessmentRepositoryImpl implements AssessmentRepository {
     Map<String, int>? traitScores,
     bool? completed,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
 
     final existing = _assessments[assessmentId];
     if (existing == null) {
@@ -92,7 +92,7 @@ class AssessmentRepositoryImpl implements AssessmentRepository {
 
   @override
   Future<Map<String, int>> getUserTraitScores({required String userId}) async {
-    await Future.delayed(const Duration(milliseconds: 250));
+    await Future<void>.delayed(const Duration(milliseconds: 250));
 
     final assessments = await getUserAssessments(userId: userId);
     final completedAssessments =
@@ -126,7 +126,7 @@ class AssessmentRepositoryImpl implements AssessmentRepository {
   Future<List<AssessmentTemplate>> getAvailableAssessments({
     AssessmentType? type,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
 
     if (type == null) {
       return MockData.assessmentTemplates;

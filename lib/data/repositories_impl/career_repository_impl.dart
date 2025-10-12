@@ -13,13 +13,13 @@ class CareerRepositoryImpl implements CareerRepository {
 
   @override
   Future<List<Career>> getCareers() async {
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future<void>.delayed(const Duration(milliseconds: 300));
     return MockData.careers;
   }
 
   @override
   Future<List<Career>> getCareersByCluster({required String cluster}) async {
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future<void>.delayed(const Duration(milliseconds: 300));
     return MockData.careers
         .where((career) => career.cluster == cluster)
         .toList();
@@ -30,7 +30,7 @@ class CareerRepositoryImpl implements CareerRepository {
     required Map<String, int> traitScores,
     int minMatchScore = 0,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 400));
+    await Future<void>.delayed(const Duration(milliseconds: 400));
 
     // Rule-based matching algorithm
     // Calculates match score based on overlap between user traits and career tags
@@ -90,7 +90,7 @@ class CareerRepositoryImpl implements CareerRepository {
 
   @override
   Future<Career?> getCareer({required String careerId}) async {
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
     try {
       return MockData.careers.firstWhere((c) => c.id == careerId);
     } catch (e) {
@@ -100,7 +100,7 @@ class CareerRepositoryImpl implements CareerRepository {
 
   @override
   Future<List<Career>> searchCareers({required String query}) async {
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future<void>.delayed(const Duration(milliseconds: 300));
 
     final lowerQuery = query.toLowerCase();
 
@@ -114,7 +114,7 @@ class CareerRepositoryImpl implements CareerRepository {
 
   @override
   Future<List<Career>> getSavedCareers({required String userId}) async {
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
 
     final savedIds = _savedCareers[userId] ?? {};
     return MockData.careers.where((c) => savedIds.contains(c.id)).toList();
@@ -125,7 +125,7 @@ class CareerRepositoryImpl implements CareerRepository {
     required String userId,
     required String careerId,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future<void>.delayed(const Duration(milliseconds: 100));
 
     _savedCareers.putIfAbsent(userId, () => {});
     _savedCareers[userId]!.add(careerId);
@@ -138,7 +138,7 @@ class CareerRepositoryImpl implements CareerRepository {
     required String userId,
     required String careerId,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future<void>.delayed(const Duration(milliseconds: 100));
 
     _savedCareers[userId]?.remove(careerId);
   }

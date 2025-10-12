@@ -153,7 +153,7 @@ class SettingsPage extends ConsumerWidget {
   }
 
   void _showLanguageDialog(BuildContext context, WidgetRef ref, User? user) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Select Language'),
@@ -193,7 +193,7 @@ class SettingsPage extends ConsumerWidget {
   }
 
   void _showThemeDialog(BuildContext context, WidgetRef ref, User? user) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Select Theme'),

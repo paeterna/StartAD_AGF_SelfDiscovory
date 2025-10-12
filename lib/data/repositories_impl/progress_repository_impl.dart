@@ -10,7 +10,7 @@ class ProgressRepositoryImpl implements ProgressRepository {
 
   @override
   Future<DiscoveryProgress> getUserProgress({required String userId}) async {
-    await Future.delayed(const Duration(milliseconds: 150));
+    await Future<void>.delayed(const Duration(milliseconds: 150));
 
     // Return existing progress or create new one
     return _progress.putIfAbsent(
@@ -29,7 +29,7 @@ class ProgressRepositoryImpl implements ProgressRepository {
     required String userId,
     required int deltaProgress,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
 
     final currentProgress = await getUserProgress(userId: userId);
     final updatedProgress = currentProgress.addProgress(deltaProgress);
@@ -41,7 +41,7 @@ class ProgressRepositoryImpl implements ProgressRepository {
 
   @override
   Future<DiscoveryProgress> resetProgress({required String userId}) async {
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future<void>.delayed(const Duration(milliseconds: 100));
 
     final resetProgress = DiscoveryProgress(
       userId: userId,

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
-/// Central theme configuration with semantic tokens
+/// Futuristic theme configuration with glassmorphism and modern aesthetics
 class AppTheme {
   AppTheme._();
 
-  // Border radius constants
-  static const double radiusSmall = 8.0;
+  // Border radius constants (rounded for friendly feel)
+  static const double radiusSmall = 12.0;
   static const double radiusMedium = 16.0;
   static const double radiusLarge = 24.0;
   static const double radiusXLarge = 32.0;
@@ -19,116 +19,131 @@ class AppTheme {
   static const double spaceLarge = 24.0;
   static const double spaceXLarge = 32.0;
 
-  /// Light theme configuration - Bright, vibrant, teen-friendly
+  // Glassmorphism constants
+  static const double glassBlur = 20.0;
+  static const double glassOpacity = 0.1;
+  static const double glassBorderOpacity = 0.2;
+
+  /// Light theme - Futuristic, friendly, and optimistic
   static ThemeData get lightTheme {
     final colorScheme = ColorScheme.light(
-      primary: AppColors.gradientPink,
-      secondary: AppColors.gradientPurple,
-      tertiary: AppColors.gradientCyan,
+      primary: AppColors.gradientBlue,
+      secondary: AppColors.gradientCyan,
+      tertiary: AppColors.gradientPurple,
       error: AppColors.error,
       surface: AppColors.lightSurface,
       onSurface: AppColors.lightOnSurface,
+      surfaceContainerHighest: AppColors.lightSurfaceVariant,
+      outline: Colors.white.withValues(alpha: glassBorderOpacity),
     );
 
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
       brightness: Brightness.light,
-      scaffoldBackgroundColor: AppColors.lightBackground,
+      scaffoldBackgroundColor: Colors.transparent,
 
-      // Typography - Poppins for friendly feel
+      // Typography - Poppins for approachable, rounded feel
       textTheme: _buildTextTheme(AppColors.lightOnBackground),
 
-      // Card theme - Glassy with gradient border
+      // Card theme - Glassmorphism style
       cardTheme: CardThemeData(
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusLarge),
           side: BorderSide(
-            color: AppColors.glassBorder,
-            width: 1.5,
+            color: Colors.white.withValues(alpha: glassBorderOpacity),
+            width: 1.0,
           ),
         ),
-        color: AppColors.lightSurface.withValues(alpha: 0.9),
+        color: Colors.white.withValues(alpha: glassOpacity),
+        shadowColor: AppColors.gradientBlue.withValues(alpha: 0.1),
       ),
 
-      // AppBar theme - Clean & Modern
+      // AppBar theme - Transparent with glassmorphism
       appBarTheme: AppBarTheme(
         elevation: 0,
         centerTitle: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white.withValues(alpha: glassOpacity),
         foregroundColor: AppColors.lightOnBackground,
         titleTextStyle: GoogleFonts.poppins(
-          fontSize: 20,
+          fontSize: 22,
           fontWeight: FontWeight.w700,
           color: AppColors.lightOnBackground,
           letterSpacing: 0.3,
         ),
       ),
 
-      // Button themes
+      // Button themes with glassmorphism
       elevatedButtonTheme: _elevatedButtonTheme(colorScheme),
       outlinedButtonTheme: _outlinedButtonTheme(colorScheme),
       textButtonTheme: _textButtonTheme(colorScheme),
 
-      // Input decoration theme
+      // Input decoration theme with glass effect
       inputDecorationTheme: _inputDecorationTheme(colorScheme, false),
 
       // Icon theme
-      iconTheme: const IconThemeData(color: AppColors.lightOnSurface),
+      iconTheme: IconThemeData(
+        color: AppColors.lightOnSurface,
+        size: 24,
+      ),
 
       // Focus theme
-      focusColor: AppColors.gradientPink.withValues(alpha: 0.2),
+      focusColor: AppColors.gradientBlue.withValues(alpha: 0.2),
 
-      // Divider
+      // Divider with subtle transparency
       dividerTheme: DividerThemeData(
         color: AppColors.lightOnSurface.withValues(alpha: 0.1),
         thickness: 1,
+        space: 1,
       ),
     );
   }
 
-  /// Dark theme configuration - Warm, cozy, teen-friendly
+  /// Dark theme - Sophisticated, immersive, and futuristic
   static ThemeData get darkTheme {
     final colorScheme = ColorScheme.dark(
-      primary: AppColors.gradientPurple,
-      secondary: AppColors.gradientPink,
-      tertiary: AppColors.gradientCyan,
+      primary: AppColors.gradientCyan,
+      secondary: AppColors.gradientViolet,
+      tertiary: AppColors.gradientPink,
       error: AppColors.error,
       surface: AppColors.darkSurface,
       onSurface: AppColors.darkOnSurface,
+      surfaceContainerHighest: AppColors.darkSurfaceVariant,
+      outline: Colors.white.withValues(alpha: glassBorderOpacity),
     );
 
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
       brightness: Brightness.dark,
-      scaffoldBackgroundColor: AppColors.darkBackground,
+      scaffoldBackgroundColor: Colors.transparent,
 
-      // Typography - Poppins for friendly feel
+      // Typography - Poppins for approachable feel
       textTheme: _buildTextTheme(AppColors.darkOnBackground),
 
-      // Card theme with glassmorphism - Glassy & vibrant
+      // Card theme - Dark glassmorphism
       cardTheme: CardThemeData(
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusLarge),
           side: BorderSide(
-            color: AppColors.glassBorder,
-            width: 1.5,
+            color: Colors.white.withValues(alpha: glassBorderOpacity),
+            width: 1.0,
           ),
         ),
-        color: AppColors.darkSurface.withValues(alpha: 0.7),
+        color: Colors.black.withValues(alpha: glassOpacity),
+        shadowColor: AppColors.gradientCyan.withValues(alpha: 0.2),
       ),
 
-      // AppBar theme - Clean & Modern
+      // AppBar theme - Dark glassmorphism
       appBarTheme: AppBarTheme(
         elevation: 0,
         centerTitle: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black.withValues(alpha: glassOpacity),
         foregroundColor: AppColors.darkOnBackground,
         titleTextStyle: GoogleFonts.poppins(
-          fontSize: 20,
+          fontSize: 22,
           fontWeight: FontWeight.w700,
           color: AppColors.darkOnBackground,
           letterSpacing: 0.3,
