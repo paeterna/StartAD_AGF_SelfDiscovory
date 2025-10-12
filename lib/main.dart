@@ -10,16 +10,27 @@ import 'core/providers/providers.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Load environment variables
-  await dotenv.load(fileName: '.env');
+  // Load environment variables from .env file (local development)
+  // For production builds, we use --dart-define instead
+  try {
+    await dotenv.load(fileName: '.env');
+  } catch (e) {
+    debugPrint('⚠️ .env file not found, using dart-define values');
+  }
 
-debugPrint('URL=${const String.fromEnvironment('SUPABASE_URL')} '
-           'KEY=${const String.fromEnvironment('SUPABASE_ANON_KEY').isNotEmpty}');
+  // Get Supabase config from .env (local) or --dart-define (production)
+  final supabaseUrl = dotenv.env['SUPABASE_URL'] ??
+                      const String.fromEnvironment('SUPABASE_URL');
+  final supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'] ??
+                          const String.fromEnvironment('SUPABASE_ANON_KEY');
+
+  debugPrint('URL=${supabaseUrl.isNotEmpty ? supabaseUrl.substring(0, 20) : "EMPTY"} '
+             'KEY=${supabaseAnonKey.isNotEmpty}');
 
   // Initialize Supabase
   await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL'] ?? '',
-    anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
+    url: supabaseUrl,
+    anonKey: supabaseAnonKey,
     authOptions: const FlutterAuthClientOptions(
       authFlowType: AuthFlowType.pkce, // recommended for web
     ),

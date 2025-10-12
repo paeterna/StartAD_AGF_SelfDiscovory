@@ -92,12 +92,13 @@
     Expires = "0"
 
 # Plugin configuration
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
-
-  [[plugins.inputs.thresholds]]
-    performance = 0.8
-    accessibility = 0.9
-    best-practices = 0.8
-    seo = 0.9
-    pwa = 0.8
+# Disabled for local development - uncomment for production builds
+# [[plugins]]
+#   package = "@netlify/plugin-lighthouse"
+#
+#   [[plugins.inputs.thresholds]]
+#     performance = 0.8
+#     accessibility = 0.9
+#     best-practices = 0.8
+#     seo = 0.9
+#     pwa = 0.8

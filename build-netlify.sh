@@ -31,7 +31,10 @@ flutter pub get
 
 # Build for web
 echo "🏗️  Building Flutter web app..."
-flutter build web --release
+echo "🔑 Using Supabase URL: ${SUPABASE_URL:0:30}..."
+flutter build web --release \
+  --dart-define=SUPABASE_URL="$SUPABASE_URL" \
+  --dart-define=SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY"
 
 # Add cache busting timestamp to index.html
 echo "🔄 Adding cache busting timestamp..."
