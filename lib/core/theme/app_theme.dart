@@ -78,7 +78,7 @@ class AppTheme {
       iconTheme: const IconThemeData(color: AppColors.lightOnSurface),
 
       // Focus theme
-      focusColor: AppColors.neonTeal.withValues(alpha: 0.2),
+      focusColor: AppColors.gradientPink.withValues(alpha: 0.2),
 
       // Divider
       dividerTheme: DividerThemeData(
@@ -147,7 +147,7 @@ class AppTheme {
       iconTheme: const IconThemeData(color: AppColors.darkOnSurface),
 
       // Focus theme
-      focusColor: AppColors.neonTeal.withValues(alpha: 0.3),
+      focusColor: AppColors.gradientPurple.withValues(alpha: 0.3),
 
       // Divider
       dividerTheme: DividerThemeData(
