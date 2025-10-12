@@ -32,7 +32,8 @@ void main() async {
     url: supabaseUrl,
     anonKey: supabaseAnonKey,
     authOptions: const FlutterAuthClientOptions(
-      authFlowType: AuthFlowType.pkce, // recommended for web
+      // Use implicit flow for web - works with both OAuth and email/password
+      authFlowType: AuthFlowType.implicit,
     ),
   );
 
