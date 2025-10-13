@@ -30,18 +30,11 @@ class LanguageSwitcher extends ConsumerWidget {
           },
           borderRadius: BorderRadius.circular(AppTheme.radiusSmall),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
-                  Icons.language,
-                  size: 18,
-                  color: Colors.white,
-                ),
+                const Icon(Icons.language, size: 18, color: Colors.white),
                 const SizedBox(width: 6),
                 Text(
                   isArabic ? 'EN' : 'عربي',

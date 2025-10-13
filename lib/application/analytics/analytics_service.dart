@@ -119,10 +119,7 @@ class MockAnalyticsService implements AnalyticsService {
   }) async {
     await logEvent(
       name: 'roadmap_step_complete',
-      parameters: {
-        'user_id': userId,
-        'step_id': stepId,
-      },
+      parameters: {'user_id': userId, 'step_id': stepId},
     );
   }
 }

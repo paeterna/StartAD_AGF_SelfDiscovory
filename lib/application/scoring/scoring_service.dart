@@ -25,7 +25,8 @@ class ProfileUpdateResponse {
       matchesComputed: json['matches_computed'] as int? ?? 0,
       matchesStored: json['matches_stored'] as int? ?? 0,
       confidence: (json['confidence'] as num?)?.toDouble() ?? 0.0,
-      topMatches: (json['top'] as List<dynamic>?)
+      topMatches:
+          (json['top'] as List<dynamic>?)
               ?.map((e) => TopCareerMatch.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
@@ -50,9 +51,11 @@ class TopCareerMatch {
     return TopCareerMatch(
       careerId: json['career_id'] as String,
       similarity: (json['similarity'] as num).toDouble(),
-      topFeatures: (json['top_features'] as List<dynamic>?)
-              ?.map((e) =>
-                  FeatureContribution.fromJson(e as Map<String, dynamic>))
+      topFeatures:
+          (json['top_features'] as List<dynamic>?)
+              ?.map(
+                (e) => FeatureContribution.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           [],
     );
@@ -96,10 +99,7 @@ class ScoringService {
     required List<FeatureScore> batchFeatures,
   }) async {
     try {
-      final batch = FeatureScoreBatch(
-        userId: userId,
-        features: batchFeatures,
-      );
+      final batch = FeatureScoreBatch(userId: userId, features: batchFeatures);
 
       final response = await _supabase.functions.invoke(
         'update_profile_and_match',
@@ -247,9 +247,11 @@ class CareerMatch {
       careerId: json['career_id'] as String,
       similarity: (json['similarity'] as num).toDouble(),
       confidence: (json['confidence'] as num).toDouble(),
-      topFeatures: (json['top_features'] as List<dynamic>?)
-              ?.map((e) =>
-                  FeatureContribution.fromJson(e as Map<String, dynamic>))
+      topFeatures:
+          (json['top_features'] as List<dynamic>?)
+              ?.map(
+                (e) => FeatureContribution.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           [],
     );

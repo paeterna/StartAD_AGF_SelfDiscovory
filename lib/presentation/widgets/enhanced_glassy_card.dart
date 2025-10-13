@@ -50,20 +50,16 @@ class _GlassyCardState extends State<GlassyCard>
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 1.02,
-    ).animate(CurvedAnimation(
-      parent: _hoverController,
-      curve: Curves.easeInOut,
-    ));
-    _elevationAnimation = Tween<double>(
-      begin: widget.elevation,
-      end: widget.elevation + 4,
-    ).animate(CurvedAnimation(
-      parent: _hoverController,
-      curve: Curves.easeInOut,
-    ));
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.02).animate(
+      CurvedAnimation(parent: _hoverController, curve: Curves.easeInOut),
+    );
+    _elevationAnimation =
+        Tween<double>(
+          begin: widget.elevation,
+          end: widget.elevation + 4,
+        ).animate(
+          CurvedAnimation(parent: _hoverController, curve: Curves.easeInOut),
+        );
   }
 
   @override
@@ -75,8 +71,8 @@ class _GlassyCardState extends State<GlassyCard>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final borderRadius = widget.borderRadius ??
-        BorderRadius.circular(AppTheme.radiusLarge);
+    final borderRadius =
+        widget.borderRadius ?? BorderRadius.circular(AppTheme.radiusLarge);
 
     return AnimatedBuilder(
       animation: _hoverController,
@@ -86,55 +82,79 @@ class _GlassyCardState extends State<GlassyCard>
           child: Transform.scale(
             scale: widget.enableHoverEffect ? _scaleAnimation.value : 1.0,
             child: Material(
-              elevation: widget.enableHoverEffect ? _elevationAnimation.value : widget.elevation,
-              shadowColor: widget.shadowColor ??
-                  (isDark ? AppColors.warmAmber.withValues(alpha: 0.3)
-                         : AppColors.warmOrange.withValues(alpha: 0.2)),
+              elevation: widget.enableHoverEffect
+                  ? _elevationAnimation.value
+                  : widget.elevation,
+              shadowColor:
+                  widget.shadowColor ??
+                  (isDark
+                      ? AppColors.warmAmber.withValues(alpha: 0.3)
+                      : AppColors.warmOrange.withValues(alpha: 0.2)),
               borderRadius: borderRadius,
               color: Colors.transparent,
               child: ClipRRect(
                 borderRadius: borderRadius,
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: widget.blur, sigmaY: widget.blur),
+                  filter: ImageFilter.blur(
+                    sigmaX: widget.blur,
+                    sigmaY: widget.blur,
+                  ),
                   child: Container(
                     decoration: BoxDecoration(
-                      gradient: widget.gradient ??
+                      gradient:
+                          widget.gradient ??
                           LinearGradient(
                             colors: [
                               isDark
-                                  ? Colors.white.withValues(alpha: AppTheme.glassOpacity)
-                                  : Colors.white.withValues(alpha: AppTheme.glassOpacity + 0.1),
+                                  ? Colors.white.withValues(
+                                      alpha: AppTheme.glassOpacity,
+                                    )
+                                  : Colors.white.withValues(
+                                      alpha: AppTheme.glassOpacity + 0.1,
+                                    ),
                               isDark
-                                  ? Colors.white.withValues(alpha: AppTheme.glassOpacity * 0.5)
-                                  : Colors.white.withValues(alpha: AppTheme.glassOpacity),
+                                  ? Colors.white.withValues(
+                                      alpha: AppTheme.glassOpacity * 0.5,
+                                    )
+                                  : Colors.white.withValues(
+                                      alpha: AppTheme.glassOpacity,
+                                    ),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
                       borderRadius: borderRadius,
                       border: Border.all(
-                        color: Colors.white.withValues(alpha: AppTheme.glassBorderOpacity),
+                        color: Colors.white.withValues(
+                          alpha: AppTheme.glassBorderOpacity,
+                        ),
                         width: 1.0,
                       ),
                     ),
                     child: widget.onTap != null
                         ? InkWell(
                             onTap: widget.onTap,
-                            onHover: widget.enableHoverEffect ? (hovering) {
-                              if (hovering) {
-                                _hoverController.forward();
-                              } else {
-                                _hoverController.reverse();
-                              }
-                            } : null,
+                            onHover: widget.enableHoverEffect
+                                ? (hovering) {
+                                    if (hovering) {
+                                      _hoverController.forward();
+                                    } else {
+                                      _hoverController.reverse();
+                                    }
+                                  }
+                                : null,
                             borderRadius: borderRadius,
                             child: Container(
-                              padding: widget.padding ?? const EdgeInsets.all(AppTheme.spaceLarge),
+                              padding:
+                                  widget.padding ??
+                                  const EdgeInsets.all(AppTheme.spaceLarge),
                               child: widget.child,
                             ),
                           )
                         : Container(
-                            padding: widget.padding ?? const EdgeInsets.all(AppTheme.spaceLarge),
+                            padding:
+                                widget.padding ??
+                                const EdgeInsets.all(AppTheme.spaceLarge),
                             child: widget.child,
                           ),
                   ),
@@ -174,7 +194,9 @@ class GradientGlassyCard extends StatelessWidget {
       margin: margin,
       onTap: onTap,
       enableHoverEffect: enableHoverEffect,
-      gradient: isDark ? AppColors.darkBackgroundGradient : AppColors.primaryGradient,
+      gradient: isDark
+          ? AppColors.darkBackgroundGradient
+          : AppColors.primaryGradient,
       child: child,
     );
   }

@@ -21,13 +21,17 @@ void main() async {
   }
 
   // Get Supabase config from .env (local) or --dart-define (production)
-  final supabaseUrl = (envLoaded ? dotenv.env['SUPABASE_URL'] : null) ??
-                      const String.fromEnvironment('SUPABASE_URL');
-  final supabaseAnonKey = (envLoaded ? dotenv.env['SUPABASE_ANON_KEY'] : null) ??
-                          const String.fromEnvironment('SUPABASE_ANON_KEY');
+  final supabaseUrl =
+      (envLoaded ? dotenv.env['SUPABASE_URL'] : null) ??
+      const String.fromEnvironment('SUPABASE_URL');
+  final supabaseAnonKey =
+      (envLoaded ? dotenv.env['SUPABASE_ANON_KEY'] : null) ??
+      const String.fromEnvironment('SUPABASE_ANON_KEY');
 
-  debugPrint('URL=${supabaseUrl.isNotEmpty ? supabaseUrl.substring(0, 20) : "EMPTY"} '
-             'KEY=${supabaseAnonKey.isNotEmpty}');
+  debugPrint(
+    'URL=${supabaseUrl.isNotEmpty ? supabaseUrl.substring(0, 20) : "EMPTY"} '
+    'KEY=${supabaseAnonKey.isNotEmpty}',
+  );
 
   // Initialize Supabase
   await Supabase.initialize(

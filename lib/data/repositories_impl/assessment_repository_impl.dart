@@ -9,7 +9,8 @@ class AssessmentRepositoryImpl implements AssessmentRepository {
 
   // In-memory storage
   final Map<String, Assessment> _assessments = {};
-  final Map<String, List<String>> _userAssessments = {}; // userId -> assessmentIds
+  final Map<String, List<String>> _userAssessments =
+      {}; // userId -> assessmentIds
 
   @override
   Future<List<Assessment>> getUserAssessments({required String userId}) async {
@@ -95,8 +96,7 @@ class AssessmentRepositoryImpl implements AssessmentRepository {
     await Future<void>.delayed(const Duration(milliseconds: 250));
 
     final assessments = await getUserAssessments(userId: userId);
-    final completedAssessments =
-        assessments.where((a) => a.completed).toList();
+    final completedAssessments = assessments.where((a) => a.completed).toList();
 
     if (completedAssessments.isEmpty) {
       return {};

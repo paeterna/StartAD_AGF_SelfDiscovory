@@ -6,11 +6,7 @@ import '../../domain/entities/user.dart';
 
 /// Auth state
 class AuthState {
-  const AuthState({
-    this.user,
-    this.isLoading = false,
-    this.error,
-  });
+  const AuthState({this.user, this.isLoading = false, this.error});
 
   final User? user;
   final bool isLoading;
@@ -18,11 +14,7 @@ class AuthState {
 
   bool get isAuthenticated => user != null;
 
-  AuthState copyWith({
-    User? user,
-    bool? isLoading,
-    String? error,
-  }) {
+  AuthState copyWith({User? user, bool? isLoading, String? error}) {
     return AuthState(
       user: user ?? this.user,
       isLoading: isLoading ?? this.isLoading,
@@ -76,17 +68,16 @@ class AuthController extends StateNotifier<AuthState> {
     }
   }
 
-  Future<void> signIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> signIn({required String email, required String password}) async {
     debugPrint('🔵 [AUTH_CONTROLLER] signIn called for: $email');
     state = state.copyWith(isLoading: true, error: null);
     try {
       final authRepo = _ref.read(authRepositoryProvider);
       debugPrint('🔵 [AUTH_CONTROLLER] Calling repository signIn...');
       final user = await authRepo.signIn(email: email, password: password);
-      debugPrint('✅ [AUTH_CONTROLLER] Repository signIn successful. User ID: ${user.id}');
+      debugPrint(
+        '✅ [AUTH_CONTROLLER] Repository signIn successful. User ID: ${user.id}',
+      );
 
       // Sync locale from user profile
       _ref.read(localeProvider.notifier).syncFromUser(user.locale);
@@ -107,7 +98,9 @@ class AuthController extends StateNotifier<AuthState> {
     required String password,
     required String displayName,
   }) async {
-    debugPrint('🔵 [AUTH_CONTROLLER] signUp called for: $email (Display: $displayName)');
+    debugPrint(
+      '🔵 [AUTH_CONTROLLER] signUp called for: $email (Display: $displayName)',
+    );
     state = state.copyWith(isLoading: true, error: null);
     try {
       final authRepo = _ref.read(authRepositoryProvider);
@@ -117,7 +110,9 @@ class AuthController extends StateNotifier<AuthState> {
         password: password,
         displayName: displayName,
       );
-      debugPrint('✅ [AUTH_CONTROLLER] Repository signUp successful. User ID: ${user.id}');
+      debugPrint(
+        '✅ [AUTH_CONTROLLER] Repository signUp successful. User ID: ${user.id}',
+      );
 
       // Sync locale from user profile
       _ref.read(localeProvider.notifier).syncFromUser(user.locale);
@@ -141,7 +136,9 @@ class AuthController extends StateNotifier<AuthState> {
       debugPrint('🔵 [AUTH_CONTROLLER] Calling repository signInWithGoogle...');
       await authRepo.signInWithGoogle();
       debugPrint('✅ [AUTH_CONTROLLER] Repository signInWithGoogle initiated');
-      debugPrint('🔵 [AUTH_CONTROLLER] OAuth flow started - user will be redirected');
+      debugPrint(
+        '🔵 [AUTH_CONTROLLER] OAuth flow started - user will be redirected',
+      );
       // The actual user session will be handled by Supabase auth state changes
       // So we just clear loading state here
       state = state.copyWith(isLoading: false);
@@ -173,7 +170,9 @@ class AuthController extends StateNotifier<AuthState> {
       final authRepo = _ref.read(authRepositoryProvider);
       debugPrint('🔵 [AUTH_CONTROLLER] Calling repository resetPassword...');
       await authRepo.resetPassword(email: email);
-      debugPrint('✅ [AUTH_CONTROLLER] Repository resetPassword successful. Email sent to: $email');
+      debugPrint(
+        '✅ [AUTH_CONTROLLER] Repository resetPassword successful. Email sent to: $email',
+      );
       state = state.copyWith(isLoading: false);
     } catch (e) {
       debugPrint('🔴 [AUTH_CONTROLLER] resetPassword error: $e');
@@ -227,8 +226,10 @@ class AuthController extends StateNotifier<AuthState> {
       state = state.copyWith(user: user);
 
       await analytics.logOnboardingComplete(userId: user.id);
-      
-      debugPrint('✅ [AUTH_CONTROLLER] Onboarding completed for user: ${user.id}');
+
+      debugPrint(
+        '✅ [AUTH_CONTROLLER] Onboarding completed for user: ${user.id}',
+      );
     } catch (e) {
       debugPrint('🔴 [AUTH_CONTROLLER] Onboarding completion error: $e');
       state = state.copyWith(error: e.toString());
@@ -237,7 +238,8 @@ class AuthController extends StateNotifier<AuthState> {
 }
 
 /// Auth controller provider
-final authControllerProvider =
-    StateNotifierProvider<AuthController, AuthState>((ref) {
-  return AuthController(ref);
-});
+final authControllerProvider = StateNotifierProvider<AuthController, AuthState>(
+  (ref) {
+    return AuthController(ref);
+  },
+);

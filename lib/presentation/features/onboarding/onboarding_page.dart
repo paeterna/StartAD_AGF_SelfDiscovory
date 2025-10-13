@@ -72,7 +72,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
       // Convert selected answers to a format suitable for the database
       // Map question indices to question keys and answers
       final answers = <String, String>{};
-      
+
       for (int i = 0; i < _selectedAnswers.length; i++) {
         final questionKey = 'question_${i + 1}';
         final answer = _selectedAnswers[i];
@@ -81,10 +81,14 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
         }
       }
 
-      debugPrint('📝 [ONBOARDING] Saving ${answers.length} answers to database');
-      
+      debugPrint(
+        '📝 [ONBOARDING] Saving ${answers.length} answers to database',
+      );
+
       // Save the answers and complete onboarding in the database
-      await ref.read(authControllerProvider.notifier).completeOnboarding(answers: answers);
+      await ref
+          .read(authControllerProvider.notifier)
+          .completeOnboarding(answers: answers);
 
       if (mounted) {
         // Navigate to dashboard - router will handle the redirect based on onboarding status
@@ -107,7 +111,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+
     // Show welcome screen first
     if (_showWelcome) {
       return WelcomeScreen(
@@ -233,7 +237,9 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                               }
                             : null,
                         child: Text(
-                          _currentStep < _totalSteps - 1 ? l10n.onboardingNextButton : l10n.onboardingFinishButton,
+                          _currentStep < _totalSteps - 1
+                              ? l10n.onboardingNextButton
+                              : l10n.onboardingFinishButton,
                         ),
                       ),
                     ),

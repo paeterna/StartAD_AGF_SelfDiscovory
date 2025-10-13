@@ -60,7 +60,11 @@ class DiscoveryProgress {
       // Check if last activity was yesterday
       if (lastActivityDate != null) {
         final yesterday = DateTime.now().subtract(const Duration(days: 1));
-        final yesterdayDate = DateTime(yesterday.year, yesterday.month, yesterday.day);
+        final yesterdayDate = DateTime(
+          yesterday.year,
+          yesterday.month,
+          yesterday.day,
+        );
         final lastDate = DateTime(
           lastActivityDate!.year,
           lastActivityDate!.month,

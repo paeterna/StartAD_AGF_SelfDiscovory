@@ -43,7 +43,9 @@ class CareersPage extends ConsumerWidget {
                           Icon(
                             Icons.work_outline,
                             size: 64,
-                            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primary.withValues(alpha: 0.5),
                           ),
                           const SizedBox(height: 16),
                           Text(
@@ -88,7 +90,11 @@ class CareersPage extends ConsumerWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                      const Icon(
+                        Icons.error_outline,
+                        size: 48,
+                        color: Colors.red,
+                      ),
                       const SizedBox(height: 16),
                       Text('Error loading careers: $error'),
                       const SizedBox(height: 16),
@@ -192,12 +198,29 @@ class _CareerCard extends StatelessWidget {
                 spacing: 6,
                 runSpacing: 6,
                 children: topFeatures.map((feature) {
-                  final featureKey = feature is Map ? feature['feature_key'] as String? : '';
-                  final displayName = featureKey?.replaceAll('_', ' ').split(' ').map((w) => w.isNotEmpty ? w[0].toUpperCase() + w.substring(1) : '').join(' ') ?? '';
+                  final featureKey = feature is Map
+                      ? feature['feature_key'] as String?
+                      : '';
+                  final displayName =
+                      featureKey
+                          ?.replaceAll('_', ' ')
+                          .split(' ')
+                          .map(
+                            (w) => w.isNotEmpty
+                                ? w[0].toUpperCase() + w.substring(1)
+                                : '',
+                          )
+                          .join(' ') ??
+                      '';
                   return Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.primaryContainer.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
@@ -250,7 +273,10 @@ class _CareerCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                TextButton(onPressed: () {}, child: Text(l10n.careersViewDetailsButton)),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(l10n.careersViewDetailsButton),
+                ),
               ],
             ),
           ],

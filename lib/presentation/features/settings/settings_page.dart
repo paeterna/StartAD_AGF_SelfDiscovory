@@ -43,7 +43,11 @@ class SettingsPage extends ConsumerWidget {
             ListTile(
               leading: const Icon(Icons.language),
               title: Text(l10n.settingsLanguage),
-              subtitle: Text(user?.locale == 'ar' ? l10n.settingsLanguageArabic : l10n.settingsLanguageEnglish),
+              subtitle: Text(
+                user?.locale == 'ar'
+                    ? l10n.settingsLanguageArabic
+                    : l10n.settingsLanguageEnglish,
+              ),
               onTap: () => _showLanguageDialog(context, ref, user),
             ),
             ListTile(

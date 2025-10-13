@@ -49,7 +49,8 @@ class GameScorer {
       return 0.5; // Default
     }
 
-    final avgTime = telemetry.reactionTimes.reduce((a, b) => a + b) /
+    final avgTime =
+        telemetry.reactionTimes.reduce((a, b) => a + b) /
         telemetry.reactionTimes.length;
 
     if (avgTime <= 0) return 0.5;
@@ -68,12 +69,15 @@ class GameScorer {
       return 0.5; // Default for single response
     }
 
-    final mean = telemetry.reactionTimes.reduce((a, b) => a + b) /
+    final mean =
+        telemetry.reactionTimes.reduce((a, b) => a + b) /
         telemetry.reactionTimes.length;
 
-    final variance = telemetry.reactionTimes
-        .map((rt) => math.pow(rt - mean, 2))
-        .reduce((a, b) => a + b) / telemetry.reactionTimes.length;
+    final variance =
+        telemetry.reactionTimes
+            .map((rt) => math.pow(rt - mean, 2))
+            .reduce((a, b) => a + b) /
+        telemetry.reactionTimes.length;
 
     final stdDev = math.sqrt(variance);
     final stability = 1.0 - (stdDev / maxStd).clamp(0.0, 1.0);
@@ -163,7 +167,8 @@ class GameScorer {
     // Base quality on number of trials and accuracy
     final accuracy = computeAccuracy(telemetry);
     final trialQuality = math.min(1.0, telemetry.total / 10.0);
-    final baseQuality = (0.5 + 0.5 * accuracy) * trialQuality * qualityMultiplier;
+    final baseQuality =
+        (0.5 + 0.5 * accuracy) * trialQuality * qualityMultiplier;
 
     for (final mapping in mappings) {
       final rawScore = mapping.computeScore(telemetry);
@@ -189,72 +194,72 @@ class GameScorer {
 
   /// Common game feature mappings
   static List<GameFeatureMapping> get problemSolvingMappings => [
-        GameFeatureMapping(
-          featureKey: 'cognition_problem_solving',
-          computeScore: computeProblemSolving,
-          weight: 1.0,
-        ),
-        GameFeatureMapping(
-          featureKey: 'cognition_attention',
-          computeScore: computeAttention,
-          weight: 0.8,
-        ),
-        GameFeatureMapping(
-          featureKey: 'trait_grit',
-          computeScore: (t) => computeAccuracy(t) * 0.7 + computeStability(t) * 0.3,
-          weight: 0.6,
-        ),
-      ];
+    GameFeatureMapping(
+      featureKey: 'cognition_problem_solving',
+      computeScore: computeProblemSolving,
+      weight: 1.0,
+    ),
+    GameFeatureMapping(
+      featureKey: 'cognition_attention',
+      computeScore: computeAttention,
+      weight: 0.8,
+    ),
+    GameFeatureMapping(
+      featureKey: 'trait_grit',
+      computeScore: (t) => computeAccuracy(t) * 0.7 + computeStability(t) * 0.3,
+      weight: 0.6,
+    ),
+  ];
 
   static List<GameFeatureMapping> get memoryMappings => [
-        GameFeatureMapping(
-          featureKey: 'cognition_memory',
-          computeScore: computeMemory,
-          weight: 1.0,
-        ),
-        GameFeatureMapping(
-          featureKey: 'cognition_attention',
-          computeScore: computeAttention,
-          weight: 0.7,
-        ),
-      ];
+    GameFeatureMapping(
+      featureKey: 'cognition_memory',
+      computeScore: computeMemory,
+      weight: 1.0,
+    ),
+    GameFeatureMapping(
+      featureKey: 'cognition_attention',
+      computeScore: computeAttention,
+      weight: 0.7,
+    ),
+  ];
 
   static List<GameFeatureMapping> get spatialMappings => [
-        GameFeatureMapping(
-          featureKey: 'cognition_spatial',
-          computeScore: computeSpatial,
-          weight: 1.0,
-        ),
-        GameFeatureMapping(
-          featureKey: 'cognition_problem_solving',
-          computeScore: computeProblemSolving,
-          weight: 0.6,
-        ),
-      ];
+    GameFeatureMapping(
+      featureKey: 'cognition_spatial',
+      computeScore: computeSpatial,
+      weight: 1.0,
+    ),
+    GameFeatureMapping(
+      featureKey: 'cognition_problem_solving',
+      computeScore: computeProblemSolving,
+      weight: 0.6,
+    ),
+  ];
 
   static List<GameFeatureMapping> get quantitativeMappings => [
-        GameFeatureMapping(
-          featureKey: 'cognition_quantitative',
-          computeScore: computeQuantitative,
-          weight: 1.0,
-        ),
-        GameFeatureMapping(
-          featureKey: 'cognition_problem_solving',
-          computeScore: computeProblemSolving,
-          weight: 0.7,
-        ),
-      ];
+    GameFeatureMapping(
+      featureKey: 'cognition_quantitative',
+      computeScore: computeQuantitative,
+      weight: 1.0,
+    ),
+    GameFeatureMapping(
+      featureKey: 'cognition_problem_solving',
+      computeScore: computeProblemSolving,
+      weight: 0.7,
+    ),
+  ];
 
   static List<GameFeatureMapping> get verbalMappings => [
-        GameFeatureMapping(
-          featureKey: 'cognition_verbal',
-          computeScore: computeVerbal,
-          weight: 1.0,
-        ),
-        GameFeatureMapping(
-          featureKey: 'cognition_memory',
-          computeScore: computeMemory,
-          weight: 0.5,
-        ),
-      ];
+    GameFeatureMapping(
+      featureKey: 'cognition_verbal',
+      computeScore: computeVerbal,
+      weight: 1.0,
+    ),
+    GameFeatureMapping(
+      featureKey: 'cognition_memory',
+      computeScore: computeMemory,
+      weight: 0.5,
+    ),
+  ];
 }

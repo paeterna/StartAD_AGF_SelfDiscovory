@@ -98,7 +98,9 @@ class RoadmapRepositoryImpl implements RoadmapRepository {
   }
 
   @override
-  Future<List<RoadmapStep>> getRoadmapTemplate({required String careerId}) async {
+  Future<List<RoadmapStep>> getRoadmapTemplate({
+    required String careerId,
+  }) async {
     await Future<void>.delayed(const Duration(milliseconds: 200));
 
     // Return template from mock data, or generate a generic one
@@ -112,7 +114,8 @@ class RoadmapRepositoryImpl implements RoadmapRepository {
         id: 'generic_1',
         careerId: careerId,
         title: 'Research the Career',
-        description: 'Learn about the career requirements, skills, and opportunities.',
+        description:
+            'Learn about the career requirements, skills, and opportunities.',
         order: 1,
         category: RoadmapStepCategory.activity,
       ),
@@ -120,7 +123,8 @@ class RoadmapRepositoryImpl implements RoadmapRepository {
         id: 'generic_2',
         careerId: careerId,
         title: 'Develop Core Skills',
-        description: 'Take courses and practice skills relevant to this career.',
+        description:
+            'Take courses and practice skills relevant to this career.',
         order: 2,
         category: RoadmapStepCategory.skill,
       ),
@@ -136,7 +140,8 @@ class RoadmapRepositoryImpl implements RoadmapRepository {
         id: 'generic_4',
         careerId: careerId,
         title: 'Gain Experience',
-        description: 'Seek internships, volunteer work, or part-time positions.',
+        description:
+            'Seek internships, volunteer work, or part-time positions.',
         order: 4,
         category: RoadmapStepCategory.experience,
       ),
@@ -144,7 +149,8 @@ class RoadmapRepositoryImpl implements RoadmapRepository {
         id: 'generic_5',
         careerId: careerId,
         title: 'Network with Professionals',
-        description: 'Connect with people in the field and learn from their experiences.',
+        description:
+            'Connect with people in the field and learn from their experiences.',
         order: 5,
         category: RoadmapStepCategory.activity,
       ),

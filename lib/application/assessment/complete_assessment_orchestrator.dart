@@ -74,8 +74,7 @@ class CompleteAssessmentOrchestrator {
       );
 
       if (!profileResponse.success) {
-        throw Exception(
-            'Failed to update profile: ${profileResponse.error}',);
+        throw Exception('Failed to update profile: ${profileResponse.error}');
       }
 
       return CompleteAssessmentResult(
@@ -85,10 +84,7 @@ class CompleteAssessmentOrchestrator {
         confidence: profileResponse.confidence,
       );
     } catch (e) {
-      return CompleteAssessmentResult(
-        success: false,
-        error: e.toString(),
-      );
+      return CompleteAssessmentResult(success: false, error: e.toString());
     }
   }
 

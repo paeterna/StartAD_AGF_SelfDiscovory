@@ -34,13 +34,9 @@ class _GradientBackgroundState extends State<GradientBackground>
         duration: widget.animationDuration,
         vsync: this,
       );
-      _animation = Tween<double>(
-        begin: 0.0,
-        end: 1.0,
-      ).animate(CurvedAnimation(
-        parent: _animationController!,
-        curve: Curves.easeInOut,
-      ));
+      _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(parent: _animationController!, curve: Curves.easeInOut),
+      );
       _animationController!.repeat(reverse: true);
     }
   }
@@ -62,7 +58,9 @@ class _GradientBackgroundState extends State<GradientBackground>
 
     final selectedGradient = widget.gradient ?? defaultGradient;
 
-    if (widget.animated && _animation != null && selectedGradient is LinearGradient) {
+    if (widget.animated &&
+        _animation != null &&
+        selectedGradient is LinearGradient) {
       return AnimatedBuilder(
         animation: _animation!,
         builder: (context, child) {
@@ -146,7 +144,8 @@ class ShimmerGradientBackground extends StatefulWidget {
   final Duration animationDuration;
 
   @override
-  State<ShimmerGradientBackground> createState() => _ShimmerGradientBackgroundState();
+  State<ShimmerGradientBackground> createState() =>
+      _ShimmerGradientBackgroundState();
 }
 
 class _ShimmerGradientBackgroundState extends State<ShimmerGradientBackground>
@@ -164,10 +163,7 @@ class _ShimmerGradientBackgroundState extends State<ShimmerGradientBackground>
     _animation = Tween<double>(
       begin: -2.0,
       end: 2.0,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    ));
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
     _controller.repeat();
   }
 
@@ -180,9 +176,10 @@ class _ShimmerGradientBackgroundState extends State<ShimmerGradientBackground>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor = widget.baseColor ??
-        (isDark ? Colors.grey[800]! : Colors.grey[300]!);
-    final highlightColor = widget.highlightColor ??
+    final baseColor =
+        widget.baseColor ?? (isDark ? Colors.grey[800]! : Colors.grey[300]!);
+    final highlightColor =
+        widget.highlightColor ??
         (isDark ? Colors.grey[700]! : Colors.grey[100]!);
 
     return AnimatedBuilder(
@@ -193,11 +190,7 @@ class _ShimmerGradientBackgroundState extends State<ShimmerGradientBackground>
             gradient: LinearGradient(
               begin: Alignment(-1.0 + _animation.value, 0.0),
               end: Alignment(1.0 + _animation.value, 0.0),
-              colors: [
-                baseColor,
-                highlightColor,
-                baseColor,
-              ],
+              colors: [baseColor, highlightColor, baseColor],
               stops: const [0.0, 0.5, 1.0],
             ),
           ),

@@ -10,20 +10,21 @@ final activityServiceProvider = Provider<ActivityService>((ref) {
 /// Provider for discovery progress
 final discoveryProgressProvider =
     FutureProvider.autoDispose<DiscoveryProgress?>((ref) async {
-  final activityService = ref.watch(activityServiceProvider);
-  return activityService.getDiscoveryProgress();
-});
+      final activityService = ref.watch(activityServiceProvider);
+      return activityService.getDiscoveryProgress();
+    });
 
 /// Provider for activity run history
-final activityRunsProvider =
-    FutureProvider.autoDispose<List<ActivityRun>>((ref) async {
+final activityRunsProvider = FutureProvider.autoDispose<List<ActivityRun>>((
+  ref,
+) async {
   final activityService = ref.watch(activityServiceProvider);
   return activityService.getActivityRuns(limit: 20);
 });
 
 /// Provider for available activities
-final availableActivitiesProvider =
-    FutureProvider.autoDispose.family<List<Activity>, String?>((ref, kind) async {
-  final activityService = ref.watch(activityServiceProvider);
-  return activityService.getActivities(kind: kind);
-});
+final availableActivitiesProvider = FutureProvider.autoDispose
+    .family<List<Activity>, String?>((ref, kind) async {
+      final activityService = ref.watch(activityServiceProvider);
+      return activityService.getActivities(kind: kind);
+    });

@@ -8,43 +8,46 @@ final scoringServiceProvider = Provider<ScoringService>((ref) {
 });
 
 /// Provider for user's career matches
-final careerMatchesProvider = FutureProvider.autoDispose<List<CareerMatchWithDetails>>((ref) async {
-  final scoringService = ref.watch(scoringServiceProvider);
-  final userId = Supabase.instance.client.auth.currentUser?.id;
+final careerMatchesProvider =
+    FutureProvider.autoDispose<List<CareerMatchWithDetails>>((ref) async {
+      final scoringService = ref.watch(scoringServiceProvider);
+      final userId = Supabase.instance.client.auth.currentUser?.id;
 
-  if (userId == null) {
-    throw Exception('User not authenticated');
-  }
+      if (userId == null) {
+        throw Exception('User not authenticated');
+      }
 
-  // Fetch matches
-  final matches = await scoringService.getCareerMatches(
-    userId: userId,
-    limit: 20,
-  );
+      // Fetch matches
+      final matches = await scoringService.getCareerMatches(
+        userId: userId,
+        limit: 20,
+      );
 
-  if (matches.isEmpty) {
-    return [];
-  }
+      if (matches.isEmpty) {
+        return [];
+      }
 
-  // Fetch career details
-  final careerIds = matches.map((m) => m.careerId).toList();
-  final careers = await scoringService.getCareers(careerIds);
+      // Fetch career details
+      final careerIds = matches.map((m) => m.careerId).toList();
+      final careers = await scoringService.getCareers(careerIds);
 
-  // Create a map for quick lookup
-  final careersMap = {for (final c in careers) c.id: c};
+      // Create a map for quick lookup
+      final careersMap = {for (final c in careers) c.id: c};
 
-  // Combine matches with career details
-  return matches.map((match) {
-    final career = careersMap[match.careerId];
-    return CareerMatchWithDetails(
-      match: match,
-      career: career,
-    );
-  }).where((m) => m.career != null).toList();
-});
+      // Combine matches with career details
+      return matches
+          .map((match) {
+            final career = careersMap[match.careerId];
+            return CareerMatchWithDetails(match: match, career: career);
+          })
+          .where((m) => m.career != null)
+          .toList();
+    });
 
 /// Provider for profile completeness
-final profileCompletenessProvider = FutureProvider.autoDispose<double>((ref) async {
+final profileCompletenessProvider = FutureProvider.autoDispose<double>((
+  ref,
+) async {
   final scoringService = ref.watch(scoringServiceProvider);
   final userId = Supabase.instance.client.auth.currentUser?.id;
 
@@ -56,23 +59,21 @@ final profileCompletenessProvider = FutureProvider.autoDispose<double>((ref) asy
 });
 
 /// Provider for user feature scores
-final userFeatureScoresProvider = FutureProvider.autoDispose<List<UserFeatureScore>>((ref) async {
-  final scoringService = ref.watch(scoringServiceProvider);
-  final userId = Supabase.instance.client.auth.currentUser?.id;
+final userFeatureScoresProvider =
+    FutureProvider.autoDispose<List<UserFeatureScore>>((ref) async {
+      final scoringService = ref.watch(scoringServiceProvider);
+      final userId = Supabase.instance.client.auth.currentUser?.id;
 
-  if (userId == null) {
-    return [];
-  }
+      if (userId == null) {
+        return [];
+      }
 
-  return scoringService.getUserFeatureScores(userId);
-});
+      return scoringService.getUserFeatureScores(userId);
+    });
 
 /// Combined career match with details
 class CareerMatchWithDetails {
-  const CareerMatchWithDetails({
-    required this.match,
-    required this.career,
-  });
+  const CareerMatchWithDetails({required this.match, required this.career});
 
   final CareerMatch match;
   final Career? career;

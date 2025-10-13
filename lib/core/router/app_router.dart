@@ -47,7 +47,8 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       final isGoingToAuth = state.matchedLocation.startsWith('/auth');
       final isGoingToOnboarding = state.matchedLocation == AppRoutes.onboarding;
-      final isGoingToStatic = state.matchedLocation.startsWith('/privacy') ||
+      final isGoingToStatic =
+          state.matchedLocation.startsWith('/privacy') ||
           state.matchedLocation.startsWith('/terms') ||
           state.matchedLocation.startsWith('/about');
 
@@ -83,80 +84,58 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: AppRoutes.login,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const LoginPage(),
-        ),
+        pageBuilder: (context, state) =>
+            MaterialPage(key: state.pageKey, child: const LoginPage()),
       ),
       GoRoute(
         path: AppRoutes.signup,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const SignupPage(),
-        ),
+        pageBuilder: (context, state) =>
+            MaterialPage(key: state.pageKey, child: const SignupPage()),
       ),
       GoRoute(
         path: AppRoutes.onboarding,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const OnboardingPage(),
-        ),
+        pageBuilder: (context, state) =>
+            MaterialPage(key: state.pageKey, child: const OnboardingPage()),
       ),
       GoRoute(
         path: AppRoutes.dashboard,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const DashboardPage(),
-        ),
+        pageBuilder: (context, state) =>
+            MaterialPage(key: state.pageKey, child: const DashboardPage()),
       ),
       GoRoute(
         path: AppRoutes.discover,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const DiscoverPage(),
-        ),
+        pageBuilder: (context, state) =>
+            MaterialPage(key: state.pageKey, child: const DiscoverPage()),
       ),
       GoRoute(
         path: AppRoutes.careers,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const CareersPage(),
-        ),
+        pageBuilder: (context, state) =>
+            MaterialPage(key: state.pageKey, child: const CareersPage()),
       ),
       GoRoute(
         path: AppRoutes.roadmap,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const RoadmapPage(),
-        ),
+        pageBuilder: (context, state) =>
+            MaterialPage(key: state.pageKey, child: const RoadmapPage()),
       ),
       GoRoute(
         path: AppRoutes.settings,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const SettingsPage(),
-        ),
+        pageBuilder: (context, state) =>
+            MaterialPage(key: state.pageKey, child: const SettingsPage()),
       ),
       GoRoute(
         path: AppRoutes.privacy,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const PrivacyPage(),
-        ),
+        pageBuilder: (context, state) =>
+            MaterialPage(key: state.pageKey, child: const PrivacyPage()),
       ),
       GoRoute(
         path: AppRoutes.terms,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const TermsPage(),
-        ),
+        pageBuilder: (context, state) =>
+            MaterialPage(key: state.pageKey, child: const TermsPage()),
       ),
       GoRoute(
         path: AppRoutes.about,
-        pageBuilder: (context, state) => MaterialPage(
-          key: state.pageKey,
-          child: const AboutPage(),
-        ),
+        pageBuilder: (context, state) =>
+            MaterialPage(key: state.pageKey, child: const AboutPage()),
       ),
     ],
     errorBuilder: (context, state) {
@@ -167,7 +146,9 @@ final routerProvider = Provider<GoRouter>((ref) {
       // If URL contains auth tokens (from OAuth redirect), show a loading screen
       // Supabase will automatically process these tokens
       if (fragment.contains('access_token=') || fragment.contains('error=')) {
-        debugPrint('🔵 [ROUTER] OAuth callback detected, processing auth tokens...');
+        debugPrint(
+          '🔵 [ROUTER] OAuth callback detected, processing auth tokens...',
+        );
         return GradientBackground(
           child: const Scaffold(
             body: Center(

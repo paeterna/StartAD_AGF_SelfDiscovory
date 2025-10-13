@@ -48,7 +48,8 @@ class MockData {
     const Career(
       id: 'career_5',
       title: 'Registered Nurse',
-      description: 'Provide and coordinate patient care in healthcare settings.',
+      description:
+          'Provide and coordinate patient care in healthcare settings.',
       tags: ['caring', 'detail-oriented', 'social', 'resilient'],
       cluster: 'Healthcare',
       matchScore: 0,
@@ -185,8 +186,7 @@ class MockData {
         id: 'step_2_4',
         careerId: 'career_2',
         title: 'Learn Machine Learning',
-        description:
-            'Study ML algorithms, deep learning, and neural networks.',
+        description: 'Study ML algorithms, deep learning, and neural networks.',
         order: 4,
         category: RoadmapStepCategory.skill,
         estimatedDuration: 16,
@@ -237,8 +237,7 @@ class MockData {
         id: 'step_3_4',
         careerId: 'career_3',
         title: 'Freelance Projects',
-        description:
-            'Take on freelance design work to gain client experience.',
+        description: 'Take on freelance design work to gain client experience.',
         order: 4,
         category: RoadmapStepCategory.experience,
         estimatedDuration: 16,

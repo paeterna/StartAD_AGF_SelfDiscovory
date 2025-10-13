@@ -55,7 +55,10 @@ class DashboardPage extends ConsumerWidget {
               // Quick actions
               Text(
                 l10n.dashboardWhatsNext,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 16),
 
@@ -105,7 +108,9 @@ class _DiscoveryProgressCard extends ConsumerWidget {
                   Icon(
                     Icons.explore,
                     size: 48,
-                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.5),
                   ),
                   const SizedBox(height: 12),
                   Text(
@@ -137,10 +142,9 @@ class _DiscoveryProgressCard extends ConsumerWidget {
                             child: CircularProgressIndicator(
                               value: progress.percent / 100.0,
                               strokeWidth: 8,
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withValues(alpha: 0.1),
+                              backgroundColor: Theme.of(
+                                context,
+                              ).colorScheme.primary.withValues(alpha: 0.1),
                               valueColor: AlwaysStoppedAnimation<Color>(
                                 Theme.of(context).colorScheme.primary,
                               ),
@@ -148,9 +152,8 @@ class _DiscoveryProgressCard extends ConsumerWidget {
                           ),
                           Text(
                             '${progress.percent}%',
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.titleLarge
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -179,15 +182,20 @@ class _DiscoveryProgressCard extends ConsumerWidget {
                         size: 48,
                         color: progress.streakDays > 0
                             ? Colors.orange
-                            : Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+                            : Theme.of(
+                                context,
+                              ).colorScheme.primary.withValues(alpha: 0.3),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         '${progress.streakDays}',
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: progress.streakDays > 0 ? Colors.orange : null,
-                        ),
+                        style: Theme.of(context).textTheme.headlineMedium
+                            ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: progress.streakDays > 0
+                                  ? Colors.orange
+                                  : null,
+                            ),
                       ),
                       Text(
                         progress.streakDays == 1 ? 'Day Streak' : 'Days Streak',
@@ -270,16 +278,16 @@ class _ProfileProgressCard extends ConsumerWidget {
                       children: [
                         Text(
                           level,
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge
+                              ?.copyWith(fontWeight: FontWeight.w600),
                         ),
                         Text(
                           '$percent%',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                       ],
                     ),
@@ -289,10 +297,9 @@ class _ProfileProgressCard extends ConsumerWidget {
                       child: LinearProgressIndicator(
                         value: completeness / 100.0,
                         minHeight: 12,
-                        backgroundColor: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withValues(alpha: 0.1),
+                        backgroundColor: Theme.of(
+                          context,
+                        ).colorScheme.primary.withValues(alpha: 0.1),
                         valueColor: AlwaysStoppedAnimation<Color>(
                           Theme.of(context).colorScheme.primary,
                         ),
@@ -304,10 +311,9 @@ class _ProfileProgressCard extends ConsumerWidget {
                           ? l10n.dashboardProgressHint
                           : l10n.dashboardProgressCompleteHint,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withValues(alpha: 0.7),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],

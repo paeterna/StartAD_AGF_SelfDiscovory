@@ -8,26 +8,28 @@ class AppColors {
   // === Warm Gradient Colors (Orange → Amber → Beige → Sky Blue) ===
 
   // Primary warm gradient
-  static const Color warmOrange = Color(0xFFFF8C42);      // Soft orange
-  static const Color warmAmber = Color(0xFFFFB366);       // Light amber
-  static const Color warmPeach = Color(0xFFFFD4A3);       // Warm peach
-  static const Color warmBeige = Color(0xFFFFF3E0);       // Soft beige
-  static const Color warmSkyBlue = Color(0xFFB8D4F1);     // Faint sky blue
-  static const Color warmLightBlue = Color(0xFFD4E7F7);   // Very light blue
+  static const Color warmOrange = Color(0xFFFF8C42); // Soft orange
+  static const Color warmAmber = Color(0xFFFFB366); // Light amber
+  static const Color warmPeach = Color(0xFFFFD4A3); // Warm peach
+  static const Color warmBeige = Color(0xFFFFF3E0); // Soft beige
+  static const Color warmSkyBlue = Color(0xFFB8D4F1); // Faint sky blue
+  static const Color warmLightBlue = Color(0xFFD4E7F7); // Very light blue
 
   // Accent colors (Muted & Warm)
-  static const Color accentCoral = Color(0xFFFF8A80);     // Muted coral
-  static const Color accentPeach = Color(0xFFFFAB91);     // Soft peach highlight
-  static const Color accentRose = Color(0xFFFFCDD2);      // Light rose
-  static const Color accentBlush = Color(0xFFFFF0E8);     // Pale blush
+  static const Color accentCoral = Color(0xFFFF8A80); // Muted coral
+  static const Color accentPeach = Color(0xFFFFAB91); // Soft peach highlight
+  static const Color accentRose = Color(0xFFFFCDD2); // Light rose
+  static const Color accentBlush = Color(0xFFFFF0E8); // Pale blush
 
   // === Text Colors (Soft, Never Harsh) ===
 
   // Light mode text (warm charcoal, not black)
-  static const Color textPrimary = Color(0xFF1A1A1A);     // Soft charcoal
-  static const Color textSecondary = Color(0xFF5A5A5A);   // Medium gray
-  static const Color textTertiary = Color(0xFF8A8A8A);    // Light gray
-  static const Color textOnGlass = Color(0xFF2D2D2D);     // Slightly darker for glass
+  static const Color textPrimary = Color(0xFF1A1A1A); // Soft charcoal
+  static const Color textSecondary = Color(0xFF5A5A5A); // Medium gray
+  static const Color textTertiary = Color(0xFF8A8A8A); // Light gray
+  static const Color textOnGlass = Color(
+    0xFF2D2D2D,
+  ); // Slightly darker for glass
 
   // Dark mode text (warm white, not pure white)
   static const Color textDarkPrimary = Color(0xFFF5F5F5); // Warm white
@@ -37,14 +39,14 @@ class AppColors {
   // === Background Colors ===
 
   // Light theme backgrounds
-  static const Color lightBackground = Color(0xFFFFF8F0);  // Very light beige
-  static const Color lightSurface = Color(0xFFFFFFFF);     // Pure white
-  static const Color lightCard = Color(0xFFFFFAF5);        // Soft cream
+  static const Color lightBackground = Color(0xFFFFF8F0); // Very light beige
+  static const Color lightSurface = Color(0xFFFFFFFF); // Pure white
+  static const Color lightCard = Color(0xFFFFFAF5); // Soft cream
 
   // Dark theme backgrounds (warm-toned, not cold)
-  static const Color darkBackground = Color(0xFF1F1F1F);   // Warm dark gray
-  static const Color darkSurface = Color(0xFF2A2A2A);      // Slightly lighter
-  static const Color darkCard = Color(0xFF353535);         // Medium dark
+  static const Color darkBackground = Color(0xFF1F1F1F); // Warm dark gray
+  static const Color darkSurface = Color(0xFF2A2A2A); // Slightly lighter
+  static const Color darkCard = Color(0xFF353535); // Medium dark
 
   // === Glassmorphism Effects (15-25% opacity) ===
 
@@ -66,16 +68,16 @@ class AppColors {
 
   // === Status Colors (Soft, Not Harsh) ===
 
-  static const Color success = Color(0xFF81C784);      // Soft green
-  static const Color warning = Color(0xFFFFB74D);      // Soft amber
-  static const Color error = Color(0xFFE57373);        // Soft red
-  static const Color info = Color(0xFF64B5F6);         // Soft blue
+  static const Color success = Color(0xFF81C784); // Soft green
+  static const Color warning = Color(0xFFFFB74D); // Soft amber
+  static const Color error = Color(0xFFE57373); // Soft red
+  static const Color info = Color(0xFF64B5F6); // Soft blue
 
   // === Progress Colors (Warm Tones) ===
 
-  static const Color progressLow = Color(0xFFFFAB91);   // Warm orange
+  static const Color progressLow = Color(0xFFFFAB91); // Warm orange
   static const Color progressMedium = Color(0xFFFFD54F); // Warm yellow
-  static const Color progressHigh = Color(0xFF81C784);  // Soft green
+  static const Color progressHigh = Color(0xFF81C784); // Soft green
 
   // === Gradient Definitions ===
 
@@ -83,11 +85,11 @@ class AppColors {
   /// Diagonal from bottom-left to top-right
   static const LinearGradient primaryGradient = LinearGradient(
     colors: [
-      warmOrange,      // Bottom-left: warm orange
-      warmAmber,       //
-      warmPeach,       //
-      warmBeige,       //
-      warmSkyBlue,     // Top-right: faint sky blue
+      warmOrange, // Bottom-left: warm orange
+      warmAmber, //
+      warmPeach, //
+      warmBeige, //
+      warmSkyBlue, // Top-right: faint sky blue
     ],
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,
@@ -97,9 +99,9 @@ class AppColors {
   /// Subtle background gradient for light mode
   static const LinearGradient lightBackgroundGradient = LinearGradient(
     colors: [
-      Color(0xFFFFE0B2),  // Light orange
-      Color(0xFFFFF8E1),  // Pale amber
-      Color(0xFFE1F5FE),  // Very light blue
+      Color(0xFFFFE0B2), // Light orange
+      Color(0xFFFFF8E1), // Pale amber
+      Color(0xFFE1F5FE), // Very light blue
     ],
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,
@@ -109,9 +111,9 @@ class AppColors {
   /// Dark mode gradient (warmer tones)
   static const LinearGradient darkBackgroundGradient = LinearGradient(
     colors: [
-      Color(0xFF2D1F1A),  // Warm dark brown
-      Color(0xFF1F1F1F),  // Neutral dark
-      Color(0xFF1A2332),  // Warm dark blue
+      Color(0xFF2D1F1A), // Warm dark brown
+      Color(0xFF1F1F1F), // Neutral dark
+      Color(0xFF1A2332), // Warm dark blue
     ],
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,
@@ -121,9 +123,9 @@ class AppColors {
   /// Accent gradient for highlights (coral/peach)
   static const LinearGradient accentGradient = LinearGradient(
     colors: [
-      accentCoral,     // Muted coral
-      accentPeach,     // Soft peach
-      warmAmber,       // Light amber
+      accentCoral, // Muted coral
+      accentPeach, // Soft peach
+      warmAmber, // Light amber
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

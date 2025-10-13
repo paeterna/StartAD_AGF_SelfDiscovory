@@ -21,9 +21,9 @@ class AppTheme {
 
   // Glassmorphism constants (15-25% opacity)
   static const double glassBlur = 40.0;
-  static const double glassOpacity = 0.35;       // Light glass
+  static const double glassOpacity = 0.35; // Light glass
   static const double glassOpacityMedium = 0.40; // Medium glass
-  static const double glassOpacityHeavy = 0.55;  // Heavy glass
+  static const double glassOpacityHeavy = 0.55; // Heavy glass
   static const double glassBorderOpacity = 0.2;
 
   /// Light theme - Warm, friendly, and optimistic
@@ -54,7 +54,12 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusLarge),
           side: BorderSide(
-            color: const Color.fromARGB(255, 255, 227, 174).withValues(alpha: glassBorderOpacity),
+            color: const Color.fromARGB(
+              255,
+              255,
+              227,
+              174,
+            ).withValues(alpha: glassBorderOpacity),
             width: 1.0,
           ),
         ),
@@ -85,10 +90,7 @@ class AppTheme {
       inputDecorationTheme: _inputDecorationTheme(colorScheme, false),
 
       // Icon theme
-      iconTheme: IconThemeData(
-        color: AppColors.textSecondary,
-        size: 24,
-      ),
+      iconTheme: IconThemeData(color: AppColors.textSecondary, size: 24),
 
       // Focus theme
       focusColor: AppColors.warmOrange.withValues(alpha: 0.2),
@@ -130,7 +132,12 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusLarge),
           side: BorderSide(
-            color: const Color.fromARGB(255, 228, 180, 141).withValues(alpha: glassBorderOpacity),
+            color: const Color.fromARGB(
+              255,
+              228,
+              180,
+              141,
+            ).withValues(alpha: glassBorderOpacity),
             width: 1.0,
           ),
         ),
@@ -354,9 +361,7 @@ class AppTheme {
   ) {
     return InputDecorationTheme(
       filled: true,
-      fillColor: isDark
-          ? AppColors.darkCard
-          : AppColors.lightCard,
+      fillColor: isDark ? AppColors.darkCard : AppColors.lightCard,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusMedium),
         borderSide: BorderSide.none,
@@ -370,24 +375,15 @@ class AppTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusMedium),
-        borderSide: BorderSide(
-          color: colorScheme.primary,
-          width: 2,
-        ),
+        borderSide: BorderSide(color: colorScheme.primary, width: 2),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusMedium),
-        borderSide: BorderSide(
-          color: colorScheme.error,
-          width: 1,
-        ),
+        borderSide: BorderSide(color: colorScheme.error, width: 1),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusMedium),
-        borderSide: BorderSide(
-          color: colorScheme.error,
-          width: 2,
-        ),
+        borderSide: BorderSide(color: colorScheme.error, width: 2),
       ),
       contentPadding: const EdgeInsets.symmetric(
         horizontal: spaceMedium,

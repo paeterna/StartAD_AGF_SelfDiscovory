@@ -32,7 +32,9 @@ class _SelfMapAppState extends ConsumerState<SelfMapApp> {
       debugPrint('🔵 [AUTH] State change: $event');
 
       if (event == AuthChangeEvent.signedIn && session != null) {
-        debugPrint('✅ [AUTH] User signed in via OAuth, refreshing auth state...');
+        debugPrint(
+          '✅ [AUTH] User signed in via OAuth, refreshing auth state...',
+        );
         // Trigger auth controller to refresh user state
         ref.read(authControllerProvider.notifier).refreshUser();
       } else if (event == AuthChangeEvent.signedOut) {

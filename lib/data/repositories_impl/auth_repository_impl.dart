@@ -36,9 +36,10 @@ class AuthRepositoryImpl implements AuthRepository {
     return User(
       id: supabaseUser.id,
       email: supabaseUser.email ?? '',
-      displayName: metadata['display_name'] as String? ??
-                   supabaseUser.email?.split('@').first ??
-                   'User',
+      displayName:
+          metadata['display_name'] as String? ??
+          supabaseUser.email?.split('@').first ??
+          'User',
       onboardingComplete: metadata['onboarding_complete'] as bool? ?? false,
       locale: metadata['locale'] as String? ?? 'en',
       theme: ThemeModePreference.fromJson(
@@ -65,7 +66,8 @@ class AuthRepositoryImpl implements AuthRepository {
           id: supabaseUser.id,
           email: supabaseUser.email ?? '',
           displayName: profileResponse['display_name'] as String? ?? 'User',
-          onboardingComplete: profileResponse['onboarding_complete'] as bool? ?? false,
+          onboardingComplete:
+              profileResponse['onboarding_complete'] as bool? ?? false,
           locale: profileResponse['locale'] as String? ?? 'en',
           theme: ThemeModePreference.fromJson(
             profileResponse['theme'] as String? ?? 'system',
@@ -75,17 +77,21 @@ class AuthRepositoryImpl implements AuthRepository {
         );
       } else {
         // Profile doesn't exist, create it from user_metadata
-        debugPrint('🔵 [AUTH_REPO] Profile not found, creating from metadata...');
+        debugPrint(
+          '🔵 [AUTH_REPO] Profile not found, creating from metadata...',
+        );
         final metadata = supabaseUser.userMetadata ?? {};
 
         final newProfile = {
           'id': supabaseUser.id,
-          'display_name': metadata['display_name'] as String? ??
-                         supabaseUser.email?.split('@').first ??
-                         'User',
+          'display_name':
+              metadata['display_name'] as String? ??
+              supabaseUser.email?.split('@').first ??
+              'User',
           'locale': metadata['locale'] as String? ?? 'en',
           'theme': metadata['theme'] as String? ?? 'system',
-          'onboarding_complete': metadata['onboarding_complete'] as bool? ?? false,
+          'onboarding_complete':
+              metadata['onboarding_complete'] as bool? ?? false,
         };
 
         await _supabase.from('profiles').insert(newProfile);
@@ -93,10 +99,10 @@ class AuthRepositoryImpl implements AuthRepository {
         return User(
           id: supabaseUser.id,
           email: supabaseUser.email ?? '',
-          displayName: newProfile['display_name'] as String,
-          onboardingComplete: newProfile['onboarding_complete'] as bool,
-          locale: newProfile['locale'] as String,
-          theme: ThemeModePreference.fromJson(newProfile['theme'] as String),
+          displayName: newProfile['display_name']! as String,
+          onboardingComplete: newProfile['onboarding_complete']! as bool,
+          locale: newProfile['locale']! as String,
+          theme: ThemeModePreference.fromJson(newProfile['theme']! as String),
           createdAt: DateTime.parse(supabaseUser.createdAt),
           lastLoginAt: DateTime.now(),
         );
@@ -130,10 +136,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<User> signIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<User> signIn({required String email, required String password}) async {
     try {
       final response = await _supabase.auth.signInWithPassword(
         email: email,
@@ -180,14 +183,22 @@ class AuthRepositoryImpl implements AuthRepository {
 
       debugPrint('🔵 [AUTH_REPO] Supabase response received');
       debugPrint('🔵 [AUTH_REPO] User: ${response.user?.id}');
-      debugPrint('🔵 [AUTH_REPO] Session: ${response.session?.accessToken != null ? "present" : "null"}');
+      debugPrint(
+        '🔵 [AUTH_REPO] Session: ${response.session?.accessToken != null ? "present" : "null"}',
+      );
 
       if (response.user == null) {
-        debugPrint('🔴 [AUTH_REPO] No user in response - sign up may require email confirmation');
-        throw Exception('Sign up failed - please check your email for confirmation link');
+        debugPrint(
+          '🔴 [AUTH_REPO] No user in response - sign up may require email confirmation',
+        );
+        throw Exception(
+          'Sign up failed - please check your email for confirmation link',
+        );
       }
 
-      debugPrint('✅ [AUTH_REPO] User created successfully: ${response.user!.email}');
+      debugPrint(
+        '✅ [AUTH_REPO] User created successfully: ${response.user!.email}',
+      );
 
       // Create profile in profiles table
       try {
@@ -200,7 +211,9 @@ class AuthRepositoryImpl implements AuthRepository {
         });
         debugPrint('✅ [AUTH_REPO] Profile created in profiles table');
       } catch (e) {
-        debugPrint('⚠️ [AUTH_REPO] Profile creation failed (may already exist): $e');
+        debugPrint(
+          '⚠️ [AUTH_REPO] Profile creation failed (may already exist): $e',
+        );
       }
 
       _currentUser = await _loadUserProfile(response.user!);
@@ -211,13 +224,19 @@ class AuthRepositoryImpl implements AuthRepository {
 
       return _currentUser!;
     } on AuthException catch (e) {
-      debugPrint('🔴 [AUTH_REPO] AuthException: ${e.message} (status: ${e.statusCode})');
+      debugPrint(
+        '🔴 [AUTH_REPO] AuthException: ${e.message} (status: ${e.statusCode})',
+      );
 
       // Provide user-friendly error messages
       if (e.message.contains('email_address_invalid')) {
-        throw Exception('This email is already registered. Please sign in instead or use a different email.');
+        throw Exception(
+          'This email is already registered. Please sign in instead or use a different email.',
+        );
       } else if (e.message.contains('User already registered')) {
-        throw Exception('This email is already registered. Please sign in instead.');
+        throw Exception(
+          'This email is already registered. Please sign in instead.',
+        );
       }
 
       throw Exception(e.message);
@@ -234,10 +253,7 @@ class AuthRepositoryImpl implements AuthRepository {
       await _supabase.auth.signInWithOAuth(
         OAuthProvider.google,
         redirectTo: kIsWeb ? '${Uri.base.origin}/auth/callback' : null,
-        queryParams: {
-          'access_type': 'offline',
-          'prompt': 'consent',
-        },
+        queryParams: {'access_type': 'offline', 'prompt': 'consent'},
       );
 
       // For web, this will redirect and the session will be picked up on return
@@ -309,7 +325,9 @@ class AuthRepositoryImpl implements AuthRepository {
             .update(profileUpdates)
             .eq('id', userId);
 
-        debugPrint('✅ [AUTH_REPO] Profile updated in profiles table: $profileUpdates');
+        debugPrint(
+          '✅ [AUTH_REPO] Profile updated in profiles table: $profileUpdates',
+        );
       }
 
       // Also update user_metadata for quick access
@@ -349,28 +367,33 @@ class AuthRepositoryImpl implements AuthRepository {
     Map<String, String>? onboardingAnswers,
   }) async {
     try {
-      debugPrint('🎯 [AUTH_REPO] Starting onboarding completion for user: $userId');
-      
+      debugPrint(
+        '🎯 [AUTH_REPO] Starting onboarding completion for user: $userId',
+      );
+
       // If we have onboarding answers, process them and save to assessments table
       if (onboardingAnswers != null && onboardingAnswers.isNotEmpty) {
-        debugPrint('📝 [AUTH_REPO] Processing ${onboardingAnswers.length} onboarding answers');
-        
+        debugPrint(
+          '📝 [AUTH_REPO] Processing ${onboardingAnswers.length} onboarding answers',
+        );
+
         // Convert answers to trait scores based on a simple scoring system
         final traitScores = _calculateTraitScores(onboardingAnswers);
-        
+
         debugPrint('🧮 [AUTH_REPO] Calculated trait scores: $traitScores');
-        
+
         // Save assessment results to the assessments table
         await _supabase.from('assessments').insert({
           'user_id': userId,
           'trait_scores': traitScores,
-          'delta_progress': 15, // Award 15 progress points for completing onboarding
+          'delta_progress':
+              15, // Award 15 progress points for completing onboarding
           'taken_at': DateTime.now().toIso8601String(),
         });
-        
+
         debugPrint('✅ [AUTH_REPO] Saved assessment results to database');
       }
-      
+
       // Update profiles table to mark onboarding as complete
       await _supabase
           .from('profiles')
@@ -380,12 +403,7 @@ class AuthRepositoryImpl implements AuthRepository {
       // Also update user_metadata for quick access
       final currentMetadata = _supabase.auth.currentUser?.userMetadata ?? {};
       final response = await _supabase.auth.updateUser(
-        UserAttributes(
-          data: {
-            ...currentMetadata,
-            'onboarding_complete': true,
-          },
-        ),
+        UserAttributes(data: {...currentMetadata, 'onboarding_complete': true}),
       );
 
       if (response.user == null) {
@@ -402,7 +420,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
       return _currentUser!;
     } on AuthException catch (e) {
-      debugPrint('🔴 [AUTH_REPO] AuthException during onboarding completion: ${e.message}');
+      debugPrint(
+        '🔴 [AUTH_REPO] AuthException during onboarding completion: ${e.message}',
+      );
       throw Exception(e.message);
     } catch (e) {
       debugPrint('🔴 [AUTH_REPO] Error during onboarding completion: $e');
@@ -429,7 +449,8 @@ class AuthRepositoryImpl implements AuthRepository {
       if (q1Answer.contains('logically') || q1Answer.contains('منطقياً')) {
         scores['analytical'] = scores['analytical']! + 2;
         scores['persistent'] = scores['persistent']! + 1;
-      } else if (q1Answer.contains('creatively') || q1Answer.contains('إبداعية')) {
+      } else if (q1Answer.contains('creatively') ||
+          q1Answer.contains('إبداعية')) {
         scores['creative'] = scores['creative']! + 2;
         scores['curious'] = scores['curious']! + 1;
       } else if (q1Answer.contains('others') || q1Answer.contains('الآخرين')) {
@@ -472,13 +493,15 @@ class AuthRepositoryImpl implements AuthRepository {
     // Question 4: Learning interests
     final q4Answer = answers['question_4'];
     if (q4Answer != null) {
-      if (q4Answer.contains('new skills') || q4Answer.contains('مهارات جديدة')) {
+      if (q4Answer.contains('new skills') ||
+          q4Answer.contains('مهارات جديدة')) {
         scores['curious'] = scores['curious']! + 2;
         scores['creative'] = scores['creative']! + 1;
       } else if (q4Answer.contains('mastering') || q4Answer.contains('إتقان')) {
         scores['persistent'] = scores['persistent']! + 2;
         scores['analytical'] = scores['analytical']! + 1;
-      } else if (q4Answer.contains('practically') || q4Answer.contains('عملياً')) {
+      } else if (q4Answer.contains('practically') ||
+          q4Answer.contains('عملياً')) {
         scores['analytical'] = scores['analytical']! + 1;
         scores['collaborative'] = scores['collaborative']! + 1;
         scores['persistent'] = scores['persistent']! + 1;
@@ -491,7 +514,8 @@ class AuthRepositoryImpl implements AuthRepository {
       if (q5Answer.contains('big picture') || q5Answer.contains('الكبيرة')) {
         scores['creative'] = scores['creative']! + 2;
         scores['curious'] = scores['curious']! + 1;
-      } else if (q5Answer.contains('details') || q5Answer.contains('التفاصيل')) {
+      } else if (q5Answer.contains('details') ||
+          q5Answer.contains('التفاصيل')) {
         scores['analytical'] = scores['analytical']! + 2;
         scores['persistent'] = scores['persistent']! + 1;
       } else if (q5Answer.contains('balance') || q5Answer.contains('أوازن')) {

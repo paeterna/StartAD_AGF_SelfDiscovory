@@ -49,7 +49,10 @@ class CareerRepositoryImpl implements CareerRepository {
 
   /// Rule-based matching: calculates match score (0-100)
   /// based on weighted overlap between user traits and career tags
-  int _calculateMatchScore(Map<String, int> traitScores, List<String> careerTags) {
+  int _calculateMatchScore(
+    Map<String, int> traitScores,
+    List<String> careerTags,
+  ) {
     if (traitScores.isEmpty || careerTags.isEmpty) return 0;
 
     double totalScore = 0;
@@ -77,7 +80,8 @@ class CareerRepositoryImpl implements CareerRepository {
 
     if (matchCount == 0) {
       // No direct matches, give a base score based on average trait scores
-      final avgTraitScore = traitScores.values.reduce((a, b) => a + b) / traitScores.length;
+      final avgTraitScore =
+          traitScores.values.reduce((a, b) => a + b) / traitScores.length;
       return (avgTraitScore * 0.3).round().clamp(10, 40);
     }
 

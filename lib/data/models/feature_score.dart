@@ -20,32 +20,29 @@ class FeatureScore {
   final double quality;
 
   Map<String, dynamic> toJson() => {
-        'key': key,
-        'mean': mean,
-        'n': n,
-        'quality': quality,
-      };
+    'key': key,
+    'mean': mean,
+    'n': n,
+    'quality': quality,
+  };
 
   factory FeatureScore.fromJson(Map<String, dynamic> json) => FeatureScore(
-        key: json['key'] as String,
-        mean: (json['mean'] as num).toDouble(),
-        n: json['n'] as int,
-        quality: (json['quality'] as num).toDouble(),
-      );
+    key: json['key'] as String,
+    mean: (json['mean'] as num).toDouble(),
+    n: json['n'] as int,
+    quality: (json['quality'] as num).toDouble(),
+  );
 }
 
 /// Batch of feature scores to send to Edge Function
 class FeatureScoreBatch {
-  const FeatureScoreBatch({
-    required this.userId,
-    required this.features,
-  });
+  const FeatureScoreBatch({required this.userId, required this.features});
 
   final String userId;
   final List<FeatureScore> features;
 
   Map<String, dynamic> toJson() => {
-        'user_id': userId,
-        'batch_features': features.map((f) => f.toJson()).toList(),
-      };
+    'user_id': userId,
+    'batch_features': features.map((f) => f.toJson()).toList(),
+  };
 }

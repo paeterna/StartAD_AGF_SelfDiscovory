@@ -26,14 +26,8 @@ abstract class CareerRepository {
   Future<List<Career>> getSavedCareers({required String userId});
 
   /// Save/favorite a career
-  Future<void> saveCareer({
-    required String userId,
-    required String careerId,
-  });
+  Future<void> saveCareer({required String userId, required String careerId});
 
   /// Remove career from saved list
-  Future<void> unsaveCareer({
-    required String userId,
-    required String careerId,
-  });
+  Future<void> unsaveCareer({required String userId, required String careerId});
 }

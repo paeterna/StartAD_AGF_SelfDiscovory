@@ -8,7 +8,7 @@ class DiscoverPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(title: Text(l10n.discoverTitle)),
@@ -148,13 +148,13 @@ class _AssessmentCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
-                          l10n.discoverCompletedBadge,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        l10n.discoverCompletedBadge,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                         ),
+                      ),
                     ),
                 ],
               ),
@@ -176,7 +176,11 @@ class _AssessmentCard extends StatelessWidget {
                         vertical: 8,
                       ),
                     ),
-                    child: Text(isStarted ? l10n.discoverResumeButton : l10n.discoverStartButton),
+                    child: Text(
+                      isStarted
+                          ? l10n.discoverResumeButton
+                          : l10n.discoverStartButton,
+                    ),
                   ),
                 ],
               ),

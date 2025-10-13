@@ -109,7 +109,8 @@ class AssessmentService {
     final response = await _supabase
         .from('assessment_items')
         .select(
-            'id, item_id, response, score_raw, score_norm, duration_ms, metadata, created_at',)
+          'id, item_id, response, score_raw, score_norm, duration_ms, metadata, created_at',
+        )
         .eq('assessment_id', assessmentId)
         .order('created_at');
 

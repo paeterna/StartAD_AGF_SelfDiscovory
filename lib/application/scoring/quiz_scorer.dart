@@ -97,12 +97,7 @@ class QuizScorer {
       // Quality can be adjusted based on response consistency
       // For now, use default quality
       batchScores.add(
-        FeatureScore(
-          key: key,
-          mean: mean,
-          n: n,
-          quality: defaultQuality,
-        ),
+        FeatureScore(key: key, mean: mean, n: n, quality: defaultQuality),
       );
     }
 
@@ -120,9 +115,9 @@ class QuizScorer {
     final mean = scores.reduce((a, b) => a + b) / scores.length;
     if (mean == 0) return 0.5;
 
-    final variance = scores
-        .map((s) => math.pow(s - mean, 2))
-        .reduce((a, b) => a + b) / scores.length;
+    final variance =
+        scores.map((s) => math.pow(s - mean, 2)).reduce((a, b) => a + b) /
+        scores.length;
     final stdDev = math.sqrt(variance);
     final cv = stdDev / mean;
 

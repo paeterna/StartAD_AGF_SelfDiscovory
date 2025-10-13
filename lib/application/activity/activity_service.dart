@@ -12,9 +12,7 @@ class ActivityService {
 
   /// Start an activity run
   /// Returns the run ID
-  Future<int> startActivityRun({
-    required String activityId,
-  }) async {
+  Future<int> startActivityRun({required String activityId}) async {
     final userId = _supabase.auth.currentUser?.id;
     if (userId == null) {
       throw Exception('User not authenticated');
@@ -51,12 +49,16 @@ class ActivityService {
       throw ArgumentError('delta_progress must be between 0 and 20');
     }
 
-    await _supabase.from('activity_runs').update({
-      'completed_at': DateTime.now().toIso8601String(),
-      'score': score,
-      'trait_scores': traitScores ?? {},
-      'delta_progress': deltaProgress,
-    }).eq('id', runId).eq('user_id', userId);
+    await _supabase
+        .from('activity_runs')
+        .update({
+          'completed_at': DateTime.now().toIso8601String(),
+          'score': score,
+          'trait_scores': traitScores ?? {},
+          'delta_progress': deltaProgress,
+        })
+        .eq('id', runId)
+        .eq('user_id', userId);
 
     // Note: Trigger fn_update_progress_after_run will automatically update
     // discovery_progress table (percent, streak_days, last_activity_date)
@@ -91,7 +93,9 @@ class ActivityService {
 
     var query = _supabase
         .from('activity_runs')
-        .select('id, activity_id, started_at, completed_at, score, trait_scores, delta_progress')
+        .select(
+          'id, activity_id, started_at, completed_at, score, trait_scores, delta_progress',
+        )
         .eq('user_id', userId)
         .order('started_at', ascending: false);
 
@@ -111,8 +115,11 @@ class ActivityService {
     String? kind, // 'quiz' or 'game'
     bool activeOnly = true,
   }) async {
-    var query = _supabase.from('activities').select(
-        'id, title, kind, estimated_minutes, active, traits_weight, created_at',);
+    var query = _supabase
+        .from('activities')
+        .select(
+          'id, title, kind, estimated_minutes, active, traits_weight, created_at',
+        );
 
     if (activeOnly) {
       query = query.eq('active', true);
