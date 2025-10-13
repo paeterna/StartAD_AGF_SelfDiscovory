@@ -542,6 +542,48 @@ abstract class AppLocalizations {
   /// **'Plan your path to success'**
   String get dashboardStartRoadmapSubtitle;
 
+  /// No description provided for @dashboardProfileProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Progress'**
+  String get dashboardProfileProgress;
+
+  /// No description provided for @dashboardProgressJustStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Just Getting Started'**
+  String get dashboardProgressJustStarted;
+
+  /// No description provided for @dashboardProgressGettingThere.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting There'**
+  String get dashboardProgressGettingThere;
+
+  /// No description provided for @dashboardProgressAlmostDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Almost Done'**
+  String get dashboardProgressAlmostDone;
+
+  /// No description provided for @dashboardProgressComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Complete!'**
+  String get dashboardProgressComplete;
+
+  /// No description provided for @dashboardProgressHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete more quizzes and games to improve your matches'**
+  String get dashboardProgressHint;
+
+  /// No description provided for @dashboardProgressCompleteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Great job! Your profile is complete and matches are optimized'**
+  String get dashboardProgressCompleteHint;
+
   /// No description provided for @discoverTitle.
   ///
   /// In en, this message translates to:

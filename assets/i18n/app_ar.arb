@@ -80,6 +80,13 @@
   "dashboardContinueDiscoverySubtitle": "خذ الاختبارات والعب الألعاب",
   "dashboardViewCareersSubtitle": "ابحث عن المهن التي تناسبك",
   "dashboardStartRoadmapSubtitle": "خطط طريقك نحو النجاح",
+  "dashboardProfileProgress": "تقدم الملف الشخصي",
+  "dashboardProgressJustStarted": "بداية الرحلة",
+  "dashboardProgressGettingThere": "في الطريق",
+  "dashboardProgressAlmostDone": "على وشك الانتهاء",
+  "dashboardProgressComplete": "الملف مكتمل!",
+  "dashboardProgressHint": "أكمل المزيد من الاختبارات والألعاب لتحسين التطابقات",
+  "dashboardProgressCompleteHint": "عمل رائع! ملفك الشخصي مكتمل والتطابقات محسّنة",
 
   "discoverTitle": "اكتشف",
   "discoverSubtitle": "خذ الاختبارات والعب الألعاب لتتعرف على نفسك أكثر",

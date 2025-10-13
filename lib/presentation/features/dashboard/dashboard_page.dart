@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../application/auth/auth_controller.dart';
+import '../../../application/scoring/scoring_providers.dart';
+import '../../../application/activity/activity_providers.dart';
 import '../../../core/router/app_router.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
@@ -42,59 +44,12 @@ class DashboardPage extends ConsumerWidget {
               ),
               const SizedBox(height: 32),
 
-              // Progress card
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    children: [
-                      Text(
-                        l10n.dashboardProgressLabel,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        height: 120,
-                        width: 120,
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            CircularProgressIndicator(
-                              value: 0.15,
-                              strokeWidth: 12,
-                              backgroundColor: Colors.grey.shade200,
-                            ),
-                            const Center(
-                              child: Text(
-                                '15%',
-                                style: TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.local_fire_department, size: 20),
-                          const SizedBox(width: 8),
-                          Text(
-                            l10n.dashboardStreakDays(3),
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Profile completeness card
+              _ProfileProgressCard(),
+              const SizedBox(height: 16),
+
+              // Discovery progress card (percent and streak)
+              _DiscoveryProgressCard(),
               const SizedBox(height: 24),
 
               // Quick actions
@@ -128,6 +83,250 @@ class DashboardPage extends ConsumerWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DiscoveryProgressCard extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final progressAsync = ref.watch(discoveryProgressProvider);
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: progressAsync.when(
+          data: (progress) {
+            if (progress == null) {
+              return Column(
+                children: [
+                  Icon(
+                    Icons.explore,
+                    size: 48,
+                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Start your discovery journey!',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Complete quizzes and games to track your progress',
+                    style: Theme.of(context).textTheme.bodySmall,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              );
+            }
+
+            return Row(
+              children: [
+                // Percent circle
+                Expanded(
+                  child: Column(
+                    children: [
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          SizedBox(
+                            width: 80,
+                            height: 80,
+                            child: CircularProgressIndicator(
+                              value: progress.percent / 100.0,
+                              strokeWidth: 8,
+                              backgroundColor: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withValues(alpha: 0.1),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            '${progress.percent}%',
+                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Discovery Progress',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Divider
+                Container(
+                  height: 80,
+                  width: 1,
+                  color: Theme.of(context).dividerColor,
+                ),
+
+                // Streak
+                Expanded(
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.local_fire_department,
+                        size: 48,
+                        color: progress.streakDays > 0
+                            ? Colors.orange
+                            : Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '${progress.streakDays}',
+                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: progress.streakDays > 0 ? Colors.orange : null,
+                        ),
+                      ),
+                      Text(
+                        progress.streakDays == 1 ? 'Day Streak' : 'Days Streak',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+          loading: () => const Center(
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: CircularProgressIndicator(),
+            ),
+          ),
+          error: (error, stack) => Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              'Unable to load progress',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.error,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ProfileProgressCard extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final completenessAsync = ref.watch(profileCompletenessProvider);
+    final l10n = AppLocalizations.of(context)!;
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.psychology_outlined,
+                  size: 28,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  l10n.dashboardProfileProgress,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            completenessAsync.when(
+              data: (completeness) {
+                final percent = completeness.round();
+                final level = percent < 30
+                    ? l10n.dashboardProgressJustStarted
+                    : percent < 60
+                    ? l10n.dashboardProgressGettingThere
+                    : percent < 90
+                    ? l10n.dashboardProgressAlmostDone
+                    : l10n.dashboardProgressComplete;
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          level,
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          '$percent%',
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: LinearProgressIndicator(
+                        value: completeness / 100.0,
+                        minHeight: 12,
+                        backgroundColor: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: 0.1),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      percent < 90
+                          ? l10n.dashboardProgressHint
+                          : l10n.dashboardProgressCompleteHint,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withValues(alpha: 0.7),
+                      ),
+                    ),
+                  ],
+                );
+              },
+              loading: () => const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+              error: (error, stack) => Text(
+                'Error loading progress',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

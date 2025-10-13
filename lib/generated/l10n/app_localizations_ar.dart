@@ -242,6 +242,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dashboardStartRoadmapSubtitle => 'خطط طريقك نحو النجاح';
 
   @override
+  String get dashboardProfileProgress => 'تقدم الملف الشخصي';
+
+  @override
+  String get dashboardProgressJustStarted => 'بداية الرحلة';
+
+  @override
+  String get dashboardProgressGettingThere => 'في الطريق';
+
+  @override
+  String get dashboardProgressAlmostDone => 'على وشك الانتهاء';
+
+  @override
+  String get dashboardProgressComplete => 'الملف مكتمل!';
+
+  @override
+  String get dashboardProgressHint =>
+      'أكمل المزيد من الاختبارات والألعاب لتحسين التطابقات';
+
+  @override
+  String get dashboardProgressCompleteHint =>
+      'عمل رائع! ملفك الشخصي مكتمل والتطابقات محسّنة';
+
+  @override
   String get discoverTitle => 'اكتشف';
 
   @override

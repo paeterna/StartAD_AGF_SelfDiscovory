@@ -242,6 +242,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardStartRoadmapSubtitle => 'Plan your path to success';
 
   @override
+  String get dashboardProfileProgress => 'Profile Progress';
+
+  @override
+  String get dashboardProgressJustStarted => 'Just Getting Started';
+
+  @override
+  String get dashboardProgressGettingThere => 'Getting There';
+
+  @override
+  String get dashboardProgressAlmostDone => 'Almost Done';
+
+  @override
+  String get dashboardProgressComplete => 'Profile Complete!';
+
+  @override
+  String get dashboardProgressHint =>
+      'Complete more quizzes and games to improve your matches';
+
+  @override
+  String get dashboardProgressCompleteHint =>
+      'Great job! Your profile is complete and matches are optimized';
+
+  @override
   String get discoverTitle => 'Discover';
 
   @override

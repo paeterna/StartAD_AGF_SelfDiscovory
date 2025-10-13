@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../application/scoring/scoring_providers.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 
-class CareersPage extends StatelessWidget {
+class CareersPage extends ConsumerWidget {
   const CareersPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    
+    final careerMatchesAsync = ref.watch(careerMatchesProvider);
+
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(title: Text(l10n.careersTitle)),
@@ -30,37 +33,72 @@ class CareersPage extends StatelessWidget {
 
             // Career list
             Expanded(
-              child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                children: [
-                  _CareerCard(
-                    title: l10n.careerSoftwareEngineerTitle,
-                    description: l10n.careerSoftwareEngineerDescription,
-                    matchScore: 85,
-                    cluster: l10n.clusterTechnology,
+              child: careerMatchesAsync.when(
+                data: (matches) {
+                  if (matches.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.work_outline,
+                            size: 64,
+                            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'No career matches yet',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Complete quizzes and games to discover careers',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      ref.invalidate(careerMatchesProvider);
+                    },
+                    child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: matches.length,
+                      separatorBuilder: (_, __) => const SizedBox(height: 12),
+                      itemBuilder: (context, index) {
+                        final match = matches[index];
+                        return _CareerCard(
+                          title: match.title,
+                          description: match.description ?? '',
+                          matchScore: match.similarityPercent.round(),
+                          cluster: match.cluster ?? 'General',
+                          topFeatures: match.topFeatures.take(3).toList(),
+                          tags: match.tags,
+                        );
+                      },
+                    ),
+                  );
+                },
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stack) => Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                      const SizedBox(height: 16),
+                      Text('Error loading careers: $error'),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () => ref.invalidate(careerMatchesProvider),
+                        child: const Text('Retry'),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 12),
-                  _CareerCard(
-                    title: l10n.careerDataScientistTitle,
-                    description: l10n.careerDataScientistDescription,
-                    matchScore: 78,
-                    cluster: l10n.clusterSTEM,
-                  ),
-                  const SizedBox(height: 12),
-                  _CareerCard(
-                    title: l10n.careerGraphicDesignerTitle,
-                    description: l10n.careerGraphicDesignerDescription,
-                    matchScore: 65,
-                    cluster: l10n.clusterArtsHumanities,
-                  ),
-                  const SizedBox(height: 12),
-                  _CareerCard(
-                    title: l10n.careerMarketingManagerTitle,
-                    description: l10n.careerMarketingManagerDescription,
-                    matchScore: 72,
-                    cluster: l10n.clusterBusinessFinance,
-                  ),
-                ],
+                ),
               ),
             ),
           ],
@@ -76,12 +114,16 @@ class _CareerCard extends StatelessWidget {
     required this.description,
     required this.matchScore,
     required this.cluster,
+    this.topFeatures = const [],
+    this.tags = const [],
   });
 
   final String title;
   final String description;
   final int matchScore;
   final String cluster;
+  final List<dynamic> topFeatures;
+  final List<String> tags;
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +178,36 @@ class _CareerCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(description, style: Theme.of(context).textTheme.bodyMedium),
+            if (topFeatures.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              Text(
+                'Why this match?',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Wrap(
+                spacing: 6,
+                runSpacing: 6,
+                children: topFeatures.map((feature) {
+                  final featureKey = feature is Map ? feature['feature_key'] as String? : '';
+                  final displayName = featureKey?.replaceAll('_', ' ').split(' ').map((w) => w.isNotEmpty ? w[0].toUpperCase() + w.substring(1) : '').join(' ') ?? '';
+                  return Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      displayName,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
             const SizedBox(height: 12),
             Row(
               children: [

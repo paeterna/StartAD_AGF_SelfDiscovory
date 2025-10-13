@@ -261,8 +261,10 @@ $$;
 drop trigger if exists trg_update_progress_after_run on public.activity_runs;
 
 create trigger trg_update_progress_after_run
-after insert on public.activity_runs
-for each row execute function public.fn_update_progress_after_run();
+after insert or update on public.activity_runs
+for each row
+when (new.completed_at is not null and (old is null or old.completed_at is null))
+execute function public.fn_update_progress_after_run();
 
 -- 4.2 Auto-create profile row on first sign-in
 create or replace function public.fn_create_profile_for_user()
