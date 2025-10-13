@@ -97,8 +97,8 @@ class RadarTraitsCard extends ConsumerWidget {
                       Text(
                         'Unable to load trait data',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.error,
-                            ),
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                       ),
                     ],
                   ),
@@ -150,7 +150,9 @@ class RadarTraitsCard extends ConsumerWidget {
             Icon(
               Icons.explore_outlined,
               size: 64,
-              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.3),
             ),
             const SizedBox(height: 16),
             Text(
@@ -161,11 +163,10 @@ class RadarTraitsCard extends ConsumerWidget {
             Text(
               'Complete assessments to see your profile',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withValues(alpha: 0.6),
-                  ),
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
               textAlign: TextAlign.center,
             ),
           ],
@@ -174,7 +175,10 @@ class RadarTraitsCard extends ConsumerWidget {
     );
   }
 
-  Widget _buildRadarChart(BuildContext context, List<RadarDataPoint> dataPoints) {
+  Widget _buildRadarChart(
+    BuildContext context,
+    List<RadarDataPoint> dataPoints,
+  ) {
     return RadarChart(
       RadarChartData(
         radarShape: RadarShape.polygon,
@@ -191,15 +195,17 @@ class RadarTraitsCard extends ConsumerWidget {
         ),
         tickCount: 5,
         ticksTextStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-              fontSize: 10,
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
-            ),
+          fontSize: 10,
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+        ),
         titleTextStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-            ),
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
+        ),
         getTitle: (index, angle) {
-          if (index >= dataPoints.length) return const RadarChartTitle(text: '');
+          if (index >= dataPoints.length) {
+            return const RadarChartTitle(text: '');
+          }
           return RadarChartTitle(
             text: _abbreviateLabel(dataPoints[index].featureLabel),
           );
@@ -207,7 +213,9 @@ class RadarTraitsCard extends ConsumerWidget {
         dataSets: [
           // User scores
           RadarDataSet(
-            fillColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
+            fillColor: Theme.of(
+              context,
+            ).colorScheme.primary.withValues(alpha: 0.2),
             borderColor: Theme.of(context).colorScheme.primary,
             borderWidth: 2,
             entryRadius: 3,

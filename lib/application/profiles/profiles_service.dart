@@ -17,7 +17,9 @@ class ProfilesService {
 
     final response = await _supabase
         .from('profiles')
-        .select('id, display_name, locale, theme, onboarding_complete, created_at')
+        .select(
+          'id, display_name, locale, theme, onboarding_complete, created_at',
+        )
         .eq('id', userId)
         .maybeSingle();
 

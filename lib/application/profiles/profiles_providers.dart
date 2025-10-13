@@ -8,7 +8,8 @@ final profilesServiceProvider = Provider<ProfilesService>((ref) {
 });
 
 /// Provider for current user's profile
-final myProfileProvider = FutureProvider.autoDispose<UserProfile?>((ref) async {
-  final profilesService = ref.watch(profilesServiceProvider);
-  return profilesService.getMyProfile();
-});
+final FutureProvider<UserProfile?> myProfileProvider =
+    FutureProvider.autoDispose<UserProfile?>((ref) async {
+      final profilesService = ref.watch(profilesServiceProvider);
+      return profilesService.getMyProfile();
+    });

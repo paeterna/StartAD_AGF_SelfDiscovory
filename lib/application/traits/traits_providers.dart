@@ -7,25 +7,26 @@ import 'traits_repository.dart';
 /// Provider for TraitsRepository
 final Provider<TraitsRepository> traitsRepositoryProvider =
     Provider<TraitsRepository>((ref) {
-  return TraitsRepository(Supabase.instance.client);
-});
+      return TraitsRepository(Supabase.instance.client);
+    });
 
 /// Provider for radar chart data
-final radarDataProvider =
+final FutureProvider<List<RadarDataPoint>> radarDataProvider =
     FutureProvider.autoDispose<List<RadarDataPoint>>((ref) async {
-  final repository = ref.watch(traitsRepositoryProvider);
-  return repository.getMyRadarData();
-});
+      final repository = ref.watch(traitsRepositoryProvider);
+      return repository.getMyRadarData();
+    });
 
 /// Provider for radar data grouped by family
-final radarDataByFamilyProvider =
+final FutureProvider<RadarDataByFamily> radarDataByFamilyProvider =
     FutureProvider.autoDispose<RadarDataByFamily>((ref) async {
-  final repository = ref.watch(traitsRepositoryProvider);
-  return repository.getMyRadarDataByFamily();
-});
+      final repository = ref.watch(traitsRepositoryProvider);
+      return repository.getMyRadarDataByFamily();
+    });
 
 /// Provider to check if user has feature scores
-final hasFeatureScoresProvider = FutureProvider.autoDispose<bool>((ref) async {
-  final repository = ref.watch(traitsRepositoryProvider);
-  return repository.hasFeatureScores();
-});
+final FutureProvider<bool> hasFeatureScoresProvider =
+    FutureProvider.autoDispose<bool>((ref) async {
+      final repository = ref.watch(traitsRepositoryProvider);
+      return repository.hasFeatureScores();
+    });

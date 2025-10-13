@@ -9,15 +9,15 @@ final progressServiceProvider = Provider<ProgressService>((ref) {
 
 /// Provider for discovery progress
 /// Note: This is the canonical provider - use this instead of the one in activity_providers
-final myProgressProvider =
+final FutureProvider<DiscoveryProgress?> myProgressProvider =
     FutureProvider.autoDispose<DiscoveryProgress?>((ref) async {
-  final progressService = ref.watch(progressServiceProvider);
-  return progressService.getMyProgress();
-});
+      final progressService = ref.watch(progressServiceProvider);
+      return progressService.getMyProgress();
+    });
 
 /// Provider for profile completeness percentage
-final myProfileCompletenessProvider =
+final FutureProvider<double> myProfileCompletenessProvider =
     FutureProvider.autoDispose<double>((ref) async {
-  final progressService = ref.watch(progressServiceProvider);
-  return progressService.getProfileCompleteness();
-});
+      final progressService = ref.watch(progressServiceProvider);
+      return progressService.getProfileCompleteness();
+    });

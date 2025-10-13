@@ -78,5 +78,6 @@ class RadarDataByFamily {
   List<RadarDataPoint> get all => [...riasec, ...cognition, ...traits];
 
   /// Check if user has any data
-  bool get hasData => riasec.isNotEmpty || cognition.isNotEmpty || traits.isNotEmpty;
+  bool get hasData =>
+      riasec.isNotEmpty || cognition.isNotEmpty || traits.isNotEmpty;
 }

@@ -136,10 +136,13 @@ class RoadmapService {
       throw Exception('User not authenticated');
     }
 
-    await _supabase.from('roadmap_steps').update({
-      'completed': completed,
-      'completed_at': completed ? DateTime.now().toIso8601String() : null,
-    }).eq('id', stepId);
+    await _supabase
+        .from('roadmap_steps')
+        .update({
+          'completed': completed,
+          'completed_at': completed ? DateTime.now().toIso8601String() : null,
+        })
+        .eq('id', stepId);
     // RLS policy ensures user owns the parent roadmap
   }
 

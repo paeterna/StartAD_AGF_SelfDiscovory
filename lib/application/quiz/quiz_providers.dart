@@ -1,30 +1,33 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod/src/providers/future_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../data/models/quiz_instrument.dart';
 import 'quiz_item_seeder.dart';
 
 /// Provider for QuizItemSeeder service
-final Provider<QuizItemSeeder> quizItemSeederProvider = Provider<QuizItemSeeder>((ref) {
-  return QuizItemSeeder(Supabase.instance.client);
-});
+final Provider<QuizItemSeeder> quizItemSeederProvider =
+    Provider<QuizItemSeeder>((ref) {
+      return QuizItemSeeder(Supabase.instance.client);
+    });
 
 /// Provider to fetch quiz items from database
-final quizItemsProvider =
+final FutureProviderFamily<List<Map<String, dynamic>>, QuizItemsParams>
+quizItemsProvider =
     FutureProvider.family<List<Map<String, dynamic>>, QuizItemsParams>(
-  (ref, params) async {
-    final seeder = ref.watch(quizItemSeederProvider);
-    return seeder.fetchQuizItems(
-      instrument: params.instrument,
-      language: params.language,
+      (ref, params) async {
+        final seeder = ref.watch(quizItemSeederProvider);
+        return seeder.fetchQuizItems(
+          instrument: params.instrument,
+          language: params.language,
+        );
+      },
     );
-  },
-);
 
 /// Provider to get quiz instrument metadata
-final quizMetadataProvider =
-    FutureProvider.family<QuizInstrument, QuizItemsParams>(
+final FutureProviderFamily<QuizInstrument, QuizItemsParams>
+quizMetadataProvider = FutureProvider.family<QuizInstrument, QuizItemsParams>(
   (ref, params) async {
     final seeder = ref.watch(quizItemSeederProvider);
     return seeder.getInstrumentMetadata(

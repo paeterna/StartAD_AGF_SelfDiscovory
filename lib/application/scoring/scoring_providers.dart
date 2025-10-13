@@ -8,7 +8,7 @@ final scoringServiceProvider = Provider<ScoringService>((ref) {
 });
 
 /// Provider for user's career matches
-final careerMatchesProvider =
+final FutureProvider<List<CareerMatchWithDetails>> careerMatchesProvider =
     FutureProvider.autoDispose<List<CareerMatchWithDetails>>((ref) async {
       final scoringService = ref.watch(scoringServiceProvider);
       final userId = Supabase.instance.client.auth.currentUser?.id;
@@ -45,21 +45,22 @@ final careerMatchesProvider =
     });
 
 /// Provider for profile completeness
-final profileCompletenessProvider = FutureProvider.autoDispose<double>((
-  ref,
-) async {
-  final scoringService = ref.watch(scoringServiceProvider);
-  final userId = Supabase.instance.client.auth.currentUser?.id;
+final FutureProvider<double> profileCompletenessProvider =
+    FutureProvider.autoDispose<double>((
+      ref,
+    ) async {
+      final scoringService = ref.watch(scoringServiceProvider);
+      final userId = Supabase.instance.client.auth.currentUser?.id;
 
-  if (userId == null) {
-    return 0.0;
-  }
+      if (userId == null) {
+        return 0.0;
+      }
 
-  return scoringService.getProfileCompleteness(userId);
-});
+      return scoringService.getProfileCompleteness(userId);
+    });
 
 /// Provider for user feature scores
-final userFeatureScoresProvider =
+final FutureProvider<List<UserFeatureScore>> userFeatureScoresProvider =
     FutureProvider.autoDispose<List<UserFeatureScore>>((ref) async {
       final scoringService = ref.watch(scoringServiceProvider);
       final userId = Supabase.instance.client.auth.currentUser?.id;

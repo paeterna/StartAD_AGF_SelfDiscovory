@@ -43,6 +43,7 @@ dependencies:
   # Icons
   cupertino_icons: ^1.0.8
 
+  riverpod: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -68,6 +69,6 @@ flutter:
   assets:
     - assets/i18n/
     - assets/assessments/
-    #- .env
+    - .env
     # Note: .env should NOT be an asset - it's for local dev only
     # Environment variables are set in Netlify dashboard

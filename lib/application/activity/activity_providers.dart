@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod/src/providers/future_provider.dart';
 import 'package:startad_agf_selfdiscovery/application/activity/activity_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -8,22 +9,24 @@ final activityServiceProvider = Provider<ActivityService>((ref) {
 });
 
 /// Provider for discovery progress
-final discoveryProgressProvider =
+final FutureProvider<DiscoveryProgress?> discoveryProgressProvider =
     FutureProvider.autoDispose<DiscoveryProgress?>((ref) async {
       final activityService = ref.watch(activityServiceProvider);
       return activityService.getDiscoveryProgress();
     });
 
 /// Provider for activity run history
-final activityRunsProvider = FutureProvider.autoDispose<List<ActivityRun>>((
-  ref,
-) async {
-  final activityService = ref.watch(activityServiceProvider);
-  return activityService.getActivityRuns(limit: 20);
-});
+final FutureProvider<List<ActivityRun>> activityRunsProvider =
+    FutureProvider.autoDispose<List<ActivityRun>>((
+      ref,
+    ) async {
+      final activityService = ref.watch(activityServiceProvider);
+      return activityService.getActivityRuns(limit: 20);
+    });
 
 /// Provider for available activities
-final availableActivitiesProvider = FutureProvider.autoDispose
+final FutureProviderFamily<List<Activity>, String?>
+availableActivitiesProvider = FutureProvider.autoDispose
     .family<List<Activity>, String?>((ref, kind) async {
       final activityService = ref.watch(activityServiceProvider);
       return activityService.getActivities(kind: kind);

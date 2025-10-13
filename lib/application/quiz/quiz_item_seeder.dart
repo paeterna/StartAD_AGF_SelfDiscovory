@@ -43,7 +43,8 @@ class QuizItemSeeder {
     bool force = false,
   }) async {
     // Check if already seeded
-    if (!force && await instrumentExists(instrument: instrument, language: language)) {
+    if (!force &&
+        await instrumentExists(instrument: instrument, language: language)) {
       return; // Already seeded, skip
     }
 

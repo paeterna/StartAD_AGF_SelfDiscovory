@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod/src/providers/future_provider.dart';
 import 'package:startad_agf_selfdiscovery/application/consent/consent_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -8,14 +9,15 @@ final consentServiceProvider = Provider<ConsentService>((ref) {
 });
 
 /// Provider for latest consent
-final latestConsentProvider = FutureProvider.autoDispose<Consent?>((ref) async {
-  final consentService = ref.watch(consentServiceProvider);
-  return consentService.latest();
-});
+final FutureProvider<Consent?> latestConsentProvider =
+    FutureProvider.autoDispose<Consent?>((ref) async {
+      final consentService = ref.watch(consentServiceProvider);
+      return consentService.latest();
+    });
 
 /// Provider to check if user has accepted a specific version
-final hasAcceptedConsentProvider =
+final FutureProviderFamily<bool, String> hasAcceptedConsentProvider =
     FutureProvider.autoDispose.family<bool, String>((ref, version) async {
-  final consentService = ref.watch(consentServiceProvider);
-  return consentService.hasAccepted(version);
-});
+      final consentService = ref.watch(consentServiceProvider);
+      return consentService.hasAccepted(version);
+    });

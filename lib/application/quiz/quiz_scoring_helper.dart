@@ -21,9 +21,7 @@ class QuizScoringHelper {
 
       // Compute item score: weight * direction * (likert - 3) / 2
       // Maps [1,5] → [-1, 1]
-      final itemScore = item.weight *
-          item.direction *
-          (likertValue - 3) / 2.0;
+      final itemScore = item.weight * item.direction * (likertValue - 3) / 2.0;
 
       scoresByFeature.putIfAbsent(item.featureKey, () => []);
       scoresByFeature[item.featureKey]!.add(

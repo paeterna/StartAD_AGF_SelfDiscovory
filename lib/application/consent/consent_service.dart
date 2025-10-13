@@ -23,7 +23,9 @@ class ConsentService {
 
     // Validate status
     if (!['accepted', 'declined', 'revoked'].contains(status)) {
-      throw ArgumentError('Invalid status. Must be accepted, declined, or revoked');
+      throw ArgumentError(
+        'Invalid status. Must be accepted, declined, or revoked',
+      );
     }
 
     await _supabase.from('consents').upsert({

@@ -81,7 +81,10 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
     );
   }
 
-  Widget _buildAssessmentContent(BuildContext context, QuizInstrument metadata) {
+  Widget _buildAssessmentContent(
+    BuildContext context,
+    QuizInstrument metadata,
+  ) {
     final totalPages = (metadata.items.length / _itemsPerPage).ceil();
     final startIdx = _currentPage * _itemsPerPage;
     final endIdx = (startIdx + _itemsPerPage).clamp(0, metadata.items.length);
@@ -110,8 +113,8 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
                     Text(
                       metadata.instructions,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontStyle: FontStyle.italic,
-                          ),
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ],
                 ),
@@ -156,15 +159,15 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
               Text(
                 'Progress',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               Text(
                 '${_responses.length} / $totalItems',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -174,8 +177,9 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
             child: LinearProgressIndicator(
               value: progress,
               minHeight: 8,
-              backgroundColor:
-                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+              backgroundColor: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.1),
               valueColor: AlwaysStoppedAnimation<Color>(
                 Theme.of(context).colorScheme.primary,
               ),
@@ -211,18 +215,17 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primary
-                        .withValues(alpha: 0.1),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     '$questionNumber',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -230,8 +233,8 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
                   child: Text(
                     item.text,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ],
@@ -277,25 +280,24 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
                     decoration: BoxDecoration(
                       color: isSelected
                           ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withValues(alpha: 0.05),
+                          : Theme.of(
+                              context,
+                            ).colorScheme.primary.withValues(alpha: 0.05),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                         color: isSelected
                             ? Theme.of(context).colorScheme.primary
-                            : Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withValues(alpha: 0.2),
+                            : Theme.of(
+                                context,
+                              ).colorScheme.primary.withValues(alpha: 0.2),
                         width: isSelected ? 2 : 1,
                       ),
                     ),
                     child: Center(
                       child: Text(
                         value.toString(),
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
                               color: isSelected
                                   ? Theme.of(context).colorScheme.onPrimary
                                   : Theme.of(context).colorScheme.onSurface,
