@@ -20,10 +20,10 @@ class AppTheme {
   static const double spaceXLarge = 32.0;
 
   // Glassmorphism constants (15-25% opacity)
-  static const double glassBlur = 20.0;
-  static const double glassOpacity = 0.15;       // Light glass
-  static const double glassOpacityMedium = 0.20; // Medium glass
-  static const double glassOpacityHeavy = 0.25;  // Heavy glass
+  static const double glassBlur = 40.0;
+  static const double glassOpacity = 0.35;       // Light glass
+  static const double glassOpacityMedium = 0.40; // Medium glass
+  static const double glassOpacityHeavy = 0.55;  // Heavy glass
   static const double glassBorderOpacity = 0.2;
 
   /// Light theme - Warm, friendly, and optimistic
@@ -54,7 +54,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusLarge),
           side: BorderSide(
-            color: Colors.white.withValues(alpha: glassBorderOpacity),
+            color: const Color.fromARGB(255, 255, 227, 174).withValues(alpha: glassBorderOpacity),
             width: 1.0,
           ),
         ),
@@ -130,7 +130,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusLarge),
           side: BorderSide(
-            color: Colors.white.withValues(alpha: glassBorderOpacity),
+            color: const Color.fromARGB(255, 228, 180, 141).withValues(alpha: glassBorderOpacity),
             width: 1.0,
           ),
         ),
