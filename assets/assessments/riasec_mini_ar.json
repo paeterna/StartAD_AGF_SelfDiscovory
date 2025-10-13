@@ -1,0 +1,230 @@
+{
+  "instrument": "riasec_mini",
+  "version": "1.0",
+  "language": "ar",
+  "title": "مستكشف الاهتمامات المهنية",
+  "description": "اكتشف اهتماماتك المهنية من خلال تقييم مدى استمتاعك بالأنشطة المختلفة.",
+  "instructions": "قيّم كل عبارة بناءً على مدى استمتاعك بالنشاط.",
+  "scale": {
+    "type": "likert5",
+    "labels": {
+      "1": "لا أحب بشدة",
+      "2": "لا أحب",
+      "3": "محايد",
+      "4": "أحب",
+      "5": "أحب بشدة"
+    }
+  },
+  "items": [
+    {
+      "id": "r1",
+      "text": "العمل مع الأدوات والآلات",
+      "feature_key": "realistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "r2",
+      "text": "بناء أو إصلاح الأشياء",
+      "feature_key": "realistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "r3",
+      "text": "العمل في الهواء الطلق",
+      "feature_key": "realistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "r4",
+      "text": "تشغيل المعدات أو الآلات",
+      "feature_key": "realistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "r5",
+      "text": "القيام بأعمال عملية باليدين",
+      "feature_key": "realistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "i1",
+      "text": "حل المشكلات المعقدة",
+      "feature_key": "investigative",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "i2",
+      "text": "إجراء التجارب العلمية",
+      "feature_key": "investigative",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "i3",
+      "text": "تحليل البيانات والأنماط",
+      "feature_key": "investigative",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "i4",
+      "text": "البحث وتعلم أشياء جديدة",
+      "feature_key": "investigative",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "i5",
+      "text": "استخدام المنطق والتفكير",
+      "feature_key": "investigative",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a1",
+      "text": "إنشاء الفن أو الموسيقى أو التصاميم",
+      "feature_key": "artistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a2",
+      "text": "كتابة القصص أو القصائد",
+      "feature_key": "artistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a3",
+      "text": "التعبير عن نفسك بشكل إبداعي",
+      "feature_key": "artistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a4",
+      "text": "الأداء أمام الآخرين",
+      "feature_key": "artistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a5",
+      "text": "تصميم المشاريع البصرية",
+      "feature_key": "artistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "s1",
+      "text": "مساعدة الآخرين في مشاكلهم",
+      "feature_key": "social",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "s2",
+      "text": "تعليم أو تدريب الناس",
+      "feature_key": "social",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "s3",
+      "text": "العمل في بيئة فريق",
+      "feature_key": "social",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "s4",
+      "text": "الاهتمام برفاهية الآخرين",
+      "feature_key": "social",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "s5",
+      "text": "تقديم الدعم والتوجيه",
+      "feature_key": "social",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e1",
+      "text": "قيادة فريق أو مشروع",
+      "feature_key": "enterprising",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e2",
+      "text": "إقناع الآخرين بوجهة نظرك",
+      "feature_key": "enterprising",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e3",
+      "text": "بدء وإدارة المشاريع",
+      "feature_key": "enterprising",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e4",
+      "text": "تولي أدوار قيادية",
+      "feature_key": "enterprising",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e5",
+      "text": "اتخاذ القرارات والمخاطرة",
+      "feature_key": "enterprising",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c1",
+      "text": "التنظيم وحفظ السجلات",
+      "feature_key": "conventional",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c2",
+      "text": "اتباع الإجراءات التفصيلية",
+      "feature_key": "conventional",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c3",
+      "text": "العمل مع الأرقام والبيانات",
+      "feature_key": "conventional",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c4",
+      "text": "إدارة الجداول الزمنية والتفاصيل",
+      "feature_key": "conventional",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c5",
+      "text": "الحفاظ على الأنظمة المنظمة",
+      "feature_key": "conventional",
+      "direction": 1,
+      "weight": 1.0
+    }
+  ]
+}

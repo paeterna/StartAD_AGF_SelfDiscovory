@@ -1,0 +1,370 @@
+{
+  "instrument": "ipip50",
+  "version": "1.0",
+  "language": "en",
+  "title": "Personality Traits Assessment",
+  "description": "Understand your personality traits through the Big Five personality dimensions.",
+  "instructions": "Rate how accurately each statement describes you.",
+  "scale": {
+    "type": "likert5",
+    "labels": {
+      "1": "Very Inaccurate",
+      "2": "Moderately Inaccurate",
+      "3": "Neither Accurate nor Inaccurate",
+      "4": "Moderately Accurate",
+      "5": "Very Accurate"
+    }
+  },
+  "items": [
+    {
+      "id": "e1",
+      "text": "I am the life of the party",
+      "feature_key": "extraversion",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a1",
+      "text": "I feel others' emotions",
+      "feature_key": "agreeableness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c1",
+      "text": "I am always prepared",
+      "feature_key": "conscientiousness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "es1",
+      "text": "I get stressed out easily",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o1",
+      "text": "I have a rich vocabulary",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e2",
+      "text": "I don't talk a lot",
+      "feature_key": "extraversion",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "a2",
+      "text": "I am not interested in other people's problems",
+      "feature_key": "agreeableness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "c2",
+      "text": "I leave my belongings around",
+      "feature_key": "conscientiousness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "es2",
+      "text": "I am relaxed most of the time",
+      "feature_key": "emotional_stability",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "o2",
+      "text": "I have difficulty understanding abstract ideas",
+      "feature_key": "openness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "e3",
+      "text": "I feel comfortable around people",
+      "feature_key": "extraversion",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a3",
+      "text": "I insult people",
+      "feature_key": "agreeableness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "c3",
+      "text": "I pay attention to details",
+      "feature_key": "conscientiousness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "es3",
+      "text": "I worry about things",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o3",
+      "text": "I have a vivid imagination",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e4",
+      "text": "I keep in the background",
+      "feature_key": "extraversion",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "a4",
+      "text": "I sympathize with others' feelings",
+      "feature_key": "agreeableness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c4",
+      "text": "I make a mess of things",
+      "feature_key": "conscientiousness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "es4",
+      "text": "I seldom feel blue",
+      "feature_key": "emotional_stability",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "o4",
+      "text": "I am not interested in abstract ideas",
+      "feature_key": "openness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "e5",
+      "text": "I start conversations",
+      "feature_key": "extraversion",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a5",
+      "text": "I am not really interested in others",
+      "feature_key": "agreeableness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "c5",
+      "text": "I get chores done right away",
+      "feature_key": "conscientiousness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "es5",
+      "text": "I am easily disturbed",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o5",
+      "text": "I have excellent ideas",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e6",
+      "text": "I have little to say",
+      "feature_key": "extraversion",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "a6",
+      "text": "I have a soft heart",
+      "feature_key": "agreeableness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c6",
+      "text": "I often forget to put things back in their proper place",
+      "feature_key": "conscientiousness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "es6",
+      "text": "I get upset easily",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o6",
+      "text": "I do not have a good imagination",
+      "feature_key": "openness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "e7",
+      "text": "I talk to a lot of different people at parties",
+      "feature_key": "extraversion",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a7",
+      "text": "I take time out for others",
+      "feature_key": "agreeableness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c7",
+      "text": "I like order",
+      "feature_key": "conscientiousness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "es7",
+      "text": "I change my mood a lot",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o7",
+      "text": "I am quick to understand things",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e8",
+      "text": "I don't like to draw attention to myself",
+      "feature_key": "extraversion",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "a8",
+      "text": "I feel little concern for others",
+      "feature_key": "agreeableness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "c8",
+      "text": "I shirk my duties",
+      "feature_key": "conscientiousness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "es8",
+      "text": "I have frequent mood swings",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o8",
+      "text": "I use difficult words",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e9",
+      "text": "I don't mind being the center of attention",
+      "feature_key": "extraversion",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a9",
+      "text": "I am interested in people",
+      "feature_key": "agreeableness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c9",
+      "text": "I follow a schedule",
+      "feature_key": "conscientiousness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "es9",
+      "text": "I get irritated easily",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o9",
+      "text": "I spend time reflecting on things",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e10",
+      "text": "I am quiet around strangers",
+      "feature_key": "extraversion",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "a10",
+      "text": "I make people feel at ease",
+      "feature_key": "agreeableness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c10",
+      "text": "I am exacting in my work",
+      "feature_key": "conscientiousness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "es10",
+      "text": "I often feel blue",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o10",
+      "text": "I am full of ideas",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    }
+  ]
+}

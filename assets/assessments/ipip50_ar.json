@@ -1,0 +1,370 @@
+{
+  "instrument": "ipip50",
+  "version": "1.0",
+  "language": "ar",
+  "title": "تقييم السمات الشخصية",
+  "description": "افهم سماتك الشخصية من خلال أبعاد الشخصية الخمسة الكبرى.",
+  "instructions": "قيّم مدى دقة وصف كل عبارة لك.",
+  "scale": {
+    "type": "likert5",
+    "labels": {
+      "1": "غير دقيق جدا",
+      "2": "غير دقيق بشكل معتدل",
+      "3": "لا دقيق ولا غير دقيق",
+      "4": "دقيق بشكل معتدل",
+      "5": "دقيق جدا"
+    }
+  },
+  "items": [
+    {
+      "id": "e1",
+      "text": "أنا روح الحفلة",
+      "feature_key": "extraversion",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a1",
+      "text": "أشعر بمشاعر الآخرين",
+      "feature_key": "agreeableness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c1",
+      "text": "أنا دائما مستعد",
+      "feature_key": "conscientiousness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "es1",
+      "text": "أشعر بالتوتر بسهولة",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o1",
+      "text": "لدي مفردات غنية",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e2",
+      "text": "لا أتحدث كثيرا",
+      "feature_key": "extraversion",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "a2",
+      "text": "لا أهتم بمشاكل الآخرين",
+      "feature_key": "agreeableness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "c2",
+      "text": "أترك أغراضي في كل مكان",
+      "feature_key": "conscientiousness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "es2",
+      "text": "أنا مسترخ معظم الوقت",
+      "feature_key": "emotional_stability",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "o2",
+      "text": "أجد صعوبة في فهم الأفكار المجردة",
+      "feature_key": "openness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "e3",
+      "text": "أشعر بالراحة بين الناس",
+      "feature_key": "extraversion",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a3",
+      "text": "أهين الناس",
+      "feature_key": "agreeableness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "c3",
+      "text": "أنتبه للتفاصيل",
+      "feature_key": "conscientiousness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "es3",
+      "text": "أقلق بشأن الأشياء",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o3",
+      "text": "لدي خيال حي",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e4",
+      "text": "أبقى في الخلفية",
+      "feature_key": "extraversion",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "a4",
+      "text": "أتعاطف مع مشاعر الآخرين",
+      "feature_key": "agreeableness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c4",
+      "text": "أفسد الأشياء",
+      "feature_key": "conscientiousness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "es4",
+      "text": "نادرا ما أشعر بالحزن",
+      "feature_key": "emotional_stability",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "o4",
+      "text": "لا أهتم بالأفكار المجردة",
+      "feature_key": "openness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "e5",
+      "text": "أبدأ المحادثات",
+      "feature_key": "extraversion",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a5",
+      "text": "لست مهتما حقا بالآخرين",
+      "feature_key": "agreeableness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "c5",
+      "text": "أنجز الأعمال المنزلية على الفور",
+      "feature_key": "conscientiousness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "es5",
+      "text": "أنزعج بسهولة",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o5",
+      "text": "لدي أفكار ممتازة",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e6",
+      "text": "ليس لدي الكثير لأقوله",
+      "feature_key": "extraversion",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "a6",
+      "text": "لدي قلب رقيق",
+      "feature_key": "agreeableness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c6",
+      "text": "غالبا ما أنسى إعادة الأشياء إلى مكانها الصحيح",
+      "feature_key": "conscientiousness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "es6",
+      "text": "أنزعج بسهولة",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o6",
+      "text": "ليس لدي خيال جيد",
+      "feature_key": "openness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "e7",
+      "text": "أتحدث مع الكثير من الناس المختلفين في الحفلات",
+      "feature_key": "extraversion",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a7",
+      "text": "أخصص وقتا للآخرين",
+      "feature_key": "agreeableness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c7",
+      "text": "أحب النظام",
+      "feature_key": "conscientiousness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "es7",
+      "text": "أغير مزاجي كثيرا",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o7",
+      "text": "أفهم الأشياء بسرعة",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e8",
+      "text": "لا أحب أن ألفت الانتباه إلى نفسي",
+      "feature_key": "extraversion",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "a8",
+      "text": "أشعر بقلق قليل تجاه الآخرين",
+      "feature_key": "agreeableness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "c8",
+      "text": "أتهرب من واجباتي",
+      "feature_key": "conscientiousness",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "es8",
+      "text": "لدي تقلبات مزاجية متكررة",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o8",
+      "text": "أستخدم كلمات صعبة",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e9",
+      "text": "لا أمانع أن أكون محور الاهتمام",
+      "feature_key": "extraversion",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a9",
+      "text": "أنا مهتم بالناس",
+      "feature_key": "agreeableness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c9",
+      "text": "أتبع جدولا زمنيا",
+      "feature_key": "conscientiousness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "es9",
+      "text": "أنزعج بسهولة",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o9",
+      "text": "أقضي وقتا في التفكير في الأشياء",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e10",
+      "text": "أنا هادئ حول الغرباء",
+      "feature_key": "extraversion",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "a10",
+      "text": "أجعل الناس يشعرون بالراحة",
+      "feature_key": "agreeableness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c10",
+      "text": "أنا دقيق في عملي",
+      "feature_key": "conscientiousness",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "es10",
+      "text": "غالبا ما أشعر بالحزن",
+      "feature_key": "emotional_stability",
+      "direction": -1,
+      "weight": 1.0
+    },
+    {
+      "id": "o10",
+      "text": "أنا مليء بالأفكار",
+      "feature_key": "openness",
+      "direction": 1,
+      "weight": 1.0
+    }
+  ]
+}

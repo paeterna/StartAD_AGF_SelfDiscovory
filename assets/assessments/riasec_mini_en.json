@@ -1,0 +1,230 @@
+{
+  "instrument": "riasec_mini",
+  "version": "1.0",
+  "language": "en",
+  "title": "Career Interest Explorer",
+  "description": "Discover your career interests by rating how much you enjoy different activities.",
+  "instructions": "Rate each statement based on how much you would enjoy the activity.",
+  "scale": {
+    "type": "likert5",
+    "labels": {
+      "1": "Strongly Dislike",
+      "2": "Dislike",
+      "3": "Neutral",
+      "4": "Like",
+      "5": "Strongly Like"
+    }
+  },
+  "items": [
+    {
+      "id": "r1",
+      "text": "Working with tools and machines",
+      "feature_key": "realistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "r2",
+      "text": "Building or repairing things",
+      "feature_key": "realistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "r3",
+      "text": "Working outdoors",
+      "feature_key": "realistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "r4",
+      "text": "Operating equipment or machinery",
+      "feature_key": "realistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "r5",
+      "text": "Doing hands-on practical work",
+      "feature_key": "realistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "i1",
+      "text": "Solving complex problems",
+      "feature_key": "investigative",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "i2",
+      "text": "Conducting scientific experiments",
+      "feature_key": "investigative",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "i3",
+      "text": "Analyzing data and patterns",
+      "feature_key": "investigative",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "i4",
+      "text": "Researching and learning new things",
+      "feature_key": "investigative",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "i5",
+      "text": "Using logic and reasoning",
+      "feature_key": "investigative",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a1",
+      "text": "Creating art, music, or designs",
+      "feature_key": "artistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a2",
+      "text": "Writing stories or poems",
+      "feature_key": "artistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a3",
+      "text": "Expressing yourself creatively",
+      "feature_key": "artistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a4",
+      "text": "Performing in front of others",
+      "feature_key": "artistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "a5",
+      "text": "Designing visual projects",
+      "feature_key": "artistic",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "s1",
+      "text": "Helping others with their problems",
+      "feature_key": "social",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "s2",
+      "text": "Teaching or training people",
+      "feature_key": "social",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "s3",
+      "text": "Working in a team environment",
+      "feature_key": "social",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "s4",
+      "text": "Caring for others' wellbeing",
+      "feature_key": "social",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "s5",
+      "text": "Providing support and guidance",
+      "feature_key": "social",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e1",
+      "text": "Leading a team or project",
+      "feature_key": "enterprising",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e2",
+      "text": "Persuading others to your viewpoint",
+      "feature_key": "enterprising",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e3",
+      "text": "Starting and managing projects",
+      "feature_key": "enterprising",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e4",
+      "text": "Taking on leadership roles",
+      "feature_key": "enterprising",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "e5",
+      "text": "Making decisions and taking risks",
+      "feature_key": "enterprising",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c1",
+      "text": "Organizing and keeping records",
+      "feature_key": "conventional",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c2",
+      "text": "Following detailed procedures",
+      "feature_key": "conventional",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c3",
+      "text": "Working with numbers and data",
+      "feature_key": "conventional",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c4",
+      "text": "Managing schedules and details",
+      "feature_key": "conventional",
+      "direction": 1,
+      "weight": 1.0
+    },
+    {
+      "id": "c5",
+      "text": "Maintaining organized systems",
+      "feature_key": "conventional",
+      "direction": 1,
+      "weight": 1.0
+    }
+  ]
+}
