@@ -58,14 +58,14 @@
   "welcomeGetStartedButton": "Let's Get Started! ✨",
   "welcomeQuickTitle": "Quick & Fun",
   "welcomeQuickDescription": "Takes just 2 minutes!",
-  "welcomeDiscoverTitle": "Discover Yourself", 
+  "welcomeDiscoverTitle": "Discover Yourself",
   "welcomeDiscoverDescription": "Find your unique strengths",
   "welcomePlanTitle": "Plan Your Future",
   "welcomePlanDescription": "Get personalized career paths",
 
   "onboardingQuestion1": "When faced with a problem, I prefer to:",
   "onboardingQ1Option1": "Analyze it logically",
-  "onboardingQ1Option2": "Think creatively", 
+  "onboardingQ1Option2": "Think creatively",
   "onboardingQ1Option3": "Discuss with others",
   "onboardingQuestion2": "I feel most energized when:",
   "onboardingQ2Option1": "Working independently",
@@ -144,7 +144,7 @@
 
   "quizPersonalityTitle": "Personality Discovery",
   "quizPersonalityDescription": "Discover your core personality traits",
-  "quizInterestTitle": "Interest Explorer", 
+  "quizInterestTitle": "Interest Explorer",
   "quizInterestDescription": "Identify your key interests",
   "quizSkillsTitle": "Skills Assessment",
   "quizSkillsDescription": "Evaluate your current skills",
@@ -174,16 +174,16 @@
 
   "careerSoftwareEngineerTitle": "Software Engineer",
   "careerSoftwareEngineerDescription": "Design, develop, and maintain software applications",
-  "careerDataScientistTitle": "Data Scientist", 
+  "careerDataScientistTitle": "Data Scientist",
   "careerDataScientistDescription": "Analyze complex data to help organizations make decisions",
   "careerGraphicDesignerTitle": "Graphic Designer",
   "careerGraphicDesignerDescription": "Create visual concepts to communicate ideas",
   "careerMarketingManagerTitle": "Marketing Manager",
   "careerMarketingManagerDescription": "Plan and execute marketing strategies",
-  
+
   "clusterTechnology": "Technology",
   "clusterSTEM": "STEM",
-  "clusterArtsHumanities": "Arts & Humanities", 
+  "clusterArtsHumanities": "Arts & Humanities",
   "clusterBusinessFinance": "Business & Finance",
 
   "roadmapTitle": "Roadmap",
@@ -204,7 +204,7 @@
   "roadmapSoftwareEngineerTitle": "Software Engineer Roadmap",
   "roadmapStepProgrammingTitle": "Master Programming Fundamentals",
   "roadmapStepProgrammingDescription": "Learn programming basics with Python or JavaScript",
-  "roadmapStepProjectsTitle": "Build Personal Projects", 
+  "roadmapStepProjectsTitle": "Build Personal Projects",
   "roadmapStepProjectsDescription": "Create 3-5 projects showcasing different skills",
   "roadmapStepAlgorithmsTitle": "Learn Data Structures & Algorithms",
   "roadmapStepAlgorithmsDescription": "Study common data structures and algorithms",
@@ -212,9 +212,9 @@
   "roadmapStepOpenSourceDescription": "Find open source projects and make contributions",
   "roadmapStepInternshipTitle": "Complete Internship",
   "roadmapStepInternshipDescription": "Apply for software engineering internships",
-  
+
   "roadmapCategorySubject": "Subject",
-  "roadmapCategoryProject": "Project", 
+  "roadmapCategoryProject": "Project",
   "roadmapCategorySkill": "Skill",
   "roadmapCategoryExperience": "Experience",
 
@@ -289,5 +289,41 @@
   "saveButton": "Save",
   "continueButton": "Continue",
   "doneButton": "Done",
-  "closeButton": "Close"
+  "closeButton": "Close",
+
+  "discoverNoQuizzesAvailable": "No quizzes available at the moment",
+  "discoverNoGamesAvailable": "No games available at the moment",
+  "discoverErrorLoadingQuizzes": "Failed to load quizzes",
+  "discoverErrorLoadingGames": "Failed to load games",
+  "discoverRetryButton": "Retry",
+  "quizGenericDescription": "Test your knowledge and skills",
+  "gameGenericDescription": "Fun interactive challenge",
+
+  "quizWhatYouWillLearn": "What you will learn:",
+  "quizInstructions": "Instructions:",
+  "discoverQuizNotFound": "Quiz not found",
+  "discoverQuizNotFoundDesc": "The requested quiz could not be found.",
+  "discoverBackToDiscovery": "Back to Discovery",
+  "discoverErrorLoadingQuiz": "Error loading quiz",
+  "discoverQuizNotSupported": "Quiz not supported yet",
+  "discoverQuizNotSupportedDesc": "This quiz is not yet available. Please try other quizzes.",
+
+  "quizRiasecDescription": "Discover your career interests with the RIASEC model. This assessment helps identify what types of work environments and activities you might enjoy.",
+  "quizIpip50Description": "Understand your personality traits with the Big Five model. This assessment measures five key dimensions of personality.",
+
+  "quizRiasecLearning1": "Your career interest profile across 6 dimensions",
+  "quizRiasecLearning2": "Which work environments suit you best",
+  "quizRiasecLearning3": "Career paths that match your interests",
+  "quizRiasecLearning4": "How you compare to others in your age group",
+
+  "quizIpip50Learning1": "Your Big Five personality profile",
+  "quizIpip50Learning2": "Your strengths and development areas",
+  "quizIpip50Learning3": "How your personality affects your career choices",
+  "quizIpip50Learning4": "Personalized insights and recommendations",
+
+  "quizGenericLearning": "Insights about your personality and career interests",
+
+  "quizRiasecInstructions": "Rate each activity based on how much you would enjoy it. There are no right or wrong answers - just be honest about your preferences.",
+  "quizIpip50Instructions": "Read each statement and indicate how accurately it describes you. Answer honestly for the most accurate results.",
+  "quizGenericInstructions": "Answer all questions honestly. This should take just a few minutes and will provide valuable insights."
 }

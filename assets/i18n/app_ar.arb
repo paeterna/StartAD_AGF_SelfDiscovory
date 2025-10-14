@@ -108,7 +108,7 @@
   "quizSkillsDescription": "قيم مهاراتك الحالية",
   "gamePatternTitle": "التعرف على الأنماط",
   "gamePatternDescription": "اختبر مهاراتك التحليلية",
-  "gameCreativeTitle": "التحدي الإبداعي", 
+  "gameCreativeTitle": "التحدي الإبداعي",
   "gameCreativeDescription": "استكشف إبداعك",
 
   "careersTitle": "المهن",
@@ -133,7 +133,7 @@
   "careerGraphicDesignerDescription": "إنشاء مفاهيم بصرية لتوصيل الأفكار",
   "careerMarketingManagerTitle": "مدير التسويق",
   "careerMarketingManagerDescription": "تخطيط وتنفيذ استراتيجيات التسويق",
-  
+
   "clusterTechnology": "التكنولوجيا",
   "clusterSTEM": "العلوم والتكنولوجيا",
   "clusterArtsHumanities": "الفنون والعلوم الإنسانية",
@@ -159,10 +159,10 @@
   "roadmapStepOpenSourceDescription": "العثور على مشاريع مفتوحة المصدر والمساهمة فيها",
   "roadmapStepInternshipTitle": "إكمال التدريب",
   "roadmapStepInternshipDescription": "التقدم لتدريب هندسة البرمجيات",
-  
+
   "roadmapCategorySubject": "موضوع",
   "roadmapCategoryProject": "مشروع",
-  "roadmapCategorySkill": "مهارة", 
+  "roadmapCategorySkill": "مهارة",
   "roadmapCategoryExperience": "خبرة",
 
   "settingsTitle": "الإعدادات",
@@ -226,5 +226,41 @@
   "saveButton": "حفظ",
   "continueButton": "متابعة",
   "doneButton": "تم",
-  "closeButton": "إغلاق"
+  "closeButton": "إغلاق",
+
+  "discoverNoQuizzesAvailable": "لا توجد اختبارات متاحة في الوقت الحالي",
+  "discoverNoGamesAvailable": "لا توجد ألعاب متاحة في الوقت الحالي",
+  "discoverErrorLoadingQuizzes": "فشل في تحميل الاختبارات",
+  "discoverErrorLoadingGames": "فشل في تحميل الألعاب",
+  "discoverRetryButton": "إعادة المحاولة",
+  "quizGenericDescription": "اختبر معرفتك ومهاراتك",
+  "gameGenericDescription": "تحدي تفاعلي ممتع",
+
+  "quizWhatYouWillLearn": "ما ستتعلمه:",
+  "quizInstructions": "التعليمات:",
+  "discoverQuizNotFound": "الاختبار غير موجود",
+  "discoverQuizNotFoundDesc": "لا يمكن العثور على الاختبار المطلوب.",
+  "discoverBackToDiscovery": "العودة إلى الاستكشاف",
+  "discoverErrorLoadingQuiz": "خطأ في تحميل الاختبار",
+  "discoverQuizNotSupported": "الاختبار غير مدعوم حتى الآن",
+  "discoverQuizNotSupportedDesc": "هذا الاختبار غير متوفر حتى الآن. يرجى تجربة اختبارات أخرى.",
+
+  "quizRiasecDescription": "اكتشف اهتماماتك المهنية مع نموذج RIASEC. يساعد هذا التقييم في تحديد أنواع بيئات العمل والأنشطة التي قد تستمتع بها.",
+  "quizIpip50Description": "افهم سمات شخصيتك مع نموذج العوامل الخمسة الكبرى. يقيس هذا التقييم خمسة أبعاد رئيسية للشخصية.",
+
+  "quizRiasecLearning1": "ملف اهتماماتك المهنية عبر 6 أبعاد",
+  "quizRiasecLearning2": "بيئات العمل التي تناسبك أكثر",
+  "quizRiasecLearning3": "المسارات المهنية التي تتماشى مع اهتماماتك",
+  "quizRiasecLearning4": "كيف تقارن مع الآخرين في فئتك العمرية",
+
+  "quizIpip50Learning1": "ملف شخصيتك للعوامل الخمسة الكبرى",
+  "quizIpip50Learning2": "نقاط قوتك ومجالات التطوير",
+  "quizIpip50Learning3": "كيف تؤثر شخصيتك على اختياراتك المهنية",
+  "quizIpip50Learning4": "رؤى وتوصيات شخصية",
+
+  "quizGenericLearning": "رؤى حول شخصيتك واهتماماتك المهنية",
+
+  "quizRiasecInstructions": "قيّم كل نشاط بناءً على مدى استمتاعك به. لا توجد إجابات صحيحة أو خاطئة - كن صادقاً حول تفضيلاتك.",
+  "quizIpip50Instructions": "اقرأ كل عبارة وأشر إلى مدى دقة وصفها لك. أجب بصدق للحصول على أدق النتائج.",
+  "quizGenericInstructions": "أجب على جميع الأسئلة بصدق. سيستغرق هذا بضع دقائق فقط وسيقدم رؤى قيمة."
 }

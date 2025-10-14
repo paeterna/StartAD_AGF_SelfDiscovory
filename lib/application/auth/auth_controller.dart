@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../core/providers/providers.dart';
 import '../../domain/entities/user.dart';
 
@@ -43,7 +42,7 @@ class AuthController extends StateNotifier<AuthState> {
       }
 
       state = AuthState(user: user, isLoading: false);
-    } catch (e) {
+    } on Exception catch (e) {
       state = AuthState(error: e.toString(), isLoading: false);
     }
   }
@@ -62,7 +61,7 @@ class AuthController extends StateNotifier<AuthState> {
       }
 
       state = AuthState(user: user, isLoading: false);
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 [AUTH_CONTROLLER] refreshUser error: $e');
       state = AuthState(error: e.toString(), isLoading: false);
     }
@@ -83,7 +82,7 @@ class AuthController extends StateNotifier<AuthState> {
       _ref.read(localeProvider.notifier).syncFromUser(user.locale);
 
       state = AuthState(user: user, isLoading: false);
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 [AUTH_CONTROLLER] signIn error: $e');
       state = state.copyWith(
         isLoading: false,
@@ -118,7 +117,7 @@ class AuthController extends StateNotifier<AuthState> {
       _ref.read(localeProvider.notifier).syncFromUser(user.locale);
 
       state = AuthState(user: user, isLoading: false);
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 [AUTH_CONTROLLER] signUp error: $e');
       state = state.copyWith(
         isLoading: false,
@@ -142,7 +141,7 @@ class AuthController extends StateNotifier<AuthState> {
       // The actual user session will be handled by Supabase auth state changes
       // So we just clear loading state here
       state = state.copyWith(isLoading: false);
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 [AUTH_CONTROLLER] signInWithGoogle error: $e');
       state = state.copyWith(
         isLoading: false,
@@ -158,7 +157,7 @@ class AuthController extends StateNotifier<AuthState> {
       final authRepo = _ref.read(authRepositoryProvider);
       await authRepo.signOut();
       state = const AuthState(isLoading: false);
-    } catch (e) {
+    } on Exception catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
@@ -174,7 +173,7 @@ class AuthController extends StateNotifier<AuthState> {
         '✅ [AUTH_CONTROLLER] Repository resetPassword successful. Email sent to: $email',
       );
       state = state.copyWith(isLoading: false);
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 [AUTH_CONTROLLER] resetPassword error: $e');
       state = state.copyWith(
         isLoading: false,
@@ -207,7 +206,7 @@ class AuthController extends StateNotifier<AuthState> {
       }
 
       state = AuthState(user: user, isLoading: false);
-    } catch (e) {
+    } on Exception catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
@@ -230,7 +229,7 @@ class AuthController extends StateNotifier<AuthState> {
       debugPrint(
         '✅ [AUTH_CONTROLLER] Onboarding completed for user: ${user.id}',
       );
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 [AUTH_CONTROLLER] Onboarding completion error: $e');
       state = state.copyWith(error: e.toString());
     }

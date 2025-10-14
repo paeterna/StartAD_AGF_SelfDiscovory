@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../application/analytics/analytics_service.dart';
 import '../../data/repositories_impl/assessment_repository_impl.dart';
 import '../../data/repositories_impl/auth_repository_impl.dart';

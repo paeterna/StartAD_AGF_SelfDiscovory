@@ -39,27 +39,29 @@ class RadarDataPoint {
   }
 }
 
-/// Grouped radar data by feature family (RIASEC, Cognition, Traits)
+/// Grouped radar data by feature family (Interests, Cognition, Traits)
+/// Note: interests = RIASEC-based career interests
 class RadarDataByFamily {
-  final List<RadarDataPoint> riasec;
+  final List<RadarDataPoint> interests; // Holland RIASEC model
   final List<RadarDataPoint> cognition;
   final List<RadarDataPoint> traits;
 
   const RadarDataByFamily({
-    required this.riasec,
+    required this.interests,
     required this.cognition,
     required this.traits,
   });
 
   factory RadarDataByFamily.fromList(List<RadarDataPoint> allPoints) {
-    final riasec = <RadarDataPoint>[];
+    final interests = <RadarDataPoint>[];
     final cognition = <RadarDataPoint>[];
     final traits = <RadarDataPoint>[];
 
     for (final point in allPoints) {
       switch (point.family.toLowerCase()) {
-        case 'riasec':
-          riasec.add(point);
+        case 'interests':
+        case 'riasec': // Legacy support
+          interests.add(point);
         case 'cognition':
           cognition.add(point);
         case 'traits':
@@ -68,16 +70,19 @@ class RadarDataByFamily {
     }
 
     return RadarDataByFamily(
-      riasec: riasec,
+      interests: interests,
       cognition: cognition,
       traits: traits,
     );
   }
 
+  /// Legacy getter for backward compatibility
+  List<RadarDataPoint> get riasec => interests;
+
   /// Get all data points in a single list
-  List<RadarDataPoint> get all => [...riasec, ...cognition, ...traits];
+  List<RadarDataPoint> get all => [...interests, ...cognition, ...traits];
 
   /// Check if user has any data
   bool get hasData =>
-      riasec.isNotEmpty || cognition.isNotEmpty || traits.isNotEmpty;
+      interests.isNotEmpty || cognition.isNotEmpty || traits.isNotEmpty;
 }

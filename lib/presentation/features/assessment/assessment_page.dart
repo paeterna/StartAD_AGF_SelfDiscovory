@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,6 +8,8 @@ import '../../../application/activity/activity_providers.dart';
 import '../../../application/assessment/assessment_providers.dart';
 import '../../../application/quiz/quiz_providers.dart';
 import '../../../application/quiz/quiz_scoring_helper.dart';
+import '../../../application/scoring/scoring_providers.dart';
+import '../../../application/traits/traits_providers.dart';
 import '../../../data/models/quiz_instrument.dart';
 import '../../widgets/gradient_background.dart';
 
@@ -421,20 +425,22 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
 
     // Show loading dialog
     if (!mounted) return;
-    showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(
-        child: Card(
-          child: Padding(
-            padding: EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 16),
-                Text('Processing your responses...'),
-              ],
+    unawaited(
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(
+          child: Card(
+            child: Padding(
+              padding: EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text('Processing your responses...'),
+                ],
+              ),
             ),
           ),
         ),
@@ -446,6 +452,7 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
       final featureScores = QuizScoringHelper.computeFeatureScores(
         items: metadata.items,
         responses: _responses,
+        instrument: widget.instrument,
       );
 
       // 2. Compute delta progress
@@ -472,13 +479,19 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
         activityId: activityId,
       );
 
-      // 5. Use orchestrator to complete the assessment
+      // 5. Build trait scores map from feature scores (canonical keys only)
+      final traitScores = <String, dynamic>{};
+      for (final fs in featureScores) {
+        traitScores[fs.key] = fs.mean;
+      }
+
+      // 6. Use orchestrator to complete the assessment
       final orchestrator = ref.read(completeAssessmentOrchestratorProvider);
 
       await orchestrator.completeAssessment(
         activityRunId: runId,
         activityId: activityId,
-        traitScores: {}, // Trait scores are derived from feature scores
+        traitScores: traitScores,
         featureScores: featureScores,
         deltaProgress: deltaProgress,
         confidence: confidence,
@@ -487,6 +500,11 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
       // Close loading dialog
       if (!mounted) return;
       context.pop();
+
+      // Invalidate providers to refresh dashboard data
+      ref.invalidate(discoveryProgressProvider);
+      ref.invalidate(profileCompletenessProvider);
+      ref.invalidate(radarDataByFamilyProvider);
 
       // Show success dialog
       if (!mounted) return;
@@ -510,6 +528,11 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
                 'Your progress has been updated by $deltaProgress%',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
+              const SizedBox(height: 12),
+              const Text(
+                'Tip: Check your dashboard to see your updated profile!',
+                style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic),
+              ),
             ],
           ),
           actions: [
@@ -523,7 +546,7 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
           ],
         ),
       );
-    } catch (e) {
+    } on Exception catch (e) {
       // Close loading dialog
       if (!mounted) return;
       context.pop();

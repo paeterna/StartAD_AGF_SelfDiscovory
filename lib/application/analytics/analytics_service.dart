@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 /// Analytics service interface
 /// Extension point: Wire to GA4/Amplitude/Mixpanel in Phase-2
 abstract class AnalyticsService {
@@ -50,8 +52,10 @@ class MockAnalyticsService implements AnalyticsService {
     required String screenName,
     Map<String, dynamic>? parameters,
   }) async {
-    // ignore: avoid_print
-    print('[Analytics] Screen: $screenName ${parameters ?? ""}');
+    developer.log(
+      '[Analytics] Screen: $screenName ${parameters ?? ""}',
+      name: 'AnalyticsService',
+    );
   }
 
   @override
@@ -59,8 +63,10 @@ class MockAnalyticsService implements AnalyticsService {
     required String name,
     Map<String, dynamic>? parameters,
   }) async {
-    // ignore: avoid_print
-    print('[Analytics] Event: $name ${parameters ?? ""}');
+    developer.log(
+      '[Analytics] Event: $name ${parameters ?? ""}',
+      name: 'AnalyticsService',
+    );
   }
 
   @override
@@ -68,8 +74,10 @@ class MockAnalyticsService implements AnalyticsService {
     required String userId,
     Map<String, dynamic>? properties,
   }) async {
-    // ignore: avoid_print
-    print('[Analytics] User Properties: $userId ${properties ?? ""}');
+    developer.log(
+      '[Analytics] User Properties: $userId ${properties ?? ""}',
+      name: 'AnalyticsService',
+    );
   }
 
   @override

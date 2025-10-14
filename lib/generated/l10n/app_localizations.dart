@@ -1315,6 +1315,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close'**
   String get closeButton;
+
+  /// No description provided for @discoverNoQuizzesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No quizzes available at the moment'**
+  String get discoverNoQuizzesAvailable;
+
+  /// No description provided for @discoverNoGamesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No games available at the moment'**
+  String get discoverNoGamesAvailable;
+
+  /// No description provided for @discoverErrorLoadingQuizzes.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load quizzes'**
+  String get discoverErrorLoadingQuizzes;
+
+  /// No description provided for @discoverErrorLoadingGames.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load games'**
+  String get discoverErrorLoadingGames;
+
+  /// No description provided for @discoverRetryButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get discoverRetryButton;
+
+  /// No description provided for @quizGenericDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Test your knowledge and skills'**
+  String get quizGenericDescription;
+
+  /// No description provided for @gameGenericDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Fun interactive challenge'**
+  String get gameGenericDescription;
+
+  /// No description provided for @quizWhatYouWillLearn.
+  ///
+  /// In en, this message translates to:
+  /// **'What you will learn:'**
+  String get quizWhatYouWillLearn;
+
+  /// No description provided for @quizInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Instructions:'**
+  String get quizInstructions;
+
+  /// No description provided for @discoverQuizNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiz not found'**
+  String get discoverQuizNotFound;
+
+  /// No description provided for @discoverQuizNotFoundDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The requested quiz could not be found.'**
+  String get discoverQuizNotFoundDesc;
+
+  /// No description provided for @discoverBackToDiscovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Discovery'**
+  String get discoverBackToDiscovery;
+
+  /// No description provided for @discoverErrorLoadingQuiz.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading quiz'**
+  String get discoverErrorLoadingQuiz;
+
+  /// No description provided for @discoverQuizNotSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiz not supported yet'**
+  String get discoverQuizNotSupported;
+
+  /// No description provided for @discoverQuizNotSupportedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'This quiz is not yet available. Please try other quizzes.'**
+  String get discoverQuizNotSupportedDesc;
+
+  /// No description provided for @quizRiasecDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover your career interests with the RIASEC model. This assessment helps identify what types of work environments and activities you might enjoy.'**
+  String get quizRiasecDescription;
+
+  /// No description provided for @quizIpip50Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Understand your personality traits with the Big Five model. This assessment measures five key dimensions of personality.'**
+  String get quizIpip50Description;
+
+  /// No description provided for @quizRiasecLearning1.
+  ///
+  /// In en, this message translates to:
+  /// **'Your career interest profile across 6 dimensions'**
+  String get quizRiasecLearning1;
+
+  /// No description provided for @quizRiasecLearning2.
+  ///
+  /// In en, this message translates to:
+  /// **'Which work environments suit you best'**
+  String get quizRiasecLearning2;
+
+  /// No description provided for @quizRiasecLearning3.
+  ///
+  /// In en, this message translates to:
+  /// **'Career paths that match your interests'**
+  String get quizRiasecLearning3;
+
+  /// No description provided for @quizRiasecLearning4.
+  ///
+  /// In en, this message translates to:
+  /// **'How you compare to others in your age group'**
+  String get quizRiasecLearning4;
+
+  /// No description provided for @quizIpip50Learning1.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Big Five personality profile'**
+  String get quizIpip50Learning1;
+
+  /// No description provided for @quizIpip50Learning2.
+  ///
+  /// In en, this message translates to:
+  /// **'Your strengths and development areas'**
+  String get quizIpip50Learning2;
+
+  /// No description provided for @quizIpip50Learning3.
+  ///
+  /// In en, this message translates to:
+  /// **'How your personality affects your career choices'**
+  String get quizIpip50Learning3;
+
+  /// No description provided for @quizIpip50Learning4.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalized insights and recommendations'**
+  String get quizIpip50Learning4;
+
+  /// No description provided for @quizGenericLearning.
+  ///
+  /// In en, this message translates to:
+  /// **'Insights about your personality and career interests'**
+  String get quizGenericLearning;
+
+  /// No description provided for @quizRiasecInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate each activity based on how much you would enjoy it. There are no right or wrong answers - just be honest about your preferences.'**
+  String get quizRiasecInstructions;
+
+  /// No description provided for @quizIpip50Instructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Read each statement and indicate how accurately it describes you. Answer honestly for the most accurate results.'**
+  String get quizIpip50Instructions;
+
+  /// No description provided for @quizGenericInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer all questions honestly. This should take just a few minutes and will provide valuable insights.'**
+  String get quizGenericInstructions;
 }
 
 class _AppLocalizationsDelegate

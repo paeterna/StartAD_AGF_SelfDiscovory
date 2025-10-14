@@ -124,7 +124,7 @@ class ScoringService {
       }
 
       return ProfileUpdateResponse.fromJson(data);
-    } catch (e) {
+    } on Object catch (e) {
       return ProfileUpdateResponse(
         success: false,
         matchesComputed: 0,

@@ -107,7 +107,7 @@ class AuthRepositoryImpl implements AuthRepository {
           lastLoginAt: DateTime.now(),
         );
       }
-    } catch (e) {
+    } on Object catch (e) {
       debugPrint('🔴 [AUTH_REPO] Error loading profile: $e');
       // Fallback to user_metadata
       return _toDomainUser(supabaseUser);
@@ -129,7 +129,7 @@ class AuthRepositoryImpl implements AuthRepository {
       }
 
       return _currentUser;
-    } catch (e) {
+    } on Object catch (e) {
       debugPrint('Error getting current user: $e');
       return null;
     }
@@ -156,7 +156,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return _currentUser!;
     } on AuthException catch (e) {
       throw Exception(e.message);
-    } catch (e) {
+    } on Object catch (e) {
       throw Exception('Sign in failed: ${e.toString()}');
     }
   }
@@ -210,7 +210,7 @@ class AuthRepositoryImpl implements AuthRepository {
           'onboarding_complete': false,
         });
         debugPrint('✅ [AUTH_REPO] Profile created in profiles table');
-      } catch (e) {
+      } on Object catch (e) {
         debugPrint(
           '⚠️ [AUTH_REPO] Profile creation failed (may already exist): $e',
         );
@@ -240,7 +240,7 @@ class AuthRepositoryImpl implements AuthRepository {
       }
 
       throw Exception(e.message);
-    } catch (e) {
+    } on Object catch (e) {
       debugPrint('🔴 [AUTH_REPO] Unknown error: $e');
       debugPrint('🔴 [AUTH_REPO] Error type: ${e.runtimeType}');
       throw Exception('Sign up failed: ${e.toString()}');
@@ -271,7 +271,7 @@ class AuthRepositoryImpl implements AuthRepository {
     } on AuthException catch (e) {
       debugPrint('Google sign-in error: ${e.message}');
       throw Exception(e.message);
-    } catch (e) {
+    } on Object catch (e) {
       debugPrint('Google sign-in error: $e');
       throw Exception('Google sign-in failed');
     }
@@ -286,7 +286,7 @@ class AuthRepositoryImpl implements AuthRepository {
       _authStateController.add(null);
     } on AuthException catch (e) {
       throw Exception(e.message);
-    } catch (e) {
+    } on Object catch (e) {
       throw Exception('Sign out failed: ${e.toString()}');
     }
   }
@@ -300,7 +300,7 @@ class AuthRepositoryImpl implements AuthRepository {
       );
     } on AuthException catch (e) {
       throw Exception(e.message);
-    } catch (e) {
+    } on Object catch (e) {
       throw Exception('Password reset failed: ${e.toString()}');
     }
   }
@@ -356,7 +356,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return _currentUser!;
     } on AuthException catch (e) {
       throw Exception(e.message);
-    } catch (e) {
+    } on Object catch (e) {
       throw Exception('Profile update failed: ${e.toString()}');
     }
   }
@@ -424,7 +424,7 @@ class AuthRepositoryImpl implements AuthRepository {
         '🔴 [AUTH_REPO] AuthException during onboarding completion: ${e.message}',
       );
       throw Exception(e.message);
-    } catch (e) {
+    } on Object catch (e) {
       debugPrint('🔴 [AUTH_REPO] Error during onboarding completion: $e');
       throw Exception('Onboarding completion failed: ${e.toString()}');
     }

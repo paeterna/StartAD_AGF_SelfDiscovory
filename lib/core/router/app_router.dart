@@ -4,16 +4,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../presentation/features/auth/login_page.dart';
 import '../../presentation/features/auth/signup_page.dart';
+import '../../presentation/features/assessment/assessment_page.dart';
 import '../../presentation/features/careers/careers_page.dart';
 import '../../presentation/features/dashboard/dashboard_page.dart';
 import '../../presentation/features/discover/discover_page.dart';
 import '../../presentation/features/onboarding/onboarding_page.dart';
+import '../../presentation/features/quiz/quiz_page.dart';
+import '../../presentation/features/game/game_page.dart';
+import '../../presentation/features/games/memory_match/memory_match_page.dart';
 import '../../presentation/features/roadmap/roadmap_page.dart';
 import '../../presentation/features/settings/settings_page.dart';
 import '../../presentation/features/static_pages/about_page.dart';
 import '../../presentation/features/static_pages/privacy_page.dart';
 import '../../presentation/features/static_pages/terms_page.dart';
 import '../../presentation/widgets/gradient_background.dart';
+import '../../presentation/shell/adaptive_shell.dart';
 import '../providers/providers.dart';
 
 /// App routes
@@ -24,6 +29,8 @@ class AppRoutes {
   static const String onboarding = '/onboarding';
   static const String dashboard = '/dashboard';
   static const String discover = '/discover';
+  static const String quiz = '/quiz';
+  static const String assessment = '/assessment';
   static const String careers = '/careers';
   static const String roadmap = '/roadmap';
   static const String settings = '/settings';
@@ -82,6 +89,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.splash,
         redirect: (context, state) => AppRoutes.dashboard,
       ),
+      // Auth routes (no shell)
       GoRoute(
         path: AppRoutes.login,
         pageBuilder: (context, state) =>
@@ -97,31 +105,80 @@ final routerProvider = Provider<GoRouter>((ref) {
         pageBuilder: (context, state) =>
             MaterialPage(key: state.pageKey, child: const OnboardingPage()),
       ),
+      // Main app shell with adaptive navigation
+      ShellRoute(
+        builder: (context, state, child) {
+          return AdaptiveShell(child: child);
+        },
+        routes: [
+          GoRoute(
+            path: AppRoutes.dashboard,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: DashboardPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.discover,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: DiscoverPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.careers,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: CareersPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.roadmap,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: RoadmapPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.settings,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: SettingsPage()),
+          ),
+        ],
+      ),
+      // Assessment and game routes (full screen, no shell)
       GoRoute(
-        path: AppRoutes.dashboard,
-        pageBuilder: (context, state) =>
-            MaterialPage(key: state.pageKey, child: const DashboardPage()),
+        path: '/quiz/:activityId',
+        pageBuilder: (context, state) {
+          final activityId = state.pathParameters['activityId']!;
+          return MaterialPage(
+            key: state.pageKey,
+            child: QuizPage(activityId: activityId),
+          );
+        },
       ),
       GoRoute(
-        path: AppRoutes.discover,
-        pageBuilder: (context, state) =>
-            MaterialPage(key: state.pageKey, child: const DiscoverPage()),
+        path: '/assessment/:instrument/:language',
+        pageBuilder: (context, state) {
+          final instrument = state.pathParameters['instrument']!;
+          final language = state.pathParameters['language']!;
+          return MaterialPage(
+            key: state.pageKey,
+            child: AssessmentPage(
+              instrument: instrument,
+              language: language,
+            ),
+          );
+        },
       ),
       GoRoute(
-        path: AppRoutes.careers,
-        pageBuilder: (context, state) =>
-            MaterialPage(key: state.pageKey, child: const CareersPage()),
+        path: '/game/:activityId',
+        pageBuilder: (context, state) {
+          final activityId = state.pathParameters['activityId']!;
+          return MaterialPage(
+            key: state.pageKey,
+            child: GamePage(activityId: activityId),
+          );
+        },
       ),
       GoRoute(
-        path: AppRoutes.roadmap,
+        path: '/games/memory-match',
         pageBuilder: (context, state) =>
-            MaterialPage(key: state.pageKey, child: const RoadmapPage()),
+            MaterialPage(key: state.pageKey, child: const MemoryMatchPage()),
       ),
-      GoRoute(
-        path: AppRoutes.settings,
-        pageBuilder: (context, state) =>
-            MaterialPage(key: state.pageKey, child: const SettingsPage()),
-      ),
+      // Static pages (no shell)
       GoRoute(
         path: AppRoutes.privacy,
         pageBuilder: (context, state) =>

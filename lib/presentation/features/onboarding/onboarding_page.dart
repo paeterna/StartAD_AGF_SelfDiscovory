@@ -94,7 +94,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
         // Navigate to dashboard - router will handle the redirect based on onboarding status
         context.go(AppRoutes.dashboard);
       }
-    } catch (e) {
+    } on Exception catch (e) {
       // Handle error if needed
       debugPrint('🔴 [ONBOARDING] Error completing onboarding: $e');
       if (mounted) {

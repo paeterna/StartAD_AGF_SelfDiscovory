@@ -656,4 +656,102 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get closeButton => 'Close';
+
+  @override
+  String get discoverNoQuizzesAvailable => 'No quizzes available at the moment';
+
+  @override
+  String get discoverNoGamesAvailable => 'No games available at the moment';
+
+  @override
+  String get discoverErrorLoadingQuizzes => 'Failed to load quizzes';
+
+  @override
+  String get discoverErrorLoadingGames => 'Failed to load games';
+
+  @override
+  String get discoverRetryButton => 'Retry';
+
+  @override
+  String get quizGenericDescription => 'Test your knowledge and skills';
+
+  @override
+  String get gameGenericDescription => 'Fun interactive challenge';
+
+  @override
+  String get quizWhatYouWillLearn => 'What you will learn:';
+
+  @override
+  String get quizInstructions => 'Instructions:';
+
+  @override
+  String get discoverQuizNotFound => 'Quiz not found';
+
+  @override
+  String get discoverQuizNotFoundDesc =>
+      'The requested quiz could not be found.';
+
+  @override
+  String get discoverBackToDiscovery => 'Back to Discovery';
+
+  @override
+  String get discoverErrorLoadingQuiz => 'Error loading quiz';
+
+  @override
+  String get discoverQuizNotSupported => 'Quiz not supported yet';
+
+  @override
+  String get discoverQuizNotSupportedDesc =>
+      'This quiz is not yet available. Please try other quizzes.';
+
+  @override
+  String get quizRiasecDescription =>
+      'Discover your career interests with the RIASEC model. This assessment helps identify what types of work environments and activities you might enjoy.';
+
+  @override
+  String get quizIpip50Description =>
+      'Understand your personality traits with the Big Five model. This assessment measures five key dimensions of personality.';
+
+  @override
+  String get quizRiasecLearning1 =>
+      'Your career interest profile across 6 dimensions';
+
+  @override
+  String get quizRiasecLearning2 => 'Which work environments suit you best';
+
+  @override
+  String get quizRiasecLearning3 => 'Career paths that match your interests';
+
+  @override
+  String get quizRiasecLearning4 =>
+      'How you compare to others in your age group';
+
+  @override
+  String get quizIpip50Learning1 => 'Your Big Five personality profile';
+
+  @override
+  String get quizIpip50Learning2 => 'Your strengths and development areas';
+
+  @override
+  String get quizIpip50Learning3 =>
+      'How your personality affects your career choices';
+
+  @override
+  String get quizIpip50Learning4 => 'Personalized insights and recommendations';
+
+  @override
+  String get quizGenericLearning =>
+      'Insights about your personality and career interests';
+
+  @override
+  String get quizRiasecInstructions =>
+      'Rate each activity based on how much you would enjoy it. There are no right or wrong answers - just be honest about your preferences.';
+
+  @override
+  String get quizIpip50Instructions =>
+      'Read each statement and indicate how accurately it describes you. Answer honestly for the most accurate results.';
+
+  @override
+  String get quizGenericInstructions =>
+      'Answer all questions honestly. This should take just a few minutes and will provide valuable insights.';
 }

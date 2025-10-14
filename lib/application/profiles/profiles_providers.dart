@@ -3,12 +3,13 @@ import 'package:startad_agf_selfdiscovery/application/profiles/profiles_service.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Provider for the profiles service
-final profilesServiceProvider = Provider<ProfilesService>((ref) {
-  return ProfilesService(Supabase.instance.client);
-});
+final Provider<ProfilesService> profilesServiceProvider =
+    Provider<ProfilesService>((ref) {
+      return ProfilesService(Supabase.instance.client);
+    });
 
 /// Provider for current user's profile
-final FutureProvider<UserProfile?> myProfileProvider =
+final AutoDisposeFutureProvider<UserProfile?> myProfileProvider =
     FutureProvider.autoDispose<UserProfile?>((ref) async {
       final profilesService = ref.watch(profilesServiceProvider);
       return profilesService.getMyProfile();

@@ -11,21 +11,21 @@ final Provider<TraitsRepository> traitsRepositoryProvider =
     });
 
 /// Provider for radar chart data
-final FutureProvider<List<RadarDataPoint>> radarDataProvider =
+final AutoDisposeFutureProvider<List<RadarDataPoint>> radarDataProvider =
     FutureProvider.autoDispose<List<RadarDataPoint>>((ref) async {
       final repository = ref.watch(traitsRepositoryProvider);
       return repository.getMyRadarData();
     });
 
 /// Provider for radar data grouped by family
-final FutureProvider<RadarDataByFamily> radarDataByFamilyProvider =
+final AutoDisposeFutureProvider<RadarDataByFamily> radarDataByFamilyProvider =
     FutureProvider.autoDispose<RadarDataByFamily>((ref) async {
       final repository = ref.watch(traitsRepositoryProvider);
       return repository.getMyRadarDataByFamily();
     });
 
 /// Provider to check if user has feature scores
-final FutureProvider<bool> hasFeatureScoresProvider =
+final AutoDisposeFutureProvider<bool> hasFeatureScoresProvider =
     FutureProvider.autoDispose<bool>((ref) async {
       final repository = ref.watch(traitsRepositoryProvider);
       return repository.hasFeatureScores();

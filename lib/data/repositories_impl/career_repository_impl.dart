@@ -95,11 +95,8 @@ class CareerRepositoryImpl implements CareerRepository {
   @override
   Future<Career?> getCareer({required String careerId}) async {
     await Future<void>.delayed(const Duration(milliseconds: 200));
-    try {
-      return MockData.careers.firstWhere((c) => c.id == careerId);
-    } catch (e) {
-      return null;
-    }
+    final matches = MockData.careers.where((c) => c.id == careerId);
+    return matches.isNotEmpty ? matches.first : null;
   }
 
   @override

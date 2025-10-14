@@ -63,7 +63,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         context.go(AppRoutes.onboarding);
         debugPrint('✅ [SIGNUP] Navigation complete');
       }
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 [SIGNUP] Error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -92,7 +92,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         '🔵 [SIGNUP_GOOGLE] User will be redirected to Google consent screen',
       );
       // The OAuth flow will redirect the user, so no need to manually navigate
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 [SIGNUP_GOOGLE] Error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -16,8 +16,8 @@ void main() async {
   try {
     await dotenv.load(fileName: '.env');
     envLoaded = true;
-  } catch (e) {
-    debugPrint('⚠️ .env file not found, using dart-define values');
+  } on Exception catch (e) {
+    debugPrint('⚠️ .env file not found, using dart-define values ($e)');
   }
 
   // Get Supabase config from .env (local) or --dart-define (production)

@@ -653,4 +653,98 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get closeButton => 'إغلاق';
+
+  @override
+  String get discoverNoQuizzesAvailable =>
+      'لا توجد اختبارات متاحة في الوقت الحالي';
+
+  @override
+  String get discoverNoGamesAvailable => 'لا توجد ألعاب متاحة في الوقت الحالي';
+
+  @override
+  String get discoverErrorLoadingQuizzes => 'فشل في تحميل الاختبارات';
+
+  @override
+  String get discoverErrorLoadingGames => 'فشل في تحميل الألعاب';
+
+  @override
+  String get discoverRetryButton => 'إعادة المحاولة';
+
+  @override
+  String get quizGenericDescription => 'اختبر معرفتك ومهاراتك';
+
+  @override
+  String get gameGenericDescription => 'تحدي تفاعلي ممتع';
+
+  @override
+  String get quizWhatYouWillLearn => 'ما ستتعلمه:';
+
+  @override
+  String get quizInstructions => 'التعليمات:';
+
+  @override
+  String get discoverQuizNotFound => 'الاختبار غير موجود';
+
+  @override
+  String get discoverQuizNotFoundDesc => 'لا يمكن العثور على الاختبار المطلوب.';
+
+  @override
+  String get discoverBackToDiscovery => 'العودة إلى الاستكشاف';
+
+  @override
+  String get discoverErrorLoadingQuiz => 'خطأ في تحميل الاختبار';
+
+  @override
+  String get discoverQuizNotSupported => 'الاختبار غير مدعوم حتى الآن';
+
+  @override
+  String get discoverQuizNotSupportedDesc =>
+      'هذا الاختبار غير متوفر حتى الآن. يرجى تجربة اختبارات أخرى.';
+
+  @override
+  String get quizRiasecDescription =>
+      'اكتشف اهتماماتك المهنية مع نموذج RIASEC. يساعد هذا التقييم في تحديد أنواع بيئات العمل والأنشطة التي قد تستمتع بها.';
+
+  @override
+  String get quizIpip50Description =>
+      'افهم سمات شخصيتك مع نموذج العوامل الخمسة الكبرى. يقيس هذا التقييم خمسة أبعاد رئيسية للشخصية.';
+
+  @override
+  String get quizRiasecLearning1 => 'ملف اهتماماتك المهنية عبر 6 أبعاد';
+
+  @override
+  String get quizRiasecLearning2 => 'بيئات العمل التي تناسبك أكثر';
+
+  @override
+  String get quizRiasecLearning3 => 'المسارات المهنية التي تتماشى مع اهتماماتك';
+
+  @override
+  String get quizRiasecLearning4 => 'كيف تقارن مع الآخرين في فئتك العمرية';
+
+  @override
+  String get quizIpip50Learning1 => 'ملف شخصيتك للعوامل الخمسة الكبرى';
+
+  @override
+  String get quizIpip50Learning2 => 'نقاط قوتك ومجالات التطوير';
+
+  @override
+  String get quizIpip50Learning3 => 'كيف تؤثر شخصيتك على اختياراتك المهنية';
+
+  @override
+  String get quizIpip50Learning4 => 'رؤى وتوصيات شخصية';
+
+  @override
+  String get quizGenericLearning => 'رؤى حول شخصيتك واهتماماتك المهنية';
+
+  @override
+  String get quizRiasecInstructions =>
+      'قيّم كل نشاط بناءً على مدى استمتاعك به. لا توجد إجابات صحيحة أو خاطئة - كن صادقاً حول تفضيلاتك.';
+
+  @override
+  String get quizIpip50Instructions =>
+      'اقرأ كل عبارة وأشر إلى مدى دقة وصفها لك. أجب بصدق للحصول على أدق النتائج.';
+
+  @override
+  String get quizGenericInstructions =>
+      'أجب على جميع الأسئلة بصدق. سيستغرق هذا بضع دقائق فقط وسيقدم رؤى قيمة.';
 }

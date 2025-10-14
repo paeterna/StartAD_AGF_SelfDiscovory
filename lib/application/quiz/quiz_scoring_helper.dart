@@ -1,73 +1,115 @@
+import '../../core/scoring/features_registry.dart';
+import '../../core/scoring/scoring_pipeline.dart';
 import '../../data/models/feature_score.dart';
 import '../../data/models/quiz_instrument.dart';
 
 /// Helper class for computing feature scores from quiz responses
+/// UPDATED: Now uses canonical features registry and unified scoring pipeline
 class QuizScoringHelper {
+  /// Build item contributions map from quiz metadata
+  ///
+  /// Maps quiz item IDs to their canonical feature contributions.
+  /// Handles RIASEC → canonical mapping automatically.
+  static Map<String, List<FeatureContribution>> buildItemContributions({
+    required List<QuizItem> items,
+    String? instrument,
+  }) {
+    final Map<String, List<FeatureContribution>> contributions = {};
+
+    for (final item in items) {
+      String canonicalKey;
+
+      // If this is a RIASEC quiz, map to canonical interest features
+      if (instrument != null && instrument.contains('riasec')) {
+        try {
+          canonicalKey = riasecToCanonical(item.featureKey);
+        } catch (e) {
+          throw StateError(
+            'Invalid RIASEC key in quiz item ${item.id}: "${item.featureKey}". '
+            'Error: $e',
+          );
+        }
+      } else {
+        // For other quizzes, assume feature_key is already canonical
+        canonicalKey = item.featureKey;
+
+        // Validate it's canonical
+        if (!isCanonicalKey(canonicalKey)) {
+          throw StateError(
+            'Non-canonical feature key in quiz item ${item.id}: "$canonicalKey". '
+            'Valid canonical keys are defined in features_registry.dart',
+          );
+        }
+      }
+
+      contributions[item.id] = [
+        FeatureContribution(
+          key: canonicalKey,
+          weight: item.direction * item.weight,
+        ),
+      ];
+    }
+
+    return contributions;
+  }
+
   /// Compute feature scores from Likert scale responses
   ///
   /// Formula per item: item_score = weight * direction * (likert - 3) / 2
   /// This maps Likert 1-5 to range [-1, 1]
   /// Then aggregate by feature_key using mean, convert to [0, 100] scale
+  ///
+  /// UPDATED: Now uses unified scoring pipeline and canonical features
   static List<FeatureScore> computeFeatureScores({
     required List<QuizItem> items,
     required Map<String, int> responses,
+    String? instrument,
   }) {
-    // Group items by feature_key
-    final Map<String, List<_ItemScore>> scoresByFeature = {};
+    // Build item contributions map
+    final itemContributions = buildItemContributions(
+      items: items,
+      instrument: instrument,
+    );
 
+    // Convert quiz responses to ItemOutcomes
+    final List<ItemOutcome> outcomes = [];
     for (final item in items) {
       final likertValue = responses[item.id];
       if (likertValue == null) continue;
 
-      // Compute item score: weight * direction * (likert - 3) / 2
-      // Maps [1,5] → [-1, 1]
-      final itemScore = item.weight * item.direction * (likertValue - 3) / 2.0;
+      // Convert Likert 5-point to normalized value (-1..+1)
+      final normalized = likert5ToNormalized(likertValue);
 
-      scoresByFeature.putIfAbsent(item.featureKey, () => []);
-      scoresByFeature[item.featureKey]!.add(
-        _ItemScore(
-          score: itemScore,
-          weight: item.weight,
+      outcomes.add(
+        ItemOutcome(
+          itemId: item.id,
+          value: normalized,
         ),
       );
     }
 
-    // Compute mean score for each feature and convert to [0, 100] scale
+    if (outcomes.isEmpty) {
+      return [];
+    }
+
+    // Use unified scoring pipeline
+    final scoringOutput = ScoringPipeline.computeScores(
+      items: outcomes,
+      itemContributions: itemContributions,
+      instrumentName: instrument ?? 'quiz',
+      kind: 'quiz',
+      baselineNPerKey: 5,
+    );
+
+    // Convert to FeatureScore format for compatibility
     final List<FeatureScore> featureScores = [];
-
-    for (final entry in scoresByFeature.entries) {
-      final featureKey = entry.key;
-      final itemScores = entry.value;
-
-      // Compute weighted mean (in practice, weights are usually 1.0)
-      final sumScores = itemScores.fold<double>(
-        0.0,
-        (sum, item) => sum + item.score * item.weight,
-      );
-      final sumWeights = itemScores.fold<double>(
-        0.0,
-        (sum, item) => sum + item.weight,
-      );
-
-      final meanNormalized = sumScores / sumWeights; // → [-1, 1]
-
-      // Convert to [0, 1] scale
-      final mean01 = ((meanNormalized + 1.0) / 2.0).clamp(0.0, 1.0);
-
-      // Convert to [0, 100] scale
-      final mean100 = mean01 * 100.0;
-
-      // Quality/confidence: based on number of items answered for this feature
-      // More items = higher quality
-      // Use formula: quality = min(1.0, n / 5) where n = number of items
-      final quality = (itemScores.length / 5.0).clamp(0.0, 1.0);
-
+    for (final entry in scoringOutput.means0to100.entries) {
       featureScores.add(
         FeatureScore(
-          key: featureKey,
-          mean: mean100,
-          n: itemScores.length,
-          quality: quality,
+          key: entry.key,
+          mean: entry.value,
+          n: scoringOutput.nByKey[entry.key] ?? 0,
+          quality: scoringOutput.qualityByKey[entry.key] ?? 0.5,
         ),
       );
     }
@@ -124,15 +166,4 @@ class QuizScoringHelper {
         .map((item) => item.id)
         .toList();
   }
-}
-
-/// Internal class to hold item score and weight
-class _ItemScore {
-  final double score;
-  final double weight;
-
-  const _ItemScore({
-    required this.score,
-    required this.weight,
-  });
 }

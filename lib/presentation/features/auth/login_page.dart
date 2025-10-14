@@ -51,7 +51,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         context.go(AppRoutes.dashboard);
         debugPrint('✅ [LOGIN] Navigation complete');
       }
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 [LOGIN] Error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -78,7 +78,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         '🔵 [GOOGLE_SIGNIN] User will be redirected to Google consent screen',
       );
       // The OAuth flow will redirect the user, so no need to manually navigate
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 [GOOGLE_SIGNIN] Error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -164,7 +164,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             ),
           );
         }
-      } catch (e) {
+      } on Exception catch (e) {
         debugPrint('🔴 [FORGOT_PASSWORD] Error: $e');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(

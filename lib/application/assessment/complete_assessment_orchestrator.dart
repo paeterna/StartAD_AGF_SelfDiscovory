@@ -1,6 +1,7 @@
 import 'package:startad_agf_selfdiscovery/application/activity/activity_service.dart';
 import 'package:startad_agf_selfdiscovery/application/assessment/assessment_service.dart';
 import 'package:startad_agf_selfdiscovery/application/scoring/scoring_service.dart';
+import 'package:startad_agf_selfdiscovery/core/scoring/features_registry.dart';
 import 'package:startad_agf_selfdiscovery/data/models/feature_score.dart';
 
 /// Orchestrates the complete assessment flow according to the data contract:
@@ -41,6 +42,14 @@ class CompleteAssessmentOrchestrator {
     List<AssessmentItemInput>? assessmentItems,
   }) async {
     try {
+      // Validate all keys are canonical before proceeding
+      if (traitScores.isNotEmpty) {
+        assertCanonicalKeys(traitScores.keys);
+      }
+      if (featureScores.isNotEmpty) {
+        assertCanonicalKeys(featureScores.map((f) => f.key));
+      }
+
       // Step 1: Complete activity_run
       // This triggers fn_update_progress_after_run → updates discovery_progress
       await activityService.completeActivityRun(
@@ -65,25 +74,57 @@ class CompleteAssessmentOrchestrator {
         );
       }
 
-      // Step 4: Update feature scores via Edge Function
+      // Step 4: Update feature scores via Edge Function (non-blocking)
       // This calls upsert_feature_ema for each feature
       // Then computes cosine similarity and updates user_career_matches
-      final profileResponse = await scoringService.updateProfileAndMatch(
-        userId: '', // Service gets from auth.uid()
-        batchFeatures: featureScores,
-      );
+      final userId = activityService.getCurrentUserId();
+      int matchesComputed = 0;
+      double profileConfidence = confidence;
 
-      if (!profileResponse.success) {
-        throw Exception('Failed to update profile: ${profileResponse.error}');
+      if (userId != null && featureScores.isNotEmpty) {
+        try {
+          // Log what we're sending for debugging
+          print(
+            '🔵 Calling Edge Function with ${featureScores.length} features for user $userId',
+          );
+          for (final f in featureScores) {
+            print(
+              '  - ${f.key}: ${f.mean.toStringAsFixed(1)} (n=${f.n}, q=${f.quality.toStringAsFixed(2)})',
+            );
+          }
+
+          final profileResponse = await scoringService.updateProfileAndMatch(
+            userId: userId,
+            batchFeatures: featureScores,
+          );
+
+          if (profileResponse.success) {
+            matchesComputed = profileResponse.matchesComputed;
+            profileConfidence = profileResponse.confidence;
+            print(
+              '✅ Edge Function succeeded: $matchesComputed matches computed',
+            );
+          } else {
+            // Log but don't fail - assessment is already saved
+            print('⚠️ Edge Function failed: ${profileResponse.error}');
+          }
+        } on Exception catch (e) {
+          // Log but don't fail - assessment is already saved
+          print('⚠️ Edge Function exception: $e');
+        }
+      } else {
+        print(
+          '⚠️ Skipping Edge Function: userId=$userId, features=${featureScores.length}',
+        );
       }
 
       return CompleteAssessmentResult(
         success: true,
         assessmentId: assessmentId,
-        matchesComputed: profileResponse.matchesComputed,
-        confidence: profileResponse.confidence,
+        matchesComputed: matchesComputed,
+        confidence: profileConfidence,
       );
-    } catch (e) {
+    } on Object catch (e) {
       return CompleteAssessmentResult(success: false, error: e.toString());
     }
   }

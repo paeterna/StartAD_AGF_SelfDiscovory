@@ -3,12 +3,14 @@ import 'package:startad_agf_selfdiscovery/application/scoring/scoring_service.da
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Provider for the scoring service
-final scoringServiceProvider = Provider<ScoringService>((ref) {
-  return ScoringService(Supabase.instance.client);
-});
+final Provider<ScoringService> scoringServiceProvider =
+    Provider<ScoringService>((ref) {
+      return ScoringService(Supabase.instance.client);
+    });
 
 /// Provider for user's career matches
-final FutureProvider<List<CareerMatchWithDetails>> careerMatchesProvider =
+final AutoDisposeFutureProvider<List<CareerMatchWithDetails>>
+careerMatchesProvider =
     FutureProvider.autoDispose<List<CareerMatchWithDetails>>((ref) async {
       final scoringService = ref.watch(scoringServiceProvider);
       final userId = Supabase.instance.client.auth.currentUser?.id;
@@ -45,10 +47,8 @@ final FutureProvider<List<CareerMatchWithDetails>> careerMatchesProvider =
     });
 
 /// Provider for profile completeness
-final FutureProvider<double> profileCompletenessProvider =
-    FutureProvider.autoDispose<double>((
-      ref,
-    ) async {
+final AutoDisposeFutureProvider<double> profileCompletenessProvider =
+    FutureProvider.autoDispose<double>((ref) async {
       final scoringService = ref.watch(scoringServiceProvider);
       final userId = Supabase.instance.client.auth.currentUser?.id;
 
@@ -60,17 +60,19 @@ final FutureProvider<double> profileCompletenessProvider =
     });
 
 /// Provider for user feature scores
-final FutureProvider<List<UserFeatureScore>> userFeatureScoresProvider =
-    FutureProvider.autoDispose<List<UserFeatureScore>>((ref) async {
-      final scoringService = ref.watch(scoringServiceProvider);
-      final userId = Supabase.instance.client.auth.currentUser?.id;
+final AutoDisposeFutureProvider<List<UserFeatureScore>>
+userFeatureScoresProvider = FutureProvider.autoDispose<List<UserFeatureScore>>((
+  ref,
+) async {
+  final scoringService = ref.watch(scoringServiceProvider);
+  final userId = Supabase.instance.client.auth.currentUser?.id;
 
-      if (userId == null) {
-        return [];
-      }
+  if (userId == null) {
+    return [];
+  }
 
-      return scoringService.getUserFeatureScores(userId);
-    });
+  return scoringService.getUserFeatureScores(userId);
+});
 
 /// Combined career match with details
 class CareerMatchWithDetails {

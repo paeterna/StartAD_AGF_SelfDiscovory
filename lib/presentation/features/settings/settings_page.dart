@@ -176,7 +176,7 @@ class SettingsPage extends ConsumerWidget {
                 onChanged: (value) {
                   if (value != null) {
                     ref
-                        .read(authControllerProvider)
+                        .read(authControllerProvider.notifier)
                         .updateProfile(locale: value);
                     Navigator.of(context).pop();
                   }
@@ -191,7 +191,7 @@ class SettingsPage extends ConsumerWidget {
                 onChanged: (value) {
                   if (value != null) {
                     ref
-                        .read(authControllerProvider)
+                        .read(authControllerProvider.notifier)
                         .updateProfile(locale: value);
                     Navigator.of(context).pop();
                   }
@@ -221,7 +221,7 @@ class SettingsPage extends ConsumerWidget {
                 onChanged: (value) {
                   if (value != null) {
                     ref
-                        .read(authControllerProvider)
+                        .read(authControllerProvider.notifier)
                         .updateProfile(theme: value);
                     Navigator.of(context).pop();
                   }
@@ -236,7 +236,7 @@ class SettingsPage extends ConsumerWidget {
                 onChanged: (value) {
                   if (value != null) {
                     ref
-                        .read(authControllerProvider)
+                        .read(authControllerProvider.notifier)
                         .updateProfile(theme: value);
                     Navigator.of(context).pop();
                   }
@@ -251,7 +251,7 @@ class SettingsPage extends ConsumerWidget {
                 onChanged: (value) {
                   if (value != null) {
                     ref
-                        .read(authControllerProvider)
+                        .read(authControllerProvider.notifier)
                         .updateProfile(theme: value);
                     Navigator.of(context).pop();
                   }
