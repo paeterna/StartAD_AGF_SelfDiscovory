@@ -1,0 +1,105 @@
+# Netlify configuration for SelfMap Flutter Web App
+
+[build]
+  # Build command - Use custom build script
+  command = "./build-netlify.sh"
+
+  # Directory to publish (output directory)
+  publish = "build/web"
+
+  # Environment variables
+  [build.environment]
+    NODE_VERSION = "22.13.0"
+    FLUTTER_VERSION = "3.24.5"
+    # Exclude documentation files from secrets scanning
+    SECRETS_SCAN_OMIT_PATHS = "*.md,**/*.md,QUICKSTART_*.md,*_STEPS.md,*_SUMMARY.md,*_FIX.md,*_ERROR*.md,*_CHECKLIST.md,*_INTEGRATION.md,*_UPDATES*.md"
+
+# Redirect rules for Flutter's client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+
+# Headers for PWA and caching
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer-when-downgrade"
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/icons/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/canvaskit/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Service worker caching - force fresh download on each deployment
+[[headers]]
+  for = "/flutter_service_worker.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# Bootstrap script - force fresh download
+[[headers]]
+  for = "/flutter_bootstrap.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# Main Dart app file - force fresh download
+[[headers]]
+  for = "/main.dart.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# Main HTML file - no cache for dynamic routing
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Pragma = "no-cache"
+    Expires = "0"
+
+# Plugin configuration
+# Disabled for local development - uncomment for production builds
+# [[plugins]]
+#   package = "@netlify/plugin-lighthouse"
+#
+#   [[plugins.inputs.thresholds]]
+#     performance = 0.8
+#     accessibility = 0.9
+#     best-practices = 0.8
+#     seo = 0.9
+#     pwa = 0.8
