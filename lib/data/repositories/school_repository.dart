@@ -45,7 +45,7 @@ class SchoolRepository {
 
     if (response == null) return null;
 
-    return School.fromJson(response as Map<String, dynamic>);
+    return School.fromJson(response);
   }
 
   /// Get school for current admin user

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../application/auth/auth_controller.dart';
+import '../../../application/school/school_providers.dart';
 import '../../../core/responsive/responsive.dart';
 import '../../../core/router/app_router.dart';
 import '../../widgets/gradient_background.dart';
@@ -20,6 +21,7 @@ class _SchoolLoginPageState extends ConsumerState<SchoolLoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
+  bool _obscurePassword = true;
   String? _errorMessage;
 
   @override
@@ -39,16 +41,15 @@ class _SchoolLoginPageState extends ConsumerState<SchoolLoginPage> {
 
     try {
       final controller = ref.read(authControllerProvider.notifier);
-      await controller.signInWithEmail(
+      await controller.signIn(
         email: _emailController.text.trim(),
         password: _passwordController.text,
       );
 
-      // Check if user is school admin
-      final user = ref.read(authControllerProvider).user;
-      final role = user?.rawUserMetaData?['role'] as String?;
+      // Check if user is school admin using school repository
+      final isAdmin = await ref.read(schoolRepositoryProvider).isSchoolAdmin();
 
-      if (role != 'school_admin') {
+      if (!isAdmin) {
         setState(() {
           _errorMessage = 'This account is not authorized as a school administrator. '
               'Please use the student login page.';
@@ -65,42 +66,6 @@ class _SchoolLoginPageState extends ConsumerState<SchoolLoginPage> {
     } catch (e) {
       setState(() {
         _errorMessage = 'Login failed: ${e.toString()}';
-        _isLoading = false;
-      });
-    }
-  }
-
-  Future<void> _signInWithGoogle() async {
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-    });
-
-    try {
-      final controller = ref.read(authControllerProvider.notifier);
-      await controller.signInWithGoogle();
-
-      // Check if user is school admin
-      final user = ref.read(authControllerProvider).user;
-      final role = user?.rawUserMetaData?['role'] as String?;
-
-      if (role != 'school_admin') {
-        setState(() {
-          _errorMessage = 'This account is not authorized as a school administrator. '
-              'Please use the student login page.';
-          _isLoading = false;
-        });
-        await controller.signOut();
-        return;
-      }
-
-      // Navigate to school dashboard
-      if (mounted) {
-        context.go('/school/dashboard');
-      }
-    } catch (e) {
-      setState(() {
-        _errorMessage = 'Google sign-in failed: ${e.toString()}';
         _isLoading = false;
       });
     }
@@ -212,12 +177,24 @@ class _SchoolLoginPageState extends ConsumerState<SchoolLoginPage> {
                             const SizedBox(height: 16),
                             TextFormField(
                               controller: _passwordController,
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 labelText: 'Password',
-                                prefixIcon: Icon(Icons.lock),
-                                border: OutlineInputBorder(),
+                                prefixIcon: const Icon(Icons.lock),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _obscurePassword
+                                        ? Icons.visibility_outlined
+                                        : Icons.visibility_off_outlined,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _obscurePassword = !_obscurePassword;
+                                    });
+                                  },
+                                ),
+                                border: const OutlineInputBorder(),
                               ),
-                              obscureText: true,
+                              obscureText: _obscurePassword,
                               textInputAction: TextInputAction.done,
                               onFieldSubmitted: (_) => _signInWithEmail(),
                               validator: (value) {
@@ -243,39 +220,6 @@ class _SchoolLoginPageState extends ConsumerState<SchoolLoginPage> {
                                 child: CircularProgressIndicator(strokeWidth: 2),
                               )
                             : const Text('Sign In'),
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // Divider
-                      Row(
-                        children: [
-                          const Expanded(child: Divider()),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Text(
-                              'OR',
-                              style: theme.textTheme.bodySmall,
-                            ),
-                          ),
-                          const Expanded(child: Divider()),
-                        ],
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // Google Sign In
-                      OutlinedButton.icon(
-                        onPressed: _isLoading ? null : _signInWithGoogle,
-                        icon: Image.asset(
-                          'assets/images/google_logo.png',
-                          height: 24,
-                          width: 24,
-                          errorBuilder: (context, error, stackTrace) {
-                            return const Icon(Icons.login);
-                          },
-                        ),
-                        label: const Text('Sign in with Google'),
                       ),
 
                       const SizedBox(height: 24),

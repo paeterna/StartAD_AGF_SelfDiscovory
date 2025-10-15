@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../core/providers/providers.dart';
 import '../../data/models/school.dart';
 import '../../data/repositories/school_repository.dart';
 
@@ -10,7 +9,7 @@ import '../../data/repositories/school_repository.dart';
 // =====================================================
 
 final schoolRepositoryProvider = Provider<SchoolRepository>((ref) {
-  final supabase = ref.watch(supabaseClientProvider);
+  final supabase = Supabase.instance.client;
   return SchoolRepository(supabase);
 });
 

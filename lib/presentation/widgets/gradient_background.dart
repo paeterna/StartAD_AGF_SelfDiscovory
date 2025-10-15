@@ -51,10 +51,10 @@ class _GradientBackgroundState extends State<GradientBackground>
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Default gradient based on theme (warm orange → beige → sky blue)
+    // Default gradient based on theme (white for light, dark grey for dark)
     final defaultGradient = isDark
         ? AppColors.darkBackgroundGradient
-        : AppColors.primaryGradient;
+        : AppColors.lightBackgroundGradient;
 
     final selectedGradient = widget.gradient ?? defaultGradient;
 

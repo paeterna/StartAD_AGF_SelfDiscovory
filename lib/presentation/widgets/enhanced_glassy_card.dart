@@ -88,8 +88,8 @@ class _GlassyCardState extends State<GlassyCard>
               shadowColor:
                   widget.shadowColor ??
                   (isDark
-                      ? AppColors.warmAmber.withValues(alpha: 0.3)
-                      : AppColors.warmOrange.withValues(alpha: 0.2)),
+                      ? AppColors.vibrantPurple.withValues(alpha: 0.3)
+                      : AppColors.deepPurple.withValues(alpha: 0.2)),
               borderRadius: borderRadius,
               color: Colors.transparent,
               child: ClipRRect(

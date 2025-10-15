@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../application/auth/auth_controller.dart';
+import '../../../application/school/school_providers.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/utils/validators.dart';
+import '../../../data/models/school.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 import '../../widgets/language_switcher.dart';
@@ -24,6 +26,8 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+  School? _selectedSchool;
+  bool _noSchool = false;
 
   @override
   void dispose() {
@@ -57,6 +61,19 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           );
 
       debugPrint('✅ [SIGNUP] Sign up successful for: $email');
+
+      // Save school assignment if selected
+      if (_selectedSchool != null) {
+        debugPrint('🔵 [SIGNUP] Assigning student to school: ${_selectedSchool!.name}');
+        final userId = ref.read(authControllerProvider).user?.id;
+        if (userId != null) {
+          await ref.read(schoolAssignmentControllerProvider).assignStudentToSchool(
+            userId: userId,
+            schoolId: _selectedSchool!.id,
+          );
+          debugPrint('✅ [SIGNUP] School assignment successful');
+        }
+      }
 
       if (mounted) {
         debugPrint('🔵 [SIGNUP] Navigating to onboarding...');
@@ -103,6 +120,75 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         );
       }
     }
+  }
+
+  Widget _buildSchoolSelection() {
+    final schoolsAsync = ref.watch(activeSchoolsProvider);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'School (Optional)',
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          'Select your school if listed. You can skip this step.',
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+        const SizedBox(height: 12),
+
+        // "I'm not in a listed school" checkbox
+        CheckboxListTile(
+          title: const Text("I'm not in a listed school"),
+          value: _noSchool,
+          onChanged: (value) {
+            setState(() {
+              _noSchool = value ?? false;
+              if (_noSchool) {
+                _selectedSchool = null;
+              }
+            });
+          },
+          contentPadding: EdgeInsets.zero,
+          dense: true,
+        ),
+
+        const SizedBox(height: 8),
+
+        // School dropdown
+        if (!_noSchool)
+          schoolsAsync.when(
+            data: (schools) {
+              return DropdownButtonFormField<School>(
+                value: _selectedSchool,
+                decoration: const InputDecoration(
+                  labelText: 'Select School',
+                  prefixIcon: Icon(Icons.school_outlined),
+                  border: OutlineInputBorder(),
+                ),
+                items: schools.map((school) {
+                  return DropdownMenuItem<School>(
+                    value: school,
+                    child: Text(school.displayLabel),
+                  );
+                }).toList(),
+                onChanged: (school) {
+                  setState(() {
+                    _selectedSchool = school;
+                  });
+                },
+              );
+            },
+            loading: () => const LinearProgressIndicator(),
+            error: (error, stack) => Text(
+              'Error loading schools: $error',
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            ),
+          ),
+      ],
+    );
   }
 
   @override
@@ -229,6 +315,10 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                         ),
                         enabled: !authState.isLoading,
                       ),
+                      const SizedBox(height: 24),
+
+                      // School selection
+                      _buildSchoolSelection(),
                       const SizedBox(height: 24),
 
                       // Sign up button

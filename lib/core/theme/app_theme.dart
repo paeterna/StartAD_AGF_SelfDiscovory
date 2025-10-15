@@ -26,17 +26,17 @@ class AppTheme {
   static const double glassOpacityHeavy = 0.55; // Heavy glass
   static const double glassBorderOpacity = 0.2;
 
-  /// Light theme - Warm, friendly, and optimistic
+  /// Light theme - Modern blue and purple with white background
   static ThemeData get lightTheme {
     final colorScheme = ColorScheme.light(
-      primary: AppColors.warmOrange,
-      secondary: AppColors.warmAmber,
-      tertiary: AppColors.warmPeach,
+      primary: AppColors.deepPurple,
+      secondary: AppColors.skyBlue,
+      tertiary: AppColors.vibrantPurple,
       error: AppColors.error,
       surface: AppColors.lightSurface,
       onSurface: AppColors.textPrimary,
       surfaceContainerHighest: AppColors.lightCard,
-      outline: Colors.white.withValues(alpha: glassBorderOpacity),
+      outline: AppColors.softPurple.withValues(alpha: 0.3),
     );
 
     return ThemeData(
@@ -48,30 +48,25 @@ class AppTheme {
       // Typography - Poppins for approachable, rounded feel
       textTheme: _buildTextTheme(AppColors.textPrimary),
 
-      // Card theme - Glassmorphism style
+      // Card theme - With blue/purple gradient
       cardTheme: CardThemeData(
-        elevation: 0,
+        elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusLarge),
           side: BorderSide(
-            color: const Color.fromARGB(
-              255,
-              255,
-              227,
-              174,
-            ).withValues(alpha: glassBorderOpacity),
+            color: AppColors.softPurple.withValues(alpha: 0.3),
             width: 1.0,
           ),
         ),
-        color: Colors.white.withValues(alpha: glassOpacity),
-        shadowColor: AppColors.warmOrange.withValues(alpha: 0.1),
+        color: Colors.white,
+        shadowColor: AppColors.deepPurple.withValues(alpha: 0.1),
       ),
 
-      // AppBar theme - Transparent with glassmorphism
+      // AppBar theme - White background
       appBarTheme: AppBarTheme(
         elevation: 0,
         centerTitle: false,
-        backgroundColor: Colors.white.withValues(alpha: glassOpacity),
+        backgroundColor: Colors.white,
         foregroundColor: AppColors.textPrimary,
         titleTextStyle: GoogleFonts.poppins(
           fontSize: 22,
@@ -81,19 +76,19 @@ class AppTheme {
         ),
       ),
 
-      // Button themes with glassmorphism
+      // Button themes
       elevatedButtonTheme: _elevatedButtonTheme(colorScheme),
       outlinedButtonTheme: _outlinedButtonTheme(colorScheme),
       textButtonTheme: _textButtonTheme(colorScheme),
 
-      // Input decoration theme with glass effect
+      // Input decoration theme
       inputDecorationTheme: _inputDecorationTheme(colorScheme, false),
 
       // Icon theme
       iconTheme: IconThemeData(color: AppColors.textSecondary, size: 24),
 
       // Focus theme
-      focusColor: AppColors.warmOrange.withValues(alpha: 0.2),
+      focusColor: AppColors.deepPurple.withValues(alpha: 0.2),
 
       // Divider with subtle transparency
       dividerTheme: DividerThemeData(
@@ -104,17 +99,17 @@ class AppTheme {
     );
   }
 
-  /// Dark theme - Warm, sophisticated, and immersive
+  /// Dark theme - Modern blue and purple with dark grey background
   static ThemeData get darkTheme {
     final colorScheme = ColorScheme.dark(
-      primary: AppColors.warmAmber,
-      secondary: AppColors.warmPeach,
-      tertiary: AppColors.accentCoral,
+      primary: AppColors.vibrantPurple,
+      secondary: AppColors.lightBlue,
+      tertiary: AppColors.accentViolet,
       error: AppColors.error,
       surface: AppColors.darkSurface,
       onSurface: AppColors.textDarkPrimary,
       surfaceContainerHighest: AppColors.darkCard,
-      outline: Colors.white.withValues(alpha: glassBorderOpacity),
+      outline: AppColors.softPurple.withValues(alpha: 0.3),
     );
 
     return ThemeData(
@@ -126,30 +121,25 @@ class AppTheme {
       // Typography - Poppins for approachable feel
       textTheme: _buildTextTheme(AppColors.textDarkPrimary),
 
-      // Card theme - Dark glassmorphism
+      // Card theme - Dark with blue/purple gradient
       cardTheme: CardThemeData(
-        elevation: 0,
+        elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusLarge),
           side: BorderSide(
-            color: const Color.fromARGB(
-              255,
-              228,
-              180,
-              141,
-            ).withValues(alpha: glassBorderOpacity),
+            color: AppColors.softPurple.withValues(alpha: 0.2),
             width: 1.0,
           ),
         ),
-        color: Colors.black.withValues(alpha: glassOpacity),
-        shadowColor: AppColors.warmAmber.withValues(alpha: 0.2),
+        color: AppColors.darkCard,
+        shadowColor: AppColors.deepPurple.withValues(alpha: 0.3),
       ),
 
-      // AppBar theme - Dark glassmorphism
+      // AppBar theme - Dark grey background
       appBarTheme: AppBarTheme(
         elevation: 0,
         centerTitle: false,
-        backgroundColor: Colors.black.withValues(alpha: glassOpacity),
+        backgroundColor: AppColors.darkSurface,
         foregroundColor: AppColors.textDarkPrimary,
         titleTextStyle: GoogleFonts.poppins(
           fontSize: 22,
@@ -171,7 +161,7 @@ class AppTheme {
       iconTheme: IconThemeData(color: AppColors.textDarkSecondary),
 
       // Focus theme
-      focusColor: AppColors.warmAmber.withValues(alpha: 0.3),
+      focusColor: AppColors.vibrantPurple.withValues(alpha: 0.3),
 
       // Divider
       dividerTheme: DividerThemeData(

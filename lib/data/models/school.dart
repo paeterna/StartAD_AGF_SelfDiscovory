@@ -204,6 +204,21 @@ class SchoolFeatureAverage {
     required this.avgScore,
   });
 
+  /// Alias for featureFamily for consistency
+  String get family => featureFamily;
+
+  /// Get label from feature key (simple formatting)
+  String get label {
+    // Convert "interest_creative" -> "Creative"
+    // Convert "cognition_memory" -> "Memory"
+    // Convert "trait_grit" -> "Grit"
+    final parts = featureKey.split('_');
+    if (parts.length > 1) {
+      return parts[1][0].toUpperCase() + parts[1].substring(1);
+    }
+    return featureKey[0].toUpperCase() + featureKey.substring(1);
+  }
+
   factory SchoolFeatureAverage.fromJson(Map<String, dynamic> json) {
     return SchoolFeatureAverage(
       featureKey: json['feature_key'] as String,

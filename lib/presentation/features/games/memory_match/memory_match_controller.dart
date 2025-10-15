@@ -203,16 +203,35 @@ class MemoryMatchController extends StateNotifier<MemoryMatchState> {
     _earlyMistakes = 0;
     _lateMistakes = 0;
 
+    // Reveal all cards initially for 1 second
+    final revealedCards = cards
+        .map((card) => card.copyWith(isRevealed: true))
+        .toList();
+
     state = MemoryMatchState(
-      cards: cards,
+      cards: revealedCards,
       difficulty: difficulty,
       isStarted: true,
-      isPaused: false,
+      isPaused: true, // Pause gameplay during initial reveal
       isCompleted: false,
       elapsedSeconds: 0,
       currentFocusStreak: 0,
       flipTimestamps: [],
     );
+
+    // After 1 second, flip all cards back and start gameplay
+    Timer(const Duration(seconds: 1), () {
+      if (!mounted) return;
+
+      final hiddenCards = revealedCards
+          .map((card) => card.copyWith(isRevealed: false))
+          .toList();
+
+      state = state.copyWith(
+        cards: hiddenCards,
+        isPaused: false, // Resume gameplay
+      );
+    });
 
     _startTimer();
   }

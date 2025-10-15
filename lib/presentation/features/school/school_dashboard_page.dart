@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../application/auth/auth_controller.dart';
 import '../../../application/school/school_providers.dart';
 import '../../../core/responsive/responsive.dart';
+import '../../../core/router/app_router.dart';
 import '../../../data/models/school.dart';
+import '../../widgets/gradient_background.dart';
 
 /// School administrator dashboard
 class SchoolDashboardPage extends ConsumerWidget {
@@ -14,19 +17,46 @@ class SchoolDashboardPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final schoolAsync = ref.watch(mySchoolProvider);
+    final theme = Theme.of(context);
 
-    return schoolAsync.when(
-      data: (school) {
-        if (school == null) {
-          return const Center(
-            child: Text('No school found for your account'),
-          );
-        }
-        return _SchoolDashboardContent(school: school);
-      },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stack) => Center(
-        child: Text('Error loading school: $error'),
+    return GradientBackground(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('School Dashboard'),
+          actions: [
+            // Settings button
+            IconButton(
+              icon: const Icon(Icons.settings_outlined),
+              onPressed: () => context.push(AppRoutes.settings),
+              tooltip: 'Settings',
+            ),
+            // Logout button
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () async {
+                await ref.read(authControllerProvider.notifier).signOut();
+                if (context.mounted) {
+                  context.go(AppRoutes.schoolLogin);
+                }
+              },
+              tooltip: 'Logout',
+            ),
+          ],
+        ),
+        body: schoolAsync.when(
+          data: (school) {
+            if (school == null) {
+              return const Center(
+                child: Text('No school found for your account'),
+              );
+            }
+            return _SchoolDashboardContent(school: school);
+          },
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stack) => Center(
+            child: Text('Error loading school: $error'),
+          ),
+        ),
       ),
     );
   }
@@ -185,12 +215,12 @@ class _KpiCards extends ConsumerWidget {
         } else {
           // Tablet/Desktop: Grid
           return GridView.count(
-            crossAxisCount: context.responsive(sm: 2, md: 2, lg: 4),
+            crossAxisCount: context.responsive(xs: 2, sm: 2, md: 2, lg: 4),
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             mainAxisSpacing: ResponsiveSpacing.md(context),
             crossAxisSpacing: ResponsiveSpacing.md(context),
-            childAspectRatio: context.responsive(sm: 1.5, md: 1.8, lg: 2.2),
+            childAspectRatio: context.responsive(xs: 1.5, sm: 1.5, md: 1.8, lg: 2.2),
             children: [
               _KpiCard(
                 icon: Icons.people,
@@ -396,27 +426,57 @@ class _CareerDistributionCard extends ConsumerWidget {
                 return const Text('No career match data available');
               }
 
-              return SizedBox(
-                height: 250,
-                child: PieChart(
-                  PieChartData(
-                    sections: distribution.map((item) {
-                      return PieChartSectionData(
-                        value: item.studentCount.toDouble(),
-                        title: '${item.studentCount}',
-                        color: _getColorForCluster(item.cluster),
-                        radius: 100,
-                        titleStyle: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+              return Column(
+                children: [
+                  SizedBox(
+                    height: 250,
+                    child: PieChart(
+                      PieChartData(
+                        sections: distribution.map((item) {
+                          return PieChartSectionData(
+                            value: item.studentCount.toDouble(),
+                            title: '${item.studentCount}',
+                            color: _getColorForCluster(item.cluster),
+                            radius: 100,
+                            titleStyle: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          );
+                        }).toList(),
+                        sectionsSpace: 2,
+                        centerSpaceRadius: 40,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  // Legend
+                  Wrap(
+                    spacing: 16,
+                    runSpacing: 8,
+                    children: distribution.map((item) {
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 16,
+                            height: 16,
+                            decoration: BoxDecoration(
+                              color: _getColorForCluster(item.cluster),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            '${item.cluster} (${item.studentCount})',
+                            style: theme.textTheme.bodySmall,
+                          ),
+                        ],
                       );
                     }).toList(),
-                    sectionsSpace: 2,
-                    centerSpaceRadius: 40,
                   ),
-                ),
+                ],
               );
             },
             loading: () => const SizedBox(
@@ -446,7 +506,7 @@ class _CareerDistributionCard extends ConsumerWidget {
 }
 
 // =====================================================
-// School Radar Card (Placeholder)
+// School Radar Card
 // =====================================================
 
 class _SchoolRadarCard extends ConsumerWidget {
@@ -457,28 +517,196 @@ class _SchoolRadarCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final featureAveragesAsync = ref.watch(schoolFeatureAveragesProvider(schoolId));
 
     return ResponsiveCard(
       enableHover: false,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'School Profile',
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+          Row(
+            children: [
+              Icon(
+                Icons.radar,
+                color: theme.colorScheme.primary,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'School Profile (Cohort Averages)',
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
-          const AspectRatio(
-            aspectRatio: 1.0,
-            child: Center(
-              child: Text('Radar Chart\n(TODO: Implement with school averages)'),
+          featureAveragesAsync.when(
+            data: (averages) {
+              if (averages.isEmpty) {
+                return AspectRatio(
+                  aspectRatio: 1.0,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          size: 48,
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'No data available yet',
+                          style: theme.textTheme.bodyLarge,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Students need to complete assessments',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+
+              // Group features by family
+              final interests = averages.where((f) => f.family == 'interests').toList();
+              final cognition = averages.where((f) => f.family == 'cognition').toList();
+              final traits = averages.where((f) => f.family == 'traits').toList();
+
+              return Column(
+                children: [
+                  // Feature family tabs or sections
+                  _buildFeatureFamilySection(context, 'Interests', interests, Icons.favorite_outline),
+                  const SizedBox(height: 16),
+                  _buildFeatureFamilySection(context, 'Cognition', cognition, Icons.psychology_outlined),
+                  const SizedBox(height: 16),
+                  _buildFeatureFamilySection(context, 'Traits', traits, Icons.person_outline),
+                ],
+              );
+            },
+            loading: () => const AspectRatio(
+              aspectRatio: 1.0,
+              child: Center(child: CircularProgressIndicator()),
+            ),
+            error: (error, stack) => AspectRatio(
+              aspectRatio: 1.0,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.error_outline,
+                      size: 48,
+                      color: theme.colorScheme.error,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Error loading school data',
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: theme.colorScheme.error,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildFeatureFamilySection(
+    BuildContext context,
+    String title,
+    List<SchoolFeatureAverage> features,
+    IconData icon,
+  ) {
+    if (features.isEmpty) return const SizedBox.shrink();
+
+    final theme = Theme.of(context);
+
+    return Card(
+      elevation: 0,
+      color: theme.colorScheme.surfaceVariant.withOpacity(0.3),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(icon, size: 20, color: theme.colorScheme.primary),
+                const SizedBox(width: 8),
+                Text(
+                  title,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            ...features.map((feature) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: _buildFeatureBar(context, feature),
+                )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFeatureBar(BuildContext context, SchoolFeatureAverage feature) {
+    final theme = Theme.of(context);
+    final score = feature.avgScore.clamp(0.0, 100.0);
+
+    return Row(
+      children: [
+        SizedBox(
+          width: 140,
+          child: Text(
+            feature.label,
+            style: theme.textTheme.bodySmall,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: LinearProgressIndicator(
+            value: score / 100,
+            minHeight: 8,
+            backgroundColor: theme.colorScheme.surfaceVariant,
+            valueColor: AlwaysStoppedAnimation(
+              _getColorForScore(context, score),
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        SizedBox(
+          width: 40,
+          child: Text(
+            '${score.toStringAsFixed(0)}',
+            style: theme.textTheme.bodySmall?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.right,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Color _getColorForScore(BuildContext context, double score) {
+    final theme = Theme.of(context);
+    if (score >= 80) return Colors.green;
+    if (score >= 60) return theme.colorScheme.primary;
+    if (score >= 40) return Colors.orange;
+    return Colors.red;
   }
 }
 

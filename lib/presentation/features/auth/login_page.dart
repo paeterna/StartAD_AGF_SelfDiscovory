@@ -346,6 +346,24 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               ),
                             ],
                           ),
+
+                          const SizedBox(height: 16),
+
+                          // School admin sign in
+                          Center(
+                            child: OutlinedButton.icon(
+                              onPressed: authState.isLoading
+                                  ? null
+                                  : () => context.go(AppRoutes.schoolLogin),
+                              icon: const Icon(Icons.school_outlined),
+                              label: const Text('Sign in as School'),
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .secondary,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
