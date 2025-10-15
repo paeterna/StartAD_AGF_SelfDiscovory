@@ -17,7 +17,6 @@ class SchoolDashboardPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final schoolAsync = ref.watch(mySchoolProvider);
-    final theme = Theme.of(context);
 
     return GradientBackground(
       child: Scaffold(
@@ -74,9 +73,12 @@ class _SchoolDashboardContent extends ConsumerWidget {
     return AppScaffoldBody(
       child: SingleChildScrollView(
         padding: context.responsivePadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1400),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             // School Header
             Row(
               children: [
@@ -100,7 +102,9 @@ class _SchoolDashboardContent extends ConsumerWidget {
                         Text(
                           'Code: ${school.code}',
                           style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
+                            color: theme.textTheme.bodySmall?.color?.withValues(
+                              alpha: 0.7,
+                            ),
                           ),
                         ),
                     ],
@@ -118,28 +122,30 @@ class _SchoolDashboardContent extends ConsumerWidget {
 
             // Desktop: Two column layout
             if (context.isDesktop)
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Left column: Top students and career distribution
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _TopStudentsCard(schoolId: school.id),
-                        SizedBox(height: ResponsiveSpacing.lg(context)),
-                        _CareerDistributionCard(schoolId: school.id),
-                      ],
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Left column: Top students and career distribution
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _TopStudentsCard(schoolId: school.id),
+                          SizedBox(height: ResponsiveSpacing.lg(context)),
+                          _CareerDistributionCard(schoolId: school.id),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(width: ResponsiveSpacing.xl(context)),
-                  // Right column: School radar
-                  Expanded(
-                    flex: 1,
-                    child: _SchoolRadarCard(schoolId: school.id),
-                  ),
-                ],
+                    SizedBox(width: ResponsiveSpacing.xl(context)),
+                    // Right column: School radar
+                    Expanded(
+                      flex: 1,
+                      child: _SchoolRadarCard(schoolId: school.id),
+                    ),
+                  ],
+                ),
               )
             else
               // Mobile/Tablet: Stacked layout
@@ -157,7 +163,9 @@ class _SchoolDashboardContent extends ConsumerWidget {
 
             // Students Table Section
             _StudentsTableSection(schoolId: school.id),
-          ],
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -220,7 +228,12 @@ class _KpiCards extends ConsumerWidget {
             physics: const NeverScrollableScrollPhysics(),
             mainAxisSpacing: ResponsiveSpacing.md(context),
             crossAxisSpacing: ResponsiveSpacing.md(context),
-            childAspectRatio: context.responsive(xs: 1.5, sm: 1.5, md: 1.8, lg: 2.2),
+            childAspectRatio: context.responsive(
+              xs: 1.5,
+              sm: 1.5,
+              md: 1.8,
+              lg: 2.2,
+            ),
             children: [
               _KpiCard(
                 icon: Icons.people,
@@ -350,7 +363,10 @@ class _TopStudentsCard extends ConsumerWidget {
                             CircleAvatar(
                               backgroundColor: theme.colorScheme.primary,
                               child: Text(
-                                student.displayName?.substring(0, 1).toUpperCase() ?? '?',
+                                student.displayName
+                                        ?.substring(0, 1)
+                                        .toUpperCase() ??
+                                    '?',
                                 style: const TextStyle(color: Colors.white),
                               ),
                             ),
@@ -405,7 +421,9 @@ class _CareerDistributionCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final distributionAsync = ref.watch(schoolCareerDistributionProvider(schoolId));
+    final distributionAsync = ref.watch(
+      schoolCareerDistributionProvider(schoolId),
+    );
     final theme = Theme.of(context);
 
     return ResponsiveCard(
@@ -517,7 +535,9 @@ class _SchoolRadarCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final featureAveragesAsync = ref.watch(schoolFeatureAveragesProvider(schoolId));
+    final featureAveragesAsync = ref.watch(
+      schoolFeatureAveragesProvider(schoolId),
+    );
 
     return ResponsiveCard(
       enableHover: false,
@@ -573,18 +593,39 @@ class _SchoolRadarCard extends ConsumerWidget {
               }
 
               // Group features by family
-              final interests = averages.where((f) => f.family == 'interests').toList();
-              final cognition = averages.where((f) => f.family == 'cognition').toList();
-              final traits = averages.where((f) => f.family == 'traits').toList();
+              final interests = averages
+                  .where((f) => f.family == 'interests')
+                  .toList();
+              final cognition = averages
+                  .where((f) => f.family == 'cognition')
+                  .toList();
+              final traits = averages
+                  .where((f) => f.family == 'traits')
+                  .toList();
 
               return Column(
                 children: [
                   // Feature family tabs or sections
-                  _buildFeatureFamilySection(context, 'Interests', interests, Icons.favorite_outline),
+                  _buildFeatureFamilySection(
+                    context,
+                    'Interests',
+                    interests,
+                    Icons.favorite_outline,
+                  ),
                   const SizedBox(height: 16),
-                  _buildFeatureFamilySection(context, 'Cognition', cognition, Icons.psychology_outlined),
+                  _buildFeatureFamilySection(
+                    context,
+                    'Cognition',
+                    cognition,
+                    Icons.psychology_outlined,
+                  ),
                   const SizedBox(height: 16),
-                  _buildFeatureFamilySection(context, 'Traits', traits, Icons.person_outline),
+                  _buildFeatureFamilySection(
+                    context,
+                    'Traits',
+                    traits,
+                    Icons.person_outline,
+                  ),
                 ],
               );
             },
@@ -632,7 +673,7 @@ class _SchoolRadarCard extends ConsumerWidget {
 
     return Card(
       elevation: 0,
-      color: theme.colorScheme.surfaceVariant.withOpacity(0.3),
+      color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -651,10 +692,12 @@ class _SchoolRadarCard extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 12),
-            ...features.map((feature) => Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: _buildFeatureBar(context, feature),
-                )),
+            ...features.map(
+              (feature) => Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: _buildFeatureBar(context, feature),
+              ),
+            ),
           ],
         ),
       ),
@@ -680,7 +723,7 @@ class _SchoolRadarCard extends ConsumerWidget {
           child: LinearProgressIndicator(
             value: score / 100,
             minHeight: 8,
-            backgroundColor: theme.colorScheme.surfaceVariant,
+            backgroundColor: theme.colorScheme.surfaceContainerHighest,
             valueColor: AlwaysStoppedAnimation(
               _getColorForScore(context, score),
             ),
@@ -690,7 +733,7 @@ class _SchoolRadarCard extends ConsumerWidget {
         SizedBox(
           width: 40,
           child: Text(
-            '${score.toStringAsFixed(0)}',
+            score.toStringAsFixed(0),
             style: theme.textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.bold,
             ),

@@ -1,0 +1,105 @@
+{
+  "instrument": "selfmap_onboarding_forced_choice_ar",
+  "version": "1.0",
+  "language": "ar",
+  "title": "اختبار التعرف على الذات",
+  "description": "اختر العبارة التي تشبهك أكثر في كل سؤال. إجاباتك تساعدنا على تكوين خريطة سماتك واهتماماتك.",
+  "instructions": "لكل سؤال، اختر العبارة التي تمثّلك أكثر.",
+  "response_type": "single_choice",
+  "scoring": {
+    "method": "add_weight_to_feature_key",
+    "notes": "يتم إضافة الوزن للصفة (feature_key) المرتبطة بالعبارة المختارة فقط."
+  },
+  "items": [
+    {
+      "id": "q1",
+      "prompt": "عندما أواجه مشكلة، عادةً ما...",
+      "options": [
+        { "id": "q1_a", "text": "أحللها منطقيًا خطوة بخطوة.", "feature_key": "cognition_problem_solving", "weight": 1.0 },
+        { "id": "q1_b", "text": "أفكر بطريقة إبداعية وغير تقليدية.", "feature_key": "trait_creativity", "weight": 1.0 },
+        { "id": "q1_c", "text": "أناقشها مع الآخرين للوصول إلى حل.", "feature_key": "trait_communication", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q2",
+      "prompt": "أشعر بالحماس الأكبر عندما...",
+      "options": [
+        { "id": "q2_a", "text": "أعمل بمفردي بتركيز عالٍ.", "feature_key": "trait_conscientiousness", "weight": 1.0 },
+        { "id": "q2_b", "text": "أتعاون مع فريق لتحقيق هدف مشترك.", "feature_key": "trait_collaboration", "weight": 1.0 },
+        { "id": "q2_c", "text": "أقود مجموعة لتنفيذ مشروع.", "feature_key": "trait_leadership", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q3",
+      "prompt": "عند البدء في مشروع جديد، أفضل أن...",
+      "options": [
+        { "id": "q3_a", "text": "أتّبع الطرق المجربة والمرتبة.", "feature_key": "trait_conscientiousness", "weight": 1.0 },
+        { "id": "q3_b", "text": "أجرّب أفكارًا وأساليب جديدة.", "feature_key": "trait_openness", "weight": 1.0 },
+        { "id": "q3_c", "text": "أوازن بين الجديد والمألوف حسب الموقف.", "feature_key": "trait_adaptability", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q4",
+      "prompt": "ما الذي يحفّزك أكثر حاليًا؟",
+      "options": [
+        { "id": "q4_a", "text": "تعلّم مهارات جديدة واستكشاف مجالات مختلفة.", "feature_key": "trait_curiosity", "weight": 1.0 },
+        { "id": "q4_b", "text": "إتقان ما أعرفه بالفعل.", "feature_key": "trait_grit", "weight": 1.0 },
+        { "id": "q4_c", "text": "تطبيق المعرفة عمليًا لحل المشكلات.", "feature_key": "interest_practical", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "عندما أعمل على مهمة، يتركز اهتمامي على...",
+      "options": [
+        { "id": "q5_a", "text": "الصورة الكاملة والفكرة العامة.", "feature_key": "trait_openness", "weight": 1.0 },
+        { "id": "q5_b", "text": "التفاصيل الصغيرة والدقة.", "feature_key": "cognition_attention", "weight": 1.0 },
+        { "id": "q5_c", "text": "التنقل بين التفاصيل والرؤية العامة حسب الحاجة.", "feature_key": "trait_adaptability", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q6",
+      "prompt": "أنا أميل أكثر إلى...",
+      "options": [
+        { "id": "q6_a", "text": "الأنشطة الإبداعية مثل الرسم أو الموسيقى أو الكتابة.", "feature_key": "interest_creative", "weight": 1.0 },
+        { "id": "q6_b", "text": "حل الألغاز والمسائل المنطقية.", "feature_key": "interest_analytical", "weight": 1.0 },
+        { "id": "q6_c", "text": "مساعدة الآخرين وتشجيعهم.", "feature_key": "interest_social", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q7",
+      "prompt": "عند شرح فكرة، أفضل أن...",
+      "options": [
+        { "id": "q7_a", "text": "أشرحها بكلمات مرتبة وواضحة.", "feature_key": "cognition_verbal", "weight": 1.0 },
+        { "id": "q7_b", "text": "أستخدم رسومات أو أمثلة بصرية.", "feature_key": "cognition_spatial", "weight": 1.0 },
+        { "id": "q7_c", "text": "أجذب انتباه الجمهور بطريقة تفاعلية.", "feature_key": "trait_communication", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q8",
+      "prompt": "المهمة التي تشبهني أكثر هي...",
+      "options": [
+        { "id": "q8_a", "text": "تحليل الأرقام والبيانات.", "feature_key": "cognition_quantitative", "weight": 1.0 },
+        { "id": "q8_b", "text": "كتابة القصص والمقالات.", "feature_key": "cognition_verbal", "weight": 1.0 },
+        { "id": "q8_c", "text": "تنظيم الأمور وترتيب الأنظمة.", "feature_key": "interest_conventional", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q9",
+      "prompt": "في المواقف الصعبة، عادةً ما...",
+      "options": [
+        { "id": "q9_a", "text": "أبقى هادئًا وأفكر بحكمة.", "feature_key": "trait_emotional_intelligence", "weight": 1.0 },
+        { "id": "q9_b", "text": "أجرب حلولًا مختلفة بسرعة.", "feature_key": "trait_adaptability", "weight": 1.0 },
+        { "id": "q9_c", "text": "أنظم الفريق وأوجّه الأدوار.", "feature_key": "trait_leadership", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q10",
+      "prompt": "إذا خُيّرت بمشروع حر، سأختار...",
+      "options": [
+        { "id": "q10_a", "text": "مشروع عملي أو تطبيقي بيدي.", "feature_key": "interest_practical", "weight": 1.0 },
+        { "id": "q10_b", "text": "تصميم أو فكرة إبداعية.", "feature_key": "trait_creativity", "weight": 1.0 },
+        { "id": "q10_c", "text": "تحسين الأنظمة أو القواعد الموجودة.", "feature_key": "interest_conventional", "weight": 1.0 }
+      ]
+    }
+  ]
+}

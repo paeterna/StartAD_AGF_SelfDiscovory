@@ -192,6 +192,25 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         body: SafeArea(
           child: Stack(
             children: [
+              // School sign-in button in top-left corner
+              Positioned(
+                top: 16,
+                left: 16,
+                child: OutlinedButton.icon(
+                  onPressed: authState.isLoading
+                      ? null
+                      : () => context.go(AppRoutes.schoolLogin),
+                  icon: const Icon(Icons.school_outlined, size: 18),
+                  label: const Text('Sign in as School'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Theme.of(context).colorScheme.secondary,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                  ),
+                ),
+              ),
               // Language switcher in top-right corner
               Positioned(top: 16, right: 16, child: const LanguageSwitcher()),
               // Main content
@@ -345,24 +364,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 child: Text(l10n.authTermsLink),
                               ),
                             ],
-                          ),
-
-                          const SizedBox(height: 16),
-
-                          // School admin sign in
-                          Center(
-                            child: OutlinedButton.icon(
-                              onPressed: authState.isLoading
-                                  ? null
-                                  : () => context.go(AppRoutes.schoolLogin),
-                              icon: const Icon(Icons.school_outlined),
-                              label: const Text('Sign in as School'),
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .secondary,
-                              ),
-                            ),
                           ),
                         ],
                       ),

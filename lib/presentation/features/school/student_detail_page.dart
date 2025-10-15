@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
+import '../../../application/school/school_providers.dart';
 import '../../../core/responsive/responsive.dart';
+import '../../../data/models/school.dart';
 import '../../widgets/gradient_background.dart';
 import '../../widgets/radar_traits_card.dart';
 
@@ -37,6 +40,8 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
 
   @override
   Widget build(BuildContext context) {
+    final studentAsync = ref.watch(studentDetailProvider(widget.studentId));
+
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(
@@ -54,20 +59,34 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
             ],
           ),
         ),
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            _buildTraitsRadarTab(),
-            _buildHistoryTab(),
-            _buildCareerMatchesTab(),
-          ],
+        body: studentAsync.when(
+          data: (student) {
+            if (student == null) {
+              return const Center(child: Text('Student not found'));
+            }
+            return TabBarView(
+              controller: _tabController,
+              children: [
+                _buildTraitsRadarTab(student),
+                _buildHistoryTab(student),
+                _buildCareerMatchesTab(student),
+              ],
+            );
+          },
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stack) => Center(
+            child: Text('Error loading student: $error'),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildStudentHeader() {
-    // TODO: Fetch student data from provider
+  Widget _buildStudentHeader(TopStudent student) {
+    final lastActive = student.lastActivity != null
+        ? DateFormat.yMMMd().format(student.lastActivity!)
+        : 'Never';
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -78,7 +97,9 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
               children: [
                 CircleAvatar(
                   radius: 40,
-                  backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                  backgroundColor: Theme.of(
+                    context,
+                  ).colorScheme.primaryContainer,
                   child: Icon(
                     Icons.person,
                     size: 40,
@@ -91,15 +112,15 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Student Name', // TODO: Replace with actual name
+                        student.displayName ?? 'Unknown Student',
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'student@example.com', // TODO: Replace with actual email
+                        student.email ?? 'No email',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurfaceVariant,
-                            ),
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Row(
@@ -107,11 +128,13 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
                           Icon(
                             Icons.access_time,
                             size: 16,
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurfaceVariant,
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            'Last active: 2 days ago', // TODO: Replace with actual date
+                            'Last active: $lastActive',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
@@ -127,21 +150,47 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
             context.responsive(
               xs: Column(
                 children: [
-                  _buildKpiMetric('Profile Completion', '75%', Icons.account_circle),
+                  _buildKpiMetric(
+                    'Profile Completion',
+                    '75%',
+                    Icons.account_circle,
+                  ),
                   const SizedBox(height: 12),
                   _buildKpiMetric('Overall Strength', '82%', Icons.star),
                   const SizedBox(height: 12),
-                  _buildKpiMetric('Assessments Completed', '12', Icons.check_circle),
+                  _buildKpiMetric(
+                    'Assessments Completed',
+                    '12',
+                    Icons.check_circle,
+                  ),
                 ],
               ),
               md: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Expanded(child: _buildKpiMetric('Profile Completion', '75%', Icons.account_circle)),
+                  Expanded(
+                    child: _buildKpiMetric(
+                      'Profile Completion',
+                      '75%',
+                      Icons.account_circle,
+                    ),
+                  ),
                   const SizedBox(width: 16),
-                  Expanded(child: _buildKpiMetric('Overall Strength', '82%', Icons.star)),
+                  Expanded(
+                    child: _buildKpiMetric(
+                      'Overall Strength',
+                      '82%',
+                      Icons.star,
+                    ),
+                  ),
                   const SizedBox(width: 16),
-                  Expanded(child: _buildKpiMetric('Assessments Completed', '12', Icons.check_circle)),
+                  Expanded(
+                    child: _buildKpiMetric(
+                      'Assessments Completed',
+                      '12',
+                      Icons.check_circle,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -155,7 +204,9 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
+        color: Theme.of(
+          context,
+        ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -174,8 +225,8 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
                 Text(
                   value,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -185,14 +236,14 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
     );
   }
 
-  Widget _buildTraitsRadarTab() {
+  Widget _buildTraitsRadarTab(TopStudent student) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Student header
-          _buildStudentHeader(),
+          _buildStudentHeader(student),
           const SizedBox(height: 24),
 
           Text(
@@ -250,20 +301,22 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
         width: 100,
         child: LinearProgressIndicator(
           value: score / 100,
-          backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+          backgroundColor: Theme.of(
+            context,
+          ).colorScheme.surfaceContainerHighest,
         ),
       ),
     );
   }
 
-  Widget _buildHistoryTab() {
+  Widget _buildHistoryTab(TopStudent student) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Student header
-          _buildStudentHeader(),
+          _buildStudentHeader(student),
           const SizedBox(height: 24),
 
           Text(
@@ -310,10 +363,15 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
     );
   }
 
-  Widget _buildHistoryItem(String title, String date, IconData icon, Color color) {
+  Widget _buildHistoryItem(
+    String title,
+    String date,
+    IconData icon,
+    Color color,
+  ) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: color.withOpacity(0.2),
+        backgroundColor: color.withValues(alpha: 0.2),
         child: Icon(icon, color: color),
       ),
       title: Text(title),
@@ -327,14 +385,14 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
     );
   }
 
-  Widget _buildCareerMatchesTab() {
+  Widget _buildCareerMatchesTab(TopStudent student) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Student header
-          _buildStudentHeader(),
+          _buildStudentHeader(student),
           const SizedBox(height: 24),
 
           Text(
@@ -345,8 +403,8 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
           Text(
             'Based on assessments and feature scores',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 16),
 
@@ -409,7 +467,8 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
                     children: [
                       Text(
                         title,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                       ),
@@ -417,14 +476,17 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
                       Text(
                         category,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(20),
@@ -443,8 +505,8 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
             Text(
               description,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
           ],
         ),

@@ -270,3 +270,47 @@ bool isRiasecKey(String key) {
   final bareKey = key.replaceFirst('riasec_', '');
   return kRiasecToCanonical.containsKey(bareKey);
 }
+
+// =====================================================
+// Big Five (IPIP-50) → Canonical Mapping
+// =====================================================
+
+/// Maps Big Five personality dimensions to canonical trait features
+/// Big Five traits are mapped to the most closely related canonical traits
+const Map<String, String> kBigFiveToCanonical = {
+  // Extraversion → Communication & Leadership
+  'extraversion': 'trait_communication',
+
+  // Agreeableness → Collaboration & Emotional Intelligence
+  'agreeableness': 'trait_collaboration',
+
+  // Conscientiousness → Conscientiousness (direct mapping)
+  'conscientiousness': 'trait_conscientiousness',
+
+  // Emotional Stability (Neuroticism reversed) → Emotional Intelligence & Adaptability
+  'emotional_stability': 'trait_emotional_intelligence',
+  'neuroticism': 'trait_emotional_intelligence', // Reverse scored
+  // Openness → Openness, Curiosity, & Creativity
+  'openness': 'trait_openness',
+};
+
+/// Convert a Big Five key to canonical trait feature
+String bigFiveToCanonical(String bigFiveKey) {
+  final lowerKey = bigFiveKey.toLowerCase().trim();
+
+  final canonical = kBigFiveToCanonical[lowerKey];
+  if (canonical == null) {
+    throw StateError(
+      'Unknown Big Five key: "$bigFiveKey". '
+      'Valid Big Five keys: ${kBigFiveToCanonical.keys.join(", ")}',
+    );
+  }
+
+  return canonical;
+}
+
+/// Check if a key is a Big Five key
+bool isBigFiveKey(String key) {
+  final lowerKey = key.toLowerCase().trim();
+  return kBigFiveToCanonical.containsKey(lowerKey);
+}

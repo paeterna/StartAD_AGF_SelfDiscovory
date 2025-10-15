@@ -63,6 +63,7 @@ create table if not exists public.activities (
 create index if not exists idx_activities_active on public.activities(active);
 create index if not exists idx_activities_kind on public.activities(kind);
 create index if not exists idx_activities_traits_gin on public.activities using gin(traits_weight jsonb_path_ops);
+create unique index if not exists idx_activities_title_unique on public.activities(title);
 
 -- 2.5 Activity Runs (user completions → progress)
 create table if not exists public.activity_runs (
@@ -104,6 +105,7 @@ create table if not exists public.careers (
 
 create index if not exists idx_careers_active on public.careers(active);
 create index if not exists idx_careers_tags_gin on public.careers using gin(tags);
+create unique index if not exists idx_careers_title_unique on public.careers(title);
 
 -- 2.8 Roadmaps & Steps
 create table if not exists public.roadmaps (
@@ -259,11 +261,20 @@ end;
 $$;
 
 drop trigger if exists trg_update_progress_after_run on public.activity_runs;
+drop trigger if exists trg_update_progress_after_insert on public.activity_runs;
+drop trigger if exists trg_update_progress_after_update on public.activity_runs;
 
-create trigger trg_update_progress_after_run
-after insert or update on public.activity_runs
+-- Separate triggers for INSERT and UPDATE to avoid OLD reference in INSERT
+create trigger trg_update_progress_after_insert
+after insert on public.activity_runs
 for each row
-when (new.completed_at is not null and (old is null or old.completed_at is null))
+when (new.completed_at is not null)
+execute function public.fn_update_progress_after_run();
+
+create trigger trg_update_progress_after_update
+after update on public.activity_runs
+for each row
+when (new.completed_at is not null and old.completed_at is null)
 execute function public.fn_update_progress_after_run();
 
 -- 4.2 Auto-create profile row on first sign-in
@@ -300,16 +311,18 @@ group by a.user_id;
 
 -- 6) Seed Data (activities, careers)
 
--- Activities (rule-based trait signals)
+-- Activities (rule-based trait signals) - Safe seed data with conflict handling
 insert into public.activities (title, kind, estimated_minutes, traits_weight) values
   ('Creativity Sparks', 'quiz', 5, '{"creativity": 2, "curiosity": 1}'),
   ('Pattern Puzzles',  'game', 7, '{"analytical": 2, "persistence": 1}'),
-  ('Team Play Quest',  'game', 6, '{"collaboration": 2, "communication": 1}');
+  ('Team Play Quest',  'game', 6, '{"collaboration": 2, "communication": 1}')
+on conflict (title) do nothing;
 
--- Careers (tags will overlap with trait names)
+-- Careers (tags will overlap with trait names) - Safe seed data with conflict handling
 insert into public.careers (title, cluster, tags) values
   ('Software Developer', 'STEM',      array['analytical','persistence','curiosity']),
   ('Graphic Designer',   'Creative',  array['creativity','communication']),
   ('Data Analyst',       'STEM',      array['analytical','curiosity']),
   ('Teacher',            'Public',    array['communication','collaboration']),
-  ('Entrepreneur',       'Business',  array['creativity','persistence','communication']);
+  ('Entrepreneur',       'Business',  array['creativity','persistence','communication'])
+on conflict (title) do nothing;

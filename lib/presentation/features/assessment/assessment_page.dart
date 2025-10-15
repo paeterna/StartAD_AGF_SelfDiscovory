@@ -32,6 +32,13 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
   int _currentPage = 0;
   final Map<String, int> _responses = {};
   final int _itemsPerPage = 10;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +137,7 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
         // Questions
         Expanded(
           child: ListView.builder(
+            controller: _scrollController,
             padding: const EdgeInsets.symmetric(horizontal: 20),
             itemCount: currentItems.length,
             itemBuilder: (context, index) {
@@ -138,14 +146,20 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
                 context,
                 item,
                 startIdx + index + 1,
-                metadata.scale,
+                metadata.scale!,
               );
             },
           ),
         ),
 
         // Navigation buttons
-        _buildNavigationButtons(context, metadata.items.length, totalPages),
+        _buildNavigationButtons(
+          context,
+          metadata,
+          startIdx,
+          endIdx,
+          totalPages,
+        ),
       ],
     );
   }
@@ -343,12 +357,13 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
 
   Widget _buildNavigationButtons(
     BuildContext context,
-    int totalItems,
+    QuizInstrument metadata,
+    int startIdx,
+    int endIdx,
     int totalPages,
   ) {
     final isFirstPage = _currentPage == 0;
     final isLastPage = _currentPage == totalPages - 1;
-    final allAnswered = _responses.length == totalItems;
 
     return Container(
       padding: const EdgeInsets.all(20),
@@ -372,6 +387,12 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
                   setState(() {
                     _currentPage--;
                   });
+                  // Scroll to top after navigation
+                  _scrollController.animateTo(
+                    0,
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.easeOut,
+                  );
                 },
                 icon: const Icon(Icons.arrow_back),
                 label: const Text('Previous'),
@@ -383,17 +404,23 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
           Expanded(
             flex: isFirstPage ? 1 : 1,
             child: ElevatedButton.icon(
-              onPressed: isLastPage && !allAnswered
-                  ? null
-                  : () {
+              onPressed: _canProceed(metadata, startIdx, endIdx)
+                  ? () {
                       if (isLastPage) {
                         _submitAssessment();
                       } else {
                         setState(() {
                           _currentPage++;
                         });
+                        // Scroll to top after navigation
+                        _scrollController.animateTo(
+                          0,
+                          duration: const Duration(milliseconds: 250),
+                          curve: Curves.easeOut,
+                        );
                       }
-                    },
+                    }
+                  : null,
               icon: Icon(isLastPage ? Icons.check : Icons.arrow_forward),
               label: Text(isLastPage ? 'Submit' : 'Next'),
             ),
@@ -401,6 +428,23 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
         ],
       ),
     );
+  }
+
+  /// Check if user can proceed to next page
+  /// For last page, checks if all items are answered
+  /// For other pages, checks if all current page items are answered
+  bool _canProceed(QuizInstrument metadata, int startIdx, int endIdx) {
+    final totalPages = (metadata.items.length / _itemsPerPage).ceil();
+    final isLastPage = _currentPage == totalPages - 1;
+
+    if (isLastPage) {
+      // On last page, check if ALL items are answered
+      return metadata.items.every((item) => _responses.containsKey(item.id));
+    } else {
+      // On other pages, check if all CURRENT PAGE items are answered
+      final currentPageItems = metadata.items.sublist(startIdx, endIdx);
+      return currentPageItems.every((item) => _responses.containsKey(item.id));
+    }
   }
 
   Future<void> _submitAssessment() async {

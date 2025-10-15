@@ -41,12 +41,16 @@ class AppColors {
   // Light theme backgrounds - Pure white
   static const Color lightBackground = Color(0xFFFFFFFF); // Pure white
   static const Color lightSurface = Color(0xFFFFFFFF); // Pure white
-  static const Color lightCard = Color(0xFFFAFAFA); // Slightly off-white for cards
+  static const Color lightCard = Color(
+    0xFFFAFAFA,
+  ); // Slightly off-white for cards
 
   // Dark theme backgrounds - Dark grey
   static const Color darkBackground = Color(0xFF1E1E1E); // Dark grey
   static const Color darkSurface = Color(0xFF2D2D2D); // Medium dark grey
-  static const Color darkCard = Color(0xFF3A3A3A); // Lighter dark grey for cards
+  static const Color darkCard = Color(
+    0xFF3A3A3A,
+  ); // Lighter dark grey for cards
 
   // === Glassmorphism Effects (15-25% opacity) ===
 

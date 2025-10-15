@@ -27,7 +27,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   School? _selectedSchool;
-  bool _noSchool = false;
 
   @override
   void dispose() {
@@ -41,6 +40,18 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   Future<void> _handleSignup() async {
     if (!_formKey.currentState!.validate()) {
       debugPrint('🔴 [SIGNUP] Validation failed');
+      return;
+    }
+
+    // Validate school selection
+    if (_selectedSchool == null) {
+      debugPrint('🔴 [SIGNUP] School selection required');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please select a school'),
+          backgroundColor: Colors.red,
+        ),
+      );
       return;
     }
 
@@ -62,17 +73,19 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
       debugPrint('✅ [SIGNUP] Sign up successful for: $email');
 
-      // Save school assignment if selected
-      if (_selectedSchool != null) {
-        debugPrint('🔵 [SIGNUP] Assigning student to school: ${_selectedSchool!.name}');
-        final userId = ref.read(authControllerProvider).user?.id;
-        if (userId != null) {
-          await ref.read(schoolAssignmentControllerProvider).assignStudentToSchool(
-            userId: userId,
-            schoolId: _selectedSchool!.id,
-          );
-          debugPrint('✅ [SIGNUP] School assignment successful');
-        }
+      // Save school assignment (now required)
+      debugPrint(
+        '🔵 [SIGNUP] Assigning student to school: ${_selectedSchool!.name}',
+      );
+      final userId = ref.read(authControllerProvider).user?.id;
+      if (userId != null) {
+        await ref
+            .read(schoolAssignmentControllerProvider)
+            .assignStudentToSchool(
+              userId: userId,
+              schoolId: _selectedSchool!.id,
+            );
+        debugPrint('✅ [SIGNUP] School assignment successful');
       }
 
       if (mounted) {
@@ -128,65 +141,40 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'School (Optional)',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        const SizedBox(height: 8),
-        Text(
-          'Select your school if listed. You can skip this step.',
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-        const SizedBox(height: 12),
-
-        // "I'm not in a listed school" checkbox
-        CheckboxListTile(
-          title: const Text("I'm not in a listed school"),
-          value: _noSchool,
-          onChanged: (value) {
-            setState(() {
-              _noSchool = value ?? false;
-              if (_noSchool) {
-                _selectedSchool = null;
-              }
-            });
-          },
-          contentPadding: EdgeInsets.zero,
-          dense: true,
-        ),
-
-        const SizedBox(height: 8),
-
         // School dropdown
-        if (!_noSchool)
-          schoolsAsync.when(
-            data: (schools) {
-              return DropdownButtonFormField<School>(
-                value: _selectedSchool,
-                decoration: const InputDecoration(
-                  labelText: 'Select School',
-                  prefixIcon: Icon(Icons.school_outlined),
-                  border: OutlineInputBorder(),
-                ),
-                items: schools.map((school) {
-                  return DropdownMenuItem<School>(
-                    value: school,
-                    child: Text(school.displayLabel),
-                  );
-                }).toList(),
-                onChanged: (school) {
-                  setState(() {
-                    _selectedSchool = school;
-                  });
-                },
-              );
-            },
-            loading: () => const LinearProgressIndicator(),
-            error: (error, stack) => Text(
-              'Error loading schools: $error',
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
-            ),
+        schoolsAsync.when(
+          data: (schools) {
+            return DropdownButtonFormField<School>(
+              value: _selectedSchool,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.school_outlined),
+                border: OutlineInputBorder(),
+              ),
+              items: schools.map((school) {
+                return DropdownMenuItem<School>(
+                  value: school,
+                  child: Text(school.displayLabel),
+                );
+              }).toList(),
+              validator: (value) {
+                if (value == null) {
+                  return 'Please select a school';
+                }
+                return null;
+              },
+              onChanged: (school) {
+                setState(() {
+                  _selectedSchool = school;
+                });
+              },
+            );
+          },
+          loading: () => const LinearProgressIndicator(),
+          error: (error, stack) => Text(
+            'Error loading schools: $error',
+            style: TextStyle(color: Theme.of(context).colorScheme.error),
           ),
+        ),
       ],
     );
   }
