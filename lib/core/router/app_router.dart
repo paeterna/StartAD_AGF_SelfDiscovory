@@ -10,6 +10,7 @@ import '../../presentation/features/auth/oauth_callback_page.dart';
 import '../../presentation/features/auth/school_login_page.dart';
 import '../../presentation/features/assessment/assessment_page.dart';
 import '../../presentation/features/careers/careers_page.dart';
+import '../../features/careers/presentation/pages/career_tree_page.dart';
 import '../../presentation/features/dashboard/dashboard_page.dart';
 import '../../presentation/features/discover/discover_page.dart';
 import '../../presentation/features/onboarding/onboarding_page.dart';
@@ -41,6 +42,7 @@ class AppRoutes {
   static const String quiz = '/quiz';
   static const String assessment = '/assessment';
   static const String careers = '/careers';
+  static const String careerTree = '/careers/tree';
   static const String roadmap = '/roadmap';
   static const String aiInsights = '/ai-insights';
   static const String settings = '/settings';
@@ -215,6 +217,13 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: AppRoutes.careers,
             pageBuilder: (context, state) =>
                 const NoTransitionPage(child: CareersPage()),
+            routes: [
+              GoRoute(
+                path: 'tree',
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: CareerTreePage()),
+              ),
+            ],
           ),
           GoRoute(
             path: AppRoutes.roadmap,

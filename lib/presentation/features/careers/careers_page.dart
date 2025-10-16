@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../application/scoring/scoring_providers.dart';
 import '../../../generated/l10n/app_localizations.dart';
+import '../../../core/router/app_router.dart';
 import '../../widgets/gradient_background.dart';
 
 class CareersPage extends ConsumerWidget {
@@ -14,7 +16,17 @@ class CareersPage extends ConsumerWidget {
 
     return GradientBackground(
       child: Scaffold(
-        appBar: AppBar(title: Text(l10n.careersTitle)),
+        appBar: AppBar(
+          title: Text(l10n.careersTitle),
+          actions: [
+            // Tree view button
+            IconButton(
+              icon: const Icon(Icons.account_tree),
+              tooltip: 'Career Tree View',
+              onPressed: () => context.push(AppRoutes.careerTree),
+            ),
+          ],
+        ),
         body: Column(
           children: [
             // Search bar
