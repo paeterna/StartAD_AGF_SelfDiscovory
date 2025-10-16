@@ -101,6 +101,7 @@ A comprehensive Flutter web platform designed to help high-school students explo
   - Minimum 50% profile completeness required
   - 7-day cooldown between generations
   - Progress tracking toward next insight
+SelfMap now has a fully integrated AI Career Insights System that analyzes student data from interactive quizzes and games to generate personalized career guidance. The system uses Azure OpenAI (gpt-5-mini deployment) via a Supabase Edge Function to process 22 behavioral feature scores, quiz responses, and activity telemetry, then produces a comprehensive report including: (1) a personality summary in teen-friendly language, (2) 5-7 detected skills, (3) weighted interest scores across 6 career fields with visual charts, (4) 2-3 modern career recommendations (like YouTuber, UX Designer, Game Developer) with match scores and reasoning, and (5) actionable next steps. The AI is triggered when students complete at least 1 assessment + 1 activity + 3 feature scores, takes 10-30 seconds to generate, stores results in a PostgreSQL database with Row-Level Security, and displays everything in a beautiful Flutter UI with charts, cards, and animations
 
 #### 🗺️ **Career Roadmaps**
 - Step-by-step career planning
