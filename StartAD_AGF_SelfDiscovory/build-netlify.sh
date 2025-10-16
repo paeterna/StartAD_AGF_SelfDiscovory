@@ -33,6 +33,7 @@ flutter pub get
 echo "🏗️  Building Flutter web app..."
 echo "🔑 Using Supabase URL: ${SUPABASE_URL:0:30}..."
 flutter build web --release \
+  --no-tree-shake-icons \
   --dart-define=SUPABASE_URL="$SUPABASE_URL" \
   --dart-define=SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY"
 

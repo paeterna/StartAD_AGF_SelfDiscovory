@@ -320,31 +320,38 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
 
   Widget _buildGrid(BuildContext context, MemoryMatchState state) {
     final columns = state.difficulty.gridColumns;
-    final cardSize = _calculateCardSize(context, columns);
+    final rows = (state.cards.length / columns).ceil();
 
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      alignment: WrapAlignment.center,
-      children: List.generate(state.cards.length, (index) {
-        return _buildCard(context, state.cards[index], index, cardSize);
-      }),
+    // Calculate grid size to constrain it and center it
+    final screenWidth = MediaQuery.of(context).size.width;
+    final maxGridWidth = columns * 100.0 + (columns - 1) * 8 + 32;
+    final gridWidth = screenWidth < maxGridWidth ? screenWidth : maxGridWidth;
+
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: gridWidth,
+          maxHeight: rows * 100.0 + (rows - 1) * 8,
+        ),
+        child: GridView.count(
+          crossAxisCount: columns,
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8,
+          childAspectRatio: 1,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          children: List.generate(state.cards.length, (index) {
+            return _buildCard(context, state.cards[index], index);
+          }),
+        ),
+      ),
     );
-  }
-
-  double _calculateCardSize(BuildContext context, int columns) {
-    final width = MediaQuery.of(context).size.width;
-    final availableWidth =
-        width - 32 - (columns - 1) * 8; // padding and spacing
-    final cardWidth = availableWidth / columns;
-    return cardWidth.clamp(60, 100);
   }
 
   Widget _buildCard(
     BuildContext context,
     MemoryCard card,
     int index,
-    double size,
   ) {
     final isRevealed = card.isRevealed || card.isMatched;
 
@@ -356,8 +363,6 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        width: size,
-        height: size,
         decoration: BoxDecoration(
           color: isRevealed
               ? (card.isMatched
@@ -383,12 +388,12 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
           child: isRevealed
               ? Icon(
                   card.icon,
-                  size: size * 0.5,
+                  size: 40,
                   color: Theme.of(context).colorScheme.primary,
                 )
               : Icon(
                   Icons.question_mark,
-                  size: size * 0.4,
+                  size: 32,
                   color: Theme.of(
                     context,
                   ).colorScheme.onSurface.withValues(alpha: 0.3),

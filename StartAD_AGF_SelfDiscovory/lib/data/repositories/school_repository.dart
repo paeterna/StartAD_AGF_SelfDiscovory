@@ -85,7 +85,10 @@ class SchoolRepository {
   }
 
   /// Get top students for school
-  Future<List<TopStudent>> getTopStudents(String schoolId, {int limit = 5}) async {
+  Future<List<TopStudent>> getTopStudents(
+    String schoolId, {
+    int limit = 5,
+  }) async {
     final response = await _supabase.rpc<List<dynamic>>(
       'get_school_top_students',
       params: {
@@ -100,14 +103,18 @@ class SchoolRepository {
   }
 
   /// Get career distribution for school
-  Future<List<CareerDistribution>> getCareerDistribution(String schoolId) async {
+  Future<List<CareerDistribution>> getCareerDistribution(
+    String schoolId,
+  ) async {
     final response = await _supabase.rpc<List<dynamic>>(
       'get_school_career_distribution',
       params: {'p_school_id': schoolId},
     );
 
     return response
-        .map((json) => CareerDistribution.fromJson(json as Map<String, dynamic>))
+        .map(
+          (json) => CareerDistribution.fromJson(json as Map<String, dynamic>),
+        )
         .toList();
   }
 
@@ -133,8 +140,43 @@ class SchoolRepository {
         .toList();
   }
 
+  /// Get individual student details by user ID
+  Future<TopStudent?> getStudentDetail(String userId) async {
+    final response = await _supabase
+        .from('profiles')
+        .select('''
+          id,
+          display_name,
+          email,
+          profile_completion,
+          last_activity,
+          (
+            SELECT COALESCE(AVG(CAST(mean AS NUMERIC)), 0)
+            FROM user_feature_scores
+            WHERE user_id = profiles.id
+          ) as overall_strength
+        ''')
+        .eq('id', userId)
+        .maybeSingle();
+
+    if (response == null) return null;
+
+    return TopStudent(
+      userId: response['id'] as String,
+      displayName: response['display_name'] as String?,
+      email: response['email'] as String?,
+      profileCompletion: ((response['profile_completion'] ?? 0) as num).toDouble(),
+      overallStrength: ((response['overall_strength'] ?? 0) as num).toDouble(),
+      lastActivity: response['last_activity'] != null
+          ? DateTime.parse(response['last_activity'] as String)
+          : null,
+    );
+  }
+
   /// Get school feature averages for radar chart
-  Future<List<SchoolFeatureAverage>> getSchoolFeatureAverages(String schoolId) async {
+  Future<List<SchoolFeatureAverage>> getSchoolFeatureAverages(
+    String schoolId,
+  ) async {
     final response = await _supabase
         .from('v_school_feature_means')
         .select()
@@ -142,7 +184,9 @@ class SchoolRepository {
         .order('feature_id');
 
     return (response as List<dynamic>)
-        .map((json) => SchoolFeatureAverage.fromJson(json as Map<String, dynamic>))
+        .map(
+          (json) => SchoolFeatureAverage.fromJson(json as Map<String, dynamic>),
+        )
         .toList();
   }
 

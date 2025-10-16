@@ -182,7 +182,9 @@ class _Rail extends StatelessWidget {
         final destination = NavDestinations.items[index];
         context.go(destination.route);
       },
-      labelType: compact ? NavigationRailLabelType.none : NavigationRailLabelType.none,
+      labelType: compact
+          ? NavigationRailLabelType.none
+          : NavigationRailLabelType.none,
       backgroundColor: theme.colorScheme.surface,
       indicatorColor: theme.colorScheme.secondaryContainer,
       leading: Padding(
@@ -361,7 +363,9 @@ class _InsightCard extends StatelessWidget {
                   Text(
                     subtitle,
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
+                      color: theme.textTheme.bodySmall?.color?.withValues(
+                        alpha: 0.7,
+                      ),
                     ),
                   ),
                 ],

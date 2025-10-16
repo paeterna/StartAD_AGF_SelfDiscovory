@@ -58,13 +58,16 @@ extension ResponsiveContext on BuildContext {
   bool get isXs => screenWidth < Breakpoints.xs;
 
   /// Check if small (large phone / small tablet)
-  bool get isSm => screenWidth >= Breakpoints.xs && screenWidth < Breakpoints.sm;
+  bool get isSm =>
+      screenWidth >= Breakpoints.xs && screenWidth < Breakpoints.sm;
 
   /// Check if medium (tablet / small laptop)
-  bool get isMd => screenWidth >= Breakpoints.sm && screenWidth < Breakpoints.md;
+  bool get isMd =>
+      screenWidth >= Breakpoints.sm && screenWidth < Breakpoints.md;
 
   /// Check if large (laptop / desktop)
-  bool get isLg => screenWidth >= Breakpoints.md && screenWidth < Breakpoints.lg;
+  bool get isLg =>
+      screenWidth >= Breakpoints.md && screenWidth < Breakpoints.lg;
 
   /// Check if extra large (large desktop / ultrawide)
   bool get isXl => screenWidth >= Breakpoints.lg;
@@ -294,7 +297,9 @@ class _ResponsiveCardState extends State<ResponsiveCard> {
   Widget build(BuildContext context) {
     final isDesktop = context.isDesktop;
     final baseElevation = widget.elevation ?? context.cardElevation;
-    final elevation = _isHovered && isDesktop ? baseElevation + 2 : baseElevation;
+    final elevation = _isHovered && isDesktop
+        ? baseElevation + 2
+        : baseElevation;
 
     Widget card = Card(
       elevation: elevation,
@@ -319,7 +324,9 @@ class _ResponsiveCardState extends State<ResponsiveCard> {
       return MouseRegion(
         onEnter: (_) => setState(() => _isHovered = true),
         onExit: (_) => setState(() => _isHovered = false),
-        cursor: widget.onTap != null ? SystemMouseCursors.click : SystemMouseCursors.basic,
+        cursor: widget.onTap != null
+            ? SystemMouseCursors.click
+            : SystemMouseCursors.basic,
         child: AnimatedScale(
           scale: _isHovered ? 1.02 : 1.0,
           duration: const Duration(milliseconds: 150),
@@ -343,54 +350,54 @@ class ResponsiveSpacing {
 
   /// Extra small spacing
   static double xs(BuildContext context) => context.responsive(
-        xs: 4.0,
-        sm: 6.0,
-        md: 8.0,
-      );
+    xs: 4.0,
+    sm: 6.0,
+    md: 8.0,
+  );
 
   /// Small spacing
   static double sm(BuildContext context) => context.responsive(
-        xs: 8.0,
-        sm: 10.0,
-        md: 12.0,
-        lg: 14.0,
-      );
+    xs: 8.0,
+    sm: 10.0,
+    md: 12.0,
+    lg: 14.0,
+  );
 
   /// Medium spacing
   static double md(BuildContext context) => context.responsive(
-        xs: 12.0,
-        sm: 14.0,
-        md: 16.0,
-        lg: 18.0,
-        xl: 20.0,
-      );
+    xs: 12.0,
+    sm: 14.0,
+    md: 16.0,
+    lg: 18.0,
+    xl: 20.0,
+  );
 
   /// Large spacing
   static double lg(BuildContext context) => context.responsive(
-        xs: 16.0,
-        sm: 18.0,
-        md: 20.0,
-        lg: 24.0,
-        xl: 28.0,
-      );
+    xs: 16.0,
+    sm: 18.0,
+    md: 20.0,
+    lg: 24.0,
+    xl: 28.0,
+  );
 
   /// Extra large spacing
   static double xl(BuildContext context) => context.responsive(
-        xs: 20.0,
-        sm: 24.0,
-        md: 28.0,
-        lg: 32.0,
-        xl: 40.0,
-      );
+    xs: 20.0,
+    sm: 24.0,
+    md: 28.0,
+    lg: 32.0,
+    xl: 40.0,
+  );
 
   /// Extra extra large spacing
   static double xxl(BuildContext context) => context.responsive(
-        xs: 24.0,
-        sm: 32.0,
-        md: 40.0,
-        lg: 48.0,
-        xl: 56.0,
-      );
+    xs: 24.0,
+    sm: 32.0,
+    md: 40.0,
+    lg: 48.0,
+    xl: 56.0,
+  );
 }
 
 // =====================================================

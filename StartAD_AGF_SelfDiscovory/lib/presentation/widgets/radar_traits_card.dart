@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/traits/traits_providers.dart';
+import '../../core/utils/feature_labels.dart';
 import '../../data/models/radar_data.dart';
 
 /// Widget displaying a radar chart of user's trait profile vs cohort average
@@ -61,7 +62,8 @@ class RadarTraitsCard extends ConsumerWidget {
               data: (radarDataByFamily) {
                 final dataPoints = _getFilteredData(radarDataByFamily);
 
-                if (dataPoints.isEmpty) {
+                // Show empty state if less than 3 features have data
+                if (dataPoints.length < 3) {
                   return _buildEmptyState(context);
                 }
 
@@ -156,12 +158,12 @@ class RadarTraitsCard extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'No trait data yet',
+              'Not enough data yet',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
             Text(
-              'Complete assessments to see your profile',
+              'Complete more activities to see your profile',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Theme.of(
                   context,
@@ -206,8 +208,10 @@ class RadarTraitsCard extends ConsumerWidget {
           if (index >= dataPoints.length) {
             return const RadarChartTitle(text: '');
           }
+          // Use short label without family prefix
+          final shortLabel = getShortFeatureLabel(dataPoints[index].featureKey);
           return RadarChartTitle(
-            text: _abbreviateLabel(dataPoints[index].featureLabel),
+            text: _abbreviateLabel(shortLabel),
           );
         },
         dataSets: [

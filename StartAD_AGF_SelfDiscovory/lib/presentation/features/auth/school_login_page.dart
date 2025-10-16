@@ -51,7 +51,8 @@ class _SchoolLoginPageState extends ConsumerState<SchoolLoginPage> {
 
       if (!isAdmin) {
         setState(() {
-          _errorMessage = 'This account is not authorized as a school administrator. '
+          _errorMessage =
+              'This account is not authorized as a school administrator. '
               'Please use the student login page.';
           _isLoading = false;
         });
@@ -115,7 +116,9 @@ class _SchoolLoginPageState extends ConsumerState<SchoolLoginPage> {
                       Text(
                         'Sign in to access your school dashboard',
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
+                          color: theme.textTheme.bodySmall?.color?.withValues(
+                            alpha: 0.7,
+                          ),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -217,7 +220,9 @@ class _SchoolLoginPageState extends ConsumerState<SchoolLoginPage> {
                             ? const SizedBox(
                                 height: 20,
                                 width: 20,
-                                child: CircularProgressIndicator(strokeWidth: 2),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
                               )
                             : const Text('Sign In'),
                       ),

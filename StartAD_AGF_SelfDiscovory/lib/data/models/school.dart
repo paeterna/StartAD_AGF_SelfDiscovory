@@ -94,8 +94,10 @@ class SchoolKpis {
   factory SchoolKpis.fromJson(Map<String, dynamic> json) {
     return SchoolKpis(
       totalStudents: json['total_students'] as int? ?? 0,
-      avgProfileCompletion: (json['avg_profile_completion'] as num?)?.toDouble() ?? 0.0,
-      avgMatchConfidence: (json['avg_match_confidence'] as num?)?.toDouble() ?? 0.0,
+      avgProfileCompletion:
+          (json['avg_profile_completion'] as num?)?.toDouble() ?? 0.0,
+      avgMatchConfidence:
+          (json['avg_match_confidence'] as num?)?.toDouble() ?? 0.0,
       topCareerCluster: json['top_career_cluster'] as String?,
     );
   }
@@ -124,7 +126,8 @@ class TopStudent {
       userId: json['user_id'] as String,
       displayName: json['display_name'] as String?,
       email: json['email'] as String?,
-      profileCompletion: (json['profile_completion'] as num?)?.toDouble() ?? 0.0,
+      profileCompletion:
+          (json['profile_completion'] as num?)?.toDouble() ?? 0.0,
       overallStrength: (json['overall_strength'] as num?)?.toDouble() ?? 0.0,
       lastActivity: json['last_activity'] != null
           ? DateTime.parse(json['last_activity'] as String)
@@ -182,7 +185,8 @@ class SchoolStudent {
       userId: json['user_id'] as String,
       displayName: json['display_name'] as String?,
       email: json['email'] as String?,
-      profileCompletion: (json['profile_completion'] as num?)?.toDouble() ?? 0.0,
+      profileCompletion:
+          (json['profile_completion'] as num?)?.toDouble() ?? 0.0,
       discoveryPercent: json['discovery_percent'] as int? ?? 0,
       lastActivity: json['last_activity'] != null
           ? DateTime.parse(json['last_activity'] as String)

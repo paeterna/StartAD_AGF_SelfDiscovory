@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../application/auth/auth_controller.dart';
+import '../../application/school/school_providers.dart';
 import '../../presentation/features/auth/login_page.dart';
 import '../../presentation/features/auth/signup_page.dart';
 import '../../presentation/features/auth/oauth_callback_page.dart';
@@ -25,7 +27,6 @@ import '../../presentation/features/ai_insights/ai_insights_page.dart';
 import '../../presentation/widgets/gradient_background.dart';
 import '../../presentation/shell/adaptive_shell.dart';
 import '../providers/providers.dart';
-import '../../application/school/school_providers.dart';
 
 /// App routes
 class AppRoutes {
@@ -34,6 +35,7 @@ class AppRoutes {
   static const String signup = '/auth/signup';
   static const String authCallback = '/auth/callback';
   static const String schoolLogin = '/auth/school';
+  static const String authCallback = '/auth/callback';
   static const String onboarding = '/onboarding';
   static const String dashboard = '/dashboard';
   static const String discover = '/discover';
@@ -59,6 +61,13 @@ final routerProvider = Provider<GoRouter>((ref) {
     initialLocation: AppRoutes.splash,
     debugLogDiagnostics: true,
     redirect: (context, state) async {
+      final currentLocation = state.matchedLocation;
+
+      // Always allow OAuth callback route (needed for Google sign-in)
+      if (currentLocation == AppRoutes.authCallback) {
+        return null;
+      }
+
       // Get current user
       final user = await authRepository.getCurrentUser();
       final isLoggedIn = user != null;
@@ -67,13 +76,13 @@ final routerProvider = Provider<GoRouter>((ref) {
       // Check user role from school repository
       final isSchoolAdmin = await schoolRepository.isSchoolAdmin();
 
-      final isGoingToAuth = state.matchedLocation.startsWith('/auth');
-      final isGoingToOnboarding = state.matchedLocation == AppRoutes.onboarding;
-      final isGoingToSchool = state.matchedLocation.startsWith('/school');
+      final isGoingToAuth = currentLocation.startsWith('/auth');
+      final isGoingToOnboarding = currentLocation == AppRoutes.onboarding;
+      final isGoingToSchool = currentLocation.startsWith('/school');
       final isGoingToStatic =
-          state.matchedLocation.startsWith('/privacy') ||
-          state.matchedLocation.startsWith('/terms') ||
-          state.matchedLocation.startsWith('/about');
+          currentLocation.startsWith('/privacy') ||
+          currentLocation.startsWith('/terms') ||
+          currentLocation.startsWith('/about');
 
       // Allow access to static pages without auth
       if (isGoingToStatic) {
@@ -83,6 +92,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       // Not logged in
       if (!isLoggedIn) {
         if (isGoingToAuth) return null; // Allow access to auth pages
+        // Avoid redirect loop: don't redirect if already going to login
+        if (currentLocation == AppRoutes.login) return null;
         return AppRoutes.login; // Redirect to login
       }
 
@@ -90,8 +101,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       if (isSchoolAdmin) {
         // Allow school routes
         if (isGoingToSchool) return null;
+        // Allow settings page
+        if (currentLocation == AppRoutes.settings) return null;
         // Redirect to school dashboard if trying to access student routes
         if (!isGoingToAuth) {
+          // Avoid redirect loop
+          if (currentLocation == AppRoutes.schoolDashboard) return null;
           return AppRoutes.schoolDashboard;
         }
         return null;
@@ -100,16 +115,22 @@ final routerProvider = Provider<GoRouter>((ref) {
       // Regular student logged in but onboarding not complete
       if (!onboardingComplete) {
         if (isGoingToOnboarding) return null; // Allow access to onboarding
+        // Avoid redirect loop
+        if (currentLocation == AppRoutes.onboarding) return null;
         return AppRoutes.onboarding; // Force onboarding
       }
 
       // Student trying to access school routes
       if (isGoingToSchool) {
+        // Avoid redirect loop
+        if (currentLocation == AppRoutes.dashboard) return null;
         return AppRoutes.dashboard; // Redirect students away from school routes
       }
 
       // Logged in and onboarding complete
       if (isGoingToAuth || isGoingToOnboarding) {
+        // Avoid redirect loop
+        if (currentLocation == AppRoutes.dashboard) return null;
         return AppRoutes.dashboard; // Redirect to dashboard
       }
 
@@ -148,11 +169,21 @@ final routerProvider = Provider<GoRouter>((ref) {
         pageBuilder: (context, state) =>
             MaterialPage(key: state.pageKey, child: const SchoolLoginPage()),
       ),
+      // OAuth callback route
+      GoRoute(
+        path: AppRoutes.authCallback,
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const _AuthCallbackPage(),
+        ),
+      ),
       // School routes (no shell - school has its own navigation)
       GoRoute(
         path: AppRoutes.schoolDashboard,
-        pageBuilder: (context, state) =>
-            MaterialPage(key: state.pageKey, child: const SchoolDashboardPage()),
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const SchoolDashboardPage(),
+        ),
       ),
       // Student detail route
       GoRoute(
@@ -305,3 +336,67 @@ final routerProvider = Provider<GoRouter>((ref) {
     },
   );
 });
+
+/// OAuth callback page - handles redirect after Google sign-in
+class _AuthCallbackPage extends ConsumerStatefulWidget {
+  const _AuthCallbackPage();
+
+  @override
+  ConsumerState<_AuthCallbackPage> createState() => _AuthCallbackPageState();
+}
+
+class _AuthCallbackPageState extends ConsumerState<_AuthCallbackPage> {
+  @override
+  void initState() {
+    super.initState();
+    _handleCallback();
+  }
+
+  Future<void> _handleCallback() async {
+    debugPrint('🔵 [AUTH_CALLBACK] Processing OAuth callback...');
+
+    // Wait a moment for Supabase to process the session
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+
+    if (!mounted) return;
+
+    // Refresh user state
+    await ref.read(authControllerProvider.notifier).refreshUser();
+
+    if (!mounted) return;
+
+    // Check if user is school admin
+    final isSchoolAdmin = await ref
+        .read(schoolRepositoryProvider)
+        .isSchoolAdmin();
+
+    if (!mounted) return;
+
+    // Navigate to appropriate dashboard
+    if (isSchoolAdmin) {
+      debugPrint('🔵 [AUTH_CALLBACK] Redirecting to school dashboard');
+      context.go(AppRoutes.schoolDashboard);
+    } else {
+      debugPrint('🔵 [AUTH_CALLBACK] Redirecting to student dashboard');
+      context.go(AppRoutes.dashboard);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GradientBackground(
+      child: const Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text('Completing sign in...'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -462,7 +462,8 @@ class GameScores {
 }
 
 /// Provider for the Memory Match controller
-final AutoDisposeStateNotifierProvider<MemoryMatchController, MemoryMatchState> memoryMatchControllerProvider =
+final AutoDisposeStateNotifierProvider<MemoryMatchController, MemoryMatchState>
+memoryMatchControllerProvider =
     StateNotifierProvider.autoDispose<MemoryMatchController, MemoryMatchState>(
       (ref) => MemoryMatchController(),
     );

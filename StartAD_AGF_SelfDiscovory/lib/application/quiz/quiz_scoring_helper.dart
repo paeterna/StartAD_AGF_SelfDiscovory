@@ -19,13 +19,23 @@ class QuizScoringHelper {
     for (final item in items) {
       String canonicalKey;
 
-      // If this is a RIASEC quiz, map to canonical interest features
+      // Map to canonical features based on instrument type
       if (instrument != null && instrument.contains('riasec')) {
         try {
           canonicalKey = riasecToCanonical(item.featureKey);
         } catch (e) {
           throw StateError(
             'Invalid RIASEC key in quiz item ${item.id}: "${item.featureKey}". '
+            'Error: $e',
+          );
+        }
+      } else if (instrument != null && instrument.contains('ipip')) {
+        // IPIP-50 Big Five to canonical traits mapping
+        try {
+          canonicalKey = bigFiveToCanonical(item.featureKey);
+        } catch (e) {
+          throw StateError(
+            'Invalid Big Five key in quiz item ${item.id}: "${item.featureKey}". '
             'Error: $e',
           );
         }

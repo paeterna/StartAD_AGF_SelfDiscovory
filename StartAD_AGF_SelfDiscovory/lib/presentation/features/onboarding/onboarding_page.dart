@@ -1,11 +1,20 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../application/activity/activity_providers.dart';
+import '../../../application/assessment/assessment_providers.dart';
 import '../../../application/auth/auth_controller.dart';
+import '../../../application/quiz/quiz_providers.dart';
+import '../../../application/quiz/quiz_scoring_helper.dart';
+import '../../../application/scoring/scoring_providers.dart';
+import '../../../application/traits/traits_providers.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../generated/l10n/app_localizations.dart';
+import '../../../data/models/feature_score.dart';
+import '../../../data/models/quiz_instrument.dart';
 import 'widgets/welcome_screen.dart';
 
 class OnboardingPage extends ConsumerStatefulWidget {
@@ -18,86 +27,125 @@ class OnboardingPage extends ConsumerStatefulWidget {
 class _OnboardingPageState extends ConsumerState<OnboardingPage> {
   bool _showWelcome = true;
   int _currentStep = 0;
-  final int _totalSteps = 5;
+  final Map<String, String> _selectedOptions = {}; // itemId -> optionId
+  final ScrollController _scrollController = ScrollController();
 
-  final Map<int, String> _selectedAnswers = {};
-
-  List<Map<String, dynamic>> _getLocalizedQuestions(AppLocalizations l10n) {
-    return [
-      {
-        'question': l10n.onboardingQuestion1,
-        'options': [
-          l10n.onboardingQ1Option1,
-          l10n.onboardingQ1Option2,
-          l10n.onboardingQ1Option3,
-        ],
-      },
-      {
-        'question': l10n.onboardingQuestion2,
-        'options': [
-          l10n.onboardingQ2Option1,
-          l10n.onboardingQ2Option2,
-          l10n.onboardingQ2Option3,
-        ],
-      },
-      {
-        'question': l10n.onboardingQuestion3,
-        'options': [
-          l10n.onboardingQ3Option1,
-          l10n.onboardingQ3Option2,
-          l10n.onboardingQ3Option3,
-        ],
-      },
-      {
-        'question': l10n.onboardingQuestion4,
-        'options': [
-          l10n.onboardingQ4Option1,
-          l10n.onboardingQ4Option2,
-          l10n.onboardingQ4Option3,
-        ],
-      },
-      {
-        'question': l10n.onboardingQuestion5,
-        'options': [
-          l10n.onboardingQ5Option1,
-          l10n.onboardingQ5Option2,
-          l10n.onboardingQ5Option3,
-        ],
-      },
-    ];
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
-  Future<void> _completeOnboarding() async {
-    try {
-      // Convert selected answers to a format suitable for the database
-      // Map question indices to question keys and answers
-      final answers = <String, String>{};
+  Future<void> _completeOnboarding(QuizInstrument metadata) async {
+    // Show loading dialog
+    if (!mounted) return;
+    unawaited(
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(
+          child: Card(
+            child: Padding(
+              padding: EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text('Processing your responses...'),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
 
-      for (int i = 0; i < _selectedAnswers.length; i++) {
-        final questionKey = 'question_${i + 1}';
-        final answer = _selectedAnswers[i];
-        if (answer != null) {
-          answers[questionKey] = answer;
+    try {
+      // Build feature scores from selected options
+      final featureScores = <String, double>{};
+
+      for (final item in metadata.items) {
+        final selectedOptionId = _selectedOptions[item.id];
+        if (selectedOptionId == null) continue;
+
+        // Find the selected option
+        ForcedChoiceOption? selectedOption;
+        if (item is ForcedChoiceItem) {
+          selectedOption = item.options.firstWhere(
+            (opt) => opt.id == selectedOptionId,
+          );
+        }
+
+        if (selectedOption != null) {
+          // Add weight to the feature key
+          final currentScore = featureScores[selectedOption.featureKey] ?? 0.0;
+          featureScores[selectedOption.featureKey] =
+              currentScore + selectedOption.weight;
         }
       }
 
-      debugPrint(
-        '📝 [ONBOARDING] Saving ${answers.length} answers to database',
+      // Normalize scores to 0-100 scale
+      // Since each question contributes 1.0, max score per feature is number of times it appears
+      // We'll normalize based on the number of responses
+      final normalizedScores = <String, double>{};
+      final responseCount = _selectedOptions.length;
+
+      for (final entry in featureScores.entries) {
+        // Normalize: (score / total_questions) * 100
+        // This gives us a percentage-based score
+        normalizedScores[entry.key] = (entry.value / responseCount) * 100;
+      }
+
+      // Compute confidence for quality score
+      final confidence = QuizScoringHelper.computeOverallConfidence(
+        totalItems: metadata.items.length,
+        answeredItems: _selectedOptions.length,
       );
 
-      // Save the answers and complete onboarding in the database
+      // Convert to FeatureScore objects
+      final featureScoresList = normalizedScores.entries.map((e) {
+        return FeatureScore(
+          key: e.key,
+          mean: e.value,
+          n: 1,
+          quality: confidence, // Use overall confidence
+        );
+      }).toList();
+
+      // Submit feature scores directly (onboarding doesn't use activity system)
+      final scoringService = ref.read(scoringServiceProvider);
+      final userId = ref.read(authControllerProvider).user?.id;
+      if (userId != null) {
+        await scoringService.updateProfileAndMatch(
+          userId: userId,
+          batchFeatures: featureScoresList,
+        );
+      }
+
+      // Mark onboarding as complete
       await ref
           .read(authControllerProvider.notifier)
-          .completeOnboarding(answers: answers);
+          .completeOnboarding(answers: {});
 
+      // Close loading dialog
+      if (!mounted) return;
+      context.pop();
+
+      // Invalidate providers to refresh dashboard data
+      ref.invalidate(discoveryProgressProvider);
+      ref.invalidate(radarDataByFamilyProvider);
+
+      // Navigate to dashboard
       if (mounted) {
-        // Navigate to dashboard - router will handle the redirect based on onboarding status
         context.go(AppRoutes.dashboard);
       }
     } on Exception catch (e) {
-      // Handle error if needed
-      debugPrint('🔴 [ONBOARDING] Error completing onboarding: $e');
+      debugPrint('🔴 [ONBOARDING] Error: $e');
+
       if (mounted) {
+        context.pop(); // Close loading dialog
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error completing onboarding: $e'),
@@ -110,7 +158,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).languageCode;
 
     // Show welcome screen first
     if (_showWelcome) {
@@ -123,9 +171,73 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
       );
     }
 
-    // Show questionnaire
-    final questions = _getLocalizedQuestions(l10n);
-    final currentQuestion = questions[_currentStep];
+    // Load quiz metadata from JSON
+    final metadataAsync = ref.watch(
+      quizMetadataProvider(
+        QuizItemsParams(
+          instrument: 'selfmap_onboarding_forced_choice',
+          language: locale,
+        ),
+      ),
+    );
+
+    return metadataAsync.when(
+      data: (metadata) => _buildQuizScreen(context, metadata),
+      loading: () => Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(gradient: AppColors.primaryGradient),
+          child: const Center(child: CircularProgressIndicator()),
+        ),
+      ),
+      error: (error, stack) => Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(gradient: AppColors.primaryGradient),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.error_outline, size: 64, color: Colors.white),
+                const SizedBox(height: 16),
+                Text(
+                  'Error loading onboarding',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  child: Text(
+                    error.toString(),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.white70,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildQuizScreen(BuildContext context, QuizInstrument metadata) {
+    final totalSteps = metadata.items.length;
+    final currentItem = metadata.items[_currentStep];
+
+    // Get current item as ForcedChoiceItem
+    if (currentItem is! ForcedChoiceItem) {
+      return const Scaffold(
+        body: Center(
+          child: Text('Invalid item type'),
+        ),
+      );
+    }
+
+    final forcedChoiceItem = currentItem;
+    final selectedOptionId = _selectedOptions[currentItem.id];
 
     return Scaffold(
       body: Container(
@@ -138,24 +250,29 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
               children: [
                 // Progress indicator
                 LinearProgressIndicator(
-                  value: (_currentStep + 1) / _totalSteps,
+                  value: (_currentStep + 1) / totalSteps,
+                  backgroundColor: Colors.white24,
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
                 const SizedBox(height: 16),
 
                 // Step indicator
                 Text(
-                  l10n.onboardingQuestionPrefix(_currentStep + 1, _totalSteps),
-                  style: Theme.of(context).textTheme.titleMedium,
+                  'Question ${_currentStep + 1} of $totalSteps',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Colors.white70,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 32),
 
-                // Question
+                // Question prompt
                 Text(
-                  currentQuestion['question'] as String,
+                  forcedChoiceItem.prompt,
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
                 const SizedBox(height: 32),
@@ -163,42 +280,38 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                 // Options
                 Expanded(
                   child: ListView.builder(
-                    itemCount: (currentQuestion['options'] as List).length,
+                    controller: _scrollController,
+                    itemCount: forcedChoiceItem.options.length,
                     itemBuilder: (context, index) {
-                      final option =
-                          currentQuestion['options'][index] as String;
-                      final isSelected =
-                          _selectedAnswers[_currentStep] == option;
+                      final option = forcedChoiceItem.options[index];
+                      final isSelected = selectedOptionId == option.id;
 
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: OutlinedButton(
                           onPressed: () {
                             setState(() {
-                              _selectedAnswers[_currentStep] = option;
+                              _selectedOptions[currentItem.id] = option.id;
                             });
                           },
                           style: OutlinedButton.styleFrom(
                             padding: const EdgeInsets.all(20),
                             side: BorderSide(
                               width: isSelected ? 2 : 1,
-                              color: isSelected
-                                  ? Theme.of(context).colorScheme.primary
-                                  : Theme.of(context).colorScheme.outline,
+                              color: isSelected ? Colors.white : Colors.white38,
                             ),
                             backgroundColor: isSelected
-                                ? Theme.of(
-                                    context,
-                                  ).colorScheme.primary.withValues(alpha: 0.1)
-                                : null,
+                                ? Colors.white.withValues(alpha: 0.2)
+                                : Colors.white.withValues(alpha: 0.05),
                           ),
                           child: Text(
-                            option,
+                            option.text,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: isSelected
                                   ? FontWeight.w600
                                   : FontWeight.normal,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -217,29 +330,47 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                             setState(() {
                               _currentStep--;
                             });
+                            // Scroll to top
+                            _scrollController.animateTo(
+                              0,
+                              duration: const Duration(milliseconds: 250),
+                              curve: Curves.easeOut,
+                            );
                           },
-                          child: Text(l10n.onboardingBackButton),
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(color: Colors.white),
+                            foregroundColor: Colors.white,
+                          ),
+                          child: const Text('Back'),
                         ),
                       ),
                     if (_currentStep > 0) const SizedBox(width: 16),
                     Expanded(
                       flex: 2,
                       child: ElevatedButton(
-                        onPressed: _selectedAnswers.containsKey(_currentStep)
+                        onPressed: _selectedOptions.containsKey(currentItem.id)
                             ? () {
-                                if (_currentStep < _totalSteps - 1) {
+                                if (_currentStep < totalSteps - 1) {
                                   setState(() {
                                     _currentStep++;
                                   });
+                                  // Scroll to top
+                                  _scrollController.animateTo(
+                                    0,
+                                    duration: const Duration(milliseconds: 250),
+                                    curve: Curves.easeOut,
+                                  );
                                 } else {
-                                  _completeOnboarding();
+                                  _completeOnboarding(metadata);
                                 }
                               }
                             : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: AppColors.deepPurple,
+                        ),
                         child: Text(
-                          _currentStep < _totalSteps - 1
-                              ? l10n.onboardingNextButton
-                              : l10n.onboardingFinishButton,
+                          _currentStep < totalSteps - 1 ? 'Next' : 'Finish',
                         ),
                       ),
                     ),
