@@ -9,6 +9,7 @@ import '../../../core/router/app_router.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 import '../../widgets/radar_traits_card.dart';
+import '../../widgets/ai_insights_dashboard_card.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({super.key});
@@ -58,6 +59,10 @@ class DashboardPage extends ConsumerWidget {
                 title: 'Your Personality Profile',
                 showLegend: true,
               ),
+              const SizedBox(height: 24),
+
+              // AI-generated insights
+              const AIInsightsDashboardCard(),
               const SizedBox(height: 24),
 
               // Quick actions

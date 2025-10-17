@@ -1,6 +1,8 @@
 import 'dart:developer' as developer;
 
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../ai_insight/ai_insight_service.dart';
+import '../../data/repositories_impl/ai_insight_repository_impl.dart';
 
 /// Service for managing activity runs and discovery progress
 /// Implements the data contract flow:
@@ -98,6 +100,35 @@ class ActivityService {
 
     // Note: Trigger fn_update_progress_after_run will automatically update
     // discovery_progress table (percent, streak_days, last_activity_date)
+
+    // Auto-generate AI insights if eligible
+    _tryAutoGenerateInsights(userId);
+  }
+
+  /// Try to auto-generate AI insights if user is eligible
+  Future<void> _tryAutoGenerateInsights(String userId) async {
+    try {
+      final aiRepository = AIInsightRepositoryImpl(_supabase);
+      final aiService = AIInsightService(aiRepository);
+      final eligibility = await aiService.checkEligibility(userId);
+      
+      if (eligibility.canGenerate) {
+        // Check if insights already exist
+        final existingInsights = await _supabase
+            .from('ai_career_insights')
+            .select('id')
+            .eq('user_id', userId)
+            .maybeSingle();
+        
+        // Only generate if no insights exist yet
+        if (existingInsights == null) {
+          await aiService.generateInsight(userId);
+        }
+      }
+    } catch (e) {
+      // Silently fail - don't block activity completion
+      print('Auto-generation failed: $e');
+    }
   }
 
   /// Get user's discovery progress

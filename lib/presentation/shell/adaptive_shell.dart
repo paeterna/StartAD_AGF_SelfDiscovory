@@ -57,12 +57,6 @@ class NavDestinations {
       labelKey: (l10n) => 'Roadmap',
     ),
     NavDestination(
-      route: '/ai-insights',
-      icon: Icons.psychology_outlined,
-      selectedIcon: Icons.psychology,
-      labelKey: (l10n) => 'AI Insights',
-    ),
-    NavDestination(
       route: '/settings',
       icon: Icons.settings_outlined,
       selectedIcon: Icons.settings,

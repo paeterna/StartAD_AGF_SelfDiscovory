@@ -178,7 +178,11 @@ Analyze this student's data and provide a comprehensive career insight that answ
    - Brief description (1 sentence)
    - Why it's a good fit (2-3 sentences referencing their specific strengths)
 
-5. **Learning Path**: Suggest 3-5 practical next steps they can take NOW (e.g., "Try a beginner coding course on Scratch", "Start a mini podcast about your favorite topic", "Join a robotics club", "Create digital art using Canva").
+5. **Career Roadmaps**: For EACH recommended career, create a detailed, UAE-specific educational and career roadmap with these stages:
+   - **School Level (Grades 9-12)**: Specific subjects to focus on and excel in (e.g., "Advanced Mathematics, Physics, Computer Science" for Software Engineer)
+   - **University Level**: Recommended universities in UAE and specific majors/degrees (e.g., "Computer Science at UAEU, Khalifa University, or AUS")
+   - **Skills & Certifications**: Specific technical skills, online courses, certifications, or training programs relevant to UAE market (e.g., "AWS Certified Solutions Architect, Arabic language proficiency for business roles")
+   - **Career Progression**: Entry-level → Mid-level → Senior positions with realistic timelines (e.g., "Junior Developer (0-2 years) → Senior Developer (3-5 years) → Tech Lead (5+ years)")
 
 **Tone:**
 - Speak like a friendly, smart mentor — not a teacher
@@ -210,14 +214,36 @@ Return ONLY valid JSON with this structure:
   "career_reasoning": {
     "Career Name": "Detailed reasoning"
   },
-  "learning_path": [
-    {
-      "title": "Action title",
-      "description": "What to do",
-      "type": "course|activity|challenge|resource",
-      "priority": number
+  "career_roadmaps": {
+    "Career Name": {
+      "school_subjects": ["Subject 1", "Subject 2", "Subject 3"],
+      "school_advice": "Specific advice for school level",
+      "university_programs": [
+        {
+          "degree": "Degree name",
+          "universities": ["University 1", "University 2"],
+          "duration": "4 years"
+        }
+      ],
+      "skills_certifications": [
+        {
+          "name": "Skill/Certification name",
+          "provider": "Platform/Organization",
+          "importance": "high|medium",
+          "uae_relevance": "Why it matters in UAE"
+        }
+      ],
+      "career_progression": [
+        {
+          "level": "Entry|Mid|Senior",
+          "title": "Job title",
+          "years": "0-2|3-5|5+",
+          "responsibilities": "Key responsibilities",
+          "salary_range_aed": "Typical salary in AED"
+        }
+      ]
     }
-  ]
+  }
 }`;
 
   return prompt;

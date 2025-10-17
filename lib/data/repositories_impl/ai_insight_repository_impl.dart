@@ -1,5 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/entities/ai_insight.dart';
+import '../../domain/entities/career_roadmap.dart';
 import '../../domain/repositories/ai_insight_repository.dart';
 
 class AIInsightRepositoryImpl implements AIInsightRepository {
@@ -141,9 +142,14 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
           .map((e) => CareerRecommendation.fromJson(e as Map<String, dynamic>))
           .toList(),
       careerReasoning: Map<String, String>.from(json['career_reasoning'] as Map),
-      learningPath: (json['learning_path'] as List)
-          .map((e) => LearningPathStep.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      careerRoadmaps: json['career_roadmaps'] != null
+          ? (json['career_roadmaps'] as Map).map(
+              (key, value) => MapEntry(
+                key as String,
+                CareerRoadmap.fromJson(key as String, value as Map<String, dynamic>),
+              ),
+            )
+          : {}, // Return empty map if null
       confidenceScore: (json['confidence_score'] as num?)?.toDouble() ?? 0.0,
       dataPointsUsed: json['data_points_used'] as int? ?? 0,
       createdAt: DateTime.parse(json['created_at'] as String),

@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'career_roadmap.dart';
 
 /// AI-generated career insight entity
 @immutable
@@ -11,7 +12,7 @@ class AIInsight {
     required this.interestScores,
     required this.careerRecommendations,
     required this.careerReasoning,
-    required this.learningPath,
+    required this.careerRoadmaps,
     required this.createdAt,
     this.confidenceScore = 0.0,
     this.dataPointsUsed = 0,
@@ -25,7 +26,7 @@ class AIInsight {
   final Map<String, double> interestScores;
   final List<CareerRecommendation> careerRecommendations;
   final Map<String, String> careerReasoning;
-  final List<LearningPathStep> learningPath;
+  final Map<String, CareerRoadmap> careerRoadmaps;
   final double confidenceScore;
   final int dataPointsUsed;
   final DateTime createdAt;
@@ -39,7 +40,7 @@ class AIInsight {
     Map<String, double>? interestScores,
     List<CareerRecommendation>? careerRecommendations,
     Map<String, String>? careerReasoning,
-    List<LearningPathStep>? learningPath,
+    Map<String, CareerRoadmap>? careerRoadmaps,
     double? confidenceScore,
     int? dataPointsUsed,
     DateTime? createdAt,
@@ -53,7 +54,7 @@ class AIInsight {
       interestScores: interestScores ?? this.interestScores,
       careerRecommendations: careerRecommendations ?? this.careerRecommendations,
       careerReasoning: careerReasoning ?? this.careerReasoning,
-      learningPath: learningPath ?? this.learningPath,
+      careerRoadmaps: careerRoadmaps ?? this.careerRoadmaps,
       confidenceScore: confidenceScore ?? this.confidenceScore,
       dataPointsUsed: dataPointsUsed ?? this.dataPointsUsed,
       createdAt: createdAt ?? this.createdAt,

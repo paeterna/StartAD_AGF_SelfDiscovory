@@ -17,7 +17,7 @@ import '../../presentation/features/onboarding/onboarding_page.dart';
 import '../../presentation/features/quiz/quiz_page.dart';
 import '../../presentation/features/game/game_page.dart';
 import '../../presentation/features/games/memory_match/memory_match_page.dart';
-import '../../presentation/features/roadmap/roadmap_page.dart';
+import '../../presentation/features/roadmap/enhanced_roadmap_page.dart';
 import '../../presentation/features/settings/settings_page.dart';
 import '../../presentation/features/school/school_dashboard_page.dart';
 import '../../presentation/features/school/student_detail_page.dart';
@@ -225,8 +225,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: AppRoutes.roadmap,
-            pageBuilder: (context, state) =>
-                const NoTransitionPage(child: RoadmapPage()),
+            pageBuilder: (context, state) {
+              final careerTitle = state.uri.queryParameters['career'];
+              return const NoTransitionPage(child: EnhancedRoadmapPage());
+            },
           ),
           GoRoute(
             path: AppRoutes.settings,
