@@ -485,6 +485,7 @@ async function storeInsight(
   dataPointsUsed: number,
   confidenceScore: number
 ): Promise<string> {
+  // Store main insight
   const { data, error } = await supabase
     .from('ai_career_insights')
     .insert({
@@ -503,6 +504,35 @@ async function storeInsight(
 
   if (error) {
     throw new Error(`Failed to store insight: ${error.message}`);
+  }
+
+  // Store individual career recommendations in ai_recommended_careers table
+  const careerRecommendations = insight.career_recommendations.map((career) => ({
+    user_id: userId,
+    career_id: career.title.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, ''), // Generate career_id from title
+    title: career.title,
+    match_score: career.match_score,
+    rationale: {
+      description: career.description,
+      why_good_fit: career.why_good_fit,
+      reasoning: insight.career_reasoning[career.title] || career.why_good_fit,
+    },
+  }));
+
+  // Clear old recommendations for this user (keep only the latest)
+  await supabase
+    .from('ai_recommended_careers')
+    .delete()
+    .eq('user_id', userId);
+
+  // Insert new recommendations
+  const { error: careersError } = await supabase
+    .from('ai_recommended_careers')
+    .insert(careerRecommendations);
+
+  if (careersError) {
+    console.error(`Warning: Failed to store career recommendations: ${careersError.message}`);
+    // Don't throw - main insight is already stored
   }
 
   return data.id;

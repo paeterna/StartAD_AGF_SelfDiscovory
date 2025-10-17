@@ -21,7 +21,7 @@ final aiInsightServiceProvider = Provider<AIInsightService>((ref) {
 final latestAIInsightProvider = FutureProvider<AIInsight?>((ref) async {
   final service = ref.watch(aiInsightServiceProvider);
   final userId = ref.watch(currentUserIdProvider);
-  
+
   if (userId == null) {
     return null;
   }
@@ -33,7 +33,7 @@ final latestAIInsightProvider = FutureProvider<AIInsight?>((ref) async {
 final allAIInsightsProvider = FutureProvider<List<AIInsight>>((ref) async {
   final service = ref.watch(aiInsightServiceProvider);
   final userId = ref.watch(currentUserIdProvider);
-  
+
   if (userId == null) {
     return [];
   }
@@ -45,7 +45,7 @@ final allAIInsightsProvider = FutureProvider<List<AIInsight>>((ref) async {
 final aiInsightEligibilityProvider = FutureProvider<InsightEligibility>((ref) async {
   final service = ref.watch(aiInsightServiceProvider);
   final userId = ref.watch(currentUserIdProvider);
-  
+
   if (userId == null) {
     return const InsightEligibility(
       canGenerate: false,

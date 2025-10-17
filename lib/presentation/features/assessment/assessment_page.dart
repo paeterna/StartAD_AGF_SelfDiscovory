@@ -11,6 +11,7 @@ import '../../../application/quiz/quiz_scoring_helper.dart';
 import '../../../application/scoring/scoring_providers.dart';
 import '../../../application/traits/traits_providers.dart';
 import '../../../data/models/quiz_instrument.dart';
+import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 
 /// Page for taking psychometric assessments with Likert scale questions
@@ -42,6 +43,7 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final metadataAsync = ref.watch(
       quizMetadataProvider(
         QuizItemsParams(
@@ -56,7 +58,7 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
         appBar: AppBar(
           title: metadataAsync.maybeWhen(
             data: (metadata) => Text(metadata.title),
-            orElse: () => const Text('Assessment'),
+            orElse: () => Text(l10n.assessmentTitle),
           ),
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -395,7 +397,7 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
                   );
                 },
                 icon: const Icon(Icons.arrow_back),
-                label: const Text('Previous'),
+                label: Text(AppLocalizations.of(context)!.assessmentPrevious),
               ),
             ),
           if (!isFirstPage) const SizedBox(width: 12),
@@ -469,20 +471,21 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
 
     // Show loading dialog
     if (!mounted) return;
+    final l10nForDialog = AppLocalizations.of(context)!;
     unawaited(
       showDialog<void>(
         context: context,
         barrierDismissible: false,
-        builder: (context) => const Center(
+        builder: (context) => Center(
           child: Card(
             child: Padding(
-              padding: EdgeInsets.all(24),
+              padding: const EdgeInsets.all(24),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 16),
-                  Text('Processing your responses...'),
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 16),
+                  Text(l10nForDialog.assessmentProcessing),
                 ],
               ),
             ),
@@ -552,21 +555,22 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
 
       // Show success dialog
       if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
       await showDialog<void>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Row(
+          title: Row(
             children: [
-              Icon(Icons.check_circle, color: Colors.green),
-              SizedBox(width: 12),
-              Text('Assessment Complete!'),
+              const Icon(Icons.check_circle, color: Colors.green),
+              const SizedBox(width: 12),
+              Text(l10n.assessmentComplete),
             ],
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Thank you for completing the assessment.'),
+              Text(l10n.assessmentCompleteMessage),
               const SizedBox(height: 16),
               Text(
                 'Your progress has been updated by $deltaProgress%',
@@ -597,21 +601,22 @@ class _AssessmentPageState extends ConsumerState<AssessmentPage> {
 
       // Show error dialog
       if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
       await showDialog<void>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Row(
+          title: Row(
             children: [
-              Icon(Icons.error_outline, color: Colors.red),
-              SizedBox(width: 12),
-              Text('Error'),
+              const Icon(Icons.error_outline, color: Colors.red),
+              const SizedBox(width: 12),
+              Text(l10n.errorTitle),
             ],
           ),
-          content: Text('Failed to submit assessment: $e'),
+          content: Text(l10n.assessmentSubmitFailed(e.toString())),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
+              child: Text(l10n.closeButton),
             ),
           ],
         ),

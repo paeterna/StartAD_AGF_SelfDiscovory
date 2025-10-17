@@ -9,10 +9,10 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'SelfMap';
+  String get appName => 'Masar';
 
   @override
-  String get welcomeMessage => 'Welcome to SelfMap';
+  String get welcomeMessage => 'Welcome to Masar';
 
   @override
   String get tagline => 'Discover Your Future';
@@ -110,7 +110,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingSkipButton => 'Skip';
 
   @override
-  String get welcomeTitle => 'Welcome to SelfMap! 🚀';
+  String get welcomeTitle => 'Welcome to Masar! 🚀';
 
   @override
   String get welcomeSubtitle => 'Discover who you are and where you\'re going';
@@ -544,7 +544,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsTermsOfUse => 'Terms of Use';
 
   @override
-  String get settingsAbout => 'About SelfMap';
+  String get settingsAbout => 'About Masar';
 
   @override
   String get settingsSupportSection => 'Support';
@@ -592,11 +592,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get termsAccept => 'I agree to the Terms of Use';
 
   @override
-  String get aboutTitle => 'About SelfMap';
+  String get aboutTitle => 'About Masar';
 
   @override
   String get aboutDescription =>
-      'SelfMap is a self-discovery platform designed to help high school students explore their interests, discover careers, and plan their future.';
+      'Masar is a self-discovery platform designed to help high school students explore their interests, discover careers, and plan their future.';
 
   @override
   String aboutVersion(String version) {
@@ -754,4 +754,230 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get quizGenericInstructions =>
       'Answer all questions honestly. This should take just a few minutes and will provide valuable insights.';
+
+  @override
+  String get memoryMatchTitle => 'Memory Match';
+
+  @override
+  String get memoryMatchDescription =>
+      'Train your memory and attention by matching pairs of cards as quickly as possible.';
+
+  @override
+  String get memoryMatchSelectDifficulty => 'Select Difficulty';
+
+  @override
+  String get memoryMatchDifficultyEasy => 'Easy';
+
+  @override
+  String get memoryMatchDifficultyNormal => 'Normal';
+
+  @override
+  String get memoryMatchDifficultyHard => 'Hard';
+
+  @override
+  String get memoryMatchDifficultyEasyDesc => '4×4 Grid (8 pairs)';
+
+  @override
+  String get memoryMatchDifficultyNormalDesc => '5×4 Grid (10 pairs)';
+
+  @override
+  String get memoryMatchDifficultyHardDesc => '6×5 Grid (15 pairs)';
+
+  @override
+  String get memoryMatchHowToPlay => 'How to Play';
+
+  @override
+  String get memoryMatchHowToPlayStep1 => 'Tap cards to flip them over';
+
+  @override
+  String get memoryMatchHowToPlayStep2 => 'Find matching pairs';
+
+  @override
+  String get memoryMatchHowToPlayStep3 =>
+      'Complete the grid as fast as you can';
+
+  @override
+  String get memoryMatchHowToPlayStep4 => 'Fewer mistakes = higher score';
+
+  @override
+  String get memoryMatchTime => 'Time';
+
+  @override
+  String get memoryMatchMoves => 'Moves';
+
+  @override
+  String get memoryMatchMatches => 'Matches';
+
+  @override
+  String get memoryMatchPaused => 'Game Paused';
+
+  @override
+  String get memoryMatchResume => 'Resume';
+
+  @override
+  String get memoryMatchSaveFailed =>
+      'Failed to save results. Please try again later.';
+
+  @override
+  String get gameResultsTitle => 'Game Complete!';
+
+  @override
+  String get gameResultsYourScore => 'Your Score';
+
+  @override
+  String get gameResultsComposite => 'Overall Performance';
+
+  @override
+  String get gameResultsTime => 'Time';
+
+  @override
+  String get gameResultsMoves => 'Moves';
+
+  @override
+  String get gameResultsAccuracy => 'Accuracy';
+
+  @override
+  String get gameResultsPerformance => 'Performance';
+
+  @override
+  String get gameResultsTraitInsights => 'Trait Insights';
+
+  @override
+  String get gameResultsTryAgain => 'Try Again';
+
+  @override
+  String get gameResultsBackToDiscovery => 'Back to Discovery';
+
+  @override
+  String get gameResultsOutstanding => 'Outstanding!';
+
+  @override
+  String get gameResultsExcellent => 'Excellent!';
+
+  @override
+  String get gameResultsGreat => 'Great!';
+
+  @override
+  String get gameResultsGood => 'Good!';
+
+  @override
+  String get gameResultsKeepGoing => 'Keep Going!';
+
+  @override
+  String get gameResultsNiceTry => 'Nice Try!';
+
+  @override
+  String get assessmentTitle => 'Assessment';
+
+  @override
+  String get assessmentPrevious => 'Previous';
+
+  @override
+  String get assessmentProcessing => 'Processing your responses...';
+
+  @override
+  String get assessmentComplete => 'Assessment Complete!';
+
+  @override
+  String get assessmentCompleteMessage =>
+      'Thank you for completing the assessment.';
+
+  @override
+  String assessmentSubmitFailed(String error) {
+    return 'Failed to submit assessment: $error';
+  }
+
+  @override
+  String get onboardingProcessing => 'Processing your responses...';
+
+  @override
+  String onboardingErrorCompleting(String error) {
+    return 'Error completing onboarding: $error';
+  }
+
+  @override
+  String get onboardingInvalidItemType => 'Invalid item type';
+
+  @override
+  String get authSchoolLoginTitle => 'School Sign In';
+
+  @override
+  String get authSignInAsSchool => 'Sign in as School';
+
+  @override
+  String get authSignInAsStudent => 'Sign in as Student';
+
+  @override
+  String get authPleaseSelectSchool => 'Please select a school';
+
+  @override
+  String get authSignIn => 'Sign In';
+
+  @override
+  String get oauthCallbackFailed => 'Authentication failed. Please try again.';
+
+  @override
+  String oauthCallbackError(String error) {
+    return 'Authentication error: $error';
+  }
+
+  @override
+  String get schoolDashboardTitle => 'School Dashboard';
+
+  @override
+  String get schoolDashboardNoSchool => 'No school found for your account';
+
+  @override
+  String schoolDashboardErrorLoading(String error) {
+    return 'Error loading school: $error';
+  }
+
+  @override
+  String get schoolDashboardNoStudentData => 'No student data available';
+
+  @override
+  String get schoolDashboardNoCareerData => 'No career match data available';
+
+  @override
+  String get schoolDashboardViewAll => 'View All';
+
+  @override
+  String get schoolDashboardStudentsTablePlaceholder =>
+      'Students table with search and filters will be here';
+
+  @override
+  String get studentDetailsTitle => 'Student Details';
+
+  @override
+  String get studentDetailsNotFound => 'Student not found';
+
+  @override
+  String studentDetailsErrorLoading(String error) {
+    return 'Error loading student: $error';
+  }
+
+  @override
+  String get studentsListTitle => 'All Students';
+
+  @override
+  String get studentsListProfileColumn => 'Profile';
+
+  @override
+  String get studentsListStrengthColumn => 'Strength';
+
+  @override
+  String get studentsListLastActiveColumn => 'Last Active';
+
+  @override
+  String get studentsListActionsColumn => 'Actions';
+
+  @override
+  String errorLoadingCareers(String error) {
+    return 'Error loading careers: $error';
+  }
+
+  @override
+  String errorGenericWithMessage(String error) {
+    return 'Error: $error';
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/school.dart';
 
@@ -142,34 +143,85 @@ class SchoolRepository {
 
   /// Get individual student details by user ID
   Future<TopStudent?> getStudentDetail(String userId) async {
-    final response = await _supabase
+    // Get profile data
+    final profileResponse = await _supabase
         .from('profiles')
-        .select('''
-          id,
-          display_name,
-          email,
-          profile_completion,
-          last_activity,
-          (
-            SELECT COALESCE(AVG(CAST(mean AS NUMERIC)), 0)
-            FROM user_feature_scores
-            WHERE user_id = profiles.id
-          ) as overall_strength
-        ''')
+        .select('id, display_name')
         .eq('id', userId)
         .maybeSingle();
 
-    if (response == null) return null;
+    if (profileResponse == null) return null;
+
+    // Get email from auth.users using helper function
+    String? email;
+    try {
+      email = await _supabase.rpc<String>(
+        'get_user_email',
+        params: {'p_user_id': userId},
+      );
+    } catch (e) {
+      debugPrint('⚠️ [SCHOOL_REPO] Could not fetch email: $e');
+      // Email is optional, continue without it
+    }
+
+    // Get profile completion using the helper function
+    double profileCompletion = 0.0;
+    try {
+      final completionResponse = await _supabase.rpc<double>(
+        'get_profile_completeness',
+        params: {'p_user_id': userId},
+      );
+      profileCompletion = completionResponse;
+    } catch (e) {
+      debugPrint('⚠️ [SCHOOL_REPO] Could not fetch profile completion: $e');
+    }
+
+    // Get overall strength from user_feature_scores
+    double overallStrength = 0.0;
+    try {
+      final scoresResponse = await _supabase
+          .from('user_feature_scores')
+          .select('score_mean')
+          .eq('user_id', userId);
+
+      if (scoresResponse.isNotEmpty) {
+        final scores = scoresResponse
+            .map((s) => ((s['score_mean'] ?? 0) as num).toDouble())
+            .where((score) => score > 0);
+        if (scores.isNotEmpty) {
+          overallStrength = scores.reduce((a, b) => a + b) / scores.length;
+        }
+      }
+    } catch (e) {
+      debugPrint('⚠️ [SCHOOL_REPO] Could not fetch feature scores: $e');
+    }
+
+    // Get last activity from activity_runs
+    DateTime? lastActivity;
+    try {
+      final activityResponse = await _supabase
+          .from('activity_runs')
+          .select('completed_at')
+          .eq('user_id', userId)
+          .not('completed_at', 'is', null)
+          .order('completed_at', ascending: false)
+          .limit(1)
+          .maybeSingle();
+
+      if (activityResponse != null && activityResponse['completed_at'] != null) {
+        lastActivity = DateTime.parse(activityResponse['completed_at'] as String);
+      }
+    } catch (e) {
+      debugPrint('⚠️ [SCHOOL_REPO] Could not fetch last activity: $e');
+    }
 
     return TopStudent(
-      userId: response['id'] as String,
-      displayName: response['display_name'] as String?,
-      email: response['email'] as String?,
-      profileCompletion: ((response['profile_completion'] ?? 0) as num).toDouble(),
-      overallStrength: ((response['overall_strength'] ?? 0) as num).toDouble(),
-      lastActivity: response['last_activity'] != null
-          ? DateTime.parse(response['last_activity'] as String)
-          : null,
+      userId: profileResponse['id'] as String,
+      displayName: profileResponse['display_name'] as String?,
+      email: email, // Retrieved from auth.users via get_user_email function
+      profileCompletion: profileCompletion,
+      overallStrength: overallStrength,
+      lastActivity: lastActivity,
     );
   }
 

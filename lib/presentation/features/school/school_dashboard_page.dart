@@ -221,45 +221,61 @@ class _KpiCards extends ConsumerWidget {
             ],
           );
         } else {
-          // Tablet/Desktop: Grid
-          return GridView.count(
-            crossAxisCount: context.responsive(xs: 2, sm: 2, md: 2, lg: 4),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            mainAxisSpacing: ResponsiveSpacing.md(context),
-            crossAxisSpacing: ResponsiveSpacing.md(context),
-            childAspectRatio: context.responsive(
-              xs: 1.5,
-              sm: 1.5,
-              md: 1.8,
-              lg: 2.2,
-            ),
-            children: [
-              _KpiCard(
-                icon: Icons.people,
-                title: 'Total Students',
-                value: kpis.totalStudents.toString(),
-                color: Colors.blue,
-              ),
-              _KpiCard(
-                icon: Icons.insert_chart,
-                title: 'Avg Profile Completion',
-                value: '${kpis.avgProfileCompletion.toStringAsFixed(1)}%',
-                color: Colors.green,
-              ),
-              _KpiCard(
-                icon: Icons.verified,
-                title: 'Avg Match Confidence',
-                value: '${(kpis.avgMatchConfidence * 100).toStringAsFixed(1)}%',
-                color: Colors.orange,
-              ),
-              _KpiCard(
-                icon: Icons.star,
-                title: 'Top Career Cluster',
-                value: kpis.topCareerCluster ?? 'N/A',
-                color: Colors.purple,
-              ),
-            ],
+          // Tablet/Desktop: Grid with explicit constraints
+          final crossAxisCount = context.responsive(xs: 2, sm: 2, md: 2, lg: 4);
+          final aspectRatio = context.responsive(
+            xs: 1.3,
+            sm: 1.4,
+            md: 1.6,
+            lg: 1.8,
+          );
+
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              // Calculate explicit height based on number of rows and aspect ratio
+              final cardWidth = (constraints.maxWidth - (ResponsiveSpacing.md(context) * (crossAxisCount - 1))) / crossAxisCount;
+              final cardHeight = cardWidth / aspectRatio;
+              final rows = (4 / crossAxisCount).ceil();
+              final totalHeight = (cardHeight * rows) + (ResponsiveSpacing.md(context) * (rows - 1));
+
+              return SizedBox(
+                height: totalHeight,
+                child: GridView.count(
+                  crossAxisCount: crossAxisCount,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  mainAxisSpacing: ResponsiveSpacing.md(context),
+                  crossAxisSpacing: ResponsiveSpacing.md(context),
+                  childAspectRatio: aspectRatio,
+                  children: [
+                    _KpiCard(
+                      icon: Icons.people,
+                      title: 'Total Students',
+                      value: kpis.totalStudents.toString(),
+                      color: Colors.blue,
+                    ),
+                    _KpiCard(
+                      icon: Icons.insert_chart,
+                      title: 'Avg Profile Completion',
+                      value: '${kpis.avgProfileCompletion.toStringAsFixed(1)}%',
+                      color: Colors.green,
+                    ),
+                    _KpiCard(
+                      icon: Icons.verified,
+                      title: 'Avg Match Confidence',
+                      value: '${(kpis.avgMatchConfidence * 100).toStringAsFixed(1)}%',
+                      color: Colors.orange,
+                    ),
+                    _KpiCard(
+                      icon: Icons.star,
+                      title: 'Top Career Cluster',
+                      value: kpis.topCareerCluster ?? 'N/A',
+                      color: Colors.purple,
+                    ),
+                  ],
+                ),
+              );
+            },
           );
         }
       },
@@ -288,25 +304,36 @@ class _KpiCard extends StatelessWidget {
 
     return ResponsiveCard(
       enableHover: false,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 40, color: color),
-          const SizedBox(height: 12),
-          Text(
-            value,
-            style: theme.textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: color,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 32, color: color),
+            const SizedBox(height: 8),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                value,
+                style: theme.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: color,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            title,
-            style: theme.textTheme.bodySmall,
-            textAlign: TextAlign.center,
-          ),
-        ],
+            const SizedBox(height: 4),
+            Text(
+              title,
+              style: theme.textTheme.bodySmall,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -374,23 +401,31 @@ class _TopStudentsCard extends ConsumerWidget {
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
                                     student.displayName ?? 'Unknown',
                                     style: theme.textTheme.titleSmall?.copyWith(
                                       fontWeight: FontWeight.w600,
                                     ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
+                                  const SizedBox(height: 2),
                                   Text(
                                     'Overall: ${student.overallStrength.toStringAsFixed(1)} | '
                                     'Completion: ${student.profileCompletion.toStringAsFixed(0)}%',
                                     style: theme.textTheme.bodySmall,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ],
                               ),
                             ),
+                            const SizedBox(width: 8),
                             Icon(
                               Icons.chevron_right,
+                              size: 20,
                               color: theme.textTheme.bodySmall?.color,
                             ),
                           ],

@@ -9,10 +9,10 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get appName => 'خريطة الذات';
+  String get appName => 'مسار';
 
   @override
-  String get welcomeMessage => 'مرحباً بك في خريطة الذات';
+  String get welcomeMessage => 'مرحباً بك في مسار';
 
   @override
   String get tagline => 'اكتشف مستقبلك';
@@ -109,7 +109,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onboardingSkipButton => 'تخطي';
 
   @override
-  String get welcomeTitle => 'مرحباً بك في خريطة الذات! 🚀';
+  String get welcomeTitle => 'مرحباً بك في مسار! 🚀';
 
   @override
   String get welcomeSubtitle => 'اكتشف من أنت وإلى أين تتجه';
@@ -541,7 +541,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsTermsOfUse => 'شروط الاستخدام';
 
   @override
-  String get settingsAbout => 'حول خريطة الذات';
+  String get settingsAbout => 'حول مسار';
 
   @override
   String get settingsSupportSection => 'الدعم';
@@ -589,11 +589,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get termsAccept => 'أوافق على شروط الاستخدام';
 
   @override
-  String get aboutTitle => 'حول خريطة الذات';
+  String get aboutTitle => 'حول مسار';
 
   @override
   String get aboutDescription =>
-      'خريطة الذات هي منصة اكتشاف الذات مصممة لمساعدة طلاب المدارس الثانوية على استكشاف اهتماماتهم واكتشاف المهن والتخطيط لمستقبلهم.';
+      'مسار هي منصة اكتشاف الذات مصممة لمساعدة طلاب المدارس الثانوية على استكشاف اهتماماتهم واكتشاف المهن والتخطيط لمستقبلهم.';
 
   @override
   String aboutVersion(String version) {
@@ -747,4 +747,228 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get quizGenericInstructions =>
       'أجب على جميع الأسئلة بصدق. سيستغرق هذا بضع دقائق فقط وسيقدم رؤى قيمة.';
+
+  @override
+  String get memoryMatchTitle => 'لعبة المطابقة';
+
+  @override
+  String get memoryMatchDescription =>
+      'درّب ذاكرتك وانتباهك من خلال مطابقة أزواج البطاقات بأسرع ما يمكن.';
+
+  @override
+  String get memoryMatchSelectDifficulty => 'اختر المستوى';
+
+  @override
+  String get memoryMatchDifficultyEasy => 'سهل';
+
+  @override
+  String get memoryMatchDifficultyNormal => 'عادي';
+
+  @override
+  String get memoryMatchDifficultyHard => 'صعب';
+
+  @override
+  String get memoryMatchDifficultyEasyDesc => 'شبكة 4×4 (8 أزواج)';
+
+  @override
+  String get memoryMatchDifficultyNormalDesc => 'شبكة 5×4 (10 أزواج)';
+
+  @override
+  String get memoryMatchDifficultyHardDesc => 'شبكة 6×5 (15 زوج)';
+
+  @override
+  String get memoryMatchHowToPlay => 'كيف تلعب';
+
+  @override
+  String get memoryMatchHowToPlayStep1 => 'انقر على البطاقات لقلبها';
+
+  @override
+  String get memoryMatchHowToPlayStep2 => 'ابحث عن الأزواج المتطابقة';
+
+  @override
+  String get memoryMatchHowToPlayStep3 => 'أكمل الشبكة بأسرع ما يمكن';
+
+  @override
+  String get memoryMatchHowToPlayStep4 => 'أخطاء أقل = نقاط أعلى';
+
+  @override
+  String get memoryMatchTime => 'الوقت';
+
+  @override
+  String get memoryMatchMoves => 'الحركات';
+
+  @override
+  String get memoryMatchMatches => 'المطابقات';
+
+  @override
+  String get memoryMatchPaused => 'اللعبة متوقفة مؤقتاً';
+
+  @override
+  String get memoryMatchResume => 'استئناف';
+
+  @override
+  String get memoryMatchSaveFailed =>
+      'فشل حفظ النتائج. يرجى المحاولة مرة أخرى لاحقاً.';
+
+  @override
+  String get gameResultsTitle => 'اللعبة مكتملة!';
+
+  @override
+  String get gameResultsYourScore => 'نقاطك';
+
+  @override
+  String get gameResultsComposite => 'الأداء الإجمالي';
+
+  @override
+  String get gameResultsTime => 'الوقت';
+
+  @override
+  String get gameResultsMoves => 'الحركات';
+
+  @override
+  String get gameResultsAccuracy => 'الدقة';
+
+  @override
+  String get gameResultsPerformance => 'الأداء';
+
+  @override
+  String get gameResultsTraitInsights => 'رؤى السمات';
+
+  @override
+  String get gameResultsTryAgain => 'حاول مرة أخرى';
+
+  @override
+  String get gameResultsBackToDiscovery => 'العودة إلى الاستكشاف';
+
+  @override
+  String get gameResultsOutstanding => 'متميز!';
+
+  @override
+  String get gameResultsExcellent => 'ممتاز!';
+
+  @override
+  String get gameResultsGreat => 'رائع!';
+
+  @override
+  String get gameResultsGood => 'جيد!';
+
+  @override
+  String get gameResultsKeepGoing => 'استمر!';
+
+  @override
+  String get gameResultsNiceTry => 'محاولة جيدة!';
+
+  @override
+  String get assessmentTitle => 'التقييم';
+
+  @override
+  String get assessmentPrevious => 'السابق';
+
+  @override
+  String get assessmentProcessing => 'جارٍ معالجة إجاباتك...';
+
+  @override
+  String get assessmentComplete => 'التقييم مكتمل!';
+
+  @override
+  String get assessmentCompleteMessage => 'شكراً لإكمال التقييم.';
+
+  @override
+  String assessmentSubmitFailed(String error) {
+    return 'فشل إرسال التقييم: $error';
+  }
+
+  @override
+  String get onboardingProcessing => 'جارٍ معالجة إجاباتك...';
+
+  @override
+  String onboardingErrorCompleting(String error) {
+    return 'خطأ في إكمال التأهيل: $error';
+  }
+
+  @override
+  String get onboardingInvalidItemType => 'نوع عنصر غير صالح';
+
+  @override
+  String get authSchoolLoginTitle => 'تسجيل دخول المدرسة';
+
+  @override
+  String get authSignInAsSchool => 'تسجيل الدخول كمدرسة';
+
+  @override
+  String get authSignInAsStudent => 'تسجيل الدخول كطالب';
+
+  @override
+  String get authPleaseSelectSchool => 'يرجى اختيار مدرسة';
+
+  @override
+  String get authSignIn => 'تسجيل الدخول';
+
+  @override
+  String get oauthCallbackFailed => 'فشلت المصادقة. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String oauthCallbackError(String error) {
+    return 'خطأ في المصادقة: $error';
+  }
+
+  @override
+  String get schoolDashboardTitle => 'لوحة تحكم المدرسة';
+
+  @override
+  String get schoolDashboardNoSchool => 'لم يتم العثور على مدرسة لحسابك';
+
+  @override
+  String schoolDashboardErrorLoading(String error) {
+    return 'خطأ في تحميل المدرسة: $error';
+  }
+
+  @override
+  String get schoolDashboardNoStudentData => 'لا توجد بيانات طالب متاحة';
+
+  @override
+  String get schoolDashboardNoCareerData => 'لا توجد بيانات مطابقة مهنية متاحة';
+
+  @override
+  String get schoolDashboardViewAll => 'عرض الكل';
+
+  @override
+  String get schoolDashboardStudentsTablePlaceholder =>
+      'سيكون جدول الطلاب مع البحث والمرشحات هنا';
+
+  @override
+  String get studentDetailsTitle => 'تفاصيل الطالب';
+
+  @override
+  String get studentDetailsNotFound => 'الطالب غير موجود';
+
+  @override
+  String studentDetailsErrorLoading(String error) {
+    return 'خطأ في تحميل الطالب: $error';
+  }
+
+  @override
+  String get studentsListTitle => 'جميع الطلاب';
+
+  @override
+  String get studentsListProfileColumn => 'الملف الشخصي';
+
+  @override
+  String get studentsListStrengthColumn => 'القوة';
+
+  @override
+  String get studentsListLastActiveColumn => 'آخر نشاط';
+
+  @override
+  String get studentsListActionsColumn => 'الإجراءات';
+
+  @override
+  String errorLoadingCareers(String error) {
+    return 'خطأ في تحميل المهن: $error';
+  }
+
+  @override
+  String errorGenericWithMessage(String error) {
+    return 'خطأ: $error';
+  }
 }

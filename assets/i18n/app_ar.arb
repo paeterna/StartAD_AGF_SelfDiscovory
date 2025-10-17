@@ -1,8 +1,8 @@
 {
   "@@locale": "ar",
 
-  "appName": "خريطة الذات",
-  "welcomeMessage": "مرحباً بك في خريطة الذات",
+  "appName": "مسار",
+  "welcomeMessage": "مرحباً بك في مسار",
   "tagline": "اكتشف مستقبلك",
 
   "authLoginTitle": "تسجيل الدخول",
@@ -36,7 +36,7 @@
   "onboardingFinishButton": "إنهاء",
   "onboardingSkipButton": "تخطي",
 
-  "welcomeTitle": "مرحباً بك في خريطة الذات! 🚀",
+  "welcomeTitle": "مرحباً بك في مسار! 🚀",
   "welcomeSubtitle": "اكتشف من أنت وإلى أين تتجه",
   "welcomeGetStartedButton": "لنبدأ! ✨",
   "welcomeQuickTitle": "سريع وممتع",
@@ -183,7 +183,7 @@
   "settingsPrivacySection": "الخصوصية والقانون",
   "settingsPrivacyPolicy": "سياسة الخصوصية",
   "settingsTermsOfUse": "شروط الاستخدام",
-  "settingsAbout": "حول خريطة الذات",
+  "settingsAbout": "حول مسار",
   "settingsSupportSection": "الدعم",
   "settingsFeedback": "إرسال ملاحظات",
   "settingsReportIssue": "الإبلاغ عن مشكلة",
@@ -202,8 +202,8 @@
   "termsTitle": "شروط الاستخدام",
   "termsAccept": "أوافق على شروط الاستخدام",
 
-  "aboutTitle": "حول خريطة الذات",
-  "aboutDescription": "خريطة الذات هي منصة اكتشاف الذات مصممة لمساعدة طلاب المدارس الثانوية على استكشاف اهتماماتهم واكتشاف المهن والتخطيط لمستقبلهم.",
+  "aboutTitle": "حول مسار",
+  "aboutDescription": "مسار هي منصة اكتشاف الذات مصممة لمساعدة طلاب المدارس الثانوية على استكشاف اهتماماتهم واكتشاف المهن والتخطيط لمستقبلهم.",
   "aboutVersion": "الإصدار {version}",
 
   "errorTitle": "عذراً!",
@@ -262,5 +262,84 @@
 
   "quizRiasecInstructions": "قيّم كل نشاط بناءً على مدى استمتاعك به. لا توجد إجابات صحيحة أو خاطئة - كن صادقاً حول تفضيلاتك.",
   "quizIpip50Instructions": "اقرأ كل عبارة وأشر إلى مدى دقة وصفها لك. أجب بصدق للحصول على أدق النتائج.",
-  "quizGenericInstructions": "أجب على جميع الأسئلة بصدق. سيستغرق هذا بضع دقائق فقط وسيقدم رؤى قيمة."
+  "quizGenericInstructions": "أجب على جميع الأسئلة بصدق. سيستغرق هذا بضع دقائق فقط وسيقدم رؤى قيمة.",
+
+  "memoryMatchTitle": "لعبة المطابقة",
+  "memoryMatchDescription": "درّب ذاكرتك وانتباهك من خلال مطابقة أزواج البطاقات بأسرع ما يمكن.",
+  "memoryMatchSelectDifficulty": "اختر المستوى",
+  "memoryMatchDifficultyEasy": "سهل",
+  "memoryMatchDifficultyNormal": "عادي",
+  "memoryMatchDifficultyHard": "صعب",
+  "memoryMatchDifficultyEasyDesc": "شبكة 4×4 (8 أزواج)",
+  "memoryMatchDifficultyNormalDesc": "شبكة 5×4 (10 أزواج)",
+  "memoryMatchDifficultyHardDesc": "شبكة 6×5 (15 زوج)",
+  "memoryMatchHowToPlay": "كيف تلعب",
+  "memoryMatchHowToPlayStep1": "انقر على البطاقات لقلبها",
+  "memoryMatchHowToPlayStep2": "ابحث عن الأزواج المتطابقة",
+  "memoryMatchHowToPlayStep3": "أكمل الشبكة بأسرع ما يمكن",
+  "memoryMatchHowToPlayStep4": "أخطاء أقل = نقاط أعلى",
+  "memoryMatchTime": "الوقت",
+  "memoryMatchMoves": "الحركات",
+  "memoryMatchMatches": "المطابقات",
+  "memoryMatchPaused": "اللعبة متوقفة مؤقتاً",
+  "memoryMatchResume": "استئناف",
+  "memoryMatchSaveFailed": "فشل حفظ النتائج. يرجى المحاولة مرة أخرى لاحقاً.",
+
+  "gameResultsTitle": "اللعبة مكتملة!",
+  "gameResultsYourScore": "نقاطك",
+  "gameResultsComposite": "الأداء الإجمالي",
+  "gameResultsTime": "الوقت",
+  "gameResultsMoves": "الحركات",
+  "gameResultsAccuracy": "الدقة",
+  "gameResultsPerformance": "الأداء",
+  "gameResultsTraitInsights": "رؤى السمات",
+  "gameResultsTryAgain": "حاول مرة أخرى",
+  "gameResultsBackToDiscovery": "العودة إلى الاستكشاف",
+  "gameResultsOutstanding": "متميز!",
+  "gameResultsExcellent": "ممتاز!",
+  "gameResultsGreat": "رائع!",
+  "gameResultsGood": "جيد!",
+  "gameResultsKeepGoing": "استمر!",
+  "gameResultsNiceTry": "محاولة جيدة!",
+
+  "assessmentTitle": "التقييم",
+  "assessmentPrevious": "السابق",
+  "assessmentProcessing": "جارٍ معالجة إجاباتك...",
+  "assessmentComplete": "التقييم مكتمل!",
+  "assessmentCompleteMessage": "شكراً لإكمال التقييم.",
+  "assessmentSubmitFailed": "فشل إرسال التقييم: {error}",
+
+  "onboardingProcessing": "جارٍ معالجة إجاباتك...",
+  "onboardingErrorCompleting": "خطأ في إكمال التأهيل: {error}",
+  "onboardingInvalidItemType": "نوع عنصر غير صالح",
+
+  "authSchoolLoginTitle": "تسجيل دخول المدرسة",
+  "authSignInAsSchool": "تسجيل الدخول كمدرسة",
+  "authSignInAsStudent": "تسجيل الدخول كطالب",
+  "authPleaseSelectSchool": "يرجى اختيار مدرسة",
+  "authSignIn": "تسجيل الدخول",
+
+  "oauthCallbackFailed": "فشلت المصادقة. يرجى المحاولة مرة أخرى.",
+  "oauthCallbackError": "خطأ في المصادقة: {error}",
+
+  "schoolDashboardTitle": "لوحة تحكم المدرسة",
+  "schoolDashboardNoSchool": "لم يتم العثور على مدرسة لحسابك",
+  "schoolDashboardErrorLoading": "خطأ في تحميل المدرسة: {error}",
+  "schoolDashboardNoStudentData": "لا توجد بيانات طالب متاحة",
+  "schoolDashboardNoCareerData": "لا توجد بيانات مطابقة مهنية متاحة",
+  "schoolDashboardViewAll": "عرض الكل",
+  "schoolDashboardStudentsTablePlaceholder": "سيكون جدول الطلاب مع البحث والمرشحات هنا",
+
+  "studentDetailsTitle": "تفاصيل الطالب",
+  "studentDetailsNotFound": "الطالب غير موجود",
+  "studentDetailsErrorLoading": "خطأ في تحميل الطالب: {error}",
+
+  "studentsListTitle": "جميع الطلاب",
+  "studentsListProfileColumn": "الملف الشخصي",
+  "studentsListStrengthColumn": "القوة",
+  "studentsListLastActiveColumn": "آخر نشاط",
+  "studentsListActionsColumn": "الإجراءات",
+
+  "errorLoadingCareers": "خطأ في تحميل المهن: {error}",
+  "errorGenericWithMessage": "خطأ: {error}"
 }

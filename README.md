@@ -1,4 +1,4 @@
-# SelfMap - Discover Your Future
+# Masar (مسار) - Discover Your Future
 
 A comprehensive Flutter web platform designed to help high-school students explore their interests, discover career paths, and plan their future through AI-powered insights and interactive assessments.
 
@@ -9,7 +9,7 @@ A comprehensive Flutter web platform designed to help high-school students explo
 
 ## 🌐 Live Demo
 
-**Production**: [https://selfmap-startad.netlify.app](https://selfmap-startad.netlify.app)
+**Production**: [https://masar-startad.netlify.app](https://masar-startad.netlify.app)
 
 ## 📚 Table of Contents
 
@@ -608,7 +608,7 @@ See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for detailed instructions.
 
 ### PWA Installation
 
-Users can install SelfMap as a Progressive Web App:
+Users can install Masar as a Progressive Web App:
 1. Visit the site in Chrome/Edge
 2. Click the install icon in the address bar
 3. Confirm installation
@@ -679,14 +679,14 @@ open coverage/html/index.html
 
 ## 📄 License
 
-Copyright © 2025 SelfMap. All rights reserved.
+Copyright © 2025 Masar. All rights reserved.
 
 This is proprietary software. Unauthorized copying, modification, or distribution is prohibited.
 
 ## 📧 Contact
 
-- **Email**: support@selfmap.app
-- **Website**: www.selfmap.app
+- **Email**: support@masar.app
+- **Website**: www.masar.app
 
 ---
 

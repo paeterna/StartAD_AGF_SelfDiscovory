@@ -25,7 +25,7 @@ class PrivacyPage extends StatelessWidget {
               ),
               SizedBox(height: 24),
               Text(
-                'SelfMap is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information.',
+                'Masar is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information.',
               ),
               SizedBox(height: 16),
               Text(
@@ -75,7 +75,7 @@ class PrivacyPage extends StatelessWidget {
               ),
               SizedBox(height: 24),
               Text(
-                'For questions about this policy, please contact us at privacy@selfmap.app',
+                'For questions about this policy, please contact us at privacy@masar.app',
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ],

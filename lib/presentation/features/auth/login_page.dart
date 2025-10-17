@@ -190,46 +190,47 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     return GradientBackground(
       child: Scaffold(
         body: SafeArea(
-          child: Stack(
-            children: [
-              // School sign-in button in top-left corner
-              Positioned(
-                top: 16,
-                left: 16,
-                child: OutlinedButton.icon(
-                  onPressed: authState.isLoading
-                      ? null
-                      : () => context.go(AppRoutes.schoolLogin),
-                  icon: const Icon(Icons.school_outlined, size: 18),
-                  label: const Text('Sign in as School'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Theme.of(context).colorScheme.secondary,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
-                  ),
-                ),
-              ),
-              // Language switcher in top-right corner
-              Positioned(top: 16, right: 16, child: const LanguageSwitcher()),
-              // Main content
-              Center(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(24),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 400),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 400),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Top row with school button and language switcher
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          // School sign-in button
+                          OutlinedButton.icon(
+                            onPressed: authState.isLoading
+                                ? null
+                                : () => context.go(AppRoutes.schoolLogin),
+                            icon: const Icon(Icons.school_outlined, size: 18),
+                            label: const Text('Sign in as School'),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: Theme.of(context).colorScheme.secondary,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 8,
+                              ),
+                            ),
+                          ),
+                          // Language switcher
+                          const LanguageSwitcher(),
+                        ],
+                      ),
+                      const SizedBox(height: 32),
+
                           // Logo/Title
                           Text(
                             l10n.appName,
-                            style: const TextStyle(
-                              fontSize: 48,
+                            style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width < 400 ? 36 : 48, // Responsive font size
                               fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.center,
@@ -371,10 +372,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+      );
   }
 }

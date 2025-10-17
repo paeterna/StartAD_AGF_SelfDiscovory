@@ -101,13 +101,13 @@ abstract class AppLocalizations {
   /// Application name
   ///
   /// In en, this message translates to:
-  /// **'SelfMap'**
+  /// **'Masar'**
   String get appName;
 
   /// Welcome message on splash
   ///
   /// In en, this message translates to:
-  /// **'Welcome to SelfMap'**
+  /// **'Welcome to Masar'**
   String get welcomeMessage;
 
   /// App tagline
@@ -293,7 +293,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to SelfMap! 🚀'**
+  /// **'Welcome to Masar! 🚀'**
   String get welcomeTitle;
 
   /// No description provided for @welcomeSubtitle.
@@ -1103,7 +1103,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsAbout.
   ///
   /// In en, this message translates to:
-  /// **'About SelfMap'**
+  /// **'About Masar'**
   String get settingsAbout;
 
   /// No description provided for @settingsSupportSection.
@@ -1193,13 +1193,13 @@ abstract class AppLocalizations {
   /// No description provided for @aboutTitle.
   ///
   /// In en, this message translates to:
-  /// **'About SelfMap'**
+  /// **'About Masar'**
   String get aboutTitle;
 
   /// No description provided for @aboutDescription.
   ///
   /// In en, this message translates to:
-  /// **'SelfMap is a self-discovery platform designed to help high school students explore their interests, discover careers, and plan their future.'**
+  /// **'Masar is a self-discovery platform designed to help high school students explore their interests, discover careers, and plan their future.'**
   String get aboutDescription;
 
   /// No description provided for @aboutVersion.
@@ -1489,6 +1489,420 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Answer all questions honestly. This should take just a few minutes and will provide valuable insights.'**
   String get quizGenericInstructions;
+
+  /// No description provided for @memoryMatchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Memory Match'**
+  String get memoryMatchTitle;
+
+  /// No description provided for @memoryMatchDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Train your memory and attention by matching pairs of cards as quickly as possible.'**
+  String get memoryMatchDescription;
+
+  /// No description provided for @memoryMatchSelectDifficulty.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Difficulty'**
+  String get memoryMatchSelectDifficulty;
+
+  /// No description provided for @memoryMatchDifficultyEasy.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy'**
+  String get memoryMatchDifficultyEasy;
+
+  /// No description provided for @memoryMatchDifficultyNormal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get memoryMatchDifficultyNormal;
+
+  /// No description provided for @memoryMatchDifficultyHard.
+  ///
+  /// In en, this message translates to:
+  /// **'Hard'**
+  String get memoryMatchDifficultyHard;
+
+  /// No description provided for @memoryMatchDifficultyEasyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'4×4 Grid (8 pairs)'**
+  String get memoryMatchDifficultyEasyDesc;
+
+  /// No description provided for @memoryMatchDifficultyNormalDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'5×4 Grid (10 pairs)'**
+  String get memoryMatchDifficultyNormalDesc;
+
+  /// No description provided for @memoryMatchDifficultyHardDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'6×5 Grid (15 pairs)'**
+  String get memoryMatchDifficultyHardDesc;
+
+  /// No description provided for @memoryMatchHowToPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'How to Play'**
+  String get memoryMatchHowToPlay;
+
+  /// No description provided for @memoryMatchHowToPlayStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap cards to flip them over'**
+  String get memoryMatchHowToPlayStep1;
+
+  /// No description provided for @memoryMatchHowToPlayStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Find matching pairs'**
+  String get memoryMatchHowToPlayStep2;
+
+  /// No description provided for @memoryMatchHowToPlayStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the grid as fast as you can'**
+  String get memoryMatchHowToPlayStep3;
+
+  /// No description provided for @memoryMatchHowToPlayStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'Fewer mistakes = higher score'**
+  String get memoryMatchHowToPlayStep4;
+
+  /// No description provided for @memoryMatchTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get memoryMatchTime;
+
+  /// No description provided for @memoryMatchMoves.
+  ///
+  /// In en, this message translates to:
+  /// **'Moves'**
+  String get memoryMatchMoves;
+
+  /// No description provided for @memoryMatchMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'Matches'**
+  String get memoryMatchMatches;
+
+  /// No description provided for @memoryMatchPaused.
+  ///
+  /// In en, this message translates to:
+  /// **'Game Paused'**
+  String get memoryMatchPaused;
+
+  /// No description provided for @memoryMatchResume.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get memoryMatchResume;
+
+  /// No description provided for @memoryMatchSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save results. Please try again later.'**
+  String get memoryMatchSaveFailed;
+
+  /// No description provided for @gameResultsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Game Complete!'**
+  String get gameResultsTitle;
+
+  /// No description provided for @gameResultsYourScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Score'**
+  String get gameResultsYourScore;
+
+  /// No description provided for @gameResultsComposite.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall Performance'**
+  String get gameResultsComposite;
+
+  /// No description provided for @gameResultsTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get gameResultsTime;
+
+  /// No description provided for @gameResultsMoves.
+  ///
+  /// In en, this message translates to:
+  /// **'Moves'**
+  String get gameResultsMoves;
+
+  /// No description provided for @gameResultsAccuracy.
+  ///
+  /// In en, this message translates to:
+  /// **'Accuracy'**
+  String get gameResultsAccuracy;
+
+  /// No description provided for @gameResultsPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance'**
+  String get gameResultsPerformance;
+
+  /// No description provided for @gameResultsTraitInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Trait Insights'**
+  String get gameResultsTraitInsights;
+
+  /// No description provided for @gameResultsTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get gameResultsTryAgain;
+
+  /// No description provided for @gameResultsBackToDiscovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Discovery'**
+  String get gameResultsBackToDiscovery;
+
+  /// No description provided for @gameResultsOutstanding.
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding!'**
+  String get gameResultsOutstanding;
+
+  /// No description provided for @gameResultsExcellent.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent!'**
+  String get gameResultsExcellent;
+
+  /// No description provided for @gameResultsGreat.
+  ///
+  /// In en, this message translates to:
+  /// **'Great!'**
+  String get gameResultsGreat;
+
+  /// No description provided for @gameResultsGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good!'**
+  String get gameResultsGood;
+
+  /// No description provided for @gameResultsKeepGoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep Going!'**
+  String get gameResultsKeepGoing;
+
+  /// No description provided for @gameResultsNiceTry.
+  ///
+  /// In en, this message translates to:
+  /// **'Nice Try!'**
+  String get gameResultsNiceTry;
+
+  /// No description provided for @assessmentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Assessment'**
+  String get assessmentTitle;
+
+  /// No description provided for @assessmentPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get assessmentPrevious;
+
+  /// No description provided for @assessmentProcessing.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing your responses...'**
+  String get assessmentProcessing;
+
+  /// No description provided for @assessmentComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Assessment Complete!'**
+  String get assessmentComplete;
+
+  /// No description provided for @assessmentCompleteMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for completing the assessment.'**
+  String get assessmentCompleteMessage;
+
+  /// No description provided for @assessmentSubmitFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to submit assessment: {error}'**
+  String assessmentSubmitFailed(String error);
+
+  /// No description provided for @onboardingProcessing.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing your responses...'**
+  String get onboardingProcessing;
+
+  /// No description provided for @onboardingErrorCompleting.
+  ///
+  /// In en, this message translates to:
+  /// **'Error completing onboarding: {error}'**
+  String onboardingErrorCompleting(String error);
+
+  /// No description provided for @onboardingInvalidItemType.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid item type'**
+  String get onboardingInvalidItemType;
+
+  /// No description provided for @authSchoolLoginTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'School Sign In'**
+  String get authSchoolLoginTitle;
+
+  /// No description provided for @authSignInAsSchool.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in as School'**
+  String get authSignInAsSchool;
+
+  /// No description provided for @authSignInAsStudent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in as Student'**
+  String get authSignInAsStudent;
+
+  /// No description provided for @authPleaseSelectSchool.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a school'**
+  String get authPleaseSelectSchool;
+
+  /// No description provided for @authSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get authSignIn;
+
+  /// No description provided for @oauthCallbackFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication failed. Please try again.'**
+  String get oauthCallbackFailed;
+
+  /// No description provided for @oauthCallbackError.
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication error: {error}'**
+  String oauthCallbackError(String error);
+
+  /// No description provided for @schoolDashboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'School Dashboard'**
+  String get schoolDashboardTitle;
+
+  /// No description provided for @schoolDashboardNoSchool.
+  ///
+  /// In en, this message translates to:
+  /// **'No school found for your account'**
+  String get schoolDashboardNoSchool;
+
+  /// No description provided for @schoolDashboardErrorLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading school: {error}'**
+  String schoolDashboardErrorLoading(String error);
+
+  /// No description provided for @schoolDashboardNoStudentData.
+  ///
+  /// In en, this message translates to:
+  /// **'No student data available'**
+  String get schoolDashboardNoStudentData;
+
+  /// No description provided for @schoolDashboardNoCareerData.
+  ///
+  /// In en, this message translates to:
+  /// **'No career match data available'**
+  String get schoolDashboardNoCareerData;
+
+  /// No description provided for @schoolDashboardViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get schoolDashboardViewAll;
+
+  /// No description provided for @schoolDashboardStudentsTablePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Students table with search and filters will be here'**
+  String get schoolDashboardStudentsTablePlaceholder;
+
+  /// No description provided for @studentDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Student Details'**
+  String get studentDetailsTitle;
+
+  /// No description provided for @studentDetailsNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Student not found'**
+  String get studentDetailsNotFound;
+
+  /// No description provided for @studentDetailsErrorLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading student: {error}'**
+  String studentDetailsErrorLoading(String error);
+
+  /// No description provided for @studentsListTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'All Students'**
+  String get studentsListTitle;
+
+  /// No description provided for @studentsListProfileColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get studentsListProfileColumn;
+
+  /// No description provided for @studentsListStrengthColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Strength'**
+  String get studentsListStrengthColumn;
+
+  /// No description provided for @studentsListLastActiveColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Active'**
+  String get studentsListLastActiveColumn;
+
+  /// No description provided for @studentsListActionsColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get studentsListActionsColumn;
+
+  /// No description provided for @errorLoadingCareers.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading careers: {error}'**
+  String errorLoadingCareers(String error);
+
+  /// No description provided for @errorGenericWithMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String errorGenericWithMessage(String error);
 }
 
 class _AppLocalizationsDelegate

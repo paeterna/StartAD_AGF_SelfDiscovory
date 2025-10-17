@@ -267,9 +267,7 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
           ),
           const SizedBox(height: 12),
           Card(
-            child: ListView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+            child: Column(
               children: [
                 _buildFeatureListTile('Creative & Artistic', 85),
                 _buildFeatureListTile('Analytical Thinking', 78),
@@ -327,9 +325,7 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
 
           // Timeline of assessments
           Card(
-            child: ListView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+            child: Column(
               children: [
                 _buildHistoryItem(
                   'RIASEC Interest Assessment',
@@ -409,9 +405,7 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
           const SizedBox(height: 16),
 
           // Career matches list
-          ListView(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+          Column(
             children: [
               _buildCareerMatchCard(
                 'Software Engineer',

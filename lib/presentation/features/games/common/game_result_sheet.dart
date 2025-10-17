@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../generated/l10n/app_localizations.dart';
 
 /// Reusable result sheet for games
 /// Shows performance metrics, trait scores, and action buttons
@@ -24,6 +25,8 @@ class GameResultSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       padding: EdgeInsets.only(
         top: 32,
@@ -86,7 +89,7 @@ class GameResultSheet extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      'Your Score',
+                      l10n.gameResultsYourScore,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
@@ -101,7 +104,7 @@ class GameResultSheet extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      _getScoreLabel(score),
+                      _getScoreLabel(score, l10n),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Theme.of(
                           context,
@@ -117,7 +120,7 @@ class GameResultSheet extends StatelessWidget {
             // Stats
             if (stats.isNotEmpty) ...[
               Text(
-                'Performance',
+                l10n.gameResultsPerformance,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -157,7 +160,7 @@ class GameResultSheet extends StatelessWidget {
             // Trait scores
             if (traitScores.isNotEmpty) ...[
               Text(
-                'Trait Insights',
+                l10n.gameResultsTraitInsights,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -225,7 +228,7 @@ class GameResultSheet extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text('Try Again'),
+                child: Text(l10n.gameResultsTryAgain),
               ),
             ),
             const SizedBox(height: 12),
@@ -239,7 +242,7 @@ class GameResultSheet extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text('Back to Discovery'),
+                child: Text(l10n.gameResultsBackToDiscovery),
               ),
             ),
           ],
@@ -257,12 +260,12 @@ class GameResultSheet extends StatelessWidget {
     return '🎯';
   }
 
-  String _getScoreLabel(int score) {
-    if (score >= 90) return 'Outstanding!';
-    if (score >= 80) return 'Excellent!';
-    if (score >= 70) return 'Great!';
-    if (score >= 60) return 'Good!';
-    if (score >= 50) return 'Keep Going!';
-    return 'Nice Try!';
+  String _getScoreLabel(int score, AppLocalizations l10n) {
+    if (score >= 90) return l10n.gameResultsOutstanding;
+    if (score >= 80) return l10n.gameResultsExcellent;
+    if (score >= 70) return l10n.gameResultsGreat;
+    if (score >= 60) return l10n.gameResultsGood;
+    if (score >= 50) return l10n.gameResultsKeepGoing;
+    return l10n.gameResultsNiceTry;
   }
 }

@@ -24,7 +24,6 @@ import '../../presentation/features/school/student_detail_page.dart';
 import '../../presentation/features/static_pages/about_page.dart';
 import '../../presentation/features/static_pages/privacy_page.dart';
 import '../../presentation/features/static_pages/terms_page.dart';
-import '../../presentation/features/ai_insights/ai_insights_page.dart';
 import '../../presentation/widgets/gradient_background.dart';
 import '../../presentation/shell/adaptive_shell.dart';
 import '../providers/providers.dart';
@@ -44,7 +43,6 @@ class AppRoutes {
   static const String careers = '/careers';
   static const String careerTree = '/careers/tree';
   static const String roadmap = '/roadmap';
-  static const String aiInsights = '/ai-insights';
   static const String settings = '/settings';
   static const String privacy = '/privacy';
   static const String terms = '/terms';
@@ -229,11 +227,6 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: AppRoutes.roadmap,
             pageBuilder: (context, state) =>
                 const NoTransitionPage(child: RoadmapPage()),
-          ),
-          GoRoute(
-            path: AppRoutes.aiInsights,
-            pageBuilder: (context, state) =>
-                const NoTransitionPage(child: AIInsightsPage()),
           ),
           GoRoute(
             path: AppRoutes.settings,

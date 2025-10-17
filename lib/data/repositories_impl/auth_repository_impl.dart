@@ -34,7 +34,7 @@ class AuthRepositoryImpl implements AuthRepository {
   User _toDomainUser(supabase.User supabaseUser) {
     try {
       final metadata = supabaseUser.userMetadata ?? {};
-      
+
       // Safe date parsing
       DateTime? createdAt;
       try {
@@ -43,7 +43,7 @@ class AuthRepositoryImpl implements AuthRepository {
         debugPrint('🔴 [AUTH_REPO] Error parsing createdAt: $e');
         createdAt = DateTime.now();
       }
-      
+
       return User(
         id: supabaseUser.id,
         email: supabaseUser.email ?? '',
@@ -95,7 +95,7 @@ class AuthRepositoryImpl implements AuthRepository {
           debugPrint('🔴 [AUTH_REPO] Error parsing created_at from profile: $e');
           createdAt = DateTime.now();
         }
-        
+
         return User(
           id: supabaseUser.id,
           email: supabaseUser.email ?? '',
@@ -110,9 +110,23 @@ class AuthRepositoryImpl implements AuthRepository {
           lastLoginAt: DateTime.now(),
         );
       } else {
-        // Profile doesn't exist, create it from user_metadata
+        // Profile doesn't exist - this should only happen during sign-up
+        // If we reach here without a valid session, return null instead of trying to create
         debugPrint(
-          '🔵 [AUTH_REPO] Profile not found, creating from metadata...',
+          '🔵 [AUTH_REPO] Profile not found for user ${supabaseUser.id}',
+        );
+
+        // Verify user still has a valid session before creating profile
+        final session = _supabase.auth.currentSession;
+        if (session == null) {
+          debugPrint(
+            '⚠️ [AUTH_REPO] No active session - cannot create profile. User likely signed out.',
+          );
+          return null;
+        }
+
+        debugPrint(
+          '🔵 [AUTH_REPO] Creating profile from metadata...',
         );
         final metadata = supabaseUser.userMetadata ?? {};
 
@@ -150,6 +164,17 @@ class AuthRepositoryImpl implements AuthRepository {
           lastLoginAt: DateTime.now(),
         );
       }
+    } on PostgrestException catch (e) {
+      if (e.code == '42501') {
+        // RLS policy violation - user is not authenticated
+        debugPrint(
+          '⚠️ [AUTH_REPO] RLS policy violation (user not authenticated): $e',
+        );
+        return null; // Return null when session is invalid
+      }
+      debugPrint('🔴 [AUTH_REPO] Postgrest error loading profile: $e');
+      // Fallback to user_metadata
+      return _toDomainUser(supabaseUser);
     } on Object catch (e) {
       debugPrint('🔴 [AUTH_REPO] Error loading profile: $e');
       // Fallback to user_metadata

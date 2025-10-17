@@ -25,7 +25,7 @@ class TermsPage extends StatelessWidget {
               ),
               SizedBox(height: 24),
               Text(
-                'By using SelfMap, you agree to these Terms of Use. Please read them carefully.',
+                'By using Masar, you agree to these Terms of Use. Please read them carefully.',
               ),
               SizedBox(height: 16),
               Text(
@@ -34,7 +34,7 @@ class TermsPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'You agree to use SelfMap only for lawful purposes and in accordance with these Terms. You must not use SelfMap in any way that violates applicable laws or regulations.',
+                'You agree to use Masar only for lawful purposes and in accordance with these Terms. You must not use Masar in any way that violates applicable laws or regulations.',
               ),
               SizedBox(height: 16),
               Text(
@@ -52,7 +52,7 @@ class TermsPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'All content provided through SelfMap is for informational purposes only. Career recommendations are suggestions based on your inputs and should not be considered professional advice.',
+                'All content provided through Masar is for informational purposes only. Career recommendations are suggestions based on your inputs and should not be considered professional advice.',
               ),
               SizedBox(height: 16),
               Text(
@@ -61,7 +61,7 @@ class TermsPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'SelfMap is provided "as is" without warranties of any kind. We are not liable for any decisions made based on information provided by the platform.',
+                'Masar is provided "as is" without warranties of any kind. We are not liable for any decisions made based on information provided by the platform.',
               ),
               SizedBox(height: 16),
               Text(
@@ -70,11 +70,11 @@ class TermsPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'We reserve the right to modify these Terms at any time. Continued use of SelfMap after changes constitutes acceptance of the new Terms.',
+                'We reserve the right to modify these Terms at any time. Continued use of Masar after changes constitutes acceptance of the new Terms.',
               ),
               SizedBox(height: 24),
               Text(
-                'For questions about these terms, please contact us at legal@selfmap.app',
+                'For questions about these terms, please contact us at legal@masar.app',
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ],

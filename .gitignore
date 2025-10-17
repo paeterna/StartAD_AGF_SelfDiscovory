@@ -124,3 +124,5 @@ app.*.symbols
 .env
 .env.local
 .env.*.local
+
+material-design-icons-4.0.0

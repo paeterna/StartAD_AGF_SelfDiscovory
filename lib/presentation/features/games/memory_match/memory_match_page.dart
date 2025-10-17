@@ -7,6 +7,7 @@ import 'dart:developer' as developer;
 import '../../../../application/activity/activity_providers.dart';
 import '../../../../application/scoring/scoring_providers.dart';
 import '../../../../application/traits/traits_providers.dart';
+import '../../../../generated/l10n/app_localizations.dart';
 import '../../../widgets/gradient_background.dart';
 import 'memory_match_controller.dart';
 import 'memory_match_telemetry.dart';
@@ -41,7 +42,7 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Memory Match'),
+          title: Text(AppLocalizations.of(context)!.memoryMatchTitle),
           actions: [
             if (state.isStarted && !state.isCompleted)
               IconButton(
@@ -67,10 +68,12 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
   }
 
   Widget _buildStartScreen(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Memory Match'),
+          title: Text(l10n.memoryMatchTitle),
         ),
         body: Center(
           child: SingleChildScrollView(
@@ -85,39 +88,39 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  'Memory Match',
+                  l10n.memoryMatchTitle,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Train your memory and attention by matching pairs of cards as quickly as possible.',
+                  l10n.memoryMatchDescription,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 40),
                 Text(
-                  'Select Difficulty',
+                  l10n.memoryMatchSelectDifficulty,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 16),
                 _buildDifficultyButton(
                   context,
                   GameDifficulty.easy,
-                  '4×4 Grid (8 pairs)',
+                  l10n.memoryMatchDifficultyEasyDesc,
                 ),
                 const SizedBox(height: 12),
                 _buildDifficultyButton(
                   context,
                   GameDifficulty.normal,
-                  '5×4 Grid (10 pairs)',
+                  l10n.memoryMatchDifficultyNormalDesc,
                 ),
                 const SizedBox(height: 12),
                 _buildDifficultyButton(
                   context,
                   GameDifficulty.hard,
-                  '6×5 Grid (15 pairs)',
+                  l10n.memoryMatchDifficultyHardDesc,
                 ),
                 const SizedBox(height: 40),
                 Card(
@@ -135,7 +138,7 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'How to Play',
+                              l10n.memoryMatchHowToPlay,
                               style: Theme.of(context).textTheme.titleMedium
                                   ?.copyWith(
                                     fontWeight: FontWeight.bold,
@@ -144,12 +147,10 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
                           ],
                         ),
                         const SizedBox(height: 12),
-                        _buildHowToPlayItem('Tap cards to flip them over'),
-                        _buildHowToPlayItem('Find matching pairs'),
-                        _buildHowToPlayItem(
-                          'Complete the grid as fast as you can',
-                        ),
-                        _buildHowToPlayItem('Fewer mistakes = higher score'),
+                        _buildHowToPlayItem(l10n.memoryMatchHowToPlayStep1),
+                        _buildHowToPlayItem(l10n.memoryMatchHowToPlayStep2),
+                        _buildHowToPlayItem(l10n.memoryMatchHowToPlayStep3),
+                        _buildHowToPlayItem(l10n.memoryMatchHowToPlayStep4),
                       ],
                     ),
                   ),
@@ -167,6 +168,21 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
     GameDifficulty difficulty,
     String description,
   ) {
+    final l10n = AppLocalizations.of(context)!;
+    String difficultyName;
+
+    switch (difficulty) {
+      case GameDifficulty.easy:
+        difficultyName = l10n.memoryMatchDifficultyEasy;
+        break;
+      case GameDifficulty.normal:
+        difficultyName = l10n.memoryMatchDifficultyNormal;
+        break;
+      case GameDifficulty.hard:
+        difficultyName = l10n.memoryMatchDifficultyHard;
+        break;
+    }
+
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -185,7 +201,7 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
         child: Column(
           children: [
             Text(
-              difficulty.name,
+              difficultyName,
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -242,6 +258,7 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
   }
 
   Widget _buildHUD(BuildContext context, MemoryMatchState state) {
+    final l10n = AppLocalizations.of(context)!;
     final minutes = state.elapsedSeconds ~/ 60;
     final seconds = state.elapsedSeconds % 60;
     final timeString =
@@ -264,17 +281,17 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildHUDItem(context, Icons.timer, 'Time', timeString),
+              _buildHUDItem(context, Icons.timer, l10n.memoryMatchTime, timeString),
               _buildHUDItem(
                 context,
                 Icons.touch_app,
-                'Moves',
+                l10n.memoryMatchMoves,
                 '${state.moves}',
               ),
               _buildHUDItem(
                 context,
                 Icons.check_circle,
-                'Matches',
+                l10n.memoryMatchMatches,
                 '${state.matches}/${state.difficulty.pairs}',
               ),
             ],
@@ -320,31 +337,32 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
 
   Widget _buildGrid(BuildContext context, MemoryMatchState state) {
     final columns = state.difficulty.gridColumns;
-    final cardSize = _calculateCardSize(context, columns);
 
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      alignment: WrapAlignment.center,
-      children: List.generate(state.cards.length, (index) {
-        return _buildCard(context, state.cards[index], index, cardSize);
-      }),
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 800),
+        child: GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: columns,
+            childAspectRatio: 1.0,
+            crossAxisSpacing: 8,
+            mainAxisSpacing: 8,
+          ),
+          itemCount: state.cards.length,
+          itemBuilder: (context, index) {
+            return _buildCard(context, state.cards[index], index);
+          },
+        ),
+      ),
     );
-  }
-
-  double _calculateCardSize(BuildContext context, int columns) {
-    final width = MediaQuery.of(context).size.width;
-    final availableWidth =
-        width - 32 - (columns - 1) * 8; // padding and spacing
-    final cardWidth = availableWidth / columns;
-    return cardWidth.clamp(60, 100);
   }
 
   Widget _buildCard(
     BuildContext context,
     MemoryCard card,
     int index,
-    double size,
   ) {
     final isRevealed = card.isRevealed || card.isMatched;
 
@@ -356,8 +374,6 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        width: size,
-        height: size,
         decoration: BoxDecoration(
           color: isRevealed
               ? (card.isMatched
@@ -379,38 +395,45 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
             ),
           ],
         ),
-        child: Center(
-          child: isRevealed
-              ? Padding(
-                  padding: EdgeInsets.all(size * 0.15),
-                  child: Image.asset(
-                    card.imagePath,
-                    fit: BoxFit.contain,
-                    color: Theme.of(context).colorScheme.primary,
-                    colorBlendMode: BlendMode.srcIn,
-                    errorBuilder: (context, error, stackTrace) {
-                      // Fallback to icon if image not found
-                      return Icon(
-                        Icons.image_not_supported,
-                        size: size * 0.5,
-                        color: Theme.of(context).colorScheme.error,
-                      );
-                    },
-                  ),
-                )
-              : Icon(
-                  Icons.question_mark,
-                  size: size * 0.4,
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withValues(alpha: 0.3),
-                ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final size = constraints.maxWidth.clamp(60.0, 100.0);
+            return Center(
+              child: isRevealed
+                  ? Padding(
+                      padding: EdgeInsets.all(size * 0.15),
+                      child: Image.asset(
+                        card.imagePath,
+                        fit: BoxFit.contain,
+                        color: Theme.of(context).colorScheme.primary,
+                        colorBlendMode: BlendMode.srcIn,
+                        errorBuilder: (context, error, stackTrace) {
+                          // Fallback to icon if image not found
+                          return Icon(
+                            Icons.image_not_supported,
+                            size: size * 0.5,
+                            color: Theme.of(context).colorScheme.error,
+                          );
+                        },
+                      ),
+                    )
+                  : Icon(
+                      Icons.question_mark,
+                      size: size * 0.4,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.3),
+                    ),
+            );
+          },
         ),
       ),
     );
   }
 
   Widget _buildPauseOverlay(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return ColoredBox(
       color: Colors.black.withValues(alpha: 0.5),
       child: Center(
@@ -424,7 +447,7 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
                 const Icon(Icons.pause_circle, size: 64),
                 const SizedBox(height: 16),
                 Text(
-                  'Game Paused',
+                  l10n.memoryMatchPaused,
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 const SizedBox(height: 24),
@@ -432,7 +455,7 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
                   onPressed: () {
                     ref.read(memoryMatchControllerProvider.notifier).resume();
                   },
-                  child: const Text('Resume'),
+                  child: Text(l10n.memoryMatchResume),
                 ),
               ],
             ),
@@ -507,8 +530,8 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
 
       // Show error but still allow user to continue
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to save results. Please try again later.'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.memoryMatchSaveFailed),
           backgroundColor: Colors.orange,
         ),
       );

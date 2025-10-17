@@ -194,7 +194,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
     final metadataAsync = ref.watch(
       quizMetadataProvider(
         QuizItemsParams(
-          instrument: 'selfmap_onboarding_forced_choice',
+          instrument: 'masar_onboarding_forced_choice',
           language: locale,
         ),
       ),

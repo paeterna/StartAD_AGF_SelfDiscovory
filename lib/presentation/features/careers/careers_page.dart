@@ -12,7 +12,6 @@ class CareersPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final careerMatchesAsync = ref.watch(careerMatchesProvider);
 
     return GradientBackground(
       child: Scaffold(
@@ -27,98 +26,82 @@ class CareersPage extends ConsumerWidget {
             ),
           ],
         ),
-        body: Column(
-          children: [
-            // Search bar
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: l10n.careersSearchHint,
-                  prefixIcon: const Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
+        body: const _TraditionalCareersView(),
+      ),
+    );
+  }
+}
+
+// Traditional Careers View
+class _TraditionalCareersView extends ConsumerWidget {
+  const _TraditionalCareersView();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final careerMatchesAsync = ref.watch(careerMatchesProvider);
+
+    return careerMatchesAsync.when(
+      data: (matches) {
+        if (matches.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.work_outline,
+                  size: 64,
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
                 ),
-              ),
+                const SizedBox(height: 16),
+                Text(
+                  'No career matches yet',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Complete quizzes and games to discover careers',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
+          );
+        }
 
-            // Career list
-            Expanded(
-              child: careerMatchesAsync.when(
-                data: (matches) {
-                  if (matches.isEmpty) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.work_outline,
-                            size: 64,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.primary.withValues(alpha: 0.5),
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'No career matches yet',
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Complete quizzes and games to discover careers',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      ref.invalidate(careerMatchesProvider);
-                    },
-                    child: ListView.separated(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: matches.length,
-                      separatorBuilder: (context, _) =>
-                          const SizedBox(height: 12),
-                      itemBuilder: (context, index) {
-                        final match = matches[index];
-                        return _CareerCard(
-                          title: match.title,
-                          description: match.description ?? '',
-                          matchScore: match.similarityPercent.round(),
-                          cluster: match.cluster ?? 'General',
-                          topFeatures: match.topFeatures.take(3).toList(),
-                          tags: match.tags,
-                        );
-                      },
-                    ),
-                  );
-                },
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, stack) => Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        size: 48,
-                        color: Colors.red,
-                      ),
-                      const SizedBox(height: 16),
-                      Text('Error loading careers: $error'),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () => ref.invalidate(careerMatchesProvider),
-                        child: const Text('Retry'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+        return RefreshIndicator(
+          onRefresh: () async {
+            ref.invalidate(careerMatchesProvider);
+          },
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            itemCount: matches.length,
+            separatorBuilder: (context, _) => const SizedBox(height: 12),
+            itemBuilder: (context, index) {
+              final match = matches[index];
+              return _CareerCard(
+                title: match.title,
+                description: match.description ?? '',
+                matchScore: match.similarityPercent.round(),
+                cluster: match.cluster ?? 'General',
+                topFeatures: match.topFeatures.take(3).toList(),
+                tags: match.tags,
+              );
+            },
+          ),
+        );
+      },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stack) => Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.error_outline, size: 48, color: Colors.red),
+            const SizedBox(height: 16),
+            Text('Error loading careers: $error'),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () => ref.invalidate(careerMatchesProvider),
+              child: const Text('Retry'),
             ),
           ],
         ),

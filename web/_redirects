@@ -1,0 +1,5 @@
+# Netlify SPA redirect configuration
+# This ensures that all routes (including OAuth callbacks) are handled by the Flutter app
+# Preserves query strings and URL fragments (#access_token=..., ?code=..., etc.)
+
+/*    /index.html   200

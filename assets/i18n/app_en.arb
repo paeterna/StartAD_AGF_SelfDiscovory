@@ -1,12 +1,12 @@
 {
   "@@locale": "en",
 
-  "appName": "SelfMap",
+  "appName": "Masar",
   "@appName": {
     "description": "Application name"
   },
 
-  "welcomeMessage": "Welcome to SelfMap",
+  "welcomeMessage": "Welcome to Masar",
   "@welcomeMessage": {
     "description": "Welcome message on splash"
   },
@@ -53,7 +53,7 @@
   "onboardingFinishButton": "Finish",
   "onboardingSkipButton": "Skip",
 
-  "welcomeTitle": "Welcome to SelfMap! 🚀",
+  "welcomeTitle": "Welcome to Masar! 🚀",
   "welcomeSubtitle": "Discover who you are and where you're going",
   "welcomeGetStartedButton": "Let's Get Started! ✨",
   "welcomeQuickTitle": "Quick & Fun",
@@ -236,7 +236,7 @@
   "settingsPrivacySection": "Privacy & Legal",
   "settingsPrivacyPolicy": "Privacy Policy",
   "settingsTermsOfUse": "Terms of Use",
-  "settingsAbout": "About SelfMap",
+  "settingsAbout": "About Masar",
   "settingsSupportSection": "Support",
   "settingsFeedback": "Send Feedback",
   "settingsReportIssue": "Report an Issue",
@@ -260,8 +260,8 @@
   "termsTitle": "Terms of Use",
   "termsAccept": "I agree to the Terms of Use",
 
-  "aboutTitle": "About SelfMap",
-  "aboutDescription": "SelfMap is a self-discovery platform designed to help high school students explore their interests, discover careers, and plan their future.",
+  "aboutTitle": "About Masar",
+  "aboutDescription": "Masar is a self-discovery platform designed to help high school students explore their interests, discover careers, and plan their future.",
   "aboutVersion": "Version {version}",
   "@aboutVersion": {
     "placeholders": {
@@ -325,5 +325,119 @@
 
   "quizRiasecInstructions": "Rate each activity based on how much you would enjoy it. There are no right or wrong answers - just be honest about your preferences.",
   "quizIpip50Instructions": "Read each statement and indicate how accurately it describes you. Answer honestly for the most accurate results.",
-  "quizGenericInstructions": "Answer all questions honestly. This should take just a few minutes and will provide valuable insights."
+  "quizGenericInstructions": "Answer all questions honestly. This should take just a few minutes and will provide valuable insights.",
+
+  "memoryMatchTitle": "Memory Match",
+  "memoryMatchDescription": "Train your memory and attention by matching pairs of cards as quickly as possible.",
+  "memoryMatchSelectDifficulty": "Select Difficulty",
+  "memoryMatchDifficultyEasy": "Easy",
+  "memoryMatchDifficultyNormal": "Normal",
+  "memoryMatchDifficultyHard": "Hard",
+  "memoryMatchDifficultyEasyDesc": "4×4 Grid (8 pairs)",
+  "memoryMatchDifficultyNormalDesc": "5×4 Grid (10 pairs)",
+  "memoryMatchDifficultyHardDesc": "6×5 Grid (15 pairs)",
+  "memoryMatchHowToPlay": "How to Play",
+  "memoryMatchHowToPlayStep1": "Tap cards to flip them over",
+  "memoryMatchHowToPlayStep2": "Find matching pairs",
+  "memoryMatchHowToPlayStep3": "Complete the grid as fast as you can",
+  "memoryMatchHowToPlayStep4": "Fewer mistakes = higher score",
+  "memoryMatchTime": "Time",
+  "memoryMatchMoves": "Moves",
+  "memoryMatchMatches": "Matches",
+  "memoryMatchPaused": "Game Paused",
+  "memoryMatchResume": "Resume",
+  "memoryMatchSaveFailed": "Failed to save results. Please try again later.",
+
+  "gameResultsTitle": "Game Complete!",
+  "gameResultsYourScore": "Your Score",
+  "gameResultsComposite": "Overall Performance",
+  "gameResultsTime": "Time",
+  "gameResultsMoves": "Moves",
+  "gameResultsAccuracy": "Accuracy",
+  "gameResultsPerformance": "Performance",
+  "gameResultsTraitInsights": "Trait Insights",
+  "gameResultsTryAgain": "Try Again",
+  "gameResultsBackToDiscovery": "Back to Discovery",
+  "gameResultsOutstanding": "Outstanding!",
+  "gameResultsExcellent": "Excellent!",
+  "gameResultsGreat": "Great!",
+  "gameResultsGood": "Good!",
+  "gameResultsKeepGoing": "Keep Going!",
+  "gameResultsNiceTry": "Nice Try!",
+
+  "assessmentTitle": "Assessment",
+  "assessmentPrevious": "Previous",
+  "assessmentProcessing": "Processing your responses...",
+  "assessmentComplete": "Assessment Complete!",
+  "assessmentCompleteMessage": "Thank you for completing the assessment.",
+  "assessmentSubmitFailed": "Failed to submit assessment: {error}",
+  "@assessmentSubmitFailed": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+
+  "onboardingProcessing": "Processing your responses...",
+  "onboardingErrorCompleting": "Error completing onboarding: {error}",
+  "@onboardingErrorCompleting": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "onboardingInvalidItemType": "Invalid item type",
+
+  "authSchoolLoginTitle": "School Sign In",
+  "authSignInAsSchool": "Sign in as School",
+  "authSignInAsStudent": "Sign in as Student",
+  "authPleaseSelectSchool": "Please select a school",
+  "authSignIn": "Sign In",
+
+  "oauthCallbackFailed": "Authentication failed. Please try again.",
+  "oauthCallbackError": "Authentication error: {error}",
+  "@oauthCallbackError": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+
+  "schoolDashboardTitle": "School Dashboard",
+  "schoolDashboardNoSchool": "No school found for your account",
+  "schoolDashboardErrorLoading": "Error loading school: {error}",
+  "@schoolDashboardErrorLoading": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "schoolDashboardNoStudentData": "No student data available",
+  "schoolDashboardNoCareerData": "No career match data available",
+  "schoolDashboardViewAll": "View All",
+  "schoolDashboardStudentsTablePlaceholder": "Students table with search and filters will be here",
+
+  "studentDetailsTitle": "Student Details",
+  "studentDetailsNotFound": "Student not found",
+  "studentDetailsErrorLoading": "Error loading student: {error}",
+  "@studentDetailsErrorLoading": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+
+  "studentsListTitle": "All Students",
+  "studentsListProfileColumn": "Profile",
+  "studentsListStrengthColumn": "Strength",
+  "studentsListLastActiveColumn": "Last Active",
+  "studentsListActionsColumn": "Actions",
+
+  "errorLoadingCareers": "Error loading careers: {error}",
+  "@errorLoadingCareers": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "errorGenericWithMessage": "Error: {error}",
+  "@errorGenericWithMessage": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  }
 }

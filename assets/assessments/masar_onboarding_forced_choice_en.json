@@ -1,0 +1,195 @@
+{
+  "instrument": "masar_onboarding_forced_choice",
+  "version": "1.0",
+  "language": "en",
+  "title": "Self Discovery Quick Start (Forced Choice)",
+  "description": "Choose the statement that feels most like you in each set. Your choices update your trait and interest profile.",
+  "instructions": "For each question, pick ONE statement that best describes you in real situations.",
+  "response_type": "single_choice",
+  "scoring": {
+    "method": "add_weight_to_feature_key",
+    "notes": "On selection, add option.weight to option.feature_key. Unselected options do not score."
+  },
+  "items": [
+    {
+      "id": "q1",
+      "prompt": "When I hit a problem, I usually…",
+      "options": [
+        { "id": "q1_a", "text": "Break it down logically into steps.", "feature_key": "cognition_problem_solving", "weight": 1.0 },
+        { "id": "q1_b", "text": "Try unusual or original ideas.", "feature_key": "trait_creativity", "weight": 1.0 },
+        { "id": "q1_c", "text": "Talk it through with someone first.", "feature_key": "trait_communication", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q2",
+      "prompt": "I feel most energized when I’m…",
+      "options": [
+        { "id": "q2_a", "text": "Working independently and staying on task.", "feature_key": "trait_conscientiousness", "weight": 1.0 },
+        { "id": "q2_b", "text": "Collaborating closely with a team.", "feature_key": "trait_collaboration", "weight": 1.0 },
+        { "id": "q2_c", "text": "Organizing and leading group efforts.", "feature_key": "trait_leadership", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q3",
+      "prompt": "When starting a new project, I prefer to…",
+      "options": [
+        { "id": "q3_a", "text": "Use proven methods and checklists.", "feature_key": "trait_conscientiousness", "weight": 1.0 },
+        { "id": "q3_b", "text": "Experiment with fresh approaches.", "feature_key": "trait_openness", "weight": 1.0 },
+        { "id": "q3_c", "text": "Blend old and new depending on context.", "feature_key": "trait_adaptability", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q4",
+      "prompt": "What motivates you most right now?",
+      "options": [
+        { "id": "q4_a", "text": "Learning new skills and exploring.", "feature_key": "trait_curiosity", "weight": 1.0 },
+        { "id": "q4_b", "text": "Mastering what I already do well.", "feature_key": "trait_grit", "weight": 1.0 },
+        { "id": "q4_c", "text": "Applying knowledge to real tasks.", "feature_key": "interest_practical", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "My natural working focus is…",
+      "options": [
+        { "id": "q5_a", "text": "The big picture and overall concept.", "feature_key": "trait_openness", "weight": 1.0 },
+        { "id": "q5_b", "text": "The details that make it precise.", "feature_key": "cognition_attention", "weight": 1.0 },
+        { "id": "q5_c", "text": "Switching between both as needed.", "feature_key": "trait_adaptability", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q6",
+      "prompt": "I’m most drawn to…",
+      "options": [
+        { "id": "q6_a", "text": "Creative activities (art, music, writing).", "feature_key": "interest_creative", "weight": 1.0 },
+        { "id": "q6_b", "text": "Logical or analytical puzzles.", "feature_key": "interest_analytical", "weight": 1.0 },
+        { "id": "q6_c", "text": "Helping and supporting people.", "feature_key": "interest_social", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q7",
+      "prompt": "When communicating ideas, I usually…",
+      "options": [
+        { "id": "q7_a", "text": "Write or speak clearly with structure.", "feature_key": "cognition_verbal", "weight": 1.0 },
+        { "id": "q7_b", "text": "Use diagrams or visuals to explain.", "feature_key": "cognition_spatial", "weight": 1.0 },
+        { "id": "q7_c", "text": "Influence and connect with the audience.", "feature_key": "trait_communication", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q8",
+      "prompt": "Which task feels most like you?",
+      "options": [
+        { "id": "q8_a", "text": "Analyzing numbers or data sets.", "feature_key": "cognition_quantitative", "weight": 1.0 },
+        { "id": "q8_b", "text": "Crafting stories and arguments.", "feature_key": "cognition_verbal", "weight": 1.0 },
+        { "id": "q8_c", "text": "Organizing systems and processes.", "feature_key": "interest_conventional", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q9",
+      "prompt": "Under pressure, I tend to…",
+      "options": [
+        { "id": "q9_a", "text": "Stay calm and plan logically.", "feature_key": "trait_emotional_intelligence", "weight": 1.0 },
+        { "id": "q9_b", "text": "Try quick experiments to find what works.", "feature_key": "trait_adaptability", "weight": 1.0 },
+        { "id": "q9_c", "text": "Rally people and assign roles fast.", "feature_key": "trait_leadership", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q10",
+      "prompt": "Given a free project choice, I’d prefer…",
+      "options": [
+        { "id": "q10_a", "text": "Hands-on practical building or fixing.", "feature_key": "interest_practical", "weight": 1.0 },
+        { "id": "q10_b", "text": "Designing visuals or aesthetics.", "feature_key": "trait_creativity", "weight": 1.0 },
+        { "id": "q10_c", "text": "Improving rules, workflows, or checklists.", "feature_key": "interest_conventional", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q11",
+      "prompt": "When tasks are tough, I usually…",
+      "options": [
+        { "id": "q11_a", "text": "Keep going until I figure it out.", "feature_key": "trait_grit", "weight": 1.0 },
+        { "id": "q11_b", "text": "Change tactics quickly if needed.", "feature_key": "trait_adaptability", "weight": 1.0 },
+        { "id": "q11_c", "text": "Ask for feedback to improve.", "feature_key": "trait_collaboration", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q12",
+      "prompt": "Which strength fits you best?",
+      "options": [
+        { "id": "q12_a", "text": "Remembering details accurately.", "feature_key": "cognition_memory", "weight": 1.0 },
+        { "id": "q12_b", "text": "Tracking progress with structure.", "feature_key": "trait_conscientiousness", "weight": 1.0 },
+        { "id": "q12_c", "text": "Connecting big ideas creatively.", "feature_key": "trait_openness", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q13",
+      "prompt": "In group work, I naturally…",
+      "options": [
+        { "id": "q13_a", "text": "Coordinate roles and timelines.", "feature_key": "trait_leadership", "weight": 1.0 },
+        { "id": "q13_b", "text": "Make sure everyone feels heard.", "feature_key": "trait_emotional_intelligence", "weight": 1.0 },
+        { "id": "q13_c", "text": "Guard quality and standards.", "feature_key": "trait_conscientiousness", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q14",
+      "prompt": "My learning style leans toward…",
+      "options": [
+        { "id": "q14_a", "text": "Exploring new topics widely.", "feature_key": "trait_curiosity", "weight": 1.0 },
+        { "id": "q14_b", "text": "Deep mastery of one specialty.", "feature_key": "trait_grit", "weight": 1.0 },
+        { "id": "q14_c", "text": "Cross-pollinating ideas between fields.", "feature_key": "trait_openness", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q15",
+      "prompt": "My problem-solving move is usually…",
+      "options": [
+        { "id": "q15_a", "text": "Break it into smaller steps.", "feature_key": "cognition_problem_solving", "weight": 1.0 },
+        { "id": "q15_b", "text": "Visualize patterns and shapes.", "feature_key": "cognition_spatial", "weight": 1.0 },
+        { "id": "q15_c", "text": "Run quick trials and compare results.", "feature_key": "trait_adaptability", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q16",
+      "prompt": "Pick the activity that sounds most like you:",
+      "options": [
+        { "id": "q16_a", "text": "Mentoring or supporting classmates.", "feature_key": "interest_social", "weight": 1.0 },
+        { "id": "q16_b", "text": "Negotiating, pitching, or taking initiative.", "feature_key": "interest_enterprising", "weight": 1.0 },
+        { "id": "q16_c", "text": "Solo deep work on complex problems.", "feature_key": "interest_analytical", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q17",
+      "prompt": "If I had a weekend challenge, I’d…",
+      "options": [
+        { "id": "q17_a", "text": "Start a small project or business idea.", "feature_key": "interest_enterprising", "weight": 1.0 },
+        { "id": "q17_b", "text": "Optimize or automate an existing system.", "feature_key": "interest_conventional", "weight": 1.0 },
+        { "id": "q17_c", "text": "Research data and compare options.", "feature_key": "cognition_quantitative", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q18",
+      "prompt": "When I must present an idea, I prefer to…",
+      "options": [
+        { "id": "q18_a", "text": "Speak to an audience and connect.", "feature_key": "trait_communication", "weight": 1.0 },
+        { "id": "q18_b", "text": "Write a clear, structured report.", "feature_key": "cognition_verbal", "weight": 1.0 },
+        { "id": "q18_c", "text": "Design a visual or infographic.", "feature_key": "trait_creativity", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q19",
+      "prompt": "In team projects, I’m most valuable as…",
+      "options": [
+        { "id": "q19_a", "text": "The idea generator / innovator.", "feature_key": "trait_creativity", "weight": 1.0 },
+        { "id": "q19_b", "text": "The organizer and scheduler.", "feature_key": "trait_conscientiousness", "weight": 1.0 },
+        { "id": "q19_c", "text": "The tester / debugger who spots issues.", "feature_key": "cognition_attention", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "When there’s conflict in a group, I usually…",
+      "options": [
+        { "id": "q20_a", "text": "Sense feelings and calm the situation.", "feature_key": "trait_emotional_intelligence", "weight": 1.0 },
+        { "id": "q20_b", "text": "Refocus everyone on the goal.", "feature_key": "trait_leadership", "weight": 1.0 },
+        { "id": "q20_c", "text": "Propose a compromise everyone can accept.", "feature_key": "trait_collaboration", "weight": 1.0 }
+      ]
+    }
+  ]
+}

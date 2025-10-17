@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:flutter/material.dart';
+import './memory_match_scoring.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'memory_match_telemetry.dart';
 
@@ -65,6 +65,7 @@ class MemoryMatchState {
     this.isStarted = false,
     this.isPaused = false,
     this.isCompleted = false,
+    this.isInitialReveal = false,
     this.elapsedSeconds = 0,
     this.currentFocusStreak = 0,
     this.flipTimestamps = const [],
@@ -76,6 +77,7 @@ class MemoryMatchState {
   final bool isStarted;
   final bool isPaused;
   final bool isCompleted;
+  final bool isInitialReveal;
   final int elapsedSeconds;
   final int currentFocusStreak;
   final List<int> flipTimestamps; // Timestamps in milliseconds
@@ -111,6 +113,7 @@ class MemoryMatchState {
     bool? isStarted,
     bool? isPaused,
     bool? isCompleted,
+    bool? isInitialReveal,
     int? elapsedSeconds,
     int? currentFocusStreak,
     List<int>? flipTimestamps,
@@ -122,6 +125,7 @@ class MemoryMatchState {
       isStarted: isStarted ?? this.isStarted,
       isPaused: isPaused ?? this.isPaused,
       isCompleted: isCompleted ?? this.isCompleted,
+      isInitialReveal: isInitialReveal ?? this.isInitialReveal,
       elapsedSeconds: elapsedSeconds ?? this.elapsedSeconds,
       currentFocusStreak: currentFocusStreak ?? this.currentFocusStreak,
       flipTimestamps: flipTimestamps ?? this.flipTimestamps,
@@ -141,26 +145,26 @@ class MemoryMatchController extends StateNotifier<MemoryMatchState> {
 
   // Image pool for cards - Arabian/Emirati themed
   static const List<String> _imagePool = [
-    'assets/images/memory_cards/coffee-pot.png',
-    'assets/images/memory_cards/palm-tree.png',
-    'assets/images/memory_cards/eagle.png',
-    'assets/images/memory_cards/burj-khalifa.png',
-    'assets/images/memory_cards/burj-al-arab.png',
-    'assets/images/memory_cards/united-arab-emirates.png',
-    'assets/images/memory_cards/mosque.png',
-    'assets/images/memory_cards/sunny.png',
-    'assets/images/memory_cards/moon.png',
-    'assets/images/memory_cards/pearls.png',
-    'assets/images/memory_cards/ship-wheel.png',
-    'assets/images/memory_cards/desert.png',
-    'assets/images/memory_cards/star.png',
-    'assets/images/memory_cards/oryx.png',
-    'assets/images/memory_cards/camel.png',
-    'assets/images/memory_cards/al-jahili-fort.png',
-    'assets/images/memory_cards/cayan-tower.png',
-    'assets/images/memory_cards/palm-islands.png',
-    'assets/images/memory_cards/united-arab-emirates (1).png',
-    'assets/images/memory_cards/united-arab-emirates (2).png',
+    'images/memory_cards/coffee-pot.png',
+    'images/memory_cards/palm-tree.png',
+    'images/memory_cards/eagle.png',
+    'images/memory_cards/burj-khalifa.png',
+    'images/memory_cards/burj-al-arab.png',
+    'images/memory_cards/united-arab-emirates.png',
+    'images/memory_cards/mosque.png',
+    'images/memory_cards/sunny.png',
+    'images/memory_cards/moon.png',
+    'images/memory_cards/pearls.png',
+    'images/memory_cards/ship-wheel.png',
+    'images/memory_cards/desert.png',
+    'images/memory_cards/star.png',
+    'images/memory_cards/oryx.png',
+    'images/memory_cards/camel.png',
+    'images/memory_cards/al-jahili-fort.png',
+    'images/memory_cards/cayan-tower.png',
+    'images/memory_cards/palm-islands.png',
+    'images/memory_cards/united-arab-emirates (1).png',
+    'images/memory_cards/united-arab-emirates (2).png',
   ];
 
   /// Start a new game with the specified difficulty
@@ -212,7 +216,8 @@ class MemoryMatchController extends StateNotifier<MemoryMatchState> {
       cards: revealedCards,
       difficulty: difficulty,
       isStarted: true,
-      isPaused: true, // Pause gameplay during initial reveal
+      isPaused: false, // Don't pause - let the game screen show
+      isInitialReveal: true, // Flag to indicate initial reveal phase
       isCompleted: false,
       elapsedSeconds: 0,
       currentFocusStreak: 0,
@@ -229,7 +234,7 @@ class MemoryMatchController extends StateNotifier<MemoryMatchState> {
 
       state = state.copyWith(
         cards: hiddenCards,
-        isPaused: false, // Resume gameplay
+        isInitialReveal: false, // End initial reveal phase
       );
     });
 
@@ -238,7 +243,7 @@ class MemoryMatchController extends StateNotifier<MemoryMatchState> {
 
   /// Flip a card at the given index
   void flip(int index) {
-    if (state.isPaused || state.isCompleted) return;
+    if (state.isPaused || state.isCompleted || state.isInitialReveal) return;
     if (state.revealedIndices.length >= 2) return;
     if (state.cards[index].isRevealed || state.cards[index].isMatched) return;
 
@@ -394,42 +399,32 @@ class MemoryMatchController extends StateNotifier<MemoryMatchState> {
     final moves = max(1, _telemetry!.moves);
     final matches = _telemetry!.matches;
     final mismatches = max(0, _telemetry!.mismatches);
-    final t = _telemetry!.totalSeconds;
-    final baselineSeconds = max(60, 12 * pairs);
+    final totalSeconds = _telemetry!.totalSeconds;
+    final avgFlipIntervalMs = _telemetry!.avgFlipIntervalMs;
+    final peakFocusStreak = _telemetry!.peakFocusStreak;
+    final earlyMistakes = _telemetry!.earlyMistakes;
+    final lateMistakes = _telemetry!.lateMistakes;
 
-    // Calculate component scores
-    final double accuracy = matches / moves;
-    final speedFactor = _clamp01(baselineSeconds / (t + 1));
-    final focusBonus = _clamp01(_peakFocusStreak / (pairs * 0.5));
-    final mistakePenalty = _clamp01(mismatches / (pairs * 2));
-
-    // Composite score (0..100)
-    final composite =
-        100 *
-        _clamp01(
-          0.55 * accuracy +
-              0.30 * speedFactor +
-              0.15 * (0.6 * focusBonus + 0.4 * (1 - mistakePenalty)),
-        );
-
-    // Feature scores
-    final cognitionMemory = composite; // Primary trait
-    final cognitionAttention =
-        100 * _clamp01(0.6 * accuracy + 0.4 * speedFactor);
-
-    // Progress bump
-    final deltaProgress = min(8, (pairs / 2).round());
+    // V2 Scoring
+    final inputs = MMV2Inputs(
+      pairs: pairs,
+      moves: moves,
+      matches: matches,
+      mismatches: mismatches,
+      totalSeconds: totalSeconds,
+      avgFlipIntervalMs: avgFlipIntervalMs,
+      peakFocusStreak: peakFocusStreak,
+      earlyMistakes: earlyMistakes,
+      lateMistakes: lateMistakes,
+    );
+    final v2 = MemoryMatchScoringV2.compute(inputs);
 
     return GameScores(
-      composite: composite.round(),
-      cognitionMemory: cognitionMemory.round(),
-      cognitionAttention: cognitionAttention.round(),
-      deltaProgress: deltaProgress,
+      composite: v2.composite,
+      cognitionMemory: v2.cognitionMemory,
+      cognitionAttention: v2.cognitionAttention,
+      deltaProgress: v2.deltaProgress,
     );
-  }
-
-  double _clamp01(double value) {
-    return value.clamp(0.0, 1.0);
   }
 
   @override

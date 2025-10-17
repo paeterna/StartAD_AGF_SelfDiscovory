@@ -1,5 +1,5 @@
 name: startad_agf_selfdiscovery
-description: "SelfMap - A self-discovery platform for high-school students"
+description: "Masar - A self-discovery platform for high-school students"
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -70,6 +70,8 @@ flutter:
   assets:
     - assets/i18n/
     - assets/assessments/
-    # - .env
+    - assets/images/
+    - assets/icons/
+    - .env
     # Note: .env should NOT be an asset - it's for local dev only
     # Environment variables are set in Netlify dashboard

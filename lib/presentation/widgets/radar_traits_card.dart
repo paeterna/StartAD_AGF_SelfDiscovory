@@ -128,18 +128,20 @@ class RadarTraitsCard extends ConsumerWidget {
   }
 
   List<RadarDataPoint> _getFilteredData(RadarDataByFamily dataByFamily) {
-    if (family == null) return dataByFamily.all;
-
-    switch (family!.toLowerCase()) {
-      case 'riasec':
-        return dataByFamily.riasec;
-      case 'cognition':
-        return dataByFamily.cognition;
-      case 'traits':
-        return dataByFamily.traits;
-      default:
-        return dataByFamily.all;
+    // If family is specified, return only that family
+    if (family != null) {
+      switch (family!.toLowerCase()) {
+        case 'cognition':
+          return dataByFamily.cognition;
+        case 'traits':
+          return dataByFamily.traits;
+        default:
+          return [...dataByFamily.cognition, ...dataByFamily.traits];
+      }
     }
+
+    // Default: return only traits and cognition (exclude interests/RIASEC)
+    return [...dataByFamily.cognition, ...dataByFamily.traits];
   }
 
   Widget _buildEmptyState(BuildContext context) {
