@@ -8,6 +8,7 @@ import '../../../core/utils/validators.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 import '../../widgets/language_switcher.dart';
+import '../../widgets/app_logo.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -206,22 +207,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          // Logo/Title
-                          Text(
-                            l10n.appName,
-                            style: const TextStyle(
-                              fontSize: 48,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
+                          // Larger logo centered on top
+                          const Center(
+                            child: AppLogo(height: 320),
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            l10n.tagline,
-                            style: Theme.of(context).textTheme.titleMedium,
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 48),
+                          const SizedBox(height: 16),
 
                           // Email field
                           TextFormField(

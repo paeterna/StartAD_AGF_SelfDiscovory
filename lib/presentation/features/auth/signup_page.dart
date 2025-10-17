@@ -10,6 +10,7 @@ import '../../../data/models/school.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 import '../../widgets/language_switcher.dart';
+import '../../widgets/app_logo.dart';
 
 class SignupPage extends ConsumerStatefulWidget {
   const SignupPage({super.key});
@@ -221,19 +222,27 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      // Logo centered on top
+                      const Center(
+                        child: AppLogoMedium(),
+                      ),
+                      const SizedBox(height: 24),
+                      
                       // Title
                       Text(
                         l10n.authSignupTitle,
                         style: const TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w600,
                         ),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 8),
                       Text(
                         l10n.tagline,
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                        ),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 32),

@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
-/// Futuristic theme configuration with glassmorphism and modern aesthetics
+/// Minimalist and aesthetic theme configuration for high schoolers and teenagers
+/// Clean, modern, and functional with vibrant yet subtle colors
 class AppTheme {
   AppTheme._();
 
-  // Border radius constants (warm, rounded feel: 20-32px)
-  static const double radiusSmall = 20.0;
-  static const double radiusMedium = 24.0;
-  static const double radiusLarge = 28.0;
-  static const double radiusXLarge = 32.0;
+  // Border radius constants (subtle, modern feel: 12-20px)
+  static const double radiusSmall = 12.0;
+  static const double radiusMedium = 16.0;
+  static const double radiusLarge = 20.0;
+  static const double radiusXLarge = 24.0;
 
   // Spacing constants
   static const double spaceXSmall = 4.0;
@@ -19,24 +20,27 @@ class AppTheme {
   static const double spaceLarge = 24.0;
   static const double spaceXLarge = 32.0;
 
-  // Glassmorphism constants (15-25% opacity)
-  static const double glassBlur = 40.0;
-  static const double glassOpacity = 0.35; // Light glass
-  static const double glassOpacityMedium = 0.40; // Medium glass
-  static const double glassOpacityHeavy = 0.55; // Heavy glass
-  static const double glassBorderOpacity = 0.2;
+  // Minimalist constants
+  static const double glassBlur = 20.0;
+  static const double glassOpacity = 0.05; // Very subtle
+  static const double glassOpacityMedium = 0.08; // Subtle
+  static const double glassOpacityHeavy = 0.12; // Light
+  static const double glassBorderOpacity = 0.1;
 
-  /// Light theme - Modern blue and purple with white background
+  /// Light theme - Vibrant and energetic colors for high schoolers
   static ThemeData get lightTheme {
     final colorScheme = ColorScheme.light(
-      primary: AppColors.deepPurple,
-      secondary: AppColors.skyBlue,
-      tertiary: AppColors.vibrantPurple,
+      primary: AppColors.teal, // Primary teal
+      secondary: AppColors.orange, // Vibrant orange
+      tertiary: AppColors.lime, // Fresh lime
       error: AppColors.error,
       surface: AppColors.lightSurface,
       onSurface: AppColors.textPrimary,
       surfaceContainerHighest: AppColors.lightCard,
-      outline: AppColors.softPurple.withValues(alpha: 0.3),
+      outline: AppColors.lavender.withValues(alpha: 0.3),
+      primaryContainer: AppColors.tealLight,
+      secondaryContainer: AppColors.orangeLight,
+      tertiaryContainer: AppColors.limeLight,
     );
 
     return ThemeData(
@@ -48,31 +52,32 @@ class AppTheme {
       // Typography - Poppins for approachable, rounded feel
       textTheme: _buildTextTheme(AppColors.textPrimary),
 
-      // Card theme - With blue/purple gradient
+      // Card theme - Minimalist and clean
       cardTheme: CardThemeData(
-        elevation: 2,
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusLarge),
           side: BorderSide(
-            color: AppColors.softPurple.withValues(alpha: 0.3),
+            color: AppColors.teal.withValues(alpha: 0.08),
             width: 1.0,
           ),
         ),
         color: Colors.white,
-        shadowColor: AppColors.deepPurple.withValues(alpha: 0.1),
+        shadowColor: Colors.transparent,
       ),
 
-      // AppBar theme - White background
+      // AppBar theme - Minimalist and clean
       appBarTheme: AppBarTheme(
         elevation: 0,
         centerTitle: false,
         backgroundColor: Colors.white,
         foregroundColor: AppColors.textPrimary,
+        surfaceTintColor: Colors.transparent,
         titleTextStyle: GoogleFonts.poppins(
-          fontSize: 22,
-          fontWeight: FontWeight.w700,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
-          letterSpacing: 0.3,
+          letterSpacing: 0,
         ),
       ),
 
@@ -88,7 +93,7 @@ class AppTheme {
       iconTheme: IconThemeData(color: AppColors.textSecondary, size: 24),
 
       // Focus theme
-      focusColor: AppColors.deepPurple.withValues(alpha: 0.2),
+      focusColor: AppColors.teal.withValues(alpha: 0.2),
 
       // Divider with subtle transparency
       dividerTheme: DividerThemeData(
@@ -96,20 +101,29 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
+
+      // Floating action button theme
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: AppColors.orange,
+        foregroundColor: Colors.white,
+      ),
     );
   }
 
-  /// Dark theme - Modern blue and purple with dark grey background
+  /// Dark theme - Vibrant and energetic colors adapted for dark mode
   static ThemeData get darkTheme {
     final colorScheme = ColorScheme.dark(
-      primary: AppColors.vibrantPurple,
-      secondary: AppColors.lightBlue,
-      tertiary: AppColors.accentViolet,
+      primary: AppColors.tealLight, // Lighter teal for dark mode
+      secondary: AppColors.orangeLight, // Softer orange for dark mode
+      tertiary: AppColors.limeLight, // Softer lime for dark mode
       error: AppColors.error,
       surface: AppColors.darkSurface,
       onSurface: AppColors.textDarkPrimary,
       surfaceContainerHighest: AppColors.darkCard,
-      outline: AppColors.softPurple.withValues(alpha: 0.3),
+      outline: AppColors.lavenderLight.withValues(alpha: 0.3),
+      primaryContainer: AppColors.tealDark,
+      secondaryContainer: AppColors.orangeDark,
+      tertiaryContainer: AppColors.limeDark,
     );
 
     return ThemeData(
@@ -121,31 +135,32 @@ class AppTheme {
       // Typography - Poppins for approachable feel
       textTheme: _buildTextTheme(AppColors.textDarkPrimary),
 
-      // Card theme - Dark with blue/purple gradient
+      // Card theme - Minimalist dark
       cardTheme: CardThemeData(
-        elevation: 2,
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusLarge),
           side: BorderSide(
-            color: AppColors.softPurple.withValues(alpha: 0.2),
+            color: AppColors.tealLight.withValues(alpha: 0.1),
             width: 1.0,
           ),
         ),
         color: AppColors.darkCard,
-        shadowColor: AppColors.deepPurple.withValues(alpha: 0.3),
+        shadowColor: Colors.transparent,
       ),
 
-      // AppBar theme - Dark grey background
+      // AppBar theme - Minimalist dark
       appBarTheme: AppBarTheme(
         elevation: 0,
         centerTitle: false,
-        backgroundColor: AppColors.darkSurface,
+        backgroundColor: AppColors.darkBackground,
         foregroundColor: AppColors.textDarkPrimary,
+        surfaceTintColor: Colors.transparent,
         titleTextStyle: GoogleFonts.poppins(
-          fontSize: 22,
-          fontWeight: FontWeight.w700,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
           color: AppColors.textDarkPrimary,
-          letterSpacing: 0.3,
+          letterSpacing: 0,
         ),
       ),
 
@@ -161,12 +176,18 @@ class AppTheme {
       iconTheme: IconThemeData(color: AppColors.textDarkSecondary),
 
       // Focus theme
-      focusColor: AppColors.vibrantPurple.withValues(alpha: 0.3),
+      focusColor: AppColors.tealLight.withValues(alpha: 0.3),
 
       // Divider
       dividerTheme: DividerThemeData(
         color: AppColors.textDarkSecondary.withValues(alpha: 0.1),
         thickness: 1,
+      ),
+
+      // Floating action button theme
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: AppColors.orangeLight,
+        foregroundColor: AppColors.darkSurface,
       ),
     );
   }
@@ -291,17 +312,17 @@ class AppTheme {
         elevation: 0,
         padding: const EdgeInsets.symmetric(
           horizontal: spaceLarge,
-          vertical: spaceMedium + 4,
+          vertical: spaceMedium + 2,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(radiusLarge),
+          borderRadius: BorderRadius.circular(radiusMedium),
         ),
         backgroundColor: colorScheme.primary,
         foregroundColor: Colors.white,
         textStyle: GoogleFonts.poppins(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.3,
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 0,
         ),
       ),
     );
@@ -312,17 +333,17 @@ class AppTheme {
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(
           horizontal: spaceLarge,
-          vertical: spaceMedium + 4,
+          vertical: spaceMedium + 2,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(radiusLarge),
+          borderRadius: BorderRadius.circular(radiusMedium),
         ),
-        side: BorderSide(color: colorScheme.primary, width: 2),
+        side: BorderSide(color: colorScheme.primary, width: 1.5),
         foregroundColor: colorScheme.primary,
         textStyle: GoogleFonts.poppins(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.3,
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 0,
         ),
       ),
     );

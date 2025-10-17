@@ -52,6 +52,7 @@ void main() async {
         // Override the SharedPreferences provider with the actual instance
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       ],
+      // App entry point
       child: const SelfMapApp(),
     ),
   );

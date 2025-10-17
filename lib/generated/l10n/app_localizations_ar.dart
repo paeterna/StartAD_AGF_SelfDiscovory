@@ -9,10 +9,10 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get appName => 'خريطة الذات';
+  String get appName => 'SelfMap';
 
   @override
-  String get welcomeMessage => 'مرحباً بك في خريطة الذات';
+  String get welcomeMessage => 'مرحباً بك في SelfMap';
 
   @override
   String get tagline => 'اكتشف مستقبلك';
@@ -109,7 +109,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onboardingSkipButton => 'تخطي';
 
   @override
-  String get welcomeTitle => 'مرحباً بك في خريطة الذات! 🚀';
+  String get welcomeTitle => 'مرحباً بك في SelfMap! 🚀';
 
   @override
   String get welcomeSubtitle => 'اكتشف من أنت وإلى أين تتجه';

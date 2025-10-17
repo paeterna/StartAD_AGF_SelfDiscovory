@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:startad_agf_selfdiscovery/core/responsive/responsive.dart';
 import 'package:startad_agf_selfdiscovery/generated/l10n/app_localizations.dart';
+import 'package:startad_agf_selfdiscovery/presentation/widgets/app_logo.dart';
 
 // =====================================================
 // Adaptive Shell - Responsive Navigation
@@ -180,11 +181,9 @@ class _Rail extends StatelessWidget {
       backgroundColor: theme.colorScheme.surface,
       indicatorColor: theme.colorScheme.secondaryContainer,
       leading: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child: Icon(
-          Icons.school,
-          size: compact ? 32 : 40,
-          color: theme.colorScheme.primary,
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+        child: AppLogo(
+          height: compact ? 72 : 96,
         ),
       ),
       trailing: compact

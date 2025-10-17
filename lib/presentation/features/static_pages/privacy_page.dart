@@ -9,8 +9,8 @@ class PrivacyPage extends StatelessWidget {
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(title: const Text('Privacy Policy')),
-        body: const SingleChildScrollView(
-          padding: EdgeInsets.all(24),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -24,8 +24,10 @@ class PrivacyPage extends StatelessWidget {
                 style: TextStyle(color: Colors.grey),
               ),
               SizedBox(height: 24),
+              SizedBox(height: 16),
               Text(
                 'SelfMap is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information.',
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(height: 16),
               Text(
@@ -74,9 +76,10 @@ class PrivacyPage extends StatelessWidget {
                 '• Update your information',
               ),
               SizedBox(height: 24),
+              SizedBox(height: 16),
               Text(
                 'For questions about this policy, please contact us at privacy@selfmap.app',
-                style: TextStyle(fontStyle: FontStyle.italic),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
           ),

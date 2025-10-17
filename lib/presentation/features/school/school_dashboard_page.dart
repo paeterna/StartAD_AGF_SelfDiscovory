@@ -78,35 +78,51 @@ class _SchoolDashboardContent extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // School Header
-            Row(
-              children: [
-                Icon(
-                  Icons.school,
-                  size: 40,
-                  color: theme.colorScheme.primary,
-                ),
-                SizedBox(width: ResponsiveSpacing.md(context)),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        school.name,
-                        style: theme.textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+            Card(
+              elevation: 2,
+              color: theme.colorScheme.primaryContainer,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      if (school.code != null)
-                        Text(
-                          'Code: ${school.code}',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
+                      child: Icon(
+                        Icons.school,
+                        size: 40,
+                        color: theme.colorScheme.primary,
+                      ),
+                    ),
+                    SizedBox(width: ResponsiveSpacing.md(context)),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            school.name,
+                            style: theme.textTheme.headlineMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                           ),
-                        ),
-                    ],
-                  ),
+                          if (school.code != null)
+                            Text(
+                              'Code: ${school.code}',
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
 
             SizedBox(height: ResponsiveSpacing.xl(context)),
@@ -273,27 +289,45 @@ class _KpiCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return ResponsiveCard(
-      enableHover: false,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 40, color: color),
-          const SizedBox(height: 12),
-          Text(
-            value,
-            style: theme.textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: color,
+    return Card(
+      elevation: 2,
+      color: color.withValues(alpha: 0.1),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, size: 32, color: color),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            title,
-            style: theme.textTheme.bodySmall,
-            textAlign: TextAlign.center,
-          ),
-        ],
+            const SizedBox(height: 12),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                value,
+                style: theme.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: color,
+                ),
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              title,
+              style: theme.textTheme.bodySmall?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -342,8 +376,12 @@ class _TopStudentsCard extends ConsumerWidget {
                       child: Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.surfaceContainerHighest,
+                          color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
                           borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: theme.colorScheme.primary.withValues(alpha: 0.2),
+                            width: 1,
+                          ),
                         ),
                         child: Row(
                           children: [
@@ -667,16 +705,18 @@ class _SchoolRadarCard extends ConsumerWidget {
 
     return Row(
       children: [
-        SizedBox(
-          width: 140,
+        Flexible(
+          flex: 2,
           child: Text(
             feature.label,
             style: theme.textTheme.bodySmall,
             overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
         ),
         const SizedBox(width: 8),
-        Expanded(
+        Flexible(
+          flex: 3,
           child: LinearProgressIndicator(
             value: score / 100,
             minHeight: 8,
@@ -688,7 +728,7 @@ class _SchoolRadarCard extends ConsumerWidget {
         ),
         const SizedBox(width: 8),
         SizedBox(
-          width: 40,
+          width: 35,
           child: Text(
             '${score.toStringAsFixed(0)}',
             style: theme.textTheme.bodySmall?.copyWith(

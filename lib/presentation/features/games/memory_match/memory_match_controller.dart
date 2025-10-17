@@ -28,28 +28,28 @@ class MemoryCard {
   const MemoryCard({
     required this.id,
     required this.pairId,
-    required this.icon,
+    required this.imagePath,
     this.isRevealed = false,
     this.isMatched = false,
   });
 
   final String id;
   final int pairId;
-  final IconData icon;
+  final String imagePath;
   final bool isRevealed;
   final bool isMatched;
 
   MemoryCard copyWith({
     String? id,
     int? pairId,
-    IconData? icon,
+    String? imagePath,
     bool? isRevealed,
     bool? isMatched,
   }) {
     return MemoryCard(
       id: id ?? this.id,
       pairId: pairId ?? this.pairId,
-      icon: icon ?? this.icon,
+      imagePath: imagePath ?? this.imagePath,
       isRevealed: isRevealed ?? this.isRevealed,
       isMatched: isMatched ?? this.isMatched,
     );
@@ -139,28 +139,28 @@ class MemoryMatchController extends StateNotifier<MemoryMatchState> {
   int _earlyMistakes = 0;
   int _lateMistakes = 0;
 
-  // Icon pool for cards
-  static const List<IconData> _iconPool = [
-    Icons.favorite,
-    Icons.star,
-    Icons.emoji_emotions,
-    Icons.wb_sunny,
-    Icons.nightlight_round,
-    Icons.sports_soccer,
-    Icons.sports_basketball,
-    Icons.sports_tennis,
-    Icons.music_note,
-    Icons.palette,
-    Icons.camera_alt,
-    Icons.flight,
-    Icons.directions_car,
-    Icons.restaurant,
-    Icons.local_cafe,
-    Icons.cake,
-    Icons.pets,
-    Icons.eco,
-    Icons.beach_access,
-    Icons.ac_unit,
+  // Image pool for cards - Arabian/Emirati themed
+  static const List<String> _imagePool = [
+    'assets/images/memory_cards/coffee-pot.png',
+    'assets/images/memory_cards/palm-tree.png',
+    'assets/images/memory_cards/eagle.png',
+    'assets/images/memory_cards/burj-khalifa.png',
+    'assets/images/memory_cards/burj-al-arab.png',
+    'assets/images/memory_cards/united-arab-emirates.png',
+    'assets/images/memory_cards/mosque.png',
+    'assets/images/memory_cards/sunny.png',
+    'assets/images/memory_cards/moon.png',
+    'assets/images/memory_cards/pearls.png',
+    'assets/images/memory_cards/ship-wheel.png',
+    'assets/images/memory_cards/desert.png',
+    'assets/images/memory_cards/star.png',
+    'assets/images/memory_cards/oryx.png',
+    'assets/images/memory_cards/camel.png',
+    'assets/images/memory_cards/al-jahili-fort.png',
+    'assets/images/memory_cards/cayan-tower.png',
+    'assets/images/memory_cards/palm-islands.png',
+    'assets/images/memory_cards/united-arab-emirates (1).png',
+    'assets/images/memory_cards/united-arab-emirates (2).png',
   ];
 
   /// Start a new game with the specified difficulty
@@ -170,7 +170,7 @@ class MemoryMatchController extends StateNotifier<MemoryMatchState> {
 
     // Generate card pairs
     final pairs = difficulty.pairs;
-    final selectedIcons = _iconPool.take(pairs).toList();
+    final selectedImages = _imagePool.take(pairs).toList();
 
     final cards = <MemoryCard>[];
     for (int i = 0; i < pairs; i++) {
@@ -178,14 +178,14 @@ class MemoryMatchController extends StateNotifier<MemoryMatchState> {
         MemoryCard(
           id: 'card_${i}_a',
           pairId: i,
-          icon: selectedIcons[i],
+          imagePath: selectedImages[i],
         ),
       );
       cards.add(
         MemoryCard(
           id: 'card_${i}_b',
           pairId: i,
-          icon: selectedIcons[i],
+          imagePath: selectedImages[i],
         ),
       );
     }

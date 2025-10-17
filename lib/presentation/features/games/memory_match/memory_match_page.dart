@@ -381,10 +381,22 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
         ),
         child: Center(
           child: isRevealed
-              ? Icon(
-                  card.icon,
-                  size: size * 0.5,
-                  color: Theme.of(context).colorScheme.primary,
+              ? Padding(
+                  padding: EdgeInsets.all(size * 0.15),
+                  child: Image.asset(
+                    card.imagePath,
+                    fit: BoxFit.contain,
+                    color: Theme.of(context).colorScheme.primary,
+                    colorBlendMode: BlendMode.srcIn,
+                    errorBuilder: (context, error, stackTrace) {
+                      // Fallback to icon if image not found
+                      return Icon(
+                        Icons.image_not_supported,
+                        size: size * 0.5,
+                        color: Theme.of(context).colorScheme.error,
+                      );
+                    },
+                  ),
                 )
               : Icon(
                   Icons.question_mark,

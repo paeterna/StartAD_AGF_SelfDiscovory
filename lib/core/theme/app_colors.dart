@@ -5,21 +5,38 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  // === Blue & Purple Gradient Colors ===
+  // === Vibrant Color Palette for High Schoolers ===
 
-  // Primary blue-purple gradient
-  static const Color deepPurple = Color(0xFF6B4EFF); // Rich purple
-  static const Color vibrantPurple = Color(0xFF8B7AFF); // Vibrant purple
-  static const Color softPurple = Color(0xFFB4A5FF); // Soft purple
-  static const Color skyBlue = Color(0xFF6BA5FF); // Sky blue
-  static const Color lightBlue = Color(0xFF94C4FF); // Light blue
-  static const Color paleBlue = Color(0xFFC2DBFF); // Pale blue
+  // Primary colors - Vibrant and energetic
+  static const Color teal = Color(0xFF38AFB7); // Primary teal
+  static const Color tealDark = Color(0xFF2D8A91); // Darker teal for dark mode
+  static const Color tealLight = Color(0xFF5DC5CC); // Lighter teal for highlights
+  
+  static const Color orange = Color(0xFFEDA43B); // Vibrant orange
+  static const Color orangeDark = Color(0xFFD88F2A); // Deeper orange
+  static const Color orangeLight = Color(0xFFF5BD6B); // Soft orange
+  
+  static const Color lime = Color(0xFFA4C252); // Fresh lime green
+  static const Color limeDark = Color(0xFF8CAA3F); // Darker lime
+  static const Color limeLight = Color(0xFFBDD47A); // Lighter lime
+  
+  static const Color lavender = Color(0xFFA587BB); // Cool lavender
+  static const Color lavenderDark = Color(0xFF8B6FA3); // Deeper lavender
+  static const Color lavenderLight = Color(0xFFC1A7D4); // Soft lavender
 
-  // Accent colors (Blue/Purple tones)
-  static const Color accentViolet = Color(0xFF9D7BFF); // Violet accent
-  static const Color accentLavender = Color(0xFFB8A5FF); // Lavender
-  static const Color accentPeriwinkle = Color(0xFFADC5FF); // Periwinkle
-  static const Color accentLightPurple = Color(0xFFD9CFFF); // Light purple
+  // Legacy colors for gradual migration
+  static const Color deepPurple = lavenderDark; // Map to lavender
+  static const Color vibrantPurple = lavender; // Map to lavender
+  static const Color softPurple = lavenderLight; // Map to light lavender
+  static const Color skyBlue = teal; // Map to teal
+  static const Color lightBlue = tealLight; // Map to light teal
+  static const Color paleBlue = Color(0xFFC2DBFF); // Keep as complement
+
+  // Accent colors - Energetic combinations
+  static const Color accentViolet = lavender; // Lavender accent
+  static const Color accentLavender = lavenderLight; // Light lavender
+  static const Color accentPeriwinkle = tealLight; // Teal accent
+  static const Color accentLightPurple = lavenderLight; // Light purple
 
   // === Text Colors (Soft, Never Harsh) ===
 
@@ -36,17 +53,17 @@ class AppColors {
   static const Color textDarkSecondary = Color(0xFFE0E0E0); // Light gray
   static const Color textDarkTertiary = Color(0xFFC0C0C0); // Medium gray
 
-  // === Background Colors ===
+  // === Background Colors (Minimalist) ===
 
-  // Light theme backgrounds - Pure white
+  // Light theme backgrounds - Pure white for minimalism
   static const Color lightBackground = Color(0xFFFFFFFF); // Pure white
   static const Color lightSurface = Color(0xFFFFFFFF); // Pure white
-  static const Color lightCard = Color(0xFFFAFAFA); // Slightly off-white for cards
+  static const Color lightCard = Color(0xFFFBFBFB); // Subtle off-white for depth
 
-  // Dark theme backgrounds - Dark grey
-  static const Color darkBackground = Color(0xFF1E1E1E); // Dark grey
-  static const Color darkSurface = Color(0xFF2D2D2D); // Medium dark grey
-  static const Color darkCard = Color(0xFF3A3A3A); // Lighter dark grey for cards
+  // Dark theme backgrounds - True black/dark grey for contrast
+  static const Color darkBackground = Color(0xFF0A0A0A); // Near black
+  static const Color darkSurface = Color(0xFF121212); // Dark grey
+  static const Color darkCard = Color(0xFF1E1E1E); // Card background
 
   // === Glassmorphism Effects (15-25% opacity) ===
 
@@ -66,60 +83,69 @@ class AppColors {
   static Color glassDark = Colors.white.withValues(alpha: 0.1);
   static Color glassDarkBorder = Colors.white.withValues(alpha: 0.15);
 
-  // === Status Colors (Soft, Not Harsh) ===
+  // === Status Colors (Vibrant & Friendly) ===
 
-  static const Color success = Color(0xFF81C784); // Soft green
-  static const Color warning = Color(0xFFFFB74D); // Soft amber
+  static const Color success = lime; // Fresh lime green
+  static const Color warning = orange; // Vibrant orange
   static const Color error = Color(0xFFE57373); // Soft red
-  static const Color info = Color(0xFF64B5F6); // Soft blue
+  static const Color info = teal; // Primary teal
 
-  // === Progress Colors (Warm Tones) ===
+  // === Progress Colors (Energetic Tones) ===
 
-  static const Color progressLow = Color(0xFFFFAB91); // Warm orange
-  static const Color progressMedium = Color(0xFFFFD54F); // Warm yellow
-  static const Color progressHigh = Color(0xFF81C784); // Soft green
+  static const Color progressLow = orange; // Vibrant orange
+  static const Color progressMedium = Color(0xFFFFD54F); // Bright yellow
+  static const Color progressHigh = lime; // Fresh lime green
 
   // === Gradient Definitions ===
 
-  /// Primary card gradient: Deep Purple → Vibrant Purple → Blue
+  /// Primary card gradient: Teal → Lavender → Lime (Vibrant & Energetic)
   /// Used for cards and interactive elements
   static const LinearGradient primaryGradient = LinearGradient(
     colors: [
-      deepPurple, // Deep purple
-      vibrantPurple, // Vibrant purple
-      skyBlue, // Sky blue
+      teal, // Vibrant teal
+      lavender, // Cool lavender
+      lime, // Fresh lime
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     stops: [0.0, 0.5, 1.0],
   );
 
-  /// Subtle background gradient for light mode - Pure white
+  /// Secondary gradient: Orange → Teal (Warm to Cool)
+  static const LinearGradient secondaryGradient = LinearGradient(
+    colors: [
+      orange, // Vibrant orange
+      teal, // Cool teal
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  /// Accent gradient: Lavender → Lime (Purple to Green)
+  static const LinearGradient accentGradient = LinearGradient(
+    colors: [
+      lavender, // Lavender
+      lime, // Lime green
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  /// Subtle background gradient for light mode - Pure white with hint of color
   static const LinearGradient lightBackgroundGradient = LinearGradient(
     colors: [
       Color(0xFFFFFFFF), // White
-      Color(0xFFFFFFFF), // White
+      Color(0xFFFAFDFD), // Very subtle teal tint
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
 
-  /// Dark mode gradient - Dark grey
+  /// Dark mode gradient - Dark grey with subtle color
   static const LinearGradient darkBackgroundGradient = LinearGradient(
     colors: [
       Color(0xFF1E1E1E), // Dark grey
-      Color(0xFF252525), // Slightly lighter dark grey
-    ],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
-
-  /// Accent gradient for highlights (purple/blue)
-  static const LinearGradient accentGradient = LinearGradient(
-    colors: [
-      accentViolet, // Violet
-      accentPeriwinkle, // Periwinkle
-      lightBlue, // Light blue
+      Color(0xFF1F2324), // Subtle teal-grey
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

@@ -1,8 +1,8 @@
-/// App-wide constants
+/// Core application constants and configuration values
 class AppConstants {
   AppConstants._();
 
-  // App Info
+  /// Application information
   static const String appName = 'SelfMap';
   static const String appVersion = '1.0.0';
 

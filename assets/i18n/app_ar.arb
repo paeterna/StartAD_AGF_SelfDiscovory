@@ -1,8 +1,8 @@
 {
   "@@locale": "ar",
 
-  "appName": "خريطة الذات",
-  "welcomeMessage": "مرحباً بك في خريطة الذات",
+  "appName": "SelfMap",
+  "welcomeMessage": "مرحباً بك في SelfMap",
   "tagline": "اكتشف مستقبلك",
 
   "authLoginTitle": "تسجيل الدخول",
@@ -36,7 +36,7 @@
   "onboardingFinishButton": "إنهاء",
   "onboardingSkipButton": "تخطي",
 
-  "welcomeTitle": "مرحباً بك في خريطة الذات! 🚀",
+  "welcomeTitle": "مرحباً بك في SelfMap! 🚀",
   "welcomeSubtitle": "اكتشف من أنت وإلى أين تتجه",
   "welcomeGetStartedButton": "لنبدأ! ✨",
   "welcomeQuickTitle": "سريع وممتع",

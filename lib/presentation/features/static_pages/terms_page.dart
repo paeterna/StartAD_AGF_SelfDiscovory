@@ -9,8 +9,8 @@ class TermsPage extends StatelessWidget {
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(title: const Text('Terms of Use')),
-        body: const SingleChildScrollView(
-          padding: EdgeInsets.all(24),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -24,8 +24,10 @@ class TermsPage extends StatelessWidget {
                 style: TextStyle(color: Colors.grey),
               ),
               SizedBox(height: 24),
+              SizedBox(height: 16),
               Text(
                 'By using SelfMap, you agree to these Terms of Use. Please read them carefully.',
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(height: 16),
               Text(
@@ -72,10 +74,9 @@ class TermsPage extends StatelessWidget {
               Text(
                 'We reserve the right to modify these Terms at any time. Continued use of SelfMap after changes constitutes acceptance of the new Terms.',
               ),
-              SizedBox(height: 24),
+              SizedBox(height: 16),
               Text(
                 'For questions about these terms, please contact us at legal@selfmap.app',
-                style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ],
           ),

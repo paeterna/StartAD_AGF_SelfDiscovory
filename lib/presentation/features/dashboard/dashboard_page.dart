@@ -9,6 +9,7 @@ import '../../../core/router/app_router.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 import '../../widgets/radar_traits_card.dart';
+import '../../widgets/app_logo.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({super.key});

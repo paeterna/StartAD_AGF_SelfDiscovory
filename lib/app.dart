@@ -9,6 +9,7 @@ import 'core/theme/app_theme.dart';
 import 'domain/entities/user.dart';
 import 'generated/l10n/app_localizations.dart';
 
+/// Main SelfMap application widget
 class SelfMapApp extends ConsumerStatefulWidget {
   const SelfMapApp({super.key});
 

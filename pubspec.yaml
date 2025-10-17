@@ -70,6 +70,9 @@ flutter:
   assets:
     - assets/i18n/
     - assets/assessments/
-    #- .env
+    - assets/images/
+    - assets/images/memory_cards/
+    - assets/images/logo_selfmap.png
+    - .env
     # Note: .env should NOT be an asset - it's for local dev only
     # Environment variables are set in Netlify dashboard
