@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/providers/providers.dart';
 import '../../data/repositories_impl/ai_insight_repository_impl.dart';
 import '../../domain/entities/ai_insight.dart';
+import '../../domain/entities/career_roadmap.dart';
 import '../../domain/repositories/ai_insight_repository.dart';
 import 'ai_insight_service.dart';
 
@@ -17,16 +18,55 @@ final aiInsightServiceProvider = Provider<AIInsightService>((ref) {
   return AIInsightService(repository);
 });
 
-/// Provider for latest AI insight for current user
-final latestAIInsightProvider = FutureProvider<AIInsight?>((ref) async {
-  final service = ref.watch(aiInsightServiceProvider);
+/// Provider for latest AI insight for current user (real-time stream)
+final latestAIInsightProvider = StreamProvider<AIInsight?>((ref) {
   final userId = ref.watch(currentUserIdProvider);
+  final supabase = ref.watch(supabaseClientProvider);
 
   if (userId == null) {
-    return null;
+    return Stream.value(null);
   }
 
-  return await service.getLatestInsight(userId);
+  // Create real-time stream from Supabase
+  return supabase
+      .from('ai_career_insights')
+      .stream(primaryKey: ['id'])
+      .eq('user_id', userId)
+      .order('created_at', ascending: false)
+      .limit(1)
+      .map((rows) {
+        if (rows.isEmpty) return null;
+        final json = rows.first as Map<String, dynamic>;
+        return AIInsight(
+          id: json['id'] as String,
+          userId: json['user_id'] as String,
+          personalitySummary: json['personality_summary'] as String,
+          skillsDetected: List<String>.from(json['skills_detected'] as List),
+          interestScores: Map<String, double>.from(
+            (json['interest_scores'] as Map).map(
+              (key, value) => MapEntry(key as String, (value as num).toDouble()),
+            ),
+          ),
+          careerRecommendations: (json['career_recommendations'] as List)
+              .map((e) => CareerRecommendation.fromJson(e as Map<String, dynamic>))
+              .toList(),
+          careerReasoning: Map<String, String>.from(json['career_reasoning'] as Map),
+          careerRoadmaps: json['career_roadmaps'] != null
+              ? (json['career_roadmaps'] as Map).map(
+                  (key, value) => MapEntry(
+                    key as String,
+                    CareerRoadmap.fromJson(key as String, value as Map<String, dynamic>),
+                  ),
+                )
+              : {},
+          confidenceScore: (json['confidence_score'] as num?)?.toDouble() ?? 0.0,
+          dataPointsUsed: json['data_points_used'] as int? ?? 0,
+          createdAt: DateTime.parse(json['created_at'] as String),
+          updatedAt: json['updated_at'] != null
+              ? DateTime.parse(json['updated_at'] as String)
+              : null,
+        );
+      });
 });
 
 /// Provider for all AI insights for current user

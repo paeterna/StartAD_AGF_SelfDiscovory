@@ -409,6 +409,20 @@ class _InterestChart extends StatelessWidget {
 
   final Map<String, double> scores;
 
+  /// Convert snake_case or camelCase keys to readable Title Case
+  String _formatLabel(String key) {
+    return key
+        .replaceAll('_', ' ')
+        .replaceAllMapped(
+          RegExp(r'([A-Z])'),
+          (match) => ' ${match.group(0)}',
+        )
+        .trim()
+        .split(' ')
+        .map((word) => word.isEmpty ? '' : word[0].toUpperCase() + word.substring(1).toLowerCase())
+        .join(' ');
+  }
+
   @override
   Widget build(BuildContext context) {
     final sortedEntries = scores.entries.toList()
@@ -424,9 +438,13 @@ class _InterestChart extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    entry.key,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                  Expanded(
+                    child: Text(
+                      _formatLabel(entry.key),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
                   ),
                   Text(
                     '${entry.value.toInt()}%',
