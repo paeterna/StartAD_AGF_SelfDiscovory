@@ -107,18 +107,13 @@ class AdaptiveShell extends StatelessWidget {
       );
     }
 
-    // Desktop: Expanded navigation rail + optional side panels
+    // Desktop: Expanded navigation rail
     return Scaffold(
       body: Row(
         children: [
           const _Rail(compact: false),
           const VerticalDivider(width: 1, thickness: 1),
           Expanded(child: child),
-          // Optional insights panel for xl screens
-          if (context.isXl) ...[
-            const VerticalDivider(width: 1, thickness: 1),
-            const _InsightsPanel(),
-          ],
         ],
       ),
     );
@@ -217,157 +212,6 @@ class _Rail extends StatelessWidget {
           label: Text(dest.label(context)),
         );
       }).toList(),
-    );
-  }
-}
-
-// =====================================================
-// Insights Panel (XL screens)
-// =====================================================
-
-class _InsightsPanel extends StatelessWidget {
-  const _InsightsPanel();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      width: 320,
-      color: theme.colorScheme.surface,
-      child: Column(
-        children: [
-          // Header
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: theme.dividerColor,
-                  width: 1,
-                ),
-              ),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.lightbulb_outline,
-                  color: theme.colorScheme.primary,
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  'Insights',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Content
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(20),
-              children: [
-                _InsightCard(
-                  icon: Icons.trending_up,
-                  title: 'Progress Streak',
-                  subtitle: 'Keep going! You\'re on a roll.',
-                  color: theme.colorScheme.primary,
-                ),
-                const SizedBox(height: 12),
-                _InsightCard(
-                  icon: Icons.star_outline,
-                  title: 'Top Match',
-                  subtitle: 'Software Developer (95% match)',
-                  color: Colors.amber,
-                ),
-                const SizedBox(height: 12),
-                _InsightCard(
-                  icon: Icons.quiz_outlined,
-                  title: 'Next Assessment',
-                  subtitle: 'Complete personality quiz',
-                  color: theme.colorScheme.secondary,
-                ),
-                const SizedBox(height: 12),
-                _InsightCard(
-                  icon: Icons.emoji_events_outlined,
-                  title: 'Achievement',
-                  subtitle: 'Completed 5 assessments',
-                  color: Colors.green,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _InsightCard extends StatelessWidget {
-  const _InsightCard({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.color,
-  });
-
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Card(
-      elevation: 0,
-      color: theme.colorScheme.surfaceContainerHighest,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(
-                icon,
-                color: color,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    subtitle,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.textTheme.bodySmall?.color?.withValues(
-                        alpha: 0.7,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
