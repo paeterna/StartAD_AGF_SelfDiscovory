@@ -273,8 +273,9 @@ serve(async (req) => {
       // Compute cosine similarity
       const cosSim = cosineSimilarity(userVector, career.vector);
 
-      // Apply confidence weighting
-      const finalSimilarity = cosSim * overallConfidence;
+      // Store raw similarity score (don't apply confidence weighting)
+      // Confidence is stored separately and can be used for UI indicators
+      const finalSimilarity = cosSim;
 
       // Get top contributing features
       const topFeatures = getTopContributingFeatures(userVector, career.vector, features);
