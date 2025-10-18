@@ -36,7 +36,7 @@ final latestAIInsightProvider = StreamProvider<AIInsight?>((ref) {
       .limit(1)
       .map((rows) {
         if (rows.isEmpty) return null;
-        final json = rows.first as Map<String, dynamic>;
+        final json = rows.first;
         return AIInsight(
           id: json['id'] as String,
           userId: json['user_id'] as String,
@@ -55,7 +55,7 @@ final latestAIInsightProvider = StreamProvider<AIInsight?>((ref) {
               ? (json['career_roadmaps'] as Map).map(
                   (key, value) => MapEntry(
                     key as String,
-                    CareerRoadmap.fromJson(key as String, value as Map<String, dynamic>),
+                    CareerRoadmap.fromJson(key as String, value),
                   ),
                 )
               : {},
@@ -78,7 +78,7 @@ final allAIInsightsProvider = FutureProvider<List<AIInsight>>((ref) async {
     return [];
   }
 
-  return await service.getAllInsights(userId);
+  return service.getAllInsights(userId);
 });
 
 /// Provider for AI insight eligibility check
@@ -96,7 +96,7 @@ final aiInsightEligibilityProvider = FutureProvider<InsightEligibility>((ref) as
     );
   }
 
-  return await service.checkEligibility(userId);
+  return service.checkEligibility(userId);
 });
 
 /// State notifier for AI insight generation

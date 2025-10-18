@@ -1,4 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../application/ai_insight/ai_insight_providers.dart';
@@ -149,7 +148,7 @@ class _EligibilityCard extends StatelessWidget {
             const SizedBox(height: 16),
             LinearProgressIndicator(
               value: progress / 100,
-              backgroundColor: Colors.grey.withOpacity(0.2),
+              backgroundColor: Colors.grey.withValues(alpha: 0.2),
               valueColor: AlwaysStoppedAnimation<Color>(
                 canGenerate ? Colors.green : Colors.orange,
               ),
@@ -314,7 +313,7 @@ class _InsightDisplay extends StatelessWidget {
             children: insight.skillsDetected
                 .map((skill) => Chip(
                       label: Text(skill),
-                      backgroundColor: Colors.blue.withOpacity(0.2),
+                      backgroundColor: Colors.blue.withValues(alpha: 0.2),
                     ))
                 .toList(),
           ),
@@ -338,19 +337,6 @@ class _InsightDisplay extends StatelessWidget {
           child: Column(
             children: insight.careerRecommendations
                 .map((career) => _CareerCard(career: career))
-                .toList(),
-          ),
-        ),
-
-        const SizedBox(height: 16),
-
-        // Learning Path
-        _SectionCard(
-          title: 'Next Steps',
-          icon: Icons.rocket_launch,
-          child: Column(
-            children: insight.learningPath
-                .map((step) => _LearningStepCard(step: step))
                 .toList(),
           ),
         ),
@@ -457,7 +443,7 @@ class _InterestChart extends StatelessWidget {
               const SizedBox(height: 4),
               LinearProgressIndicator(
                 value: entry.value / 100,
-                backgroundColor: Colors.grey.withOpacity(0.2),
+                backgroundColor: Colors.grey.withValues(alpha: 0.2),
               ),
             ],
           ),
@@ -497,7 +483,7 @@ class _CareerCard extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.2),
+                    color: Colors.green.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -519,7 +505,7 @@ class _CareerCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
+                color: Colors.blue.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
@@ -529,51 +515,6 @@ class _CareerCard extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _LearningStepCard extends StatelessWidget {
-  const _LearningStepCard({required this.step});
-
-  final LearningPathStep step;
-
-  @override
-  Widget build(BuildContext context) {
-    IconData icon;
-    Color color;
-
-    switch (step.type.toLowerCase()) {
-      case 'course':
-        icon = Icons.school;
-        color = Colors.blue;
-        break;
-      case 'activity':
-        icon = Icons.sports_esports;
-        color = Colors.green;
-        break;
-      case 'challenge':
-        icon = Icons.emoji_events;
-        color = Colors.orange;
-        break;
-      default:
-        icon = Icons.link;
-        color = Colors.purple;
-    }
-
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: color.withOpacity(0.2),
-          child: Icon(icon, color: color),
-        ),
-        title: Text(
-          step.title,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text(step.description),
       ),
     );
   }
@@ -664,4 +605,5 @@ class _MetadataItem extends StatelessWidget {
     );
   }
 }
+
 

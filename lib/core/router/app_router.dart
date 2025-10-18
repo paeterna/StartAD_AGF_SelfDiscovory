@@ -225,10 +225,8 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: AppRoutes.roadmap,
-            pageBuilder: (context, state) {
-              final careerTitle = state.uri.queryParameters['career'];
-              return const NoTransitionPage(child: EnhancedRoadmapPage());
-            },
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: EnhancedRoadmapPage()),
           ),
           GoRoute(
             path: AppRoutes.settings,
