@@ -18,6 +18,8 @@ import '../../presentation/features/quiz/quiz_page.dart';
 import '../../presentation/features/game/game_page.dart';
 import '../../presentation/features/games/memory_match/memory_match_page.dart';
 import '../../presentation/features/roadmap/enhanced_roadmap_page.dart';
+import '../../presentation/features/roadmaps/roadmap_detail_page.dart';
+import '../../application/roadmaps/roadmap_providers.dart';
 import '../../presentation/features/settings/settings_page.dart';
 import '../../presentation/features/school/school_dashboard_page.dart';
 import '../../presentation/features/school/student_detail_page.dart';
@@ -43,6 +45,7 @@ class AppRoutes {
   static const String careers = '/careers';
   static const String careerTree = '/careers/tree';
   static const String roadmap = '/roadmap';
+  static const String roadmapDetail = '/roadmap/detail';
   static const String settings = '/settings';
   static const String privacy = '/privacy';
   static const String terms = '/terms';
@@ -230,6 +233,44 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: AppRoutes.roadmap,
             pageBuilder: (context, state) =>
                 const NoTransitionPage(child: EnhancedRoadmapPage()),
+          ),
+          // AI Roadmap detail route
+          GoRoute(
+            path: '${AppRoutes.roadmapDetail}/:roadmapId',
+            pageBuilder: (context, state) {
+              final roadmapId = state.pathParameters['roadmapId']!;
+              return MaterialPage(
+                key: state.pageKey,
+                child: Consumer(
+                  builder: (context, ref, _) {
+                    final roadmapAsync = ref.watch(roadmapByIdProvider(roadmapId));
+
+                    return roadmapAsync.when(
+                      data: (roadmap) {
+                        if (roadmap == null) {
+                          return Scaffold(
+                            appBar: AppBar(title: const Text('Roadmap Not Found')),
+                            body: const Center(
+                              child: Text('This roadmap could not be found.'),
+                            ),
+                          );
+                        }
+                        return RoadmapDetailPage(roadmap: roadmap);
+                      },
+                      loading: () => const Scaffold(
+                        body: Center(child: CircularProgressIndicator()),
+                      ),
+                      error: (error, _) => Scaffold(
+                        appBar: AppBar(title: const Text('Error')),
+                        body: Center(
+                          child: Text('Error loading roadmap: $error'),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
           ),
           GoRoute(
             path: AppRoutes.settings,

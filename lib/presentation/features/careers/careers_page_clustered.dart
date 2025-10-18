@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../domain/entities/career_cluster.dart' show CareerClusterGroup;
 import '../../../domain/entities/career.dart' hide CareerCluster;
 import '../../../generated/l10n/app_localizations.dart';
 import '../../../core/router/app_router.dart';
+import '../../../application/roadmaps/roadmap_providers.dart';
 
 /// Cluster-first careers page
 ///
@@ -198,16 +200,16 @@ class _ClusterList extends StatelessWidget {
 }
 
 /// Expandable cluster card
-class _ClusterCard extends StatefulWidget {
+class _ClusterCard extends ConsumerStatefulWidget {
   const _ClusterCard({required this.cluster});
 
   final CareerClusterGroup cluster;
 
   @override
-  State<_ClusterCard> createState() => _ClusterCardState();
+  ConsumerState<_ClusterCard> createState() => _ClusterCardState();
 }
 
-class _ClusterCardState extends State<_ClusterCard> {
+class _ClusterCardState extends ConsumerState<_ClusterCard> {
   bool _isExpanded = false;
 
   @override
@@ -349,18 +351,27 @@ class _ClusterCardState extends State<_ClusterCard> {
     return Colors.grey;
   }
 
-  void _handleGenerateRoadmap(BuildContext context, Career career) {
-    // TODO: Check if roadmap exists, handle limit, call generation
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Generate roadmap for ${career.title}'),
-        action: SnackBarAction(
-          label: 'Generate',
-          onPressed: () {
-            // TODO: Implement roadmap generation
-          },
-        ),
-      ),
+  Future<void> _handleGenerateRoadmap(BuildContext context, Career career) async {
+    final roadmapService = ref.read(roadmapServiceProvider);
+    final userId = Supabase.instance.client.auth.currentUser?.id;
+
+    if (userId == null) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please log in to generate roadmaps')),
+        );
+      }
+      return;
+    }
+
+    // Call the service which handles everything: checks, limits, generation, navigation
+    await roadmapService.generateRoadmapWithFlow(
+      context: context,
+      userId: userId,
+      careerId: career.id,
+      careerTitle: career.title,
+      matchScore: career.matchScore,
+      locale: 'en', // TODO: Get from user preferences
     );
   }
 }
