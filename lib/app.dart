@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
@@ -8,6 +9,17 @@ import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'domain/entities/user.dart';
 import 'generated/l10n/app_localizations.dart';
+
+/// Custom scroll behavior for web to fix double-click issue
+class AppScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.stylus,
+        PointerDeviceKind.trackpad,
+      };
+}
 
 class SelfMapApp extends ConsumerStatefulWidget {
   const SelfMapApp({super.key});
@@ -69,6 +81,9 @@ class _SelfMapAppState extends ConsumerState<SelfMapApp> {
       locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+
+      // Fix double-click issue on web by enabling mouse drag for scrolling
+      scrollBehavior: AppScrollBehavior(),
     );
   }
 

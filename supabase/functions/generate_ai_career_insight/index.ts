@@ -10,15 +10,15 @@ const corsHeaders = {
 interface UserData {
   featureScores: Array<{ key: string; family: string; score: number; n: number }>;
   assessments: Array<{ taken_at: string; trait_scores: any }>;
-  activityRuns: Array<{ 
-    activity_title: string; 
-    completed_at: string; 
+  activityRuns: Array<{
+    activity_title: string;
+    completed_at: string;
     score: number;
     trait_scores: any;
   }>;
-  careerMatches: Array<{ 
-    career_title: string; 
-    similarity: number; 
+  careerMatches: Array<{
+    career_title: string;
+    similarity: number;
     confidence: number;
   }>;
   profile: {
@@ -254,13 +254,13 @@ function generateFallbackInsight(userData: UserData): AIInsight {
   const interests = userData.featureScores.filter(f => f.family === 'interests');
   const traits = userData.featureScores.filter(f => f.family === 'traits');
   const cognition = userData.featureScores.filter(f => f.family === 'cognition');
-  
+
   // Get top 3 interests
   const topInterests = interests
     .sort((a, b) => b.score - a.score)
     .slice(0, 3)
     .map(i => i.key.replace('interest_', ''));
-  
+
   // Get top 3 traits
   const topTraits = traits
     .sort((a, b) => b.score - a.score)
@@ -307,7 +307,7 @@ function generateFallbackInsight(userData: UserData): AIInsight {
     personality_summary: `Based on your assessment data, you show strong interests in ${topInterests.join(', ')} and demonstrate traits like ${topTraits.join(', ')}. You appear to be someone who approaches challenges with curiosity and determination.`,
     skills_detected: [
       "Analytical thinking",
-      "Problem solving", 
+      "Problem solving",
       "Creative expression",
       "Communication",
       "Attention to detail",
@@ -351,13 +351,16 @@ function generateFallbackInsight(userData: UserData): AIInsight {
 async function generateAIInsight(prompt: string, azureApiKey: string): Promise<AIInsight> {
   // Azure OpenAI configuration
   const azureEndpoint = 'https://my-openai-email.openai.azure.com';
-  const deploymentName = 'gpt-5-mini';
   const apiVersion = '2024-02-15-preview';
 
   // List of deployment names to try in order of preference
   const deployments = [
-    'gpt-5-mini', 
+    'gpt-5-mini',
+    'gpt-4o',
+    'gpt-4o-mini',
     'gpt-4',
+    'gpt-4-turbo',
+    'gpt-35-turbo-16k',
     'gpt-35-turbo',
   ];
 
@@ -366,10 +369,10 @@ async function generateAIInsight(prompt: string, azureApiKey: string): Promise<A
   for (const deployment of deployments) {
     try {
       console.log(`Attempting to use Azure OpenAI deployment: ${deployment}`);
-      
+
       // Azure OpenAI endpoint format
       const azureUrl = `${azureEndpoint}/openai/deployments/${deployment}/chat/completions?api-version=${apiVersion}`;
-      
+
       const response = await fetch(azureUrl, {
         method: 'POST',
         headers: {
@@ -396,21 +399,21 @@ async function generateAIInsight(prompt: string, azureApiKey: string): Promise<A
       if (!response.ok) {
         const errorData = await response.text();
         lastError = errorData;
-        
+
         // Parse error to check if it's a quota or deployment issue
         try {
           const errorJson = JSON.parse(errorData);
           const errorCode = errorJson.error?.code;
           const errorType = errorJson.error?.type;
-          
+
           console.log(`Deployment ${deployment} failed with code: ${errorCode}, type: ${errorType}`);
-          
+
           // If it's a quota issue, try next deployment
           if (errorCode === 'insufficient_quota' || errorType === 'insufficient_quota') {
             console.log(`Quota exceeded for ${deployment}, trying next deployment...`);
             continue;
           }
-          
+
           // If deployment not found, try next deployment
           if (errorCode === 'DeploymentNotFound' || errorCode === 'model_not_found') {
             console.log(`Deployment ${deployment} not found, trying next deployment...`);
@@ -419,17 +422,17 @@ async function generateAIInsight(prompt: string, azureApiKey: string): Promise<A
         } catch (parseError) {
           console.log(`Could not parse error for ${deployment}: ${errorData}`);
         }
-        
+
         // For other errors, continue to next deployment
         continue;
       }
 
       const data = await response.json();
       const content = data.choices[0].message.content;
-      
+
       console.log(`Successfully generated insight using Azure OpenAI deployment: ${deployment}`);
       return JSON.parse(content);
-      
+
     } catch (error) {
       console.log(`Error with deployment ${deployment}: ${error.message}`);
       lastError = error.message;
@@ -439,14 +442,14 @@ async function generateAIInsight(prompt: string, azureApiKey: string): Promise<A
 
   // If all deployments failed, return fallback insight
   console.log('All Azure OpenAI deployments failed, generating fallback insight...');
-  
+
   // Extract user data from the context to generate fallback
   // Since we don't have userData here directly, we'll generate a basic fallback
   const fallbackInsight: AIInsight = {
     personality_summary: "Based on your assessment data, you demonstrate strong analytical abilities and show curiosity across multiple domains. You appear to approach challenges with a methodical mindset while maintaining creativity.",
     skills_detected: [
       "Analytical thinking",
-      "Problem solving", 
+      "Problem solving",
       "Creative expression",
       "Communication",
       "Attention to detail",

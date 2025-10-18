@@ -39,24 +39,6 @@ class NavDestinations {
       labelKey: (l10n) => 'Dashboard',
     ),
     NavDestination(
-      route: '/discover',
-      icon: Icons.explore_outlined,
-      selectedIcon: Icons.explore,
-      labelKey: (l10n) => 'Discover',
-    ),
-    NavDestination(
-      route: '/careers',
-      icon: Icons.work_outline,
-      selectedIcon: Icons.work,
-      labelKey: (l10n) => 'Careers',
-    ),
-    NavDestination(
-      route: '/roadmap',
-      icon: Icons.map_outlined,
-      selectedIcon: Icons.map,
-      labelKey: (l10n) => 'Roadmap',
-    ),
-    NavDestination(
       route: '/settings',
       icon: Icons.settings_outlined,
       selectedIcon: Icons.settings,

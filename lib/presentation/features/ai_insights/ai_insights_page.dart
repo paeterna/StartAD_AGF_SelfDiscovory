@@ -537,7 +537,7 @@ class _MetadataCard extends StatelessWidget {
               children: [
                 _MetadataItem(
                   icon: Icons.analytics,
-                  label: 'Confidence',
+                  label: 'Accuracy',
                   value: '${(insight.confidenceScore * 100).toInt()}%',
                 ),
                 _MetadataItem(

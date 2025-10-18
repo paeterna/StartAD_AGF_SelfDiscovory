@@ -235,9 +235,9 @@ serve(async (req) => {
 
     console.log(`User vector built: ${validFeatures}/${featureCount} features with data, ${totalObservations} total observations`);
 
-    // Compute overall confidence (min(1, n_avg / 12))
+    // Compute overall confidence (min(1, n_avg / 6)) - less aggressive than /12
     const avgObservations = validFeatures > 0 ? totalObservations / validFeatures : 0;
-    const overallConfidence = Math.min(1.0, avgObservations / 12.0);
+    const overallConfidence = Math.min(1.0, avgObservations / 6.0);
 
     console.log(`Overall confidence: ${overallConfidence.toFixed(3)}`);
 
@@ -273,9 +273,9 @@ serve(async (req) => {
       // Compute cosine similarity
       const cosSim = cosineSimilarity(userVector, career.vector);
 
-      // Store raw similarity score (don't apply confidence weighting)
-      // Confidence is stored separately and can be used for UI indicators
-      const finalSimilarity = cosSim;
+      // Apply less aggressive confidence weighting (boosted by sqrt to reduce penalty)
+      // This preserves high matches while still reflecting data quality
+      const finalSimilarity = cosSim * Math.sqrt(overallConfidence);
 
       // Get top contributing features
       const topFeatures = getTopContributingFeatures(userVector, career.vector, features);

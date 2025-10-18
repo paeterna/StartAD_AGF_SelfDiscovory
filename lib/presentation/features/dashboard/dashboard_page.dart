@@ -19,12 +19,45 @@ class DashboardPage extends ConsumerWidget {
     final authState = ref.watch(authControllerProvider);
     final user = authState.user;
     final l10n = AppLocalizations.of(context)!;
+    final progressAsync = ref.watch(discoveryProgressProvider);
 
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.dashboardTitle),
           actions: [
+            // Streak indicator
+            progressAsync.when(
+              data: (progress) {
+                if (progress == null || progress.streakDays == 0) {
+                  return const SizedBox.shrink();
+                }
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.local_fire_department,
+                        color: Colors.orange,
+                        size: 24,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${progress.streakDays}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.orange,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                    ],
+                  ),
+                );
+              },
+              loading: () => const SizedBox.shrink(),
+              error: (_, __) => const SizedBox.shrink(),
+            ),
             IconButton(
               icon: const Icon(Icons.settings),
               onPressed: () => context.push(AppRoutes.settings),
@@ -48,10 +81,10 @@ class DashboardPage extends ConsumerWidget {
 
               // Profile completeness card
               _ProfileProgressCard(),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
 
-              // Discovery progress card (percent and streak)
-              _DiscoveryProgressCard(),
+              // Quick navigation buttons
+              _QuickNavigationButtons(),
               const SizedBox(height: 24),
 
               // Personality traits radar chart
@@ -105,136 +138,83 @@ class DashboardPage extends ConsumerWidget {
   }
 }
 
-class _DiscoveryProgressCard extends ConsumerWidget {
+class _QuickNavigationButtons extends StatelessWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final progressAsync = ref.watch(discoveryProgressProvider);
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: progressAsync.when(
-          data: (progress) {
-            if (progress == null) {
-              return Column(
-                children: [
-                  Icon(
-                    Icons.explore,
-                    size: 48,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.primary.withValues(alpha: 0.5),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Start your discovery journey!',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Complete quizzes and games to track your progress',
-                    style: Theme.of(context).textTheme.bodySmall,
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              );
-            }
-
-            return Row(
-              children: [
-                // Percent circle
-                Expanded(
-                  child: Column(
-                    children: [
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          SizedBox(
-                            width: 80,
-                            height: 80,
-                            child: CircularProgressIndicator(
-                              value: progress.percent / 100.0,
-                              strokeWidth: 8,
-                              backgroundColor: Theme.of(
-                                context,
-                              ).colorScheme.primary.withValues(alpha: 0.1),
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            '${progress.percent}%',
-                            style: Theme.of(context).textTheme.titleLarge
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Discovery Progress',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Divider
-                Container(
-                  height: 80,
-                  width: 1,
-                  color: Theme.of(context).dividerColor,
-                ),
-
-                // Streak
-                Expanded(
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.local_fire_department,
-                        size: 48,
-                        color: progress.streakDays > 0
-                            ? Colors.orange
-                            : Theme.of(
-                                context,
-                              ).colorScheme.primary.withValues(alpha: 0.3),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        '${progress.streakDays}',
-                        style: Theme.of(context).textTheme.headlineMedium
-                            ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: progress.streakDays > 0
-                                  ? Colors.orange
-                                  : null,
-                            ),
-                      ),
-                      Text(
-                        progress.streakDays == 1 ? 'Day Streak' : 'Days Streak',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          },
-          loading: () => const Center(
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: CircularProgressIndicator(),
-            ),
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _NavButton(
+            icon: Icons.sports_esports,
+            label: 'Games',
+            onTap: () => context.push('/games/memory-match'),
           ),
-          error: (error, stack) => Padding(
-            padding: const EdgeInsets.all(20),
-            child: Text(
-              'Unable to load progress',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.error,
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _NavButton(
+            icon: Icons.quiz,
+            label: 'Quizzes',
+            onTap: () => context.push(AppRoutes.discover),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _NavButton(
+            icon: Icons.work_outline,
+            label: 'Careers',
+            onTap: () => context.push(AppRoutes.careers),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: _NavButton(
+            icon: Icons.map_outlined,
+            label: 'Roadmap',
+            onTap: () => context.push(AppRoutes.roadmap),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _NavButton extends StatelessWidget {
+  const _NavButton({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                size: 32,
+                color: Theme.of(context).colorScheme.primary,
               ),
-              textAlign: TextAlign.center,
-            ),
+              const SizedBox(height: 8),
+              Text(
+                label,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
       ),
