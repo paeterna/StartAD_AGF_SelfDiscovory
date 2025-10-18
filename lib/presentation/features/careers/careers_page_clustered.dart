@@ -7,6 +7,7 @@ import '../../../domain/entities/career.dart' hide CareerCluster;
 import '../../../generated/l10n/app_localizations.dart';
 import '../../../core/router/app_router.dart';
 import '../../../application/roadmaps/roadmap_providers.dart';
+import '../../../application/scoring/scoring_providers.dart';
 
 /// Cluster-first careers page
 ///
@@ -18,8 +19,7 @@ class CareersPageClustered extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    // TODO: Replace with actual provider that calls watchTopClustersWithCareers
-    // final clustersAsync = ref.watch(careerClustersProvider);
+    final clustersAsync = ref.watch(careerClusterGroupsProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -33,9 +33,7 @@ class CareersPageClustered extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.map),
             tooltip: 'My Roadmaps',
-            onPressed: () {
-              // TODO: Navigate to roadmaps list
-            },
+            onPressed: () => context.push(AppRoutes.roadmap),
           ),
         ],
       ),
@@ -64,15 +62,13 @@ class CareersPageClustered extends ConsumerWidget {
             ),
           ),
 
-          // Cluster list
+          // Cluster list - Using real data from database
           Expanded(
-            child: _buildMockClusters(context),
-            // TODO: Replace with actual stream
-            // child: clustersAsync.when(
-            //   data: (clusters) => _ClusterList(clusters: clusters),
-            //   loading: () => const Center(child: CircularProgressIndicator()),
-            //   error: (error, stack) => _ErrorView(error: error),
-            // ),
+            child: clustersAsync.when(
+              data: (clusters) => _ClusterList(clusters: clusters),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stack) => _ErrorView(error: error.toString()),
+            ),
           ),
         ],
       ),
@@ -89,7 +85,7 @@ class CareersPageClustered extends ConsumerWidget {
         icon: '💻',
         topCareers: [
           const Career(
-            id: '1',
+            id: '00000000-0000-0000-0000-000000000001',
             title: 'Software Developer',
             description: 'Build apps and software solutions',
             tags: [],
@@ -97,7 +93,7 @@ class CareersPageClustered extends ConsumerWidget {
             cluster: 'Technology',
           ),
           const Career(
-            id: '2',
+            id: '00000000-0000-0000-0000-000000000002',
             title: 'Data Scientist',
             description: 'Analyze data and build AI models',
             tags: [],
@@ -105,7 +101,7 @@ class CareersPageClustered extends ConsumerWidget {
             cluster: 'Technology',
           ),
           const Career(
-            id: '3',
+            id: '00000000-0000-0000-0000-000000000003',
             title: 'UX Designer',
             description: 'Design user-friendly digital experiences',
             tags: [],
@@ -122,7 +118,7 @@ class CareersPageClustered extends ConsumerWidget {
         icon: '🏥',
         topCareers: [
           const Career(
-            id: '4',
+            id: '00000000-0000-0000-0000-000000000004',
             title: 'Doctor',
             description: 'Diagnose and treat patients',
             tags: [],
@@ -130,7 +126,7 @@ class CareersPageClustered extends ConsumerWidget {
             cluster: 'Healthcare',
           ),
           const Career(
-            id: '5',
+            id: '00000000-0000-0000-0000-000000000005',
             title: 'Pharmacist',
             description: 'Dispense medications and advise patients',
             tags: [],
@@ -138,7 +134,7 @@ class CareersPageClustered extends ConsumerWidget {
             cluster: 'Healthcare',
           ),
           const Career(
-            id: '6',
+            id: '00000000-0000-0000-0000-000000000006',
             title: 'Physical Therapist',
             description: 'Help patients recover mobility',
             tags: [],
@@ -449,8 +445,8 @@ class _CareerItem extends StatelessWidget {
           // Action button
           IconButton(
             onPressed: onGenerateRoadmap,
-            icon: const Icon(Icons.map),
-            tooltip: 'Generate Roadmap',
+            icon: const Icon(Icons.auto_awesome),
+            tooltip: 'Generate AI Roadmap',
             style: IconButton.styleFrom(
               backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.1),
               foregroundColor: theme.colorScheme.primary,
@@ -465,5 +461,49 @@ class _CareerItem extends StatelessWidget {
     if (score >= 70) return Colors.green;
     if (score >= 50) return Colors.orange;
     return Colors.grey;
+  }
+}
+
+/// Error view widget
+class _ErrorView extends StatelessWidget {
+  const _ErrorView({required this.error});
+
+  final String error;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error_outline,
+              size: 64,
+              color: Colors.red.shade400,
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'Error Loading Careers',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade700,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              error,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey.shade600,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

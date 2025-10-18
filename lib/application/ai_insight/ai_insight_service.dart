@@ -22,17 +22,17 @@ class AIInsightService {
       );
     }
 
-    return await _repository.generateInsight(userId);
+    return _repository.generateInsight(userId);
   }
 
   /// Get the latest AI insight for a user
   Future<AIInsight?> getLatestInsight(String userId) async {
-    return await _repository.getLatestInsight(userId);
+    return _repository.getLatestInsight(userId);
   }
 
   /// Get all AI insights for a user
   Future<List<AIInsight>> getAllInsights(String userId) async {
-    return await _repository.getAllInsights(userId);
+    return _repository.getAllInsights(userId);
   }
 
   /// Check if user can generate an AI insight

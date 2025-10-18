@@ -147,7 +147,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         schoolsAsync.when(
           data: (schools) {
             return DropdownButtonFormField<School>(
-              value: _selectedSchool,
+              initialValue: _selectedSchool,
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.school_outlined),
                 border: OutlineInputBorder(),

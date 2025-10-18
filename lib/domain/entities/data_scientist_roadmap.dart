@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'enhanced_career_roadmap.dart';
 
 /// Data Scientist career roadmap

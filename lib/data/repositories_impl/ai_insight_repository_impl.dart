@@ -146,7 +146,7 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
           ? (json['career_roadmaps'] as Map).map(
               (key, value) => MapEntry(
                 key as String,
-                CareerRoadmap.fromJson(key as String, value as Map<String, dynamic>),
+                CareerRoadmap.fromJson(key, value as Map<String, dynamic>),
               ),
             )
           : {}, // Return empty map if null

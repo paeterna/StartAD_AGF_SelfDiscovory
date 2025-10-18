@@ -122,7 +122,7 @@ class AIRoadmapPage extends ConsumerWidget {
               },
             ),
           );
-        }).toList(),
+        }),
       ],
     );
   }

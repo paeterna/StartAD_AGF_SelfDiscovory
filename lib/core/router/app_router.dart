@@ -9,7 +9,7 @@ import '../../presentation/features/auth/signup_page.dart';
 import '../../presentation/features/auth/oauth_callback_page.dart';
 import '../../presentation/features/auth/school_login_page.dart';
 import '../../presentation/features/assessment/assessment_page.dart';
-import '../../presentation/features/careers/careers_page.dart';
+import '../../presentation/features/careers/careers_page_clustered.dart';
 import '../../features/careers/presentation/pages/career_tree_page.dart';
 import '../../presentation/features/dashboard/dashboard_page.dart';
 import '../../presentation/features/discover/discover_page.dart';
@@ -17,8 +17,8 @@ import '../../presentation/features/onboarding/onboarding_page.dart';
 import '../../presentation/features/quiz/quiz_page.dart';
 import '../../presentation/features/game/game_page.dart';
 import '../../presentation/features/games/memory_match/memory_match_page.dart';
-import '../../presentation/features/roadmap/enhanced_roadmap_page.dart';
 import '../../presentation/features/roadmaps/roadmap_detail_page.dart';
+import '../../presentation/features/roadmaps/roadmaps_list_page.dart';
 import '../../application/roadmaps/roadmap_providers.dart';
 import '../../presentation/features/settings/settings_page.dart';
 import '../../presentation/features/school/school_dashboard_page.dart';
@@ -220,7 +220,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: AppRoutes.careers,
             pageBuilder: (context, state) =>
-                const NoTransitionPage(child: CareersPage()),
+                const NoTransitionPage(child: CareersPageClustered()),
             routes: [
               GoRoute(
                 path: 'tree',
@@ -232,7 +232,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: AppRoutes.roadmap,
             pageBuilder: (context, state) =>
-                const NoTransitionPage(child: EnhancedRoadmapPage()),
+                const NoTransitionPage(child: RoadmapsListPage()),
           ),
           // AI Roadmap detail route
           GoRoute(

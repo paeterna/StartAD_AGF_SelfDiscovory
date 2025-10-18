@@ -69,7 +69,7 @@ class AICareerRecommendationsCard extends ConsumerWidget {
           // Career cards
           ...insight.careerRecommendations.map((career) {
             return _buildCareerCard(context, career, insight);
-          }).toList(),
+          }),
         ],
       ),
     );

@@ -68,6 +68,7 @@ class RoadmapService {
       showDialog<void>(
         context: context,
         barrierDismissible: false,
+        useRootNavigator: true,
         builder: (context) => const Center(
           child: Card(
             child: Padding(
@@ -98,9 +99,9 @@ class RoadmapService {
         locale: locale,
       );
 
-      // Close loading dialog
+      // Close loading dialog first, before navigation
       if (context.mounted) {
-        Navigator.of(context).pop();
+        Navigator.of(context, rootNavigator: true).pop();
       }
 
       // Log success
@@ -117,10 +118,10 @@ class RoadmapService {
       }
 
       return true;
-    } on RoadmapLimitExceededException catch (e) {
+    } on RoadmapLimitExceededException {
       // Close loading dialog
       if (context.mounted) {
-        Navigator.of(context).pop();
+        Navigator.of(context, rootNavigator: true).pop();
       }
 
       // Get existing roadmaps
@@ -168,9 +169,9 @@ class RoadmapService {
         locale: locale,
       );
     } on RoadmapAlreadyExistsException {
-      // Close loading dialog
+      // Close loading dialog safely
       if (context.mounted) {
-        Navigator.of(context).pop();
+        Navigator.of(context, rootNavigator: true).pop();
       }
 
       // This shouldn't happen since we checked, but handle it
@@ -184,9 +185,9 @@ class RoadmapService {
 
       return false;
     } on AIGenerationFailedException catch (e) {
-      // Close loading dialog
+      // Close loading dialog safely
       if (context.mounted) {
-        Navigator.of(context).pop();
+        Navigator.of(context, rootNavigator: true).pop();
       }
 
       // Log failure
@@ -221,9 +222,9 @@ class RoadmapService {
 
       return false;
     } on Exception catch (e) {
-      // Close loading dialog
+      // Close loading dialog safely
       if (context.mounted) {
-        Navigator.of(context).pop();
+        Navigator.of(context, rootNavigator: true).pop();
       }
 
       // Log generic failure
@@ -237,8 +238,14 @@ class RoadmapService {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('An error occurred: ${e.toString()}'),
+            content: Text('Failed to generate roadmap. Please ensure the Edge Function is deployed.\n\nError: ${e.toString()}'),
             backgroundColor: Colors.red,
+            duration: const Duration(seconds: 6),
+            action: SnackBarAction(
+              label: 'OK',
+              textColor: Colors.white,
+              onPressed: () {},
+            ),
           ),
         );
       }
@@ -299,7 +306,9 @@ class RoadmapService {
         );
 
         // Navigate back
-        Navigator.of(context).pop();
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+        }
       }
 
       return true;

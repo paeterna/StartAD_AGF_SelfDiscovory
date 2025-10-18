@@ -12,7 +12,7 @@ final aiRoadmapRepositoryProvider = Provider<AIRoadmapRepository>((ref) {
 });
 
 /// Provider to watch user's roadmap summaries in real-time
-final userRoadmapsStreamProvider = StreamProvider.autoDispose<List<AICareerRoadmapSummary>>((ref) {
+final AutoDisposeStreamProvider<List<AICareerRoadmapSummary>> userRoadmapsStreamProvider = StreamProvider.autoDispose<List<AICareerRoadmapSummary>>((ref) {
   final repository = ref.watch(aiRoadmapRepositoryProvider);
   final userId = Supabase.instance.client.auth.currentUser?.id;
 
@@ -24,7 +24,7 @@ final userRoadmapsStreamProvider = StreamProvider.autoDispose<List<AICareerRoadm
 });
 
 /// Provider to get roadmap count for a user
-final userRoadmapCountProvider = FutureProvider.autoDispose<int>((ref) async {
+final AutoDisposeFutureProvider<int> userRoadmapCountProvider = FutureProvider.autoDispose<int>((ref) async {
   final repository = ref.watch(aiRoadmapRepositoryProvider);
   final userId = Supabase.instance.client.auth.currentUser?.id;
 
@@ -36,7 +36,7 @@ final userRoadmapCountProvider = FutureProvider.autoDispose<int>((ref) async {
 });
 
 /// Provider to check if user has a roadmap for a specific career
-final hasRoadmapForCareerProvider = FutureProvider.autoDispose.family<bool, String>((ref, careerId) async {
+final AutoDisposeFutureProviderFamily<bool, String> hasRoadmapForCareerProvider = FutureProvider.autoDispose.family<bool, String>((ref, careerId) async {
   final repository = ref.watch(aiRoadmapRepositoryProvider);
   final userId = Supabase.instance.client.auth.currentUser?.id;
 
@@ -48,13 +48,13 @@ final hasRoadmapForCareerProvider = FutureProvider.autoDispose.family<bool, Stri
 });
 
 /// Provider to get a specific roadmap by ID
-final roadmapByIdProvider = FutureProvider.autoDispose.family<AICareerRoadmap?, String>((ref, roadmapId) async {
+final AutoDisposeFutureProviderFamily<AICareerRoadmap?, String> roadmapByIdProvider = FutureProvider.autoDispose.family<AICareerRoadmap?, String>((ref, roadmapId) async {
   final repository = ref.watch(aiRoadmapRepositoryProvider);
   return repository.getRoadmapById(roadmapId);
 });
 
 /// Provider to get roadmap for a specific career
-final roadmapForCareerProvider = FutureProvider.autoDispose.family<AICareerRoadmap?, String>((ref, careerId) async {
+final AutoDisposeFutureProviderFamily<AICareerRoadmap?, String> roadmapForCareerProvider = FutureProvider.autoDispose.family<AICareerRoadmap?, String>((ref, careerId) async {
   final repository = ref.watch(aiRoadmapRepositoryProvider);
   final userId = Supabase.instance.client.auth.currentUser?.id;
 
@@ -115,7 +115,7 @@ class RoadmapGenerationNotifier extends StateNotifier<AsyncValue<String>> {
 }
 
 /// Provider for roadmap generation state
-final roadmapGenerationProvider = StateNotifierProvider.autoDispose<RoadmapGenerationNotifier, AsyncValue<String>>((ref) {
+final AutoDisposeStateNotifierProvider<RoadmapGenerationNotifier, AsyncValue<String>> roadmapGenerationProvider = StateNotifierProvider.autoDispose<RoadmapGenerationNotifier, AsyncValue<String>>((ref) {
   final repository = ref.watch(aiRoadmapRepositoryProvider);
   return RoadmapGenerationNotifier(repository);
 });

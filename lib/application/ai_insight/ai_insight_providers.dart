@@ -55,7 +55,7 @@ final latestAIInsightProvider = StreamProvider<AIInsight?>((ref) {
               ? (json['career_roadmaps'] as Map).map(
                   (key, value) => MapEntry(
                     key as String,
-                    CareerRoadmap.fromJson(key as String, value),
+                    CareerRoadmap.fromJson(key, value as Map<String, dynamic>),
                   ),
                 )
               : {},

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../application/scoring/scoring_providers.dart';
+import '../../../application/roadmaps/roadmap_providers.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../../core/router/app_router.dart';
 import '../../widgets/gradient_background.dart';
@@ -84,6 +86,7 @@ class CareersPage extends ConsumerWidget {
                       itemBuilder: (context, index) {
                         final match = matches[index];
                         return _CareerCard(
+                          careerId: match.match.careerId,
                           title: match.title,
                           description: match.description ?? '',
                           matchScore: match.similarityPercent.round(),
@@ -120,8 +123,9 @@ class CareersPage extends ConsumerWidget {
   }
 }
 
-class _CareerCard extends StatelessWidget {
+class _CareerCard extends ConsumerStatefulWidget {
   const _CareerCard({
+    required this.careerId,
     required this.title,
     required this.description,
     required this.matchScore,
@@ -130,6 +134,7 @@ class _CareerCard extends StatelessWidget {
     this.tags = const [],
   });
 
+  final String careerId;
   final String title;
   final String description;
   final int matchScore;
@@ -138,17 +143,66 @@ class _CareerCard extends StatelessWidget {
   final List<String> tags;
 
   @override
+  ConsumerState<_CareerCard> createState() => _CareerCardState();
+}
+
+class _CareerCardState extends ConsumerState<_CareerCard> {
+  bool _isGenerating = false;
+
+  Future<void> _handleGenerateRoadmap(BuildContext context) async {
+    final roadmapService = ref.read(roadmapServiceProvider);
+    final userId = Supabase.instance.client.auth.currentUser?.id;
+
+    if (userId == null) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please log in to generate roadmaps')),
+        );
+      }
+      return;
+    }
+
+    setState(() {
+      _isGenerating = true;
+    });
+
+    try {
+      await roadmapService.generateRoadmapWithFlow(
+        context: context,
+        userId: userId,
+        careerId: widget.careerId,
+        careerTitle: widget.title,
+        matchScore: widget.matchScore,
+        locale: 'en',
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isGenerating = false;
+        });
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final matchLevel = matchScore >= 70
+    final userId = Supabase.instance.client.auth.currentUser?.id;
+
+    // Check if roadmap exists for this career
+    final hasRoadmapAsync = userId != null
+        ? ref.watch(hasRoadmapForCareerProvider(widget.careerId))
+        : const AsyncValue.data(false);
+
+    final matchLevel = widget.matchScore >= 70
         ? l10n.careersHighMatch
-        : matchScore >= 40
+        : widget.matchScore >= 40
         ? l10n.careersMediumMatch
         : l10n.careersLowMatch;
 
-    final matchColor = matchScore >= 70
+    final matchColor = widget.matchScore >= 70
         ? Colors.green
-        : matchScore >= 40
+        : widget.matchScore >= 40
         ? Colors.orange
         : Colors.grey;
 
@@ -162,7 +216,7 @@ class _CareerCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    title,
+                    widget.title,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -179,7 +233,7 @@ class _CareerCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    '$matchScore%',
+                    '${widget.matchScore}%',
                     style: TextStyle(
                       color: matchColor,
                       fontWeight: FontWeight.bold,
@@ -189,8 +243,8 @@ class _CareerCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            Text(description, style: Theme.of(context).textTheme.bodyMedium),
-            if (topFeatures.isNotEmpty) ...[
+            Text(widget.description, style: Theme.of(context).textTheme.bodyMedium),
+            if (widget.topFeatures.isNotEmpty) ...[
               const SizedBox(height: 12),
               Text(
                 'Why this match?',
@@ -203,7 +257,7 @@ class _CareerCard extends StatelessWidget {
               Wrap(
                 spacing: 6,
                 runSpacing: 6,
-                children: topFeatures.map((feature) {
+                children: widget.topFeatures.map((dynamic feature) {
                   final featureKey = feature is Map
                       ? feature['feature_key'] as String?
                       : '';
@@ -252,7 +306,7 @@ class _CareerCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    cluster,
+                    widget.cluster,
                     style: TextStyle(
                       fontSize: 12,
                       color: Theme.of(context).colorScheme.primary,
@@ -279,9 +333,46 @@ class _CareerCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(l10n.careersViewDetailsButton),
+                hasRoadmapAsync.when(
+                  data: (hasRoadmap) {
+                    if (_isGenerating) {
+                      return const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      );
+                    }
+
+                    return hasRoadmap
+                        ? TextButton.icon(
+                            onPressed: () async {
+                              if (userId == null) return;
+                              final roadmap = await ref.read(
+                                roadmapForCareerProvider(widget.careerId).future,
+                              );
+                              if (roadmap != null && context.mounted) {
+                                await context.push('${AppRoutes.roadmapDetail}/${roadmap.id}');
+                              }
+                            },
+                            icon: const Icon(Icons.map, size: 18),
+                            label: const Text('View Roadmap'),
+                          )
+                        : TextButton.icon(
+                            onPressed: () => _handleGenerateRoadmap(context),
+                            icon: const Icon(Icons.auto_awesome, size: 18),
+                            label: const Text('Generate AI Roadmap'),
+                          );
+                  },
+                  loading: () => const SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                  error: (error, _) => TextButton.icon(
+                    onPressed: () => _handleGenerateRoadmap(context),
+                    icon: const Icon(Icons.auto_awesome, size: 18),
+                    label: const Text('Generate AI Roadmap'),
+                  ),
                 ),
               ],
             ),

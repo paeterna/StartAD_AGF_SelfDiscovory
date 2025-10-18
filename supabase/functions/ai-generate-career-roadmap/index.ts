@@ -109,7 +109,7 @@ async function fetchUserVectors(supabase: any, userId: string): Promise<UserVect
 async function fetchCareerDetails(supabase: any, careerId: string): Promise<any> {
   const { data: career, error } = await supabase
     .from('careers')
-    .select('id, title, description, cluster_id, clusters(name)')
+    .select('id, title, description, cluster, tags')
     .eq('id', careerId)
     .single();
 
@@ -206,7 +206,7 @@ function buildRoadmapPrompt(
 **Target Career:**
 - Title: ${career.title}
 - Description: ${career.description}
-- Cluster: ${career.clusters?.name || 'General'}
+- Cluster: ${career.cluster || 'General'}
 
 **Context:**
 - Location: United Arab Emirates
@@ -320,37 +320,37 @@ Return ONLY valid JSON with this exact structure:
 }
 
 /**
- * Generate roadmap using Azure OpenAI
+ * Generate roadmap using OpenAI API
  */
 async function generateAIRoadmap(
   prompt: string,
-  azureApiKey: string
+  openaiApiKey: string
 ): Promise<AIRoadmapResponse> {
-  const azureEndpoint = 'https://my-openai-email.openai.azure.com';
-  const apiVersion = '2024-02-15-preview';
+  // Get OpenAI configuration from environment variables
+  const openaiEndpoint = Deno.env.get('OPENAI_ENDPOINT') || 'https://api.openai.com/v1';
 
-  const deployments = [
-    'gpt-4o',
-    'gpt-4o-mini',
-    'gpt-4-turbo',
-    'gpt-4',
-  ];
+  // Get model from environment, or use fallback list
+  const primaryModel = Deno.env.get('OPENAI_MODEL');
+  const models = primaryModel
+    ? [primaryModel, 'gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'gpt-4', 'gpt-3.5-turbo']
+    : ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'gpt-4', 'gpt-3.5-turbo'];
 
   let lastError = '';
 
-  for (const deployment of deployments) {
+  for (const model of models) {
     try {
-      console.log(`Attempting Azure OpenAI deployment: ${deployment}`);
+      console.log(`Attempting OpenAI model: ${model}`);
 
-      const azureUrl = `${azureEndpoint}/openai/deployments/${deployment}/chat/completions?api-version=${apiVersion}`;
+      const openaiUrl = `${openaiEndpoint}/chat/completions`;
 
-      const response = await fetch(azureUrl, {
+      const response = await fetch(openaiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'api-key': azureApiKey,
+          'Authorization': `Bearer ${openaiApiKey}`,
         },
         body: JSON.stringify({
+          model: model,
           messages: [
             {
               role: 'system',
@@ -375,12 +375,12 @@ async function generateAIRoadmap(
           const errorJson = JSON.parse(errorData);
           const errorCode = errorJson.error?.code;
 
-          if (errorCode === 'insufficient_quota' || errorCode === 'DeploymentNotFound' || errorCode === 'model_not_found') {
-            console.log(`Deployment ${deployment} unavailable, trying next...`);
+          if (errorCode === 'insufficient_quota' || errorCode === 'model_not_found' || errorCode === 'invalid_model') {
+            console.log(`Model ${model} unavailable, trying next...`);
             continue;
           }
         } catch (parseError) {
-          console.log(`Could not parse error for ${deployment}`);
+          console.log(`Could not parse error for ${model}`);
         }
 
         continue;
@@ -389,7 +389,7 @@ async function generateAIRoadmap(
       const data = await response.json();
       const content = data.choices[0].message.content;
 
-      console.log(`Successfully generated roadmap using: ${deployment}`);
+      console.log(`Successfully generated roadmap using: ${model}`);
       const roadmap = JSON.parse(content);
 
       // Validate response structure
@@ -399,13 +399,13 @@ async function generateAIRoadmap(
 
       return roadmap;
     } catch (error) {
-      console.log(`Error with deployment ${deployment}: ${error.message}`);
+      console.log(`Error with model ${model}: ${error.message}`);
       lastError = error.message;
       continue;
     }
   }
 
-  throw new Error(`All AI deployments failed. Last error: ${lastError}`);
+  throw new Error(`All AI models failed. Last error: ${lastError}`);
 }
 
 /**
@@ -502,10 +502,10 @@ serve(async (req) => {
     // Get environment variables
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const azureApiKey = Deno.env.get('OPENAI_AZURE')!;
+    const openaiApiKey = Deno.env.get('OPENAI_API_KEY')!;
 
-    if (!supabaseUrl || !supabaseKey || !azureApiKey) {
-      throw new Error('Missing environment variables');
+    if (!supabaseUrl || !supabaseKey || !openaiApiKey) {
+      throw new Error('Missing environment variables. Please set OPENAI_API_KEY');
     }
 
     const supabase = createClient(supabaseUrl, supabaseKey);
@@ -578,7 +578,7 @@ serve(async (req) => {
 
     // Generate roadmap
     console.log('Generating AI roadmap...');
-    const roadmap = await generateAIRoadmap(prompt, azureApiKey);
+    const roadmap = await generateAIRoadmap(prompt, openaiApiKey);
 
     // Persist to database
     console.log('Persisting roadmap to database...');

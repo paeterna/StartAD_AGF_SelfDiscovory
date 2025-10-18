@@ -1,7 +1,7 @@
 
 /// V2 Scoring for Memory Match (multi-factor)
 /// This module is self-contained and does not rely on V1 helpers.
-library memory_match_scoring_v2;
+library;
 
 import 'dart:math' as math;
 
@@ -116,10 +116,10 @@ class MemoryMatchScoringV2 {
     final strat = _clamp01(0.45 * (1.0 - pathEntropy) + 0.35 * sweepRate + 0.20 * probeEff);
 
     // Metacognition / Learning
-    final mmSlope = (i.normalizedMismatchSlope ?? 0.0); // -1..1; negative good
+    final mmSlope = i.normalizedMismatchSlope ?? 0.0; // -1..1; negative good
     final withinSession = _clamp01(0.5 * (1.0 - mmRate) + 0.5 * (1.0 - _clamp01(0.5 * (mmSlope + 1.0))));
     // No history in this module ⇒ neutral 0.5 for across-session
-    final acrossSession = 0.5;
+    const acrossSession = 0.5;
     final meta = _clamp01(0.6 * withinSession + 0.4 * acrossSession);
 
     // Consistency / Persistence
