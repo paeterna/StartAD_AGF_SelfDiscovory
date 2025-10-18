@@ -22,7 +22,7 @@ abstract class CareerRepository {
   /// Returns the top 4 clusters ranked by the highest match score in each cluster.
   /// Each cluster contains its top 3 careers sorted by match score.
   /// Used for the new cluster-first careers page design.
-  Stream<List<CareerCluster>> watchTopClustersWithCareers({
+  Stream<List<CareerClusterGroup>> watchTopClustersWithCareers({
     required String userId,
     int clusterLimit = 4,
     int careersPerCluster = 3,

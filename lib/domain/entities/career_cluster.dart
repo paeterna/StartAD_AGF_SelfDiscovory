@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'career.dart';
 
-/// Career cluster with top matching careers
+/// Career cluster with top matching careers (for cluster-first view)
 @immutable
-class CareerCluster {
-  const CareerCluster({
+class CareerClusterGroup {
+  const CareerClusterGroup({
     required this.id,
     required this.name,
     required this.description,
@@ -24,8 +24,8 @@ class CareerCluster {
   /// Highest match score among all careers in this cluster
   final int maxMatchScore;
 
-  factory CareerCluster.fromJson(Map<String, dynamic> json) {
-    return CareerCluster(
+  factory CareerClusterGroup.fromJson(Map<String, dynamic> json) {
+    return CareerClusterGroup(
       id: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String? ?? '',
@@ -64,7 +64,7 @@ class CareerCluster {
     };
   }
 
-  CareerCluster copyWith({
+  CareerClusterGroup copyWith({
     String? id,
     String? name,
     String? description,
@@ -72,7 +72,7 @@ class CareerCluster {
     List<Career>? topCareers,
     int? maxMatchScore,
   }) {
-    return CareerCluster(
+    return CareerClusterGroup(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
@@ -85,14 +85,14 @@ class CareerCluster {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CareerCluster && runtimeType == other.runtimeType && id == other.id;
+      other is CareerClusterGroup && runtimeType == other.runtimeType && id == other.id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
   String toString() {
-    return 'CareerCluster(id: $id, name: $name, topCareers: ${topCareers.length}, '
+    return 'CareerClusterGroup(id: $id, name: $name, topCareers: ${topCareers.length}, '
         'maxMatchScore: $maxMatchScore)';
   }
 }

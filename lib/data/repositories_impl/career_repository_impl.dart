@@ -147,7 +147,7 @@ class CareerRepositoryImpl implements CareerRepository {
   }
 
   @override
-  Stream<List<CareerCluster>> watchTopClustersWithCareers({
+  Stream<List<CareerClusterGroup>> watchTopClustersWithCareers({
     required String userId,
     int clusterLimit = 4,
     int careersPerCluster = 3,
@@ -172,12 +172,12 @@ class CareerRepositoryImpl implements CareerRepository {
         careers.sort((a, b) => b.matchScore.compareTo(a.matchScore));
       }
 
-      // Create CareerCluster objects with top N careers
+      // Create CareerClusterGroup objects with top N careers
       final clusters = careersByCluster.entries.map((entry) {
         final topCareers = entry.value.take(careersPerCluster).toList();
         final maxScore = topCareers.isNotEmpty ? topCareers.first.matchScore : 0;
 
-        return CareerCluster(
+        return CareerClusterGroup(
           id: entry.key.toLowerCase().replaceAll(' ', '_'),
           name: entry.key,
           description: 'Careers in ${entry.key}',
