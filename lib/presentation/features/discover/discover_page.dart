@@ -3,11 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../application/activity/activity_providers.dart';
+import '../../../core/assets/app_icons.dart';
+import '../../../core/widgets/app_icon.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 
 class DiscoverPage extends ConsumerWidget {
-  const DiscoverPage({super.key});
+  const DiscoverPage({super.key, this.initialTabIndex = 0});
+
+  final int initialTabIndex;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,6 +22,7 @@ class DiscoverPage extends ConsumerWidget {
         appBar: AppBar(title: Text(l10n.discoverTitle)),
         body: DefaultTabController(
           length: 2,
+          initialIndex: initialTabIndex,
           child: Column(
             children: [
               TabBar(
@@ -70,11 +75,12 @@ class DiscoverPage extends ConsumerWidget {
         if (!hasRiasec) {
           items.add(
             _AssessmentCard(
-              title: 'Career Interest Explorer',
+              title: l10n.quizInterestTitle,
               description: l10n.quizGenericDescription,
               duration: l10n.discoverDurationMinutes(5),
               progress: 0.0,
               onTap: () => context.push('/quiz/quiz_riasec_mini'),
+              iconPath: AppIcons.quizOutlined,
             ),
           );
         }
@@ -82,11 +88,12 @@ class DiscoverPage extends ConsumerWidget {
         if (!hasIpip) {
           items.add(
             _AssessmentCard(
-              title: 'Personality Traits Assessment',
+              title: l10n.quizPersonalityTitle,
               description: l10n.quizGenericDescription,
               duration: l10n.discoverDurationMinutes(10),
               progress: 0.0,
               onTap: () => context.push('/quiz/quiz_ipip50'),
+              iconPath: AppIcons.psychologyOutlined,
             ),
           );
         }
@@ -129,6 +136,7 @@ class DiscoverPage extends ConsumerWidget {
                   : l10n.discoverDurationMinutes(5),
               progress: 0.0,
               onTap: () => context.push('/quiz/${quiz.id}'),
+              iconPath: AppIcons.quizOutlined,
             );
           }),
         );
@@ -190,12 +198,12 @@ class DiscoverPage extends ConsumerWidget {
         if (!hasMemoryMatch) {
           items.add(
             _AssessmentCard(
-              title: 'Memory Match',
-              description:
-                  'Train memory & attention through rapid pair matching',
+              title: l10n.memoryMatchTitle,
+              description: l10n.gameGenericDescription,
               duration: l10n.discoverDurationMinutes(7),
               progress: 0.0,
               onTap: () => context.push('/games/memory-match'),
+              iconPath: AppIcons.sportsEsports,
             ),
           );
         }
@@ -248,6 +256,7 @@ class DiscoverPage extends ConsumerWidget {
                   : l10n.discoverDurationMinutes(5),
               progress: 0.0, // TODO: Get actual progress from user data
               onTap: () => context.push(route),
+              iconPath: AppIcons.gamesOutlined,
             );
           }),
         );
@@ -295,6 +304,7 @@ class _AssessmentCard extends StatelessWidget {
     required this.duration,
     required this.progress,
     required this.onTap,
+    this.iconPath,
   });
 
   final String title;
@@ -302,6 +312,7 @@ class _AssessmentCard extends StatelessWidget {
   final String duration;
   final double progress;
   final VoidCallback onTap;
+  final String? iconPath;
 
   @override
   Widget build(BuildContext context) {
@@ -320,6 +331,21 @@ class _AssessmentCard extends StatelessWidget {
             children: [
               Row(
                 children: [
+                  if (iconPath != null) ...[
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: AppIcon(
+                        iconPath!,
+                        size: 32,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                  ],
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

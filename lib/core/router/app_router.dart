@@ -208,8 +208,11 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: AppRoutes.discover,
-            pageBuilder: (context, state) =>
-                const NoTransitionPage(child: DiscoverPage()),
+            pageBuilder: (context, state) {
+              final tabParam = state.uri.queryParameters['tab'];
+              final tabIndex = tabParam != null ? int.tryParse(tabParam) ?? 0 : 0;
+              return NoTransitionPage(child: DiscoverPage(initialTabIndex: tabIndex));
+            },
           ),
           GoRoute(
             path: AppRoutes.careers,

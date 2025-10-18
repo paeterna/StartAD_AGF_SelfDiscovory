@@ -5,7 +5,9 @@ import 'package:go_router/go_router.dart';
 import '../../../application/auth/auth_controller.dart';
 import '../../../application/scoring/scoring_providers.dart';
 import '../../../application/activity/activity_providers.dart';
+import '../../../core/assets/app_icons.dart';
 import '../../../core/router/app_router.dart';
+import '../../../core/widgets/app_icon.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 import '../../widgets/radar_traits_card.dart';
@@ -96,40 +98,6 @@ class DashboardPage extends ConsumerWidget {
 
               // AI-generated insights
               const AIInsightsDashboardCard(),
-              const SizedBox(height: 24),
-
-              // Quick actions
-              Text(
-                l10n.dashboardWhatsNext,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              _QuickActionCard(
-                icon: Icons.explore,
-                title: l10n.dashboardContinueDiscovery,
-                subtitle: l10n.dashboardContinueDiscoverySubtitle,
-                onTap: () => context.push(AppRoutes.discover),
-              ),
-              const SizedBox(height: 12),
-
-              _QuickActionCard(
-                icon: Icons.work_outline,
-                title: l10n.dashboardViewCareers,
-                subtitle: l10n.dashboardViewCareersSubtitle,
-                onTap: () => context.push(AppRoutes.careers),
-              ),
-              const SizedBox(height: 12),
-
-              _QuickActionCard(
-                icon: Icons.map_outlined,
-                title: l10n.dashboardStartRoadmap,
-                subtitle: l10n.dashboardStartRoadmapSubtitle,
-                onTap: () => context.push(AppRoutes.roadmap),
-              ),
             ],
           ),
         ),
@@ -141,36 +109,38 @@ class DashboardPage extends ConsumerWidget {
 class _QuickNavigationButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Row(
       children: [
         Expanded(
           child: _NavButton(
-            icon: Icons.sports_esports,
-            label: 'Games',
-            onTap: () => context.push('/games/memory-match'),
+            iconPath: AppIcons.sportsEsports,
+            label: l10n.discoverGamesTab,
+            onTap: () => context.push('${AppRoutes.discover}?tab=1'),
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: _NavButton(
-            icon: Icons.quiz,
-            label: 'Quizzes',
+            iconPath: AppIcons.quizOutlined,
+            label: l10n.discoverQuizzesTab,
             onTap: () => context.push(AppRoutes.discover),
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: _NavButton(
-            icon: Icons.work_outline,
-            label: 'Careers',
+            iconPath: AppIcons.workOutline,
+            label: l10n.careersTitle,
             onTap: () => context.push(AppRoutes.careers),
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: _NavButton(
-            icon: Icons.map_outlined,
-            label: 'Roadmap',
+            iconPath: AppIcons.mapOutlined,
+            label: l10n.roadmapTitle,
             onTap: () => context.push(AppRoutes.roadmap),
           ),
         ),
@@ -181,12 +151,12 @@ class _QuickNavigationButtons extends StatelessWidget {
 
 class _NavButton extends StatelessWidget {
   const _NavButton({
-    required this.icon,
+    required this.iconPath,
     required this.label,
     required this.onTap,
   });
 
-  final IconData icon;
+  final String iconPath;
   final String label;
   final VoidCallback onTap;
 
@@ -201,8 +171,8 @@ class _NavButton extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                icon,
+              AppIcon(
+                iconPath,
                 size: 32,
                 color: Theme.of(context).colorScheme.primary,
               ),
@@ -327,75 +297,3 @@ class _ProfileProgressCard extends ConsumerWidget {
 }
 
 // Quick Action Card Widget
-class _QuickActionCard extends StatelessWidget {
-  const _QuickActionCard({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.primary.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  icon,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withValues(alpha: 0.7),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Icon(
-                Icons.chevron_right,
-                color: Theme.of(
-                  context,
-                ).colorScheme.onSurface.withValues(alpha: 0.5),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
