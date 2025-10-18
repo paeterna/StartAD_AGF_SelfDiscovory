@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:math';
 import '../../domain/entities/career.dart';
+import '../../domain/entities/career_cluster.dart';
 import '../../domain/repositories/career_repository.dart';
 import '../sources/mock_data.dart';
 
@@ -142,5 +144,68 @@ class CareerRepositoryImpl implements CareerRepository {
     await Future<void>.delayed(const Duration(milliseconds: 100));
 
     _savedCareers[userId]?.remove(careerId);
+  }
+
+  @override
+  Stream<List<CareerCluster>> watchTopClustersWithCareers({
+    required String userId,
+    int clusterLimit = 4,
+    int careersPerCluster = 3,
+  }) {
+    // Mock implementation - returns a stream that emits mock data
+    // In production, this would query Supabase career_matches table
+    return Stream.periodic(const Duration(seconds: 1), (_) {
+      // Group careers by cluster
+      final careersByCluster = <String, List<Career>>{};
+
+      for (final career in MockData.careers) {
+        careersByCluster.putIfAbsent(career.cluster, () => []);
+        // Add random match scores for mock data
+        final mockMatchScore = 60 + Random().nextInt(40); // 60-100 range
+        careersByCluster[career.cluster]!.add(
+          career.copyWith(matchScore: mockMatchScore),
+        );
+      }
+
+      // Sort careers within each cluster by match score
+      for (final careers in careersByCluster.values) {
+        careers.sort((a, b) => b.matchScore.compareTo(a.matchScore));
+      }
+
+      // Create CareerCluster objects with top N careers
+      final clusters = careersByCluster.entries.map((entry) {
+        final topCareers = entry.value.take(careersPerCluster).toList();
+        final maxScore = topCareers.isNotEmpty ? topCareers.first.matchScore : 0;
+
+        return CareerCluster(
+          id: entry.key.toLowerCase().replaceAll(' ', '_'),
+          name: entry.key,
+          description: 'Careers in ${entry.key}',
+          icon: _getClusterIcon(entry.key),
+          topCareers: topCareers,
+          maxMatchScore: maxScore,
+        );
+      }).toList();
+
+      // Sort clusters by max match score
+      clusters.sort((a, b) => b.maxMatchScore.compareTo(a.maxMatchScore));
+
+      // Return top N clusters
+      return clusters.take(clusterLimit).toList();
+    }).take(1); // Only emit once for mock
+  }
+
+  String _getClusterIcon(String cluster) {
+    final icons = {
+      'Technology': '💻',
+      'Healthcare': '🏥',
+      'Business': '💼',
+      'Arts': '🎨',
+      'Engineering': '⚙️',
+      'Science': '🔬',
+      'Education': '📚',
+      'STEM': '🧬',
+    };
+    return icons[cluster] ?? '💼';
   }
 }

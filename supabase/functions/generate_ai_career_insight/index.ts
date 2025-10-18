@@ -82,17 +82,9 @@ async function fetchUserData(supabase: any, userId: string): Promise<UserData> {
     .order('completed_at', { ascending: false })
     .limit(20);
 
-  // Fetch top career matches
-  const { data: careerMatches } = await supabase
-    .from('user_career_matches')
-    .select(`
-      similarity,
-      confidence,
-      careers!inner(title, cluster, description)
-    `)
-    .eq('user_id', userId)
-    .order('similarity', { ascending: false })
-    .limit(10);
+  // Fetch career
+
+
 
   // Fetch profile
   const { data: profile } = await supabase
