@@ -341,5 +341,13 @@
   "studentsListActionsColumn": "الإجراءات",
 
   "errorLoadingCareers": "خطأ في تحميل المهن: {error}",
-  "errorGenericWithMessage": "خطأ: {error}"
+  "errorGenericWithMessage": "خطأ: {error}",
+
+  "helpDialogTitle": "تحتاج مساعدة؟",
+  "helpDialogWelcome": "مرحباً بك في رحلة اكتشاف مسارك المهني!",
+  "helpDialogTip1": "• أكمل التقييمات لبناء ملفك الشخصي",
+  "helpDialogTip2": "• استكشف المهن التي تناسب اهتماماتك",
+  "helpDialogTip3": "• اتبع خارطة طريقك الشخصية",
+  "helpDialogAdvice": "نصيحة: كلما أكملت المزيد من التقييمات، كانت توافقات المهن أفضل.",
+  "helpDialogButton": "فهمت!"
 }

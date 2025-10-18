@@ -36,31 +36,31 @@ class NavDestinations {
       route: '/dashboard',
       icon: Icons.dashboard_outlined,
       selectedIcon: Icons.dashboard,
-      labelKey: (l10n) => 'Dashboard',
+      labelKey: (l10n) => l10n.dashboardTitle,
     ),
     NavDestination(
       route: '/discover',
       icon: Icons.explore_outlined,
       selectedIcon: Icons.explore,
-      labelKey: (l10n) => 'Discover',
+      labelKey: (l10n) => l10n.discoverTitle,
     ),
     NavDestination(
       route: '/careers',
       icon: Icons.work_outline,
       selectedIcon: Icons.work,
-      labelKey: (l10n) => 'Careers',
+      labelKey: (l10n) => l10n.careersTitle,
     ),
     NavDestination(
       route: '/roadmap',
       icon: Icons.map_outlined,
       selectedIcon: Icons.map,
-      labelKey: (l10n) => 'Roadmap',
+      labelKey: (l10n) => l10n.roadmapTitle,
     ),
     NavDestination(
       route: '/settings',
       icon: Icons.settings_outlined,
       selectedIcon: Icons.settings,
-      labelKey: (l10n) => 'Settings',
+      labelKey: (l10n) => l10n.settingsTitle,
     ),
   ];
 
@@ -225,29 +225,31 @@ class _HelpDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return AlertDialog(
       icon: const Icon(Icons.help_outline),
-      title: const Text('Need Help?'),
-      content: const Column(
+      title: Text(l10n.helpDialogTitle),
+      content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Welcome to your career discovery journey!'),
-          SizedBox(height: 16),
-          Text('• Complete assessments to build your profile'),
-          Text('• Explore careers that match your interests'),
-          Text('• Follow your personalized roadmap'),
-          SizedBox(height: 16),
+          Text(l10n.helpDialogWelcome),
+          const SizedBox(height: 16),
+          Text(l10n.helpDialogTip1),
+          Text(l10n.helpDialogTip2),
+          Text(l10n.helpDialogTip3),
+          const SizedBox(height: 16),
           Text(
-            'Tip: The more assessments you complete, the better your career matches will be.',
-            style: TextStyle(fontStyle: FontStyle.italic),
+            l10n.helpDialogAdvice,
+            style: const TextStyle(fontStyle: FontStyle.italic),
           ),
         ],
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Got it!'),
+          child: Text(l10n.helpDialogButton),
         ),
       ],
     );

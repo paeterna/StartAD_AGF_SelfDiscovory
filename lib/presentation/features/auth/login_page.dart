@@ -211,7 +211,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 ? null
                                 : () => context.go(AppRoutes.schoolLogin),
                             icon: const Icon(Icons.school_outlined, size: 18),
-                            label: const Text('Sign in as School'),
+                            label: Text(l10n.authSignInAsSchool),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: Theme.of(context).colorScheme.secondary,
                               padding: const EdgeInsets.symmetric(

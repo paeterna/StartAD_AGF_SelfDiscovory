@@ -6,6 +6,7 @@ import '../../../application/auth/auth_controller.dart';
 import '../../../application/school/school_providers.dart';
 import '../../../core/responsive/responsive.dart';
 import '../../../core/router/app_router.dart';
+import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 
 /// School administrator login page
@@ -75,6 +76,7 @@ class _SchoolLoginPageState extends ConsumerState<SchoolLoginPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return GradientBackground(
       child: Scaffold(
@@ -224,7 +226,7 @@ class _SchoolLoginPageState extends ConsumerState<SchoolLoginPage> {
                                   strokeWidth: 2,
                                 ),
                               )
-                            : const Text('Sign In'),
+                            : Text(l10n.authSignIn),
                       ),
 
                       const SizedBox(height: 24),
@@ -234,7 +236,7 @@ class _SchoolLoginPageState extends ConsumerState<SchoolLoginPage> {
                         onPressed: _isLoading
                             ? null
                             : () => context.go(AppRoutes.login),
-                        child: const Text('Sign in as Student'),
+                        child: Text(l10n.authSignInAsStudent),
                       ),
                     ],
                   ),

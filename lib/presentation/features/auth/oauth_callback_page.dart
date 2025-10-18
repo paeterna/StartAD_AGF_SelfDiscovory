@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../application/auth/auth_controller.dart';
 import '../../../core/router/app_router.dart';
+import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 
 /// OAuth callback handler page
@@ -50,12 +51,13 @@ class _OAuthCallbackPageState extends ConsumerState<OAuthCallbackPage> {
       } else {
         debugPrint('🔴 [OAUTH_CALLBACK] Authentication failed');
         if (mounted) {
+          final l10n = AppLocalizations.of(context)!;
           context.go(AppRoutes.login);
-          
+
           // Show error message
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Authentication failed. Please try again.'),
+            SnackBar(
+              content: Text(l10n.oauthCallbackFailed),
               backgroundColor: Colors.red,
             ),
           );
@@ -64,11 +66,12 @@ class _OAuthCallbackPageState extends ConsumerState<OAuthCallbackPage> {
     } catch (e) {
       debugPrint('🔴 [OAUTH_CALLBACK] Error: $e');
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         context.go(AppRoutes.login);
-        
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Authentication error: $e'),
+            content: Text(l10n.oauthCallbackError(e.toString())),
             backgroundColor: Colors.red,
           ),
         );

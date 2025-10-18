@@ -38,6 +38,8 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   }
 
   Future<void> _handleSignup() async {
+    final l10n = AppLocalizations.of(context)!;
+
     if (!_formKey.currentState!.validate()) {
       debugPrint('🔴 [SIGNUP] Validation failed');
       return;
@@ -47,8 +49,8 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     if (_selectedSchool == null) {
       debugPrint('🔴 [SIGNUP] School selection required');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please select a school'),
+        SnackBar(
+          content: Text(l10n.authPleaseSelectSchool),
           backgroundColor: Colors.red,
         ),
       );
@@ -135,7 +137,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     }
   }
 
-  Widget _buildSchoolSelection() {
+  Widget _buildSchoolSelection(AppLocalizations l10n) {
     final schoolsAsync = ref.watch(activeSchoolsProvider);
 
     return Column(
@@ -158,7 +160,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
               }).toList(),
               validator: (value) {
                 if (value == null) {
-                  return 'Please select a school';
+                  return l10n.authPleaseSelectSchool;
                 }
                 return null;
               },
@@ -306,7 +308,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       const SizedBox(height: 24),
 
                       // School selection
-                      _buildSchoolSelection(),
+                      _buildSchoolSelection(l10n),
                       const SizedBox(height: 24),
 
                       // Sign up button

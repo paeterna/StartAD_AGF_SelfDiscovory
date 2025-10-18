@@ -439,5 +439,13 @@
     "placeholders": {
       "error": {"type": "String"}
     }
-  }
+  },
+
+  "helpDialogTitle": "Need Help?",
+  "helpDialogWelcome": "Welcome to your career discovery journey!",
+  "helpDialogTip1": "• Complete assessments to build your profile",
+  "helpDialogTip2": "• Explore careers that match your interests",
+  "helpDialogTip3": "• Follow your personalized roadmap",
+  "helpDialogAdvice": "Tip: The more assessments you complete, the better your career matches will be.",
+  "helpDialogButton": "Got it!"
 }

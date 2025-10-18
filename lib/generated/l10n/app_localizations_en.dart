@@ -980,4 +980,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String errorGenericWithMessage(String error) {
     return 'Error: $error';
   }
+
+  @override
+  String get helpDialogTitle => 'Need Help?';
+
+  @override
+  String get helpDialogWelcome => 'Welcome to your career discovery journey!';
+
+  @override
+  String get helpDialogTip1 => '• Complete assessments to build your profile';
+
+  @override
+  String get helpDialogTip2 => '• Explore careers that match your interests';
+
+  @override
+  String get helpDialogTip3 => '• Follow your personalized roadmap';
+
+  @override
+  String get helpDialogAdvice =>
+      'Tip: The more assessments you complete, the better your career matches will be.';
+
+  @override
+  String get helpDialogButton => 'Got it!';
 }

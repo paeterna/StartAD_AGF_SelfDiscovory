@@ -1903,6 +1903,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error: {error}'**
   String errorGenericWithMessage(String error);
+
+  /// No description provided for @helpDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Need Help?'**
+  String get helpDialogTitle;
+
+  /// No description provided for @helpDialogWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to your career discovery journey!'**
+  String get helpDialogWelcome;
+
+  /// No description provided for @helpDialogTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'• Complete assessments to build your profile'**
+  String get helpDialogTip1;
+
+  /// No description provided for @helpDialogTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'• Explore careers that match your interests'**
+  String get helpDialogTip2;
+
+  /// No description provided for @helpDialogTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'• Follow your personalized roadmap'**
+  String get helpDialogTip3;
+
+  /// No description provided for @helpDialogAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip: The more assessments you complete, the better your career matches will be.'**
+  String get helpDialogAdvice;
+
+  /// No description provided for @helpDialogButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it!'**
+  String get helpDialogButton;
 }
 
 class _AppLocalizationsDelegate
