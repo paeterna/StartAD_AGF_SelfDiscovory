@@ -34,15 +34,15 @@ class _ThemeSelectionPageState extends ConsumerState<ThemeSelectionPage> {
               Text(
                 'Choose Your Vibe 🎨',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
                 'Pick a theme that matches your style. You can always change it later!',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Colors.grey[400],
-                    ),
+                  color: Colors.grey[400],
+                ),
               ),
               const SizedBox(height: 32),
 
@@ -53,30 +53,32 @@ class _ThemeSelectionPageState extends ConsumerState<ThemeSelectionPage> {
                     final selectedKey = _selectedThemeKey ?? currentThemeKey;
 
                     return GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
-                        childAspectRatio: 0.85,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                            childAspectRatio: 0.85,
+                          ),
                       itemCount: TeenThemes.allThemes.length,
                       itemBuilder: (context, index) {
                         final theme = TeenThemes.allThemes[index];
-                        final isSelected = theme.themeKey == selectedKey;
+                        final isSelected = theme.key == selectedKey;
 
                         return _ThemeCard(
                           theme: theme,
                           isSelected: isSelected,
                           onTap: () {
                             setState(() {
-                              _selectedThemeKey = theme.themeKey;
+                              _selectedThemeKey = theme.key;
                             });
                           },
                         );
                       },
                     );
                   },
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
                   error: (error, _) => Center(
                     child: Text('Error: $error'),
                   ),
@@ -132,7 +134,7 @@ class _ThemeCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(theme.buttonRadius),
       child: AnimatedContainer(
-        duration: Duration(milliseconds: theme.motionDurationMs),
+        duration: Duration(milliseconds: (theme.motionScale * 300).round()),
         curve: Curves.easeInOut,
         decoration: BoxDecoration(
           gradient: theme.bgGradient,
@@ -144,14 +146,14 @@ class _ThemeCard extends StatelessWidget {
               ? [
                   BoxShadow(
                     color: theme.primary.withValues(alpha: 0.6),
-                    blurRadius: theme.cardGlow * 3,
+                    blurRadius: theme.elevation * 3,
                     spreadRadius: 3,
                   ),
                 ]
               : [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.4),
-                    blurRadius: theme.cardGlow,
+                    blurRadius: theme.elevation,
                   ),
                 ],
         ),
@@ -188,7 +190,7 @@ class _ThemeCard extends StatelessWidget {
 
               // Theme name
               Text(
-                theme.displayName,
+                _getDisplayName(theme.key),
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -239,5 +241,23 @@ class _ColorCircle extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// Helper function to get display name from theme key
+String _getDisplayName(String key) {
+  switch (key) {
+    case 'neon_arcade':
+      return 'Neon Arcade';
+    case 'galaxy_pulse':
+      return 'Galaxy Pulse';
+    case 'street_pop':
+      return 'Street Pop';
+    case 'ocean_wave':
+      return 'Ocean Wave';
+    case 'retro_pixel':
+      return 'Retro Pixel';
+    default:
+      return 'Neon Arcade';
   }
 }

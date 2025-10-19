@@ -19,11 +19,14 @@ class MatchScoreColors {
       return Colors.green.shade600;
     } else if (score >= mediumHighThreshold) {
       // Medium-high: Yellow to Orange gradient
-      final t = (score - mediumHighThreshold) / (highThreshold - mediumHighThreshold);
+      final t =
+          (score - mediumHighThreshold) / (highThreshold - mediumHighThreshold);
       return Color.lerp(Colors.orange.shade400, Colors.yellow.shade600, t)!;
     } else if (score >= mediumLowThreshold) {
       // Medium-low: Orange to Red gradient
-      final t = (score - mediumLowThreshold) / (mediumHighThreshold - mediumLowThreshold);
+      final t =
+          (score - mediumLowThreshold) /
+          (mediumHighThreshold - mediumLowThreshold);
       return Color.lerp(Colors.red.shade600, Colors.orange.shade400, t)!;
     } else {
       // Low match: Red
@@ -68,32 +71,32 @@ class MatchScoreColors {
 
   /// Legend items for display
   static List<LegendItem> get legendItems => [
-        LegendItem(
-          color: Colors.green.shade600,
-          label: 'High Match (80%+)',
-          threshold: highThreshold,
-        ),
-        LegendItem(
-          color: Colors.yellow.shade600,
-          label: 'Good Match (50-80%)',
-          threshold: mediumHighThreshold,
-        ),
-        LegendItem(
-          color: Colors.orange.shade400,
-          label: 'Fair Match (20-50%)',
-          threshold: mediumLowThreshold,
-        ),
-        LegendItem(
-          color: Colors.red.shade600,
-          label: 'Low Match (<20%)',
-          threshold: 0.0,
-        ),
-        LegendItem(
-          color: Colors.grey.shade400,
-          label: 'Unknown',
-          threshold: null,
-        ),
-      ];
+    LegendItem(
+      color: Colors.green.shade600,
+      label: 'High Match (80%+)',
+      threshold: highThreshold,
+    ),
+    LegendItem(
+      color: Colors.yellow.shade600,
+      label: 'Good Match (50-80%)',
+      threshold: mediumHighThreshold,
+    ),
+    LegendItem(
+      color: Colors.orange.shade400,
+      label: 'Fair Match (20-50%)',
+      threshold: mediumLowThreshold,
+    ),
+    LegendItem(
+      color: Colors.red.shade600,
+      label: 'Low Match (<20%)',
+      threshold: 0.0,
+    ),
+    LegendItem(
+      color: Colors.grey.shade400,
+      label: 'Unknown',
+      threshold: null,
+    ),
+  ];
 
   /// Calculate aggregate color for a category based on its careers
   static Color getAggregateColor(List<double?> scores) {

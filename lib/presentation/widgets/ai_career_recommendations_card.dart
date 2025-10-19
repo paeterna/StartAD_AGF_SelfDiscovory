@@ -87,7 +87,9 @@ class AICareerRecommendationsCard extends ConsumerWidget {
       child: InkWell(
         onTap: () {
           // Navigate to roadmap page with this career
-          context.push('${AppRoutes.roadmap}?career=${Uri.encodeComponent(career.title)}');
+          context.push(
+            '${AppRoutes.roadmap}?career=${Uri.encodeComponent(career.title)}',
+          );
         },
         borderRadius: BorderRadius.circular(16),
         child: Padding(
@@ -109,7 +111,10 @@ class AICareerRecommendationsCard extends ConsumerWidget {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: _getMatchColor(career.matchScore).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(20),
@@ -189,7 +194,9 @@ class AICareerRecommendationsCard extends ConsumerWidget {
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    context.push('${AppRoutes.roadmap}?career=${Uri.encodeComponent(career.title)}');
+                    context.push(
+                      '${AppRoutes.roadmap}?career=${Uri.encodeComponent(career.title)}',
+                    );
                   },
                   icon: const Icon(Icons.map),
                   label: const Text('View Career Roadmap'),
@@ -214,4 +221,3 @@ class AICareerRecommendationsCard extends ConsumerWidget {
     return Colors.grey;
   }
 }
-

@@ -175,7 +175,9 @@ class CareerRepositoryImpl implements CareerRepository {
       // Create CareerClusterGroup objects with top N careers
       final clusters = careersByCluster.entries.map((entry) {
         final topCareers = entry.value.take(careersPerCluster).toList();
-        final maxScore = topCareers.isNotEmpty ? topCareers.first.matchScore : 0;
+        final maxScore = topCareers.isNotEmpty
+            ? topCareers.first.matchScore
+            : 0;
 
         return CareerClusterGroup(
           id: entry.key.toLowerCase().replaceAll(' ', '_'),

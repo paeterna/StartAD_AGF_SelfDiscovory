@@ -32,7 +32,8 @@ class CybersecurityRoadmap {
                 'HackTheBox - Practice labs',
                 'Cybrary - Free courses',
               ],
-              tip: '💡 Cybersecurity is one of the highest-paid tech careers in UAE!',
+              tip:
+                  '💡 Cybersecurity is one of the highest-paid tech careers in UAE!',
             ),
             RoadmapStep(
               title: 'Programming & Networking',
@@ -52,7 +53,7 @@ class CybersecurityRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 2: UNIVERSITY
         RoadmapPhase(
           id: 'university',
@@ -76,7 +77,8 @@ class CybersecurityRoadmap {
                 'UAEU Security',
                 'RIT Dubai',
               ],
-              tip: '💡 UAE government heavily invests in cybersecurity - great opportunities!',
+              tip:
+                  '💡 UAE government heavily invests in cybersecurity - great opportunities!',
             ),
             RoadmapStep(
               title: 'Core Security Courses',
@@ -89,7 +91,8 @@ class CybersecurityRoadmap {
                 '🔒 Risk Management - Assess threats',
                 '🔒 Incident Response - Handle attacks',
               ],
-              tip: '💡 Hands-on labs are crucial - practice in safe environments!',
+              tip:
+                  '💡 Hands-on labs are crucial - practice in safe environments!',
             ),
             RoadmapStep(
               title: 'Practical Experience',
@@ -110,7 +113,7 @@ class CybersecurityRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 3: SKILLS
         RoadmapPhase(
           id: 'skills',
@@ -167,7 +170,7 @@ class CybersecurityRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 4: CAREER
         RoadmapPhase(
           id: 'career',
@@ -227,7 +230,8 @@ class CybersecurityRoadmap {
                 '🏆 Achievements: Zero major breaches',
                 '👥 Leadership: Manage 10-50+ security professionals',
               ],
-              tip: '💡 You\'re now a business executive who specializes in security!',
+              tip:
+                  '💡 You\'re now a business executive who specializes in security!',
             ),
           ],
         ),

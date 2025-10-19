@@ -5,8 +5,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:developer' as developer;
 
 import '../../../../application/activity/activity_providers.dart';
+import '../../../../application/gamification/gamification_providers.dart';
+import '../../../../application/gamification/xp_calculator.dart';
 import '../../../../application/scoring/scoring_providers.dart';
 import '../../../../application/traits/traits_providers.dart';
+import '../../../../common/widgets/confetti_overlay.dart';
+import '../../../../common/widgets/xp_popover.dart';
+import '../../../../data/repositories/gamification_repository.dart';
 import '../../../../generated/l10n/app_localizations.dart';
 import '../../../widgets/gradient_background.dart';
 import 'memory_match_controller.dart';
@@ -281,7 +286,12 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildHUDItem(context, Icons.timer, l10n.memoryMatchTime, timeString),
+              _buildHUDItem(
+                context,
+                Icons.timer,
+                l10n.memoryMatchTime,
+                timeString,
+              ),
               _buildHUDItem(
                 context,
                 Icons.touch_app,
@@ -315,7 +325,7 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
   ) {
     return Column(
       children: [
-        Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
+        Icon(icon, size: 20),
         const SizedBox(height: 4),
         Text(
           label,
@@ -482,10 +492,16 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
 
       if (!mounted) return;
 
+      // Award XP and show celebration
+      await _awardXpAndCelebrate(scores, telemetry);
+
+      if (!mounted) return;
+
       // Invalidate providers to refresh dashboard data
       ref.invalidate(discoveryProgressProvider);
       ref.invalidate(profileCompletenessProvider);
       ref.invalidate(radarDataByFamilyProvider);
+      ref.invalidate(gamificationProfileProvider);
 
       // Show result sheet
       await showModalBottomSheet<void>(
@@ -542,6 +558,68 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
       setState(() {
         _isSubmitting = false;
       });
+    }
+  }
+
+  /// Award XP for game completion and show celebrations
+  Future<void> _awardXpAndCelebrate(
+    GameScores scores,
+    MemoryMatchTelemetry? telemetry,
+  ) async {
+    if (telemetry == null) return;
+
+    try {
+      // Calculate XP earned
+      final xpGained = XpCalculator.calculateMemoryMatchXp(
+        scores,
+        telemetry.totalSeconds,
+      );
+
+      // Get gamification repository
+      final gamificationRepo = ref.read(gamificationRepositoryProvider);
+
+      // Award XP
+      final result = await gamificationRepo.awardXp(
+        reason: 'memory_match',
+        amount: xpGained,
+      );
+
+      if (!mounted) return;
+
+      // Show confetti celebration
+      showConfetti(context);
+
+      // Delay slightly for confetti to start
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+
+      if (!mounted) return;
+
+      // Show XP popover
+      showXpPopover(
+        context,
+        xpAmount: xpGained,
+        reason: 'Memory Match Complete',
+      );
+
+      // If leveled up, show special celebration
+      if (result.leveledUp) {
+        await Future<void>.delayed(const Duration(milliseconds: 1500));
+        if (!mounted) return;
+
+        showConfettiCelebration(
+          context,
+          title: 'Level ${result.profile.level}!',
+          subtitle: 'You\'re getting better every day!',
+          emoji: '🎉',
+        );
+      }
+    } on Exception catch (error, stackTrace) {
+      developer.log(
+        'Failed to award XP',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      // Don't block the user if XP fails - just log it
     }
   }
 

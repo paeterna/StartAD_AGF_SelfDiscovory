@@ -64,10 +64,12 @@ class AIRoadmapRepositoryImpl implements AIRoadmapRepository {
   Future<AICareerRoadmap?> getRoadmapById(String roadmapId) async {
     try {
       // Fetch roadmap with phases and steps using the helper function
-      final response = await _supabase.rpc<Map<String, dynamic>>(
-        'get_user_career_roadmap_by_id',
-        params: {'p_roadmap_id': roadmapId},
-      ).maybeSingle();
+      final response = await _supabase
+          .rpc<Map<String, dynamic>>(
+            'get_user_career_roadmap_by_id',
+            params: {'p_roadmap_id': roadmapId},
+          )
+          .maybeSingle();
 
       if (response == null) {
         return null;
@@ -178,7 +180,8 @@ class AIRoadmapRepositoryImpl implements AIRoadmapRepository {
 
   /// Map database JSON to AICareerRoadmap entity
   AICareerRoadmap _mapToEntity(Map<String, dynamic> json) {
-    final phases = (json['phases'] as List<dynamic>?)
+    final phases =
+        (json['phases'] as List<dynamic>?)
             ?.map((p) => RoadmapPhase.fromJson(p as Map<String, dynamic>))
             .toList() ??
         [];

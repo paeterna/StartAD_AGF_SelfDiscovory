@@ -24,22 +24,22 @@ class _OAuthCallbackPageState extends ConsumerState<OAuthCallbackPage> {
 
   Future<void> _handleCallback() async {
     debugPrint('🔵 [OAUTH_CALLBACK] Handling OAuth callback...');
-    
+
     // Wait a moment for Supabase to process the auth tokens from URL
     await Future.delayed(const Duration(milliseconds: 1500));
-    
+
     try {
       // Refresh the auth state to get the current user
       final authController = ref.read(authControllerProvider.notifier);
       await authController.refreshUser();
-      
+
       // Get the current auth state
       final authState = ref.read(authControllerProvider);
       final user = authState.user;
-      
+
       if (user != null) {
         debugPrint('✅ [OAUTH_CALLBACK] User authenticated: ${user.email}');
-        
+
         // Navigate based on onboarding status
         if (mounted) {
           if (user.onboardingComplete) {
@@ -114,4 +114,3 @@ class _OAuthCallbackPageState extends ConsumerState<OAuthCallbackPage> {
     );
   }
 }
-

@@ -213,7 +213,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             icon: const Icon(Icons.school_outlined, size: 18),
                             label: Text(l10n.authSignInAsSchool),
                             style: OutlinedButton.styleFrom(
-                              foregroundColor: Theme.of(context).colorScheme.secondary,
+                              foregroundColor: Theme.of(
+                                context,
+                              ).colorScheme.secondary,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 12,
                                 vertical: 8,
@@ -226,154 +228,153 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       ),
                       const SizedBox(height: 32),
 
-                          // Logo/Title
-                          Text(
-                            l10n.appName,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width < 400 ? 36 : 48, // Responsive font size
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            l10n.tagline,
-                            style: Theme.of(context).textTheme.titleMedium,
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 48),
+                      // Logo/Title
+                      Text(
+                        l10n.appName,
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width < 400
+                              ? 36
+                              : 48, // Responsive font size
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        l10n.tagline,
+                        style: Theme.of(context).textTheme.titleMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 48),
 
-                          // Email field
-                          TextFormField(
-                            controller: _emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              labelText: l10n.authEmailLabel,
-                              prefixIcon: const Icon(Icons.email_outlined),
-                            ),
-                            validator: Validators.email,
-                            enabled: !authState.isLoading,
-                          ),
-                          const SizedBox(height: 16),
+                      // Email field
+                      TextFormField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          labelText: l10n.authEmailLabel,
+                          prefixIcon: const Icon(Icons.email_outlined),
+                        ),
+                        validator: Validators.email,
+                        enabled: !authState.isLoading,
+                      ),
+                      const SizedBox(height: 16),
 
-                          // Password field
-                          TextFormField(
-                            controller: _passwordController,
-                            obscureText: _obscurePassword,
-                            decoration: InputDecoration(
-                              labelText: l10n.authPasswordLabel,
-                              prefixIcon: const Icon(Icons.lock_outline),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassword
-                                      ? Icons.visibility_outlined
-                                      : Icons.visibility_off_outlined,
+                      // Password field
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: _obscurePassword,
+                        decoration: InputDecoration(
+                          labelText: l10n.authPasswordLabel,
+                          prefixIcon: const Icon(Icons.lock_outline),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscurePassword = !_obscurePassword;
+                              });
+                            },
+                          ),
+                        ),
+                        validator: Validators.password,
+                        enabled: !authState.isLoading,
+                      ),
+                      const SizedBox(height: 8),
+
+                      // Forgot password link
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: authState.isLoading
+                              ? null
+                              : () => _showForgotPasswordDialog(),
+                          child: Text(l10n.authForgotPassword),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Login button
+                      ElevatedButton(
+                        onPressed: authState.isLoading ? null : _handleLogin,
+                        child: authState.isLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    _obscurePassword = !_obscurePassword;
-                                  });
-                                },
-                              ),
+                              )
+                            : Text(l10n.authLoginButton),
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Sign up link
+                      TextButton(
+                        onPressed: authState.isLoading
+                            ? null
+                            : () => context.go(AppRoutes.signup),
+                        child: Text(l10n.authSwitchToSignup),
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      // Divider
+                      Row(
+                        children: [
+                          const Expanded(child: Divider()),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
                             ),
-                            validator: Validators.password,
-                            enabled: !authState.isLoading,
+                            child: Text(l10n.authDividerOr),
                           ),
-                          const SizedBox(height: 8),
+                          const Expanded(child: Divider()),
+                        ],
+                      ),
 
-                          // Forgot password link
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: authState.isLoading
-                                  ? null
-                                  : () => _showForgotPasswordDialog(),
-                              child: Text(l10n.authForgotPassword),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
+                      const SizedBox(height: 24),
 
-                          // Login button
-                          ElevatedButton(
-                            onPressed: authState.isLoading
-                                ? null
-                                : _handleLogin,
-                            child: authState.isLoading
-                                ? const SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  )
-                                : Text(l10n.authLoginButton),
-                          ),
-                          const SizedBox(height: 16),
+                      // Google Sign-In button
+                      OutlinedButton.icon(
+                        onPressed: authState.isLoading
+                            ? null
+                            : _handleGoogleSignIn,
+                        icon: const Icon(Icons.g_mobiledata, size: 24),
+                        label: Text(l10n.authGoogleSignIn),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                        ),
+                      ),
 
-                          // Sign up link
+                      const SizedBox(height: 32),
+
+                      // Privacy & Terms
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                           TextButton(
-                            onPressed: authState.isLoading
-                                ? null
-                                : () => context.go(AppRoutes.signup),
-                            child: Text(l10n.authSwitchToSignup),
+                            onPressed: () => context.push(AppRoutes.privacy),
+                            child: Text(l10n.authPrivacyLink),
                           ),
-
-                          const SizedBox(height: 24),
-
-                          // Divider
-                          Row(
-                            children: [
-                              const Expanded(child: Divider()),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                ),
-                                child: Text(l10n.authDividerOr),
-                              ),
-                              const Expanded(child: Divider()),
-                            ],
-                          ),
-
-                          const SizedBox(height: 24),
-
-                          // Google Sign-In button
-                          OutlinedButton.icon(
-                            onPressed: authState.isLoading
-                                ? null
-                                : _handleGoogleSignIn,
-                            icon: const Icon(Icons.g_mobiledata, size: 24),
-                            label: Text(l10n.authGoogleSignIn),
-                            style: OutlinedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                            ),
-                          ),
-
-                          const SizedBox(height: 32),
-
-                          // Privacy & Terms
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                onPressed: () =>
-                                    context.push(AppRoutes.privacy),
-                                child: Text(l10n.authPrivacyLink),
-                              ),
-                              const Text(' • '),
-                              TextButton(
-                                onPressed: () => context.push(AppRoutes.terms),
-                                child: Text(l10n.authTermsLink),
-                              ),
-                            ],
+                          const Text(' • '),
+                          TextButton(
+                            onPressed: () => context.push(AppRoutes.terms),
+                            child: Text(l10n.authTermsLink),
                           ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
             ),
           ),
-      );
+        ),
+      ),
+    );
   }
 }

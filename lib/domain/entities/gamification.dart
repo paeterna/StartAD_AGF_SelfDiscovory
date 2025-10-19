@@ -27,17 +27,22 @@ class GamificationProfile {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  /// Calculate XP needed for next level
-  /// Formula: nextLevelXp = 100 * pow((level + 1) / 0.75, 1/0.75)
+  /// Calculate total XP needed to reach next level
+  /// Formula: totalXp = (level)² × 100
+  /// Level 2: (2-1)² × 100 = 100 XP
+  /// Level 3: (3-1)² × 100 = 400 XP
+  /// level 4: (4-1)² × 100 = 900 XP
+  /// Level 5: (5-1)² × 100 = 1,600 XP
+  /// Level 10: (10-1)² × 100 = 8,100 XP
   int get xpForNextLevel {
     final nextLevel = level + 1;
-    return (100 * pow(nextLevel / 0.75, 1 / 0.75)).round();
+    return (nextLevel - 1) * (nextLevel - 1) * 100;
   }
 
-  /// Calculate XP for current level
+  /// Calculate total XP needed for current level
   int get xpForCurrentLevel {
-    if (level == 0) return 0;
-    return (100 * pow(level / 0.75, 1 / 0.75)).round();
+    if (level <= 1) return 0;
+    return (level - 1) * (level - 1) * 100;
   }
 
   /// Progress to next level (0.0 - 1.0)
@@ -46,11 +51,20 @@ class GamificationProfile {
     final nextLevelXp = xpForNextLevel;
     final xpInLevel = totalXp - currentLevelXp;
     final xpNeeded = nextLevelXp - currentLevelXp;
+    if (xpNeeded <= 0) return 0.0;
     return (xpInLevel / xpNeeded).clamp(0.0, 1.0);
   }
 
   /// XP remaining until next level
-  int get xpUntilNextLevel => (xpForNextLevel - totalXp).clamp(0, double.infinity).toInt();
+  int get xpUntilNextLevel =>
+      (xpForNextLevel - totalXp).clamp(0, double.infinity).toInt();
+
+  /// Current XP within the current level (for XP bar display)
+  int get currentXp => (totalXp - xpForCurrentLevel).clamp(0, double.infinity).toInt();
+
+  /// XP needed to progress through current level
+  int get xpNeededForCurrentLevel =>
+      (xpForNextLevel - xpForCurrentLevel).clamp(0, double.infinity).toInt();
 
   factory GamificationProfile.fromJson(Map<String, dynamic> json) {
     return GamificationProfile(
@@ -321,12 +335,11 @@ class XpConstants {
     required double deltaAttention,
     required double deltaMemory,
   }) {
-    final xp = base + (k1 * deltaComposite) + (k2 * deltaAttention) + (k3 * deltaMemory);
+    final xp =
+        base +
+        (k1 * deltaComposite) +
+        (k2 * deltaAttention) +
+        (k3 * deltaMemory);
     return xp.round().clamp(0, 1000); // Cap at 1000 XP per activity
   }
-}
-
-// Helper function for pow
-double pow(num x, num exponent) {
-  return x < 0 ? 0 : x.toDouble().clamp(0, double.infinity);
 }

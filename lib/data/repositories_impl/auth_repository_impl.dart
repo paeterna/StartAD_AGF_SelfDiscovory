@@ -92,7 +92,9 @@ class AuthRepositoryImpl implements AuthRepository {
         try {
           createdAt = DateTime.parse(profileResponse['created_at'] as String);
         } catch (e) {
-          debugPrint('🔴 [AUTH_REPO] Error parsing created_at from profile: $e');
+          debugPrint(
+            '🔴 [AUTH_REPO] Error parsing created_at from profile: $e',
+          );
           createdAt = DateTime.now();
         }
 

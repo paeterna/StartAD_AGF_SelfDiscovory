@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:startad_agf_selfdiscovery/core/theme/app_colors.dart';
 import 'package:startad_agf_selfdiscovery/core/theme/app_theme.dart';
 import 'package:startad_agf_selfdiscovery/generated/l10n/app_localizations.dart';
-import 'package:startad_agf_selfdiscovery/presentation/widgets/enhanced_glassy_card.dart';
 import 'package:startad_agf_selfdiscovery/presentation/widgets/gradient_background.dart';
 
 /// Welcome screen for onboarding - Friendly introduction for teens
@@ -88,15 +87,17 @@ class WelcomeScreen extends StatelessWidget {
               const Spacer(),
 
               // Get Started Button
-              GradientGlassyCard(
-                onTap: onGetStarted,
-                child: Center(
-                  child: Text(
-                    l10n.welcomeGetStartedButton,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    ),
+              FilledButton(
+                onPressed: onGetStarted,
+                style: FilledButton.styleFrom(
+                  padding: const EdgeInsets.all(AppTheme.spaceLarge),
+                  minimumSize: const Size(double.infinity, 60),
+                ),
+                child: Text(
+                  l10n.welcomeGetStartedButton,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),

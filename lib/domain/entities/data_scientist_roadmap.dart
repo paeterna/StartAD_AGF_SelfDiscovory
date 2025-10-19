@@ -5,7 +5,8 @@ class DataScientistRoadmap {
   static EnhancedCareerRoadmap getRoadmap() {
     return EnhancedCareerRoadmap(
       careerTitle: 'Data Scientist',
-      description: 'Analyze data and build AI models to solve real-world problems',
+      description:
+          'Analyze data and build AI models to solve real-world problems',
       estimatedDuration: '8-12 years to senior level',
       salaryRange: 'AED 10,000 - 60,000/month',
       phases: [
@@ -52,7 +53,7 @@ class DataScientistRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 2: UNIVERSITY
         RoadmapPhase(
           id: 'university',
@@ -76,7 +77,8 @@ class DataScientistRoadmap {
                 'UAEU - Data Science courses',
                 'AUS - CS with AI track',
               ],
-              tip: '💡 Take as many statistics and machine learning courses as possible!',
+              tip:
+                  '💡 Take as many statistics and machine learning courses as possible!',
             ),
             RoadmapStep(
               title: 'Core Data Science Courses',
@@ -89,7 +91,8 @@ class DataScientistRoadmap {
                 '📚 Data Visualization - Present insights',
                 '📚 Big Data Technologies - Handle large datasets',
               ],
-              tip: '💡 Focus on understanding concepts, not just memorizing formulas!',
+              tip:
+                  '💡 Focus on understanding concepts, not just memorizing formulas!',
             ),
             RoadmapStep(
               title: 'Practical Projects',
@@ -110,7 +113,7 @@ class DataScientistRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 3: SKILLS
         RoadmapPhase(
           id: 'skills',
@@ -172,7 +175,7 @@ class DataScientistRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 4: CAREER
         RoadmapPhase(
           id: 'career',
@@ -232,7 +235,8 @@ class DataScientistRoadmap {
                 '🏆 Achievements: Transform business with AI',
                 '👥 Leadership: Manage 10-30+ data professionals',
               ],
-              tip: '💡 At this level, you\'re a business leader who happens to know data!',
+              tip:
+                  '💡 At this level, you\'re a business leader who happens to know data!',
             ),
           ],
         ),

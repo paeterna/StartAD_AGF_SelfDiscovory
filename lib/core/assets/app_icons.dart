@@ -48,7 +48,8 @@ class AppIcons {
   static const String arrowForwardIos = '$_basePath/arrow_forward_ios.svg';
 
   // Dashboard & Discovery Icons
-  static const String localFireDepartment = '$_basePath/local_fire_department.svg';
+  static const String localFireDepartment =
+      '$_basePath/local_fire_department.svg';
   static const String schedule = '$_basePath/schedule.svg';
   static const String verified = '$_basePath/verified.svg';
   static const String trendingUp = '$_basePath/trending_up.svg';
@@ -57,7 +58,8 @@ class AppIcons {
   static const String games = '$_basePath/games.svg';
   static const String gamesOutlined = '$_basePath/games_outlined.svg';
   static const String emojiEvents = '$_basePath/emoji_events.svg';
-  static const String emojiEventsOutlined = '$_basePath/emoji_events_outlined.svg';
+  static const String emojiEventsOutlined =
+      '$_basePath/emoji_events_outlined.svg';
 
   // Career Icons
   static const String accountTree = '$_basePath/account_tree.svg';
@@ -71,7 +73,8 @@ class AppIcons {
   static const String timer = '$_basePath/timer.svg';
   static const String touchApp = '$_basePath/touch_app.svg';
   static const String checkCircle = '$_basePath/check_circle.svg';
-  static const String checkCircleOutline = '$_basePath/check_circle_outline.svg';
+  static const String checkCircleOutline =
+      '$_basePath/check_circle_outline.svg';
   static const String playArrow = '$_basePath/play_arrow.svg';
   static const String pause = '$_basePath/pause.svg';
   static const String pauseCircle = '$_basePath/pause_circle.svg';
@@ -110,16 +113,19 @@ class AppIcons {
   // Status Icons
   static const String errorOutline = '$_basePath/error_outline.svg';
   static const String cancelOutlined = '$_basePath/cancel_outlined.svg';
-  static const String removeCircleOutline = '$_basePath/remove_circle_outline.svg';
+  static const String removeCircleOutline =
+      '$_basePath/remove_circle_outline.svg';
   static const String imageNotSupported = '$_basePath/image_not_supported.svg';
-  static const String constructionOutlined = '$_basePath/construction_outlined.svg';
+  static const String constructionOutlined =
+      '$_basePath/construction_outlined.svg';
 
   // Authentication Icons
   static const String lock = '$_basePath/lock.svg';
   static const String lockOutline = '$_basePath/lock_outline.svg';
   static const String logout = '$_basePath/logout.svg';
   static const String visibilityOutlined = '$_basePath/visibility_outlined.svg';
-  static const String visibilityOffOutlined = '$_basePath/visibility_off_outlined.svg';
+  static const String visibilityOffOutlined =
+      '$_basePath/visibility_off_outlined.svg';
   static const String accountCircle = '$_basePath/account_circle.svg';
 
   // Miscellaneous Icons

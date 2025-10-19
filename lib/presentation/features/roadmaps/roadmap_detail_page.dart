@@ -184,7 +184,9 @@ class _RoadmapHeader extends StatelessWidget {
                     Text(
                       'AI-Generated Roadmap',
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onPrimary.withValues(alpha: 0.8),
+                        color: theme.colorScheme.onPrimary.withValues(
+                          alpha: 0.8,
+                        ),
                       ),
                     ),
                   ],
@@ -526,24 +528,26 @@ class _StepItem extends StatelessWidget {
           // Details
           if (step.details.isNotEmpty) ...[
             const SizedBox(height: 12),
-            ...step.details.map((detail) => Padding(
-                  padding: const EdgeInsets.only(left: 36, bottom: 4),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '• ',
+            ...step.details.map(
+              (detail) => Padding(
+                padding: const EdgeInsets.only(left: 36, bottom: 4),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '• ',
+                      style: theme.textTheme.bodySmall,
+                    ),
+                    Expanded(
+                      child: Text(
+                        detail,
                         style: theme.textTheme.bodySmall,
                       ),
-                      Expanded(
-                        child: Text(
-                          detail,
-                          style: theme.textTheme.bodySmall,
-                        ),
-                      ),
-                    ],
-                  ),
-                )),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
 
           // Resources
@@ -572,15 +576,17 @@ class _StepItem extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 4),
-                  ...step.resources.map((resource) => Padding(
-                        padding: const EdgeInsets.only(bottom: 2),
-                        child: Text(
-                          resource,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: theme.colorScheme.primary,
-                          ),
+                  ...step.resources.map(
+                    (resource) => Padding(
+                      padding: const EdgeInsets.only(bottom: 2),
+                      child: Text(
+                        resource,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.primary,
                         ),
-                      )),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -593,7 +599,9 @@ class _StepItem extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               margin: const EdgeInsets.only(left: 36),
               decoration: BoxDecoration(
-                color: theme.colorScheme.tertiaryContainer.withValues(alpha: 0.5),
+                color: theme.colorScheme.tertiaryContainer.withValues(
+                  alpha: 0.5,
+                ),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
                   color: theme.colorScheme.tertiary.withValues(alpha: 0.3),

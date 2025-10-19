@@ -12,7 +12,7 @@ class AIInsightService {
   Future<AIInsight> generateInsight(String userId) async {
     // Check if user has sufficient data
     final eligibility = await _repository.canGenerateInsight(userId);
-    
+
     if (eligibility['can_generate'] != true) {
       throw InsufficientDataException(
         eligibility['reason'] as String? ?? 'Insufficient data for analysis',
@@ -38,7 +38,7 @@ class AIInsightService {
   /// Check if user can generate an AI insight
   Future<InsightEligibility> checkEligibility(String userId) async {
     final result = await _repository.canGenerateInsight(userId);
-    
+
     return InsightEligibility(
       canGenerate: result['can_generate'] as bool,
       reason: result['reason'] as String,
@@ -76,8 +76,9 @@ class InsightEligibility {
     final assessmentProgress = (assessments / 1 * 100).clamp(0, 100);
     final activityProgress = (activities / 2 * 100).clamp(0, 100);
     final featureProgress = (features / 10 * 100).clamp(0, 100);
-    
-    return ((assessmentProgress + activityProgress + featureProgress) / 3).round();
+
+    return ((assessmentProgress + activityProgress + featureProgress) / 3)
+        .round();
   }
 
   /// Get a user-friendly message about what's needed
@@ -116,7 +117,7 @@ class InsufficientDataException implements Exception {
   final int features;
 
   @override
-  String toString() => 'InsufficientDataException: $message '
+  String toString() =>
+      'InsufficientDataException: $message '
       '(assessments: $assessments, activities: $activities, features: $features)';
 }
-

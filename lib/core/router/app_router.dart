@@ -82,7 +82,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       final isGoingToAuth = currentLocation.startsWith('/auth');
       final isGoingToOnboarding = currentLocation == AppRoutes.onboarding;
       final isGoingToSchool = currentLocation.startsWith('/school');
-      final isGoingToContinueSignup = currentLocation == AppRoutes.continueSignup;
+      final isGoingToContinueSignup =
+          currentLocation == AppRoutes.continueSignup;
       final isGoingToStatic =
           currentLocation.startsWith('/privacy') ||
           currentLocation.startsWith('/terms') ||
@@ -229,8 +230,12 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: AppRoutes.discover,
             pageBuilder: (context, state) {
               final tabParam = state.uri.queryParameters['tab'];
-              final tabIndex = tabParam != null ? int.tryParse(tabParam) ?? 0 : 0;
-              return NoTransitionPage(child: DiscoverPage(initialTabIndex: tabIndex));
+              final tabIndex = tabParam != null
+                  ? int.tryParse(tabParam) ?? 0
+                  : 0;
+              return NoTransitionPage(
+                child: DiscoverPage(initialTabIndex: tabIndex),
+              );
             },
           ),
           GoRoute(
@@ -252,13 +257,17 @@ final routerProvider = Provider<GoRouter>((ref) {
                 key: state.pageKey,
                 child: Consumer(
                   builder: (context, ref, _) {
-                    final roadmapAsync = ref.watch(roadmapByIdProvider(roadmapId));
+                    final roadmapAsync = ref.watch(
+                      roadmapByIdProvider(roadmapId),
+                    );
 
                     return roadmapAsync.when(
                       data: (roadmap) {
                         if (roadmap == null) {
                           return Scaffold(
-                            appBar: AppBar(title: const Text('Roadmap Not Found')),
+                            appBar: AppBar(
+                              title: const Text('Roadmap Not Found'),
+                            ),
                             body: const Center(
                               child: Text('This roadmap could not be found.'),
                             ),

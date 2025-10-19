@@ -89,16 +89,20 @@ class _ContinueSignupPageState extends ConsumerState<ContinueSignupPage> {
       }
 
       // Save display name and grade
-      await ref.read(profilesServiceProvider).updateProfile(
-        displayName: _displayNameController.text.trim(),
-        grade: _selectedGrade,
-      );
+      await ref
+          .read(profilesServiceProvider)
+          .updateProfile(
+            displayName: _displayNameController.text.trim(),
+            grade: _selectedGrade,
+          );
 
       // Assign school
-      await ref.read(schoolAssignmentControllerProvider).assignStudentToSchool(
-        userId: userId,
-        schoolId: _selectedSchool!.id,
-      );
+      await ref
+          .read(schoolAssignmentControllerProvider)
+          .assignStudentToSchool(
+            userId: userId,
+            schoolId: _selectedSchool!.id,
+          );
 
       if (mounted) {
         context.go(AppRoutes.onboarding);
@@ -209,11 +213,13 @@ class _ContinueSignupPageState extends ConsumerState<ContinueSignupPage> {
                           }
                           return null;
                         },
-                        onChanged: _isLoading ? null : (grade) {
-                          setState(() {
-                            _selectedGrade = grade;
-                          });
-                        },
+                        onChanged: _isLoading
+                            ? null
+                            : (grade) {
+                                setState(() {
+                                  _selectedGrade = grade;
+                                });
+                              },
                       ),
                       const SizedBox(height: 16),
 
@@ -240,11 +246,13 @@ class _ContinueSignupPageState extends ConsumerState<ContinueSignupPage> {
                               }
                               return null;
                             },
-                            onChanged: _isLoading ? null : (school) {
-                              setState(() {
-                                _selectedSchool = school;
-                              });
-                            },
+                            onChanged: _isLoading
+                                ? null
+                                : (school) {
+                                    setState(() {
+                                      _selectedSchool = school;
+                                    });
+                                  },
                           );
                         },
                         loading: () => const LinearProgressIndicator(),
@@ -262,7 +270,9 @@ class _ContinueSignupPageState extends ConsumerState<ContinueSignupPage> {
                             ? const SizedBox(
                                 height: 20,
                                 width: 20,
-                                child: CircularProgressIndicator(strokeWidth: 2),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
                               )
                             : Text(l10n.continueButton),
                       ),

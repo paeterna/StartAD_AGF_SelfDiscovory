@@ -158,7 +158,9 @@ class RoadmapPhase {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is RoadmapPhase && runtimeType == other.runtimeType && id == other.id;
+      other is RoadmapPhase &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
 
   @override
   int get hashCode => id.hashCode;
@@ -260,7 +262,9 @@ class AICareerRoadmap {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AICareerRoadmap && runtimeType == other.runtimeType && id == other.id;
+      other is AICareerRoadmap &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
 
   @override
   int get hashCode => id.hashCode;

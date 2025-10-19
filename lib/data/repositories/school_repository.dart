@@ -208,8 +208,11 @@ class SchoolRepository {
           .limit(1)
           .maybeSingle();
 
-      if (activityResponse != null && activityResponse['completed_at'] != null) {
-        lastActivity = DateTime.parse(activityResponse['completed_at'] as String);
+      if (activityResponse != null &&
+          activityResponse['completed_at'] != null) {
+        lastActivity = DateTime.parse(
+          activityResponse['completed_at'] as String,
+        );
       }
     } catch (e) {
       debugPrint('⚠️ [SCHOOL_REPO] Could not fetch last activity: $e');

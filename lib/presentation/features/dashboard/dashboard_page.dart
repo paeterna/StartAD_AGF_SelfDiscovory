@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../application/auth/auth_controller.dart';
 import '../../../application/scoring/scoring_providers.dart';
-import '../../../application/activity/activity_providers.dart';
+import '../../../application/gamification/gamification_providers.dart';
+import '../../../common/widgets/level_badge.dart';
+import '../../../common/widgets/streak_chip.dart';
 import '../../../core/assets/app_icons.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/widgets/app_icon.dart';
@@ -21,37 +23,27 @@ class DashboardPage extends ConsumerWidget {
     final authState = ref.watch(authControllerProvider);
     final user = authState.user;
     final l10n = AppLocalizations.of(context)!;
-    final progressAsync = ref.watch(discoveryProgressProvider);
+    final profileAsync = ref.watch(gamificationProfileProvider);
 
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.dashboardTitle),
           actions: [
-            // Streak indicator
-            progressAsync.when(
-              data: (progress) {
-                if (progress == null || progress.streakDays == 0) {
-                  return const SizedBox.shrink();
-                }
+            // New streak and level widgets
+            profileAsync.when(
+              data: (profile) {
+                if (profile == null) return const SizedBox.shrink();
                 return Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.local_fire_department,
-                        color: Colors.orange,
-                        size: 24,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '${progress.streakDays}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.orange,
-                        ),
-                      ),
+                      // Streak chip
+                      if (profile.currentStreak > 0)
+                        CompactStreakChip(streakDays: profile.currentStreak),
+                      if (profile.currentStreak > 0) const SizedBox(width: 12),
+                      // Level badge
+                      CompactLevelBadge(level: profile.level, size: 36),
                       const SizedBox(width: 12),
                     ],
                   ),
@@ -81,8 +73,14 @@ class DashboardPage extends ConsumerWidget {
               ),
               const SizedBox(height: 32),
 
-              // Profile completeness card
-              _ProfileProgressCard(),
+              // Progress cards row (XP and Profile side by side)
+              Row(
+                children: [
+                  Expanded(child: _GamificationCard()),
+                  const SizedBox(width: 16),
+                  Expanded(child: _ProfileProgressCard()),
+                ],
+              ),
               const SizedBox(height: 24),
 
               // Quick navigation buttons
@@ -174,7 +172,6 @@ class _NavButton extends StatelessWidget {
               AppIcon(
                 iconPath,
                 size: 32,
-                color: Theme.of(context).colorScheme.primary,
               ),
               const SizedBox(height: 8),
               Text(
@@ -201,95 +198,272 @@ class _ProfileProgressCard extends ConsumerWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+        child: completenessAsync.when(
+          data: (completeness) {
+            final percent = completeness.round();
+            final level = percent < 30
+                ? l10n.dashboardProgressJustStarted
+                : percent < 60
+                    ? l10n.dashboardProgressGettingThere
+                    : percent < 90
+                        ? l10n.dashboardProgressAlmostDone
+                        : l10n.dashboardProgressComplete;
+
+            final colorScheme = Theme.of(context).colorScheme;
+
+            return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  Icons.psychology_outlined,
-                  size: 28,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  l10n.dashboardProfileProgress,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                // Circular progress indicator
+                SizedBox(
+                  width: 120,
+                  height: 120,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // Background circle
+                      SizedBox(
+                        width: 120,
+                        height: 120,
+                        child: CircularProgressIndicator(
+                          value: 1.0,
+                          strokeWidth: 8,
+                          color: colorScheme.primary.withValues(alpha: 0.2),
+                        ),
+                      ),
+                      // Progress circle
+                      SizedBox(
+                        width: 120,
+                        height: 120,
+                        child: CircularProgressIndicator(
+                          value: completeness / 100.0,
+                          strokeWidth: 8,
+                          // color: colorScheme.primary,
+                        ),
+                      ),
+                      // Center content
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.psychology_outlined,
+                            // color: colorScheme.secondary,
+                            size: 32,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '$percent%',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              // color: colorScheme.secondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
+                ),
+                const SizedBox(height: 16),
+
+                // Status label
+                Text(
+                  'Profile',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        // color: colorScheme.secondary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  level,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurface.withValues(alpha: 0.6),
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            );
+          },
+          loading: () => const Padding(
+            padding: EdgeInsets.all(20),
+            child: CircularProgressIndicator(),
+          ),
+          error: (error, stackTrace) => Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.error_outline, size: 40, color: Colors.red),
+                const SizedBox(height: 8),
+                Text(
+                  'Error',
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
-            completenessAsync.when(
-              data: (completeness) {
-                final percent = completeness.round();
-                final level = percent < 30
-                    ? l10n.dashboardProgressJustStarted
-                    : percent < 60
-                    ? l10n.dashboardProgressGettingThere
-                    : percent < 90
-                    ? l10n.dashboardProgressAlmostDone
-                    : l10n.dashboardProgressComplete;
+          ),
+        ),
+      ),
+    );
+  }
+}
 
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          level,
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(fontWeight: FontWeight.w600),
+/// Gamification XP/Level card showing progress
+class _GamificationCard extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profileAsync = ref.watch(gamificationProfileProvider);
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: profileAsync.when(
+          data: (profile) {
+            if (profile == null) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.stars, size: 40, color: Colors.grey),
+                  const SizedBox(height: 8),
+                  Text(
+                    'No XP data',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              );
+            }
+
+            final colorScheme = Theme.of(context).colorScheme;
+
+            // Calculate progress manually
+            final progress = profile.xpNeededForCurrentLevel > 0
+                ? (profile.totalXp / profile.xpNeededForCurrentLevel).clamp(0.0, 1.0)
+                : 0.0;
+
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Circular progress indicator
+                SizedBox(
+                  width: 120,
+                  height: 120,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // Background circle
+                      SizedBox(
+                        width: 120,
+                        height: 120,
+                        child: CircularProgressIndicator(
+                          value: 1.0,
+                          strokeWidth: 8,
+                          color: colorScheme.primary.withValues(alpha: 0.1),
                         ),
+                      ),
+                      // Progress circle
+                      SizedBox(
+                        width: 120,
+                        height: 120,
+                        child: CircularProgressIndicator(
+                          value: progress,
+                          strokeWidth: 8,
+                          color: colorScheme.primary,
+                        ),
+                      ),
+                      // Center content
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.military_tech,
+                            size: 32,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Level ${profile.level}',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                // XP Info
+                Text(
+                  '${profile.totalXp} XP',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '${profile.xpNeededForCurrentLevel - profile.currentXp} to Level ${profile.level + 1}',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurface.withValues(alpha: 0.6),
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+
+                // Streak badge if active
+                if (profile.currentStreak > 0) ...[
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.local_fire_department,
+                          color: Colors.orange,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 4),
                         Text(
-                          '$percent%',
-                          style: Theme.of(context).textTheme.titleLarge
-                              ?.copyWith(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          '${profile.currentStreak} day streak',
+                          style: TextStyle(
+                            color: Colors.orange,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                          ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: LinearProgressIndicator(
-                        value: completeness / 100.0,
-                        minHeight: 12,
-                        backgroundColor: Theme.of(
-                          context,
-                        ).colorScheme.primary.withValues(alpha: 0.1),
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      percent < 90
-                          ? l10n.dashboardProgressHint
-                          : l10n.dashboardProgressCompleteHint,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withValues(alpha: 0.7),
-                      ),
-                    ),
-                  ],
-                );
-              },
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
-              error: (error, stackTrace) => Center(
-                child: Text('Error: $error'),
-              ),
+                  ),
+                ],
+              ],
+            );
+          },
+          loading: () => const Padding(
+            padding: EdgeInsets.all(20),
+            child: CircularProgressIndicator(),
+          ),
+          error: (error, _) => Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.error_outline, size: 40, color: Colors.red),
+                const SizedBox(height: 8),
+                Text(
+                  'Error',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

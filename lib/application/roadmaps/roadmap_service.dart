@@ -10,8 +10,8 @@ class RoadmapService {
   RoadmapService({
     required AIRoadmapRepository roadmapRepository,
     required AnalyticsService analyticsService,
-  })  : _roadmapRepository = roadmapRepository,
-        _analyticsService = analyticsService;
+  }) : _roadmapRepository = roadmapRepository,
+       _analyticsService = analyticsService;
 
   final AIRoadmapRepository _roadmapRepository;
   final AnalyticsService _analyticsService;
@@ -238,7 +238,9 @@ class RoadmapService {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to generate roadmap. Please ensure the Edge Function is deployed.\n\nError: ${e.toString()}'),
+            content: Text(
+              'Failed to generate roadmap. Please ensure the Edge Function is deployed.\n\nError: ${e.toString()}',
+            ),
             backgroundColor: Colors.red,
             duration: const Duration(seconds: 6),
             action: SnackBarAction(

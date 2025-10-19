@@ -134,6 +134,8 @@ class _BottomNav extends StatelessWidget {
 
     return NavigationBar(
       selectedIndex: currentIndex,
+      backgroundColor: Theme.of(context).colorScheme.primary.withAlpha(30),
+      indicatorColor: Theme.of(context).colorScheme.tertiary.withAlpha(90),
       onDestinationSelected: (index) {
         final destination = NavDestinations.items[index];
         context.go(destination.route);

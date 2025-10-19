@@ -5,7 +5,8 @@ class DigitalMarketerRoadmap {
   static EnhancedCareerRoadmap getRoadmap() {
     return EnhancedCareerRoadmap(
       careerTitle: 'Digital Marketer',
-      description: 'Promote products and brands online through social media, ads, and content',
+      description:
+          'Promote products and brands online through social media, ads, and content',
       estimatedDuration: '5-8 years to senior level',
       salaryRange: 'AED 6,000 - 35,000/month',
       phases: [
@@ -52,7 +53,7 @@ class DigitalMarketerRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 2: UNIVERSITY
         RoadmapPhase(
           id: 'university',
@@ -76,7 +77,8 @@ class DigitalMarketerRoadmap {
                 'Zayed University Marketing',
                 'UAEU Business',
               ],
-              tip: '💡 Internships are crucial - work at agencies during summer!',
+              tip:
+                  '💡 Internships are crucial - work at agencies during summer!',
             ),
             RoadmapStep(
               title: 'Essential Marketing Courses',
@@ -110,7 +112,7 @@ class DigitalMarketerRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 3: SKILLS
         RoadmapPhase(
           id: 'skills',
@@ -135,7 +137,8 @@ class DigitalMarketerRoadmap {
                 'HubSpot Academy - Free',
                 'Meta Blueprint - Facebook ads',
               ],
-              tip: '💡 Get Google Ads and Analytics certifications - they\'re free!',
+              tip:
+                  '💡 Get Google Ads and Analytics certifications - they\'re free!',
             ),
             RoadmapStep(
               title: 'Content Creation Skills',
@@ -173,7 +176,7 @@ class DigitalMarketerRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 4: CAREER
         RoadmapPhase(
           id: 'career',

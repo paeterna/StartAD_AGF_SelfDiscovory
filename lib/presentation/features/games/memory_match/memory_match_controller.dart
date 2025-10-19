@@ -424,10 +424,16 @@ class MemoryMatchController extends StateNotifier<MemoryMatchState> {
 
     // Derive additional cognitive traits from V2 factors
     // Problem Solving: Strategy + Metacognition (planning & learning)
-    final cognitionProblemSolving01 = (0.6 * v2.strat + 0.4 * v2.meta).clamp(0.0, 1.0);
+    final cognitionProblemSolving01 = (0.6 * v2.strat + 0.4 * v2.meta).clamp(
+      0.0,
+      1.0,
+    );
 
     // Quantitative: Metacognition + Working Memory (learning & logical thinking)
-    final cognitionQuantitative01 = (0.5 * v2.meta + 0.5 * v2.wm).clamp(0.0, 1.0);
+    final cognitionQuantitative01 = (0.5 * v2.meta + 0.5 * v2.wm).clamp(
+      0.0,
+      1.0,
+    );
 
     // Spatial: Speed + Consistency (quick pattern recognition)
     final cognitionSpatial01 = (0.6 * v2.spd + 0.4 * v2.cons).clamp(0.0, 1.0);
@@ -485,7 +491,8 @@ class GameScores {
 }
 
 /// Provider for the Memory Match controller
-final AutoDisposeStateNotifierProvider<MemoryMatchController, MemoryMatchState> memoryMatchControllerProvider =
+final AutoDisposeStateNotifierProvider<MemoryMatchController, MemoryMatchState>
+memoryMatchControllerProvider =
     StateNotifierProvider.autoDispose<MemoryMatchController, MemoryMatchState>(
       (ref) => MemoryMatchController(),
     );

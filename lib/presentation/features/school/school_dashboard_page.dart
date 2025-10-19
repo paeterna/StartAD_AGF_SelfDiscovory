@@ -79,90 +79,91 @@ class _SchoolDashboardContent extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-            // School Header
-            Row(
-              children: [
-                Icon(
-                  Icons.school,
-                  size: 40,
-                  color: theme.colorScheme.primary,
-                ),
-                SizedBox(width: ResponsiveSpacing.md(context)),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        school.name,
-                        style: theme.textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      if (school.code != null)
-                        Text(
-                          'Code: ${school.code}',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.textTheme.bodySmall?.color?.withValues(
-                              alpha: 0.7,
+                // School Header
+                Row(
+                  children: [
+                    Icon(
+                      Icons.school,
+                      size: 40,
+                      color: theme.colorScheme.primary,
+                    ),
+                    SizedBox(width: ResponsiveSpacing.md(context)),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            school.name,
+                            style: theme.textTheme.headlineMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: ResponsiveSpacing.xl(context)),
-
-            // KPI Cards
-            _KpiCards(schoolId: school.id),
-
-            SizedBox(height: ResponsiveSpacing.xl(context)),
-
-            // Desktop: Two column layout
-            if (context.isDesktop)
-              IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Left column: Top students and career distribution
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          _TopStudentsCard(schoolId: school.id),
-                          SizedBox(height: ResponsiveSpacing.lg(context)),
-                          _CareerDistributionCard(schoolId: school.id),
+                          if (school.code != null)
+                            Text(
+                              'Code: ${school.code}',
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: theme.textTheme.bodySmall?.color
+                                    ?.withValues(
+                                      alpha: 0.7,
+                                    ),
+                              ),
+                            ),
                         ],
                       ),
                     ),
-                    SizedBox(width: ResponsiveSpacing.xl(context)),
-                    // Right column: School radar
-                    Expanded(
-                      flex: 1,
-                      child: _SchoolRadarCard(schoolId: school.id),
-                    ),
                   ],
                 ),
-              )
-            else
-              // Mobile/Tablet: Stacked layout
-              Column(
-                children: [
-                  _TopStudentsCard(schoolId: school.id),
-                  SizedBox(height: ResponsiveSpacing.lg(context)),
-                  _SchoolRadarCard(schoolId: school.id),
-                  SizedBox(height: ResponsiveSpacing.lg(context)),
-                  _CareerDistributionCard(schoolId: school.id),
-                ],
-              ),
 
-            SizedBox(height: ResponsiveSpacing.xl(context)),
+                SizedBox(height: ResponsiveSpacing.xl(context)),
 
-            // Students Table Section
-            _StudentsTableSection(schoolId: school.id),
+                // KPI Cards
+                _KpiCards(schoolId: school.id),
+
+                SizedBox(height: ResponsiveSpacing.xl(context)),
+
+                // Desktop: Two column layout
+                if (context.isDesktop)
+                  IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Left column: Top students and career distribution
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              _TopStudentsCard(schoolId: school.id),
+                              SizedBox(height: ResponsiveSpacing.lg(context)),
+                              _CareerDistributionCard(schoolId: school.id),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: ResponsiveSpacing.xl(context)),
+                        // Right column: School radar
+                        Expanded(
+                          flex: 1,
+                          child: _SchoolRadarCard(schoolId: school.id),
+                        ),
+                      ],
+                    ),
+                  )
+                else
+                  // Mobile/Tablet: Stacked layout
+                  Column(
+                    children: [
+                      _TopStudentsCard(schoolId: school.id),
+                      SizedBox(height: ResponsiveSpacing.lg(context)),
+                      _SchoolRadarCard(schoolId: school.id),
+                      SizedBox(height: ResponsiveSpacing.lg(context)),
+                      _CareerDistributionCard(schoolId: school.id),
+                    ],
+                  ),
+
+                SizedBox(height: ResponsiveSpacing.xl(context)),
+
+                // Students Table Section
+                _StudentsTableSection(schoolId: school.id),
               ],
             ),
           ),
@@ -233,10 +234,15 @@ class _KpiCards extends ConsumerWidget {
           return LayoutBuilder(
             builder: (context, constraints) {
               // Calculate explicit height based on number of rows and aspect ratio
-              final cardWidth = (constraints.maxWidth - (ResponsiveSpacing.md(context) * (crossAxisCount - 1))) / crossAxisCount;
+              final cardWidth =
+                  (constraints.maxWidth -
+                      (ResponsiveSpacing.md(context) * (crossAxisCount - 1))) /
+                  crossAxisCount;
               final cardHeight = cardWidth / aspectRatio;
               final rows = (4 / crossAxisCount).ceil();
-              final totalHeight = (cardHeight * rows) + (ResponsiveSpacing.md(context) * (rows - 1));
+              final totalHeight =
+                  (cardHeight * rows) +
+                  (ResponsiveSpacing.md(context) * (rows - 1));
 
               return SizedBox(
                 height: totalHeight,
@@ -263,7 +269,8 @@ class _KpiCards extends ConsumerWidget {
                     _KpiCard(
                       icon: Icons.verified,
                       title: 'Avg Match Confidence',
-                      value: '${(kpis.avgMatchConfidence * 100).toStringAsFixed(1)}%',
+                      value:
+                          '${(kpis.avgMatchConfidence * 100).toStringAsFixed(1)}%',
                       color: Colors.orange,
                     ),
                     _KpiCard(
@@ -716,7 +723,7 @@ class _SchoolRadarCard extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Icon(icon, size: 20, color: theme.colorScheme.primary),
+                Icon(icon, size: 20),
                 const SizedBox(width: 8),
                 Text(
                   title,

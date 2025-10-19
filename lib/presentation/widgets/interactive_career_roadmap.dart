@@ -11,10 +11,12 @@ class InteractiveCareerRoadmap extends StatefulWidget {
   });
 
   @override
-  State<InteractiveCareerRoadmap> createState() => _InteractiveCareerRoadmapState();
+  State<InteractiveCareerRoadmap> createState() =>
+      _InteractiveCareerRoadmapState();
 }
 
-class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> with TickerProviderStateMixin {
+class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap>
+    with TickerProviderStateMixin {
   String? expandedPhaseId;
   String? expandedStepId;
   late AnimationController _controller;
@@ -43,7 +45,7 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
           // Header
           _buildHeader(context),
           const SizedBox(height: 32),
-          
+
           // Roadmap Timeline
           _buildTimeline(context),
         ],
@@ -132,13 +134,17 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
         final index = entry.key;
         final phase = entry.value;
         final isLast = index == widget.roadmap.phases.length - 1;
-        
+
         return _buildPhaseCard(context, phase, isLast);
       }).toList(),
     );
   }
 
-  Widget _buildPhaseCard(BuildContext context, RoadmapPhase phase, bool isLast) {
+  Widget _buildPhaseCard(
+    BuildContext context,
+    RoadmapPhase phase,
+    bool isLast,
+  ) {
     final isExpanded = expandedPhaseId == phase.id;
     final color = _getPhaseColor(phase.type);
 
@@ -193,7 +199,7 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
                       ),
                     ),
                     const SizedBox(width: 16),
-                    
+
                     // Title and subtitle
                     Expanded(
                       child: Column(
@@ -218,10 +224,13 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
                         ],
                       ),
                     ),
-                    
+
                     // Duration badge
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         color: color.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(12),
@@ -235,9 +244,9 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
                         ),
                       ),
                     ),
-                    
+
                     const SizedBox(width: 8),
-                    
+
                     // Expand icon
                     Icon(
                       isExpanded ? Icons.expand_less : Icons.expand_more,
@@ -245,7 +254,7 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
                     ),
                   ],
                 ),
-                
+
                 // Expanded content
                 if (isExpanded) ...[
                   const SizedBox(height: 20),
@@ -257,7 +266,7 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
             ),
           ),
         ),
-        
+
         // Connector line
         if (!isLast)
           Container(
@@ -270,7 +279,12 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
                 end: Alignment.bottomCenter,
                 colors: [
                   color.withOpacity(0.5),
-                  _getPhaseColor(widget.roadmap.phases[widget.roadmap.phases.indexOf(phase) + 1].type).withOpacity(0.5),
+                  _getPhaseColor(
+                    widget
+                        .roadmap
+                        .phases[widget.roadmap.phases.indexOf(phase) + 1]
+                        .type,
+                  ).withOpacity(0.5),
                 ],
               ),
             ),
@@ -279,15 +293,26 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
     );
   }
 
-  Widget _buildStepsList(BuildContext context, RoadmapPhase phase, Color color) {
+  Widget _buildStepsList(
+    BuildContext context,
+    RoadmapPhase phase,
+    Color color,
+  ) {
     return Column(
       children: phase.steps.asMap().entries.map((entry) {
         final index = entry.key;
         final step = entry.value;
         final stepId = '${phase.id}_$index';
         final isStepExpanded = expandedStepId == stepId;
-        
-        return _buildStepCard(context, step, stepId, isStepExpanded, color, index + 1);
+
+        return _buildStepCard(
+          context,
+          step,
+          stepId,
+          isStepExpanded,
+          color,
+          index + 1,
+        );
       }).toList(),
     );
   }
@@ -344,7 +369,7 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
                     ),
                   ),
                   const SizedBox(width: 12),
-                  
+
                   // Title
                   Expanded(
                     child: Column(
@@ -364,7 +389,10 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
                             ),
                             if (step.isOptional)
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 2,
+                                ),
                                 decoration: BoxDecoration(
                                   color: Colors.orange.shade100,
                                   borderRadius: BorderRadius.circular(8),
@@ -391,51 +419,55 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
                       ],
                     ),
                   ),
-                  
+
                   // Expand icon
                   Icon(
-                    isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                    isExpanded
+                        ? Icons.keyboard_arrow_up
+                        : Icons.keyboard_arrow_down,
                     color: color,
                     size: 20,
                   ),
                 ],
               ),
-              
+
               // Expanded details
               if (isExpanded) ...[
                 const SizedBox(height: 16),
                 const Divider(height: 1),
                 const SizedBox(height: 16),
-                
+
                 // Details
-                ...step.details.map((detail) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(top: 6),
-                            width: 6,
-                            height: 6,
-                            decoration: BoxDecoration(
-                              color: color,
-                              shape: BoxShape.circle,
+                ...step.details.map(
+                  (detail) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(top: 6),
+                          width: 6,
+                          height: 6,
+                          decoration: BoxDecoration(
+                            color: color,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            detail,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              height: 1.5,
                             ),
                           ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              detail,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                height: 1.5,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )),
-                
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
                 // Resources
                 if (step.resources.isNotEmpty) ...[
                   const SizedBox(height: 16),
@@ -450,7 +482,11 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.link, size: 16, color: Colors.blue.shade700),
+                            Icon(
+                              Icons.link,
+                              size: 16,
+                              color: Colors.blue.shade700,
+                            ),
                             const SizedBox(width: 8),
                             Text(
                               'Resources',
@@ -463,21 +499,23 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
                           ],
                         ),
                         const SizedBox(height: 8),
-                        ...step.resources.map((resource) => Padding(
-                              padding: const EdgeInsets.only(bottom: 4),
-                              child: Text(
-                                '• $resource',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.blue.shade900,
-                                ),
+                        ...step.resources.map(
+                          (resource) => Padding(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: Text(
+                              '• $resource',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.blue.shade900,
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ],
-                
+
                 // Tip
                 if (step.tip != null) ...[
                   const SizedBox(height: 12),
@@ -531,4 +569,3 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap> wit
     }
   }
 }
-

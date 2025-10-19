@@ -52,7 +52,7 @@ class GameDeveloperRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 2: UNIVERSITY
         RoadmapPhase(
           id: 'university',
@@ -110,7 +110,7 @@ class GameDeveloperRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 3: SKILLS
         RoadmapPhase(
           id: 'skills',
@@ -166,7 +166,7 @@ class GameDeveloperRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 4: CAREER
         RoadmapPhase(
           id: 'career',

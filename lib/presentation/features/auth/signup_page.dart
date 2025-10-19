@@ -104,9 +104,11 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         debugPrint('✅ [SIGNUP] School assignment successful');
 
         // Save grade
-        await ref.read(profilesServiceProvider).updateProfile(
-          grade: _selectedGrade,
-        );
+        await ref
+            .read(profilesServiceProvider)
+            .updateProfile(
+              grade: _selectedGrade,
+            );
         debugPrint('✅ [SIGNUP] Grade saved: $_selectedGrade');
       }
 

@@ -679,9 +679,10 @@ open coverage/html/index.html
 
 ## 📄 License
 
-Copyright © 2025 Masar. All rights reserved.
+This project is developed as part of the **AI Sandbox Challenge**, under the principle of open innovation.
 
-This is proprietary software. Unauthorized copying, modification, or distribution is prohibited.
+- **Code & Software:** Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- **Creative Works & Documentation:** Licensed under the [CC-BY 4.0 International License](https://creativecommons.org/licenses/by/4.0/).  
 
 ## 📧 Contact
 

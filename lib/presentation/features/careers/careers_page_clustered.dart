@@ -161,7 +161,9 @@ class _ClusterList extends StatelessWidget {
             Icon(
               Icons.work_outline,
               size: 64,
-              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.5),
             ),
             const SizedBox(height: 16),
             Text(
@@ -232,7 +234,9 @@ class _ClusterCardState extends ConsumerState<_ClusterCard> {
                     theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
                   ],
                 ),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(16),
+                ),
               ),
               child: Row(
                 children: [
@@ -277,13 +281,17 @@ class _ClusterCardState extends ConsumerState<_ClusterCard> {
                             Icon(
                               Icons.trending_up,
                               size: 16,
-                              color: _getMatchColor(widget.cluster.maxMatchScore),
+                              color: _getMatchColor(
+                                widget.cluster.maxMatchScore,
+                              ),
                             ),
                             const SizedBox(width: 4),
                             Text(
                               'Best Match: ${widget.cluster.maxMatchScore}%',
                               style: theme.textTheme.labelMedium?.copyWith(
-                                color: _getMatchColor(widget.cluster.maxMatchScore),
+                                color: _getMatchColor(
+                                  widget.cluster.maxMatchScore,
+                                ),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -314,7 +322,8 @@ class _ClusterCardState extends ConsumerState<_ClusterCard> {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: _CareerItem(
                       career: career,
-                      onGenerateRoadmap: () => _handleGenerateRoadmap(context, career),
+                      onGenerateRoadmap: () =>
+                          _handleGenerateRoadmap(context, career),
                     ),
                   );
                 }),
@@ -342,7 +351,10 @@ class _ClusterCardState extends ConsumerState<_ClusterCard> {
     return Colors.grey;
   }
 
-  Future<void> _handleGenerateRoadmap(BuildContext context, Career career) async {
+  Future<void> _handleGenerateRoadmap(
+    BuildContext context,
+    Career career,
+  ) async {
     final roadmapService = ref.read(roadmapServiceProvider);
     final userId = Supabase.instance.client.auth.currentUser?.id;
 

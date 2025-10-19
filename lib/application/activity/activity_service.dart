@@ -111,7 +111,7 @@ class ActivityService {
       final aiRepository = AIInsightRepositoryImpl(_supabase);
       final aiService = AIInsightService(aiRepository);
       final eligibility = await aiService.checkEligibility(userId);
-      
+
       if (eligibility.canGenerate) {
         // Check if insights already exist
         final existingInsights = await _supabase
@@ -119,7 +119,7 @@ class ActivityService {
             .select('id')
             .eq('user_id', userId)
             .maybeSingle();
-        
+
         // Only generate if no insights exist yet
         if (existingInsights == null) {
           await aiService.generateInsight(userId);

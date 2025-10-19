@@ -24,7 +24,7 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
       }
 
       final data = response.data as Map<String, dynamic>;
-      
+
       if (data['success'] != true) {
         throw Exception(
           data['error'] ?? 'Failed to generate insight',
@@ -34,7 +34,7 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
       // Fetch the created insight from database
       final insightId = data['insight_id'] as String;
       final insight = await _getInsightById(insightId);
-      
+
       if (insight == null) {
         throw Exception('Failed to retrieve generated insight');
       }
@@ -86,10 +86,12 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
   @override
   Future<Map<String, dynamic>> canGenerateInsight(String userId) async {
     try {
-      final response = await _supabase.rpc<Map<String, dynamic>>(
-        'can_generate_ai_insight',
-        params: {'p_user_id': userId},
-      ).single();
+      final response = await _supabase
+          .rpc<Map<String, dynamic>>(
+            'can_generate_ai_insight',
+            params: {'p_user_id': userId},
+          )
+          .single();
 
       return response;
     } catch (e) {
@@ -100,10 +102,7 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
   @override
   Future<void> deleteInsight(String insightId) async {
     try {
-      await _supabase
-          .from('ai_career_insights')
-          .delete()
-          .eq('id', insightId);
+      await _supabase.from('ai_career_insights').delete().eq('id', insightId);
     } catch (e) {
       throw Exception('Error deleting insight: $e');
     }
@@ -141,7 +140,9 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
       careerRecommendations: (json['career_recommendations'] as List)
           .map((e) => CareerRecommendation.fromJson(e as Map<String, dynamic>))
           .toList(),
-      careerReasoning: Map<String, String>.from(json['career_reasoning'] as Map),
+      careerReasoning: Map<String, String>.from(
+        json['career_reasoning'] as Map,
+      ),
       careerRoadmaps: json['career_roadmaps'] != null
           ? (json['career_roadmaps'] as Map).map(
               (key, value) => MapEntry(
@@ -159,4 +160,3 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
     );
   }
 }
-

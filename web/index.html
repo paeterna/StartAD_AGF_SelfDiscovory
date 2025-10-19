@@ -89,6 +89,22 @@
     window._flutterCacheBuster = Date.now();
   </script>
 </head>
+<style>
+  /* Target for mobile devices */
+  @media (max-width: 600px) {
+
+    /* Target the chat bubble container (most common Chatbase selector) */
+    .cb-chat-button-container {
+      /* Lift it up to clear the bottom navigation bar (approx 5rem) */
+      bottom: 5.5rem !important;
+    }
+
+    /* Fallback/alternative selector for the chat bubble */
+    #chatbase-bubble-button {
+        bottom: 5.5rem !important;
+    }
+  }
+</style>
 <body>
   <script>
     // Load Flutter bootstrap with cache busting
@@ -97,5 +113,10 @@
     script.async = true;
     document.body.appendChild(script);
   </script>
+  <script>
+    (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="jUPDsqJuD0inwYfN4BG0Q";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+  </script>
 </body>
 </html>
+
+

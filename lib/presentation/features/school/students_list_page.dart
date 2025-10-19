@@ -137,9 +137,12 @@ class _StudentsListPageState extends ConsumerState<StudentsListPage> {
                                       const SizedBox(height: 8),
                                       Text(
                                         'Try a different search term',
-                                        style: theme.textTheme.bodySmall?.copyWith(
-                                          color: theme.colorScheme.onSurfaceVariant,
-                                        ),
+                                        style: theme.textTheme.bodySmall
+                                            ?.copyWith(
+                                              color: theme
+                                                  .colorScheme
+                                                  .onSurfaceVariant,
+                                            ),
                                       ),
                                     ],
                                   ],
@@ -156,11 +159,13 @@ class _StudentsListPageState extends ConsumerState<StudentsListPage> {
                               // Mobile: Card list
                               Column(
                                 children: students
-                                    .map((student) => _buildStudentCard(
-                                          context,
-                                          theme,
-                                          student,
-                                        ))
+                                    .map(
+                                      (student) => _buildStudentCard(
+                                        context,
+                                        theme,
+                                        student,
+                                      ),
+                                    )
                                     .toList(),
                               )
                             else
@@ -180,7 +185,8 @@ class _StudentsListPageState extends ConsumerState<StudentsListPage> {
                             ResponsiveCard(
                               enableHover: false,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Page ${_currentPage + 1}',
@@ -361,7 +367,8 @@ class _StudentsListPageState extends ConsumerState<StudentsListPage> {
                       radius: 16,
                       backgroundColor: theme.colorScheme.primary,
                       child: Text(
-                        student.displayName?.substring(0, 1).toUpperCase() ?? '?',
+                        student.displayName?.substring(0, 1).toUpperCase() ??
+                            '?',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,

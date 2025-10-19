@@ -30,15 +30,18 @@ class CareerClusterGroup {
       name: json['name'] as String,
       description: json['description'] as String? ?? '',
       icon: json['icon'] as String? ?? '💼',
-      topCareers: (json['top_careers'] as List<dynamic>?)
-              ?.map((c) => Career(
-                    id: c['id'] as String,
-                    title: c['title'] as String,
-                    description: c['description'] as String? ?? '',
-                    tags: (c['tags'] as List<dynamic>?)?.cast<String>() ?? [],
-                    matchScore: (c['match_score'] as num?)?.toInt() ?? 0,
-                    cluster: json['name'] as String,
-                  ))
+      topCareers:
+          (json['top_careers'] as List<dynamic>?)
+              ?.map(
+                (c) => Career(
+                  id: c['id'] as String,
+                  title: c['title'] as String,
+                  description: c['description'] as String? ?? '',
+                  tags: (c['tags'] as List<dynamic>?)?.cast<String>() ?? [],
+                  matchScore: (c['match_score'] as num?)?.toInt() ?? 0,
+                  cluster: json['name'] as String,
+                ),
+              )
               .toList() ??
           [],
       maxMatchScore: (json['max_match_score'] as num?)?.toInt() ?? 0,
@@ -52,13 +55,15 @@ class CareerClusterGroup {
       'description': description,
       'icon': icon,
       'top_careers': topCareers
-          .map((c) => {
-                'id': c.id,
-                'title': c.title,
-                'description': c.description,
-                'tags': c.tags,
-                'match_score': c.matchScore,
-              })
+          .map(
+            (c) => {
+              'id': c.id,
+              'title': c.title,
+              'description': c.description,
+              'tags': c.tags,
+              'match_score': c.matchScore,
+            },
+          )
           .toList(),
       'max_match_score': maxMatchScore,
     };
@@ -85,7 +90,9 @@ class CareerClusterGroup {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CareerClusterGroup && runtimeType == other.runtimeType && id == other.id;
+      other is CareerClusterGroup &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
 
   @override
   int get hashCode => id.hashCode;

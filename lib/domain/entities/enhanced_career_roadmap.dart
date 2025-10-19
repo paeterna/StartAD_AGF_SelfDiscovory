@@ -72,7 +72,8 @@ class CareerRoadmapData {
   static EnhancedCareerRoadmap getSoftwareDeveloperRoadmap() {
     return EnhancedCareerRoadmap(
       careerTitle: 'Software Developer',
-      description: 'Build amazing apps, websites, and systems that millions use daily',
+      description:
+          'Build amazing apps, websites, and systems that millions use daily',
       estimatedDuration: '7-10 years to senior level',
       salaryRange: 'AED 8,000 - 45,000/month',
       phases: [
@@ -98,7 +99,8 @@ class CareerRoadmapData {
                 'Khan Academy - Free math courses',
                 'Brilliant.org - Interactive problem solving',
               ],
-              tip: '💡 Math is everywhere in coding! Every algorithm you write uses math concepts.',
+              tip:
+                  '💡 Math is everywhere in coding! Every algorithm you write uses math concepts.',
             ),
             RoadmapStep(
               title: 'Computer Science',
@@ -113,7 +115,8 @@ class CareerRoadmapData {
                 'Code.org - Beginner programming',
                 'Scratch - Visual programming',
               ],
-              tip: '💡 Start coding early! Even simple projects teach you a lot.',
+              tip:
+                  '💡 Start coding early! Even simple projects teach you a lot.',
             ),
             RoadmapStep(
               title: 'Physics',
@@ -141,7 +144,7 @@ class CareerRoadmapData {
             ),
           ],
         ),
-        
+
         // PHASE 2: UNIVERSITY
         RoadmapPhase(
           id: 'university',
@@ -180,7 +183,8 @@ class CareerRoadmapData {
                 '📚 Operating Systems - How computers work',
                 '📚 Computer Networks - How internet works',
               ],
-              tip: '💡 Don\'t just pass - truly understand! These concepts last forever.',
+              tip:
+                  '💡 Don\'t just pass - truly understand! These concepts last forever.',
             ),
             RoadmapStep(
               title: 'Internships',
@@ -196,11 +200,12 @@ class CareerRoadmapData {
                 'Bayt.com - UAE jobs',
                 'GulfTalent - Professional roles',
               ],
-              tip: '💡 Internships often lead to full-time jobs! Take them seriously.',
+              tip:
+                  '💡 Internships often lead to full-time jobs! Take them seriously.',
             ),
           ],
         ),
-        
+
         // PHASE 3: SKILLS
         RoadmapPhase(
           id: 'skills',
@@ -225,7 +230,8 @@ class CareerRoadmapData {
                 'Udemy - Affordable courses',
                 'Coursera - University-level courses',
               ],
-              tip: '💡 Start with Python, then learn JavaScript. These two open many doors!',
+              tip:
+                  '💡 Start with Python, then learn JavaScript. These two open many doors!',
             ),
             RoadmapStep(
               title: 'Professional Certifications',
@@ -242,7 +248,8 @@ class CareerRoadmapData {
                 'Many have free training materials',
                 'Employers value these highly',
               ],
-              tip: '💡 Get AWS or Azure certified - cloud skills are in huge demand!',
+              tip:
+                  '💡 Get AWS or Azure certified - cloud skills are in huge demand!',
             ),
             RoadmapStep(
               title: 'Soft Skills',
@@ -254,7 +261,8 @@ class CareerRoadmapData {
                 '🎯 Problem Solving - Think creatively',
                 '📊 Presentation Skills - Present your work',
               ],
-              tip: '💡 Technical skills get you hired, soft skills get you promoted!',
+              tip:
+                  '💡 Technical skills get you hired, soft skills get you promoted!',
             ),
             RoadmapStep(
               title: 'Build Your Portfolio',
@@ -275,7 +283,7 @@ class CareerRoadmapData {
             ),
           ],
         ),
-        
+
         // PHASE 4: CAREER
         RoadmapPhase(
           id: 'career',
@@ -300,7 +308,8 @@ class CareerRoadmapData {
                 'Ask questions - everyone expects this',
                 'Find a good mentor',
               ],
-              tip: '💡 Your first 2 years are for learning. Absorb everything like a sponge!',
+              tip:
+                  '💡 Your first 2 years are for learning. Absorb everything like a sponge!',
             ),
             RoadmapStep(
               title: 'Mid-Level Developer (Years 2-5)',
@@ -312,7 +321,8 @@ class CareerRoadmapData {
                 '🏆 Achievements: Deliver major features independently',
                 '📈 Growth: Start specializing (Frontend, Backend, Mobile, etc.)',
               ],
-              tip: '💡 This is when you choose your specialization. Pick what you love!',
+              tip:
+                  '💡 This is when you choose your specialization. Pick what you love!',
             ),
             RoadmapStep(
               title: 'Senior Developer (Years 5-8)',
@@ -324,7 +334,8 @@ class CareerRoadmapData {
                 '🏆 Achievements: Design and build major systems',
                 '👥 Leadership: Guide 3-5 developers',
               ],
-              tip: '💡 Senior means you solve problems others can\'t. Keep learning!',
+              tip:
+                  '💡 Senior means you solve problems others can\'t. Keep learning!',
             ),
             RoadmapStep(
               title: 'Lead/Principal Developer (Years 8-12)',
@@ -336,7 +347,8 @@ class CareerRoadmapData {
                 '🏆 Achievements: Build scalable systems used by millions',
                 '👥 Leadership: Guide 10-20+ developers',
               ],
-              tip: '💡 At this level, your decisions impact the entire company!',
+              tip:
+                  '💡 At this level, your decisions impact the entire company!',
             ),
             RoadmapStep(
               title: 'Engineering Manager / CTO (Years 12+)',
@@ -348,7 +360,8 @@ class CareerRoadmapData {
                 '🏆 Achievements: Build world-class engineering teams',
                 '👥 Leadership: Manage managers, 50-500+ people',
               ],
-              tip: '💡 The ultimate goal! But remember, you can also stay technical as a Principal Engineer.',
+              tip:
+                  '💡 The ultimate goal! But remember, you can also stay technical as a Principal Engineer.',
             ),
           ],
         ),
@@ -359,7 +372,8 @@ class CareerRoadmapData {
   static EnhancedCareerRoadmap getUXDesignerRoadmap() {
     return EnhancedCareerRoadmap(
       careerTitle: 'UX/UI Designer',
-      description: 'Design beautiful, user-friendly experiences that people love',
+      description:
+          'Design beautiful, user-friendly experiences that people love',
       estimatedDuration: '6-9 years to senior level',
       salaryRange: 'AED 7,000 - 40,000/month',
       phases: [
@@ -427,7 +441,7 @@ class CareerRoadmapData {
             ),
           ],
         ),
-        
+
         // PHASE 2: UNIVERSITY
         RoadmapPhase(
           id: 'university',
@@ -483,7 +497,8 @@ class CareerRoadmapData {
                 'Dribbble - Get discovered',
                 'Daily UI Challenge - Practice daily',
               ],
-              tip: '💡 Quality over quantity! 5 amazing projects beat 20 mediocre ones.',
+              tip:
+                  '💡 Quality over quantity! 5 amazing projects beat 20 mediocre ones.',
             ),
             RoadmapStep(
               title: 'Internships & Freelance',
@@ -498,7 +513,7 @@ class CareerRoadmapData {
             ),
           ],
         ),
-        
+
         // PHASE 3: SKILLS
         RoadmapPhase(
           id: 'skills',
@@ -524,7 +539,8 @@ class CareerRoadmapData {
                 'YouTube tutorials for everything',
                 'Udemy courses often on sale',
               ],
-              tip: '💡 Learn Figma first - it\'s free and most companies use it!',
+              tip:
+                  '💡 Learn Figma first - it\'s free and most companies use it!',
             ),
             RoadmapStep(
               title: 'Technical Skills',
@@ -568,7 +584,7 @@ class CareerRoadmapData {
             ),
           ],
         ),
-        
+
         // PHASE 4: CAREER
         RoadmapPhase(
           id: 'career',
@@ -612,7 +628,8 @@ class CareerRoadmapData {
                 '🏆 Achievements: Create design systems',
                 '👥 Leadership: Guide 2-4 designers',
               ],
-              tip: '💡 Senior means you make strategic decisions, not just pretty screens!',
+              tip:
+                  '💡 Senior means you make strategic decisions, not just pretty screens!',
             ),
             RoadmapStep(
               title: 'Lead Designer (Years 8-10)',
@@ -636,7 +653,8 @@ class CareerRoadmapData {
                 '🏆 Achievements: Build award-winning products',
                 '👥 Leadership: Lead 15-50+ designers',
               ],
-              tip: '💡 The ultimate goal! Or become a freelance design consultant!',
+              tip:
+                  '💡 The ultimate goal! Or become a freelance design consultant!',
             ),
           ],
         ),
@@ -654,9 +672,9 @@ class CareerRoadmapData {
       // Add more mappings as needed
     };
 
-    return roadmaps[careerTitle] ?? getSoftwareDeveloperRoadmap(); // Default fallback
+    return roadmaps[careerTitle] ??
+        getSoftwareDeveloperRoadmap(); // Default fallback
   }
 
   // Add more career roadmaps here (Data Scientist, etc.)
 }
-

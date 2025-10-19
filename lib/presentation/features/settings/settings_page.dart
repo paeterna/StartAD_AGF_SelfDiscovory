@@ -302,7 +302,9 @@ class _TeenThemeSelector extends ConsumerWidget {
 
     return profileAsync.when(
       data: (profile) {
-        final themeName = _getThemeDisplayName(profile?.themeKey ?? 'neon_arcade');
+        final themeName = _getThemeDisplayName(
+          profile?.themeKey ?? 'neon_arcade',
+        );
         return ListTile(
           leading: const Icon(Icons.palette),
           title: const Text('App Theme'),

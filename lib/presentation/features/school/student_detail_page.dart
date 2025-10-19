@@ -211,7 +211,7 @@ class _StudentDetailPageState extends ConsumerState<StudentDetailPage>
       ),
       child: Row(
         children: [
-          Icon(icon, size: 24, color: Theme.of(context).colorScheme.primary),
+          Icon(icon, size: 24),
           const SizedBox(width: 12),
           Expanded(
             child: Column(

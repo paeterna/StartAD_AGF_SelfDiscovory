@@ -42,7 +42,11 @@ class AIInsightsDashboardCard extends ConsumerWidget {
             // Header
             Row(
               children: [
-                Icon(Icons.psychology, color: Theme.of(context).primaryColor, size: 28),
+                Icon(
+                  Icons.psychology,
+                  color: Theme.of(context).primaryColor,
+                  size: 28,
+                ),
                 const SizedBox(width: 12),
                 const Text(
                   'Your AI Profile',
@@ -84,7 +88,9 @@ class AIInsightsDashboardCard extends ConsumerWidget {
               children: insight.skillsDetected.map((skill) {
                 return Chip(
                   label: Text(skill),
-                  backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
+                  backgroundColor: Theme.of(
+                    context,
+                  ).primaryColor.withOpacity(0.1),
                   labelStyle: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w500,
@@ -129,7 +135,8 @@ class AIInsightsDashboardCard extends ConsumerWidget {
             sideTitles: SideTitles(
               showTitles: true,
               getTitlesWidget: (value, meta) {
-                if (value.toInt() >= 0 && value.toInt() < sortedEntries.length) {
+                if (value.toInt() >= 0 &&
+                    value.toInt() < sortedEntries.length) {
                   final label = sortedEntries[value.toInt()].key;
                   return Padding(
                     padding: const EdgeInsets.only(top: 8.0),
@@ -150,12 +157,19 @@ class AIInsightsDashboardCard extends ConsumerWidget {
               showTitles: true,
               reservedSize: 40,
               getTitlesWidget: (value, meta) {
-                return Text('${value.toInt()}%', style: const TextStyle(fontSize: 11));
+                return Text(
+                  '${value.toInt()}%',
+                  style: const TextStyle(fontSize: 11),
+                );
               },
             ),
           ),
-          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          topTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          rightTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
         ),
         gridData: FlGridData(
           show: true,
@@ -173,7 +187,9 @@ class AIInsightsDashboardCard extends ConsumerWidget {
                 toY: score,
                 color: _getColorForIndex(context, index),
                 width: 30,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(6)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(6),
+                ),
               ),
             ],
           );
@@ -204,4 +220,3 @@ class AIInsightsDashboardCard extends ConsumerWidget {
     return colors[index % colors.length];
   }
 }
-

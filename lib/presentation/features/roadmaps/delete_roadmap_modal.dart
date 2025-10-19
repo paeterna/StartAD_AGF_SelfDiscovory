@@ -117,7 +117,9 @@ class _DeleteRoadmapModalState extends State<DeleteRoadmapModal> {
                         decoration: BoxDecoration(
                           color: isSelected
                               ? theme.colorScheme.error.withValues(alpha: 0.2)
-                              : theme.colorScheme.primary.withValues(alpha: 0.1),
+                              : theme.colorScheme.primary.withValues(
+                                  alpha: 0.1,
+                                ),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Center(
@@ -149,7 +151,7 @@ class _DeleteRoadmapModalState extends State<DeleteRoadmapModal> {
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: isSelected
                                     ? theme.colorScheme.onErrorContainer
-                                        .withValues(alpha: 0.8)
+                                          .withValues(alpha: 0.8)
                                     : theme.colorScheme.onSurfaceVariant,
                               ),
                               maxLines: 2,
@@ -161,9 +163,9 @@ class _DeleteRoadmapModalState extends State<DeleteRoadmapModal> {
                               style: theme.textTheme.labelSmall?.copyWith(
                                 color: isSelected
                                     ? theme.colorScheme.onErrorContainer
-                                        .withValues(alpha: 0.7)
+                                          .withValues(alpha: 0.7)
                                     : theme.colorScheme.onSurfaceVariant
-                                        .withValues(alpha: 0.7),
+                                          .withValues(alpha: 0.7),
                               ),
                             ),
                           ],
@@ -179,8 +181,9 @@ class _DeleteRoadmapModalState extends State<DeleteRoadmapModal> {
                       else
                         Icon(
                           Icons.radio_button_unchecked,
-                          color: theme.colorScheme.onSurfaceVariant
-                              .withValues(alpha: 0.5),
+                          color: theme.colorScheme.onSurfaceVariant.withValues(
+                            alpha: 0.5,
+                          ),
                         ),
                     ],
                   ),

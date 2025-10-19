@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../application/ai_insight/ai_insight_providers.dart';
 import '../../../domain/entities/ai_insight.dart';
-import '../../widgets/enhanced_glassy_card.dart';
 import '../../widgets/gradient_background.dart';
 
 class AIInsightsPage extends ConsumerWidget {
@@ -111,7 +110,7 @@ class _EligibilityCard extends StatelessWidget {
     final canGenerate = eligibility.canGenerate as bool;
     final progress = eligibility.progressPercentage as int;
 
-    return GlassyCard(
+    return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -132,8 +131,8 @@ class _EligibilityCard extends StatelessWidget {
                       Text(
                         canGenerate ? 'Ready!' : 'Keep Going!',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -194,7 +193,7 @@ class _GeneratingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlassyCard(
+    return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -222,7 +221,7 @@ class _NoInsightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlassyCard(
+    return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -257,7 +256,7 @@ class _ErrorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlassyCard(
+    return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -311,10 +310,12 @@ class _InsightDisplay extends StatelessWidget {
             spacing: 8,
             runSpacing: 8,
             children: insight.skillsDetected
-                .map((skill) => Chip(
-                      label: Text(skill),
-                      backgroundColor: Colors.blue.withValues(alpha: 0.2),
-                    ))
+                .map(
+                  (skill) => Chip(
+                    label: Text(skill),
+                    backgroundColor: Colors.blue.withValues(alpha: 0.2),
+                  ),
+                )
                 .toList(),
           ),
         ),
@@ -363,7 +364,7 @@ class _SectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlassyCard(
+    return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -371,13 +372,13 @@ class _SectionCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icon, color: Theme.of(context).colorScheme.primary),
+                Icon(icon),
                 const SizedBox(width: 8),
                 Text(
                   title,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -405,7 +406,11 @@ class _InterestChart extends StatelessWidget {
         )
         .trim()
         .split(' ')
-        .map((word) => word.isEmpty ? '' : word[0].toUpperCase() + word.substring(1).toLowerCase())
+        .map(
+          (word) => word.isEmpty
+              ? ''
+              : word[0].toUpperCase() + word.substring(1).toLowerCase(),
+        )
         .join(' ');
   }
 
@@ -428,15 +433,15 @@ class _InterestChart extends StatelessWidget {
                     child: Text(
                       _formatLabel(entry.key),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w500,
-                          ),
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   Text(
                     '${entry.value.toInt()}%',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -473,8 +478,8 @@ class _CareerCard extends StatelessWidget {
                   child: Text(
                     career.title,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Container(
@@ -527,7 +532,7 @@ class _MetadataCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlassyCard(
+    return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -594,8 +599,8 @@ class _MetadataItem extends StatelessWidget {
         Text(
           value,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+            fontWeight: FontWeight.bold,
+          ),
         ),
         Text(
           label,
@@ -605,5 +610,3 @@ class _MetadataItem extends StatelessWidget {
     );
   }
 }
-
-

@@ -52,7 +52,8 @@ class AIInsight {
       personalitySummary: personalitySummary ?? this.personalitySummary,
       skillsDetected: skillsDetected ?? this.skillsDetected,
       interestScores: interestScores ?? this.interestScores,
-      careerRecommendations: careerRecommendations ?? this.careerRecommendations,
+      careerRecommendations:
+          careerRecommendations ?? this.careerRecommendations,
       careerReasoning: careerReasoning ?? this.careerReasoning,
       careerRoadmaps: careerRoadmaps ?? this.careerRoadmaps,
       confidenceScore: confidenceScore ?? this.confidenceScore,
@@ -167,4 +168,3 @@ class LearningPathStep {
   @override
   int get hashCode => title.hashCode;
 }
-

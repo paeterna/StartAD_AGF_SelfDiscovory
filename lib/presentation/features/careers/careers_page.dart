@@ -20,14 +20,6 @@ class CareersPage extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.careersTitle),
-          actions: [
-            // Tree view button
-            IconButton(
-              icon: const Icon(Icons.account_tree),
-              tooltip: 'Career Tree View',
-              onPressed: () => context.push(AppRoutes.careerTree),
-            ),
-          ],
         ),
         body: Column(
           children: [
@@ -57,7 +49,9 @@ class CareersPage extends ConsumerWidget {
                           Icon(
                             Icons.work_outline,
                             size: 64,
-                            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primary.withValues(alpha: 0.5),
                           ),
                           const SizedBox(height: 16),
                           Text(
@@ -82,7 +76,8 @@ class CareersPage extends ConsumerWidget {
                     child: ListView.separated(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       itemCount: matches.length,
-                      separatorBuilder: (context, _) => const SizedBox(height: 12),
+                      separatorBuilder: (context, _) =>
+                          const SizedBox(height: 12),
                       itemBuilder: (context, index) {
                         final match = matches[index];
                         return _CareerCard(
@@ -103,7 +98,11 @@ class CareersPage extends ConsumerWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                      const Icon(
+                        Icons.error_outline,
+                        size: 48,
+                        color: Colors.red,
+                      ),
                       const SizedBox(height: 16),
                       Text('Error loading careers: $error'),
                       const SizedBox(height: 16),
@@ -243,7 +242,10 @@ class _CareerCardState extends ConsumerState<_CareerCard> {
               ],
             ),
             const SizedBox(height: 8),
-            Text(widget.description, style: Theme.of(context).textTheme.bodyMedium),
+            Text(
+              widget.description,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
             if (widget.topFeatures.isNotEmpty) ...[
               const SizedBox(height: 12),
               Text(
@@ -348,10 +350,14 @@ class _CareerCardState extends ConsumerState<_CareerCard> {
                             onPressed: () async {
                               if (userId == null) return;
                               final roadmap = await ref.read(
-                                roadmapForCareerProvider(widget.careerId).future,
+                                roadmapForCareerProvider(
+                                  widget.careerId,
+                                ).future,
                               );
                               if (roadmap != null && context.mounted) {
-                                await context.push('${AppRoutes.roadmapDetail}/${roadmap.id}');
+                                await context.push(
+                                  '${AppRoutes.roadmapDetail}/${roadmap.id}',
+                                );
                               }
                             },
                             icon: const Icon(Icons.map, size: 18),

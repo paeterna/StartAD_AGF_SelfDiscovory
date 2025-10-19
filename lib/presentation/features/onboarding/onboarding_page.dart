@@ -63,7 +63,8 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
     try {
       // Build feature scores from selected options
       final featureScores = <String, double>{};
-      final featureMaxPossible = <String, double>{}; // Track max possible score per feature
+      final featureMaxPossible =
+          <String, double>{}; // Track max possible score per feature
 
       // First pass: count all possible scores per feature
       for (final item in metadata.items) {

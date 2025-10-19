@@ -52,7 +52,7 @@ class MobileAppDeveloperRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 2: UNIVERSITY
         RoadmapPhase(
           id: 'university',
@@ -110,7 +110,7 @@ class MobileAppDeveloperRoadmap {
             ),
           ],
         ),
-        
+
         // PHASE 3: SKILLS
         RoadmapPhase(
           id: 'skills',
@@ -134,7 +134,8 @@ class MobileAppDeveloperRoadmap {
                 'Android Developers',
                 'Flutter.dev tutorials',
               ],
-              tip: '💡 Flutter lets you build for iOS AND Android with one codebase!',
+              tip:
+                  '💡 Flutter lets you build for iOS AND Android with one codebase!',
             ),
             RoadmapStep(
               title: 'Backend & Cloud Services',
@@ -167,11 +168,12 @@ class MobileAppDeveloperRoadmap {
                 'Apple Developer Program',
                 'Flutter certification program',
               ],
-              tip: '💡 Certifications help but your published apps matter more!',
+              tip:
+                  '💡 Certifications help but your published apps matter more!',
             ),
           ],
         ),
-        
+
         // PHASE 4: CAREER
         RoadmapPhase(
           id: 'career',

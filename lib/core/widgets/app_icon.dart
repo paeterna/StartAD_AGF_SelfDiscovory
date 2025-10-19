@@ -38,7 +38,10 @@ class AppIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = color ?? IconTheme.of(context).color ?? Theme.of(context).iconTheme.color;
+    final iconColor =
+        color ??
+        IconTheme.of(context).color ??
+        Theme.of(context).iconTheme.color;
 
     return SvgPicture.asset(
       assetPath,

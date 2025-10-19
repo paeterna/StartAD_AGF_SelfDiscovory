@@ -17,8 +17,10 @@ final gamificationRepositoryProvider = Provider<GamificationRepository>((ref) {
 // ============================================================================
 
 /// User's gamification profile (XP, level, streaks, theme)
-final AutoDisposeStreamProvider<GamificationProfile?> gamificationProfileProvider =
-    StreamProvider.autoDispose<GamificationProfile?>((ref) {
+final AutoDisposeStreamProvider<GamificationProfile?>
+gamificationProfileProvider = StreamProvider.autoDispose<GamificationProfile?>((
+  ref,
+) {
   final supabase = Supabase.instance.client;
   final userId = supabase.auth.currentUser?.id;
 
@@ -37,76 +39,80 @@ final AutoDisposeStreamProvider<GamificationProfile?> gamificationProfileProvide
 });
 
 /// Synchronous getter for gamification profile (may be stale)
-final AutoDisposeFutureProvider<GamificationProfile?> gamificationProfileSyncProvider =
+final AutoDisposeFutureProvider<GamificationProfile?>
+gamificationProfileSyncProvider =
     FutureProvider.autoDispose<GamificationProfile?>((ref) async {
-  final repo = ref.watch(gamificationRepositoryProvider);
-  return repo.getProfile();
-});
+      final repo = ref.watch(gamificationRepositoryProvider);
+      return repo.getProfile();
+    });
 
 // ============================================================================
 // Badges State
 // ============================================================================
 
 /// User's earned badges
-final AutoDisposeStreamProvider<List<Badge>> badgesProvider = StreamProvider.autoDispose<List<Badge>>((ref) {
-  final supabase = Supabase.instance.client;
-  final userId = supabase.auth.currentUser?.id;
+final AutoDisposeStreamProvider<List<Badge>> badgesProvider =
+    StreamProvider.autoDispose<List<Badge>>((ref) {
+      final supabase = Supabase.instance.client;
+      final userId = supabase.auth.currentUser?.id;
 
-  if (userId == null) {
-    return Stream.value([]);
-  }
+      if (userId == null) {
+        return Stream.value([]);
+      }
 
-  return supabase
-      .from('badges')
-      .stream(primaryKey: ['id'])
-      .eq('user_id', userId)
-      .order('earned_at', ascending: false)
-      .map((rows) => rows.map((json) => Badge.fromJson(json)).toList());
-});
+      return supabase
+          .from('badges')
+          .stream(primaryKey: ['id'])
+          .eq('user_id', userId)
+          .order('earned_at', ascending: false)
+          .map((rows) => rows.map((json) => Badge.fromJson(json)).toList());
+    });
 
 /// Check if user has specific badge
 final AutoDisposeFutureProviderFamily<bool, String> hasBadgeProvider =
     FutureProvider.autoDispose.family<bool, String>((ref, badgeKey) async {
-  final repo = ref.watch(gamificationRepositoryProvider);
-  return repo.hasBadge(badgeKey);
-});
+      final repo = ref.watch(gamificationRepositoryProvider);
+      return repo.hasBadge(badgeKey);
+    });
 
 // ============================================================================
 // Remote Config State
 // ============================================================================
 
 /// XP calculation constants from remote config
-final AutoDisposeFutureProvider<XpConstants> xpConstantsProvider = FutureProvider.autoDispose<XpConstants>((ref) async {
-  final repo = ref.watch(gamificationRepositoryProvider);
-  return repo.getXpConstants();
-});
+final AutoDisposeFutureProvider<XpConstants> xpConstantsProvider =
+    FutureProvider.autoDispose<XpConstants>((ref) async {
+      final repo = ref.watch(gamificationRepositoryProvider);
+      return repo.getXpConstants();
+    });
 
 /// Copy tone setting (friendly, neutral, coach)
-final AutoDisposeFutureProvider<String> copyToneProvider = FutureProvider.autoDispose<String>((ref) async {
-  final repo = ref.watch(gamificationRepositoryProvider);
-  return repo.getCopyTone();
-});
+final AutoDisposeFutureProvider<String> copyToneProvider =
+    FutureProvider.autoDispose<String>((ref) async {
+      final repo = ref.watch(gamificationRepositoryProvider);
+      return repo.getCopyTone();
+    });
 
 /// Generic remote config value
 final AutoDisposeFutureProviderFamily<dynamic, String> remoteConfigProvider =
     FutureProvider.autoDispose.family<dynamic, String>((ref, key) async {
-  final repo = ref.watch(gamificationRepositoryProvider);
-  return repo.getRemoteConfig(key);
-});
+      final repo = ref.watch(gamificationRepositoryProvider);
+      return repo.getRemoteConfig(key);
+    });
 
 /// Feature flags
 final AutoDisposeFutureProviderFamily<bool, String> featureFlagProvider =
     FutureProvider.autoDispose.family<bool, String>((ref, key) async {
-  final repo = ref.watch(gamificationRepositoryProvider);
-  return repo.getFeatureFlag(key);
-});
+      final repo = ref.watch(gamificationRepositoryProvider);
+      return repo.getFeatureFlag(key);
+    });
 
 /// Cluster labels (for career display)
 final AutoDisposeFutureProvider<Map<String, dynamic>> clusterLabelsProvider =
     FutureProvider.autoDispose<Map<String, dynamic>>((ref) async {
-  final repo = ref.watch(gamificationRepositoryProvider);
-  return repo.getClusterLabels();
-});
+      final repo = ref.watch(gamificationRepositoryProvider);
+      return repo.getClusterLabels();
+    });
 
 // ============================================================================
 // XP and Level Actions
@@ -114,16 +120,20 @@ final AutoDisposeFutureProvider<Map<String, dynamic>> clusterLabelsProvider =
 
 /// Award XP to user
 /// Call this after completing activities (games, quizzes, roadmap steps)
-final awardXpProvider = Provider<Future<GamificationProfile> Function(int)>((ref) {
-  return (int xpAmount) async {
+/// Returns record with profile, leveledUp status, and oldLevel
+final awardXpProvider = Provider<
+  Future<({GamificationProfile profile, bool leveledUp, int oldLevel})>
+  Function({required String reason, required int amount})
+>((ref) {
+  return ({required String reason, required int amount}) async {
     final repo = ref.read(gamificationRepositoryProvider);
-    final profile = await repo.awardXp(xpAmount);
+    final result = await repo.awardXp(reason: reason, amount: amount);
 
     // Invalidate profile cache to trigger UI update
     ref.invalidate(gamificationProfileProvider);
     ref.invalidate(gamificationProfileSyncProvider);
 
-    return profile;
+    return result;
   };
 });
 
@@ -149,29 +159,40 @@ final updateStreakProvider = Provider<Future<void> Function()>((ref) {
 
 /// Award a badge to user
 final awardBadgeProvider =
-    Provider<Future<Badge?> Function(String, {Map<String, dynamic> metadata})>((ref) {
-  return (String badgeKey, {Map<String, dynamic> metadata = const {}}) async {
-    final repo = ref.read(gamificationRepositoryProvider);
-    final badge = await repo.awardBadge(badgeKey, metadata: metadata);
+    Provider<Future<Badge?> Function(String, {Map<String, dynamic> metadata})>((
+      ref,
+    ) {
+      return (
+        String badgeKey, {
+        Map<String, dynamic> metadata = const {},
+      }) async {
+        final repo = ref.read(gamificationRepositoryProvider);
+        final badge = await repo.awardBadge(badgeKey, metadata: metadata);
 
-    // Invalidate badges cache to trigger UI update
-    ref.invalidate(badgesProvider);
+        // Invalidate badges cache to trigger UI update
+        ref.invalidate(badgesProvider);
 
-    return badge;
-  };
-});
+        return badge;
+      };
+    });
 
 // ============================================================================
 // Telemetry Actions
 // ============================================================================
 
 /// Log telemetry event
-final logEventProvider = Provider<Future<void> Function(String, {Map<String, dynamic> metadata})>((ref) {
-  return (String eventKind, {Map<String, dynamic> metadata = const {}}) async {
-    final repo = ref.read(gamificationRepositoryProvider);
-    await repo.logEvent(eventKind, metadata: metadata);
-  };
-});
+final logEventProvider =
+    Provider<Future<void> Function(String, {Map<String, dynamic> metadata})>((
+      ref,
+    ) {
+      return (
+        String eventKind, {
+        Map<String, dynamic> metadata = const {},
+      }) async {
+        final repo = ref.read(gamificationRepositoryProvider);
+        await repo.logEvent(eventKind, metadata: metadata);
+      };
+    });
 
 // ============================================================================
 // Theme Actions
@@ -190,27 +211,29 @@ final updateThemeProvider = Provider<Future<void> Function(String)>((ref) {
 });
 
 /// Update user's avatar configuration
-final updateAvatarProvider = Provider<Future<void> Function(Map<String, dynamic>)>((ref) {
-  return (Map<String, dynamic> avatarConfig) async {
-    final repo = ref.read(gamificationRepositoryProvider);
-    await repo.updateAvatar(avatarConfig);
+final updateAvatarProvider =
+    Provider<Future<void> Function(Map<String, dynamic>)>((ref) {
+      return (Map<String, dynamic> avatarConfig) async {
+        final repo = ref.read(gamificationRepositoryProvider);
+        await repo.updateAvatar(avatarConfig);
 
-    // Invalidate profile cache to trigger UI update
-    ref.invalidate(gamificationProfileProvider);
-    ref.invalidate(gamificationProfileSyncProvider);
-  };
-});
+        // Invalidate profile cache to trigger UI update
+        ref.invalidate(gamificationProfileProvider);
+        ref.invalidate(gamificationProfileSyncProvider);
+      };
+    });
 
 // ============================================================================
 // Leaderboard State
 // ============================================================================
 
 /// Global XP leaderboard
-final AutoDisposeFutureProviderFamily<List<GamificationProfile>, int> leaderboardProvider =
-    FutureProvider.autoDispose.family<List<GamificationProfile>, int>((ref, limit) async {
-  final repo = ref.watch(gamificationRepositoryProvider);
-  return repo.getLeaderboard(limit: limit);
-});
+final AutoDisposeFutureProviderFamily<List<GamificationProfile>, int>
+leaderboardProvider = FutureProvider.autoDispose
+    .family<List<GamificationProfile>, int>((ref, limit) async {
+      final repo = ref.watch(gamificationRepositoryProvider);
+      return repo.getLeaderboard(limit: limit);
+    });
 
 // ============================================================================
 // A/B Testing
@@ -218,7 +241,10 @@ final AutoDisposeFutureProviderFamily<List<GamificationProfile>, int> leaderboar
 
 /// Get user's experiment bucket assignment
 final AutoDisposeFutureProviderFamily<String, String> experimentBucketProvider =
-    FutureProvider.autoDispose.family<String, String>((ref, experimentKey) async {
-  final repo = ref.watch(gamificationRepositoryProvider);
-  return repo.getExperimentBucket(experimentKey);
-});
+    FutureProvider.autoDispose.family<String, String>((
+      ref,
+      experimentKey,
+    ) async {
+      final repo = ref.watch(gamificationRepositoryProvider);
+      return repo.getExperimentBucket(experimentKey);
+    });

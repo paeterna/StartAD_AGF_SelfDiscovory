@@ -19,7 +19,10 @@ class CareerRoadmap {
   final List<SkillCertification> skillsCertifications;
   final List<CareerProgressionStep> careerProgression;
 
-  factory CareerRoadmap.fromJson(String careerTitle, Map<String, dynamic> json) {
+  factory CareerRoadmap.fromJson(
+    String careerTitle,
+    Map<String, dynamic> json,
+  ) {
     return CareerRoadmap(
       careerTitle: careerTitle,
       schoolSubjects: (json['school_subjects'] as List<dynamic>)
@@ -43,7 +46,9 @@ class CareerRoadmap {
       'school_subjects': schoolSubjects,
       'school_advice': schoolAdvice,
       'university_programs': universityPrograms.map((e) => e.toJson()).toList(),
-      'skills_certifications': skillsCertifications.map((e) => e.toJson()).toList(),
+      'skills_certifications': skillsCertifications
+          .map((e) => e.toJson())
+          .toList(),
       'career_progression': careerProgression.map((e) => e.toJson()).toList(),
     };
   }
@@ -152,4 +157,3 @@ class CareerProgressionStep {
     };
   }
 }
-

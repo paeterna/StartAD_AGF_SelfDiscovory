@@ -7,17 +7,18 @@ import 'application/auth/auth_controller.dart';
 import 'application/theme/theme_providers.dart';
 import 'core/providers/providers.dart';
 import 'core/router/app_router.dart';
+import 'domain/entities/user.dart';
 import 'generated/l10n/app_localizations.dart';
 
 /// Custom scroll behavior for web to fix double-click issue
 class AppScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => {
-        PointerDeviceKind.touch,
-        PointerDeviceKind.mouse,
-        PointerDeviceKind.stylus,
-        PointerDeviceKind.trackpad,
-      };
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.stylus,
+    PointerDeviceKind.trackpad,
+  };
 }
 
 class SelfMapApp extends ConsumerStatefulWidget {
@@ -57,27 +58,37 @@ class _SelfMapAppState extends ConsumerState<SelfMapApp> {
   @override
   Widget build(BuildContext context) {
     final router = ref.watch(routerProvider);
+    final authState = ref.watch(authControllerProvider);
+    final user = authState.user;
     final locale = ref.watch(localeProvider);
 
     // Watch teen palette for authenticated users
     final teenPaletteAsync = ref.watch(currentTeenPaletteProvider);
 
-    // Build theme from teen palette or use fallback
-    final teenTheme = teenPaletteAsync.when(
-      data: (palette) => buildThemeFromPalette(palette),
-      loading: () => buildDefaultTheme(),
-      error: (_, _) => buildDefaultTheme(),
+    // Build light and dark themes from teen palette
+    final lightTheme = teenPaletteAsync.when(
+      data: (palette) => buildLightThemeFromPalette(palette),
+      loading: () => buildDefaultLightTheme(),
+      error: (_, _) => buildDefaultLightTheme(),
     );
+
+    final darkTheme = teenPaletteAsync.when(
+      data: (palette) => buildDarkThemeFromPalette(palette),
+      loading: () => buildDefaultDarkTheme(),
+      error: (_, _) => buildDefaultDarkTheme(),
+    );
+
+    // Get theme mode from user preference
+    final themeMode = _getThemeMode(user?.theme);
 
     return MaterialApp.router(
       title: 'SelfMap',
       debugShowCheckedModeBanner: false,
 
-      // Theme configuration - use teen theme system
-      // Always use dark theme for teens (teen themes are designed for dark mode)
-      theme: teenTheme,
-      darkTheme: teenTheme,
-      themeMode: ThemeMode.dark,
+      // Theme configuration - teen colors with user's light/dark preference
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: themeMode,
 
       // Router configuration
       routerConfig: router,
@@ -90,5 +101,17 @@ class _SelfMapAppState extends ConsumerState<SelfMapApp> {
       // Fix double-click issue on web by enabling mouse drag for scrolling
       scrollBehavior: AppScrollBehavior(),
     );
+  }
+
+  ThemeMode _getThemeMode(ThemeModePreference? preference) {
+    switch (preference) {
+      case ThemeModePreference.light:
+        return ThemeMode.light;
+      case ThemeModePreference.dark:
+        return ThemeMode.dark;
+      case ThemeModePreference.system:
+      case null:
+        return ThemeMode.system;
+    }
   }
 }

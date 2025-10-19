@@ -20,4 +20,3 @@ abstract class AIInsightRepository {
   /// Delete an AI insight
   Future<void> deleteInsight(String insightId);
 }
-

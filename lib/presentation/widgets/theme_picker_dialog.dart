@@ -12,11 +12,13 @@ class ThemePickerDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentThemeKeyAsync = ref.watch(currentThemeKeyProvider);
     final themeController = ref.watch(themeControllerProvider.notifier);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Dialog(
+      backgroundColor: colorScheme.surface,
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 500, maxHeight: 600),
-        padding: const EdgeInsets.all(24),
+        constraints: const BoxConstraints(maxWidth: 400, maxHeight: 500),
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,38 +27,39 @@ class ThemePickerDialog extends ConsumerWidget {
             Text(
               'Choose Your Vibe',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: colorScheme.onSurface,
+              ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 6),
             Text(
               'Pick a theme that matches your style',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey,
-                  ),
+                color: colorScheme.onSurfaceVariant,
+              ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
 
-            // Theme grid
+            // Theme grid - much smaller boxes
             Expanded(
               child: currentThemeKeyAsync.when(
                 data: (currentThemeKey) => GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                    crossAxisCount: 3,
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
-                    childAspectRatio: 1.0,
+                    childAspectRatio: 0.85,
                   ),
                   itemCount: TeenThemes.allThemes.length,
                   itemBuilder: (context, index) {
                     final theme = TeenThemes.allThemes[index];
-                    final isSelected = theme.themeKey == currentThemeKey;
+                    final isSelected = theme.key == currentThemeKey;
 
                     return _ThemeCard(
                       theme: theme,
                       isSelected: isSelected,
                       onTap: () async {
-                        await themeController.changeTheme(theme.themeKey);
+                        await themeController.changeTheme(theme.key);
                         if (context.mounted) {
                           Navigator.of(context).pop();
                         }
@@ -65,7 +68,8 @@ class ThemePickerDialog extends ConsumerWidget {
                   },
                 ),
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (_, __) => const Center(child: Text('Error loading themes')),
+                error: (_, __) =>
+                    const Center(child: Text('Error loading themes')),
               ),
             ),
 
@@ -100,111 +104,120 @@ class _ThemeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(theme.buttonRadius),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: theme.bgGradient,
-          borderRadius: BorderRadius.circular(theme.buttonRadius),
-          border: isSelected
-              ? Border.all(color: Colors.white, width: 3)
-              : null,
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: theme.primary.withOpacity(0.5),
-                    blurRadius: theme.cardGlow * 2,
-                    spreadRadius: 2,
-                  ),
-                ]
-              : [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: theme.cardGlow,
-                  ),
-                ],
-        ),
-        child: Stack(
-          children: [
-            // Theme name and emoji
-            Positioned(
-              top: 12,
-              left: 12,
-              right: 12,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    theme.emojiPack.first,
-                    style: const TextStyle(fontSize: 32),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    theme.displayName,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+    final currentColorScheme = Theme.of(context).colorScheme;
+    final brightness = Theme.of(context).brightness;
 
-            // Selected indicator
-            if (isSelected)
-              const Positioned(
-                top: 8,
-                right: 8,
-                child: Icon(
-                  Icons.check_circle,
-                  color: Colors.white,
-                  size: 24,
-                ),
-              ),
-
-            // Color preview circles
-            Positioned(
-              bottom: 12,
-              left: 12,
-              right: 12,
-              child: Row(
-                children: [
-                  _ColorCircle(color: theme.primary, size: 20),
-                  const SizedBox(width: 4),
-                  _ColorCircle(color: theme.secondary, size: 20),
-                  const SizedBox(width: 4),
-                  _ColorCircle(color: theme.tertiary, size: 20),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+    // Generate a preview ColorScheme for this theme
+    final previewScheme = ColorScheme.fromSeed(
+      seedColor: theme.seed,
+      brightness: brightness,
+      primary: theme.primary,
+      secondary: theme.secondary,
+      tertiary: theme.tertiary,
     );
-  }
-}
 
-/// Small color preview circle
-class _ColorCircle extends StatelessWidget {
-  const _ColorCircle({
-    required this.color,
-    required this.size,
-  });
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          decoration: BoxDecoration(
+            // Use the theme's actual surface color
+            color: brightness == Brightness.dark
+                ? theme.background
+                : previewScheme.surface,
+            borderRadius: BorderRadius.circular(12),
+            border: isSelected
+                ? Border.all(color: currentColorScheme.primary, width: 2.5)
+                : Border.all(
+                    color: currentColorScheme.outline.withValues(alpha: 0.2),
+                    width: 1,
+                  ),
+          ),
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Top section with icon and theme name
+              Column(
+                children: [
+                  // Icon based on theme (using tertiary for preview)
+                  Icon(
+                    _getThemeIcon(theme.key),
+                    size: 28,
+                    color: theme.primary,
+                  ),
+                  const SizedBox(height: 6),
+                  // Theme name
+                  Text(
+                    _getDisplayName(theme.key),
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color: brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black87,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
 
-  final Color color;
-  final double size;
+              // Bottom section - 3 color buttons side by side
+              Column(
+                children: [
+                  // Three color preview buttons in a row
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 16,
+                          decoration: BoxDecoration(
+                            color: theme.primary,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 3),
+                      Expanded(
+                        child: Container(
+                          height: 16,
+                          decoration: BoxDecoration(
+                            color: theme.secondary,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 3),
+                      Expanded(
+                        child: Container(
+                          height: 16,
+                          decoration: BoxDecoration(
+                            color: theme.tertiary,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.white.withOpacity(0.3), width: 1),
+              // Selected indicator at bottom
+              if (isSelected)
+                Icon(
+                  Icons.check_circle,
+                  color: currentColorScheme.primary,
+                  size: 14,
+                )
+              else
+                const SizedBox(height: 14),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -216,4 +229,40 @@ Future<void> showThemePickerDialog(BuildContext context) {
     context: context,
     builder: (context) => const ThemePickerDialog(),
   );
+}
+
+/// Helper function to get display name from theme key
+String _getDisplayName(String key) {
+  switch (key) {
+    case 'neon_arcade':
+      return 'Neon Arcade';
+    case 'galaxy_pulse':
+      return 'Galaxy Pulse';
+    case 'street_pop':
+      return 'Street Pop';
+    case 'ocean_wave':
+      return 'Ocean Wave';
+    case 'retro_pixel':
+      return 'Retro Pixel';
+    default:
+      return 'Neon Arcade';
+  }
+}
+
+/// Helper function to get icon for theme
+IconData _getThemeIcon(String key) {
+  switch (key) {
+    case 'neon_arcade':
+      return Icons.sports_esports; // Gaming controller
+    case 'galaxy_pulse':
+      return Icons.rocket_launch; // Rocket/space
+    case 'street_pop':
+      return Icons.skateboarding; // Skateboard
+    case 'ocean_wave':
+      return Icons.waves; // Ocean waves
+    case 'retro_pixel':
+      return Icons.videogame_asset; // Retro game controller
+    default:
+      return Icons.sports_esports;
+  }
 }

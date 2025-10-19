@@ -1,265 +1,230 @@
 import 'package:flutter/material.dart';
 
-/// Teen UX Theme Extension
-/// Provides TikTok-energy themed palettes with motion parameters
 @immutable
 class TeenPalette extends ThemeExtension<TeenPalette> {
+  final String key; // e.g. 'neon_arcade'
+  final Color seed; // base for ColorScheme.fromSeed
+  final Color primary; // brand/accent
+  final Color secondary; // complementary accent
+  final Color tertiary; // playful tertiary accent
+  final Color background; // fallback bg (scaffold)
+  final LinearGradient bgGradient; // hero/dashboard backgrounds
+  final double buttonRadius; // 12–20 for teen rounded vibe
+  final double elevation; // default elevation for cards/buttons
+  final double motionScale; // 0.8–1.2 to speed up/down animations
+  final List<String> emojiPack; // used in microcopy
+  final List<String> lottieSet; // asset keys
+
   const TeenPalette({
-    required this.themeKey,
-    required this.displayName,
+    required this.key,
+    required this.seed,
     required this.primary,
     required this.secondary,
     required this.tertiary,
     required this.background,
     required this.bgGradient,
-    required this.cardGlow,
     required this.buttonRadius,
     required this.elevation,
     required this.motionScale,
-    required this.motionDurationMs,
     required this.emojiPack,
     required this.lottieSet,
-    required this.illustrationStyle,
   });
-
-  final String themeKey;
-  final String displayName;
-  final Color primary;
-  final Color secondary;
-  final Color tertiary;
-  final Color background;
-  final LinearGradient bgGradient;
-  final double cardGlow;
-  final double buttonRadius;
-  final double elevation;
-  final double motionScale; // Animation amplitude multiplier
-  final int motionDurationMs; // Base animation duration
-  final List<String> emojiPack;
-  final Map<String, String> lottieSet; // Animation asset paths
-  final String illustrationStyle;
-
-  Duration get motionDuration => Duration(milliseconds: motionDurationMs);
 
   @override
   TeenPalette copyWith({
-    String? themeKey,
-    String? displayName,
+    String? key,
+    Color? seed,
     Color? primary,
     Color? secondary,
     Color? tertiary,
     Color? background,
     LinearGradient? bgGradient,
-    double? cardGlow,
     double? buttonRadius,
     double? elevation,
     double? motionScale,
-    int? motionDurationMs,
     List<String>? emojiPack,
-    Map<String, String>? lottieSet,
-    String? illustrationStyle,
+    List<String>? lottieSet,
   }) {
     return TeenPalette(
-      themeKey: themeKey ?? this.themeKey,
-      displayName: displayName ?? this.displayName,
+      key: key ?? this.key,
+      seed: seed ?? this.seed,
       primary: primary ?? this.primary,
       secondary: secondary ?? this.secondary,
       tertiary: tertiary ?? this.tertiary,
       background: background ?? this.background,
       bgGradient: bgGradient ?? this.bgGradient,
-      cardGlow: cardGlow ?? this.cardGlow,
       buttonRadius: buttonRadius ?? this.buttonRadius,
       elevation: elevation ?? this.elevation,
       motionScale: motionScale ?? this.motionScale,
-      motionDurationMs: motionDurationMs ?? this.motionDurationMs,
       emojiPack: emojiPack ?? this.emojiPack,
       lottieSet: lottieSet ?? this.lottieSet,
-      illustrationStyle: illustrationStyle ?? this.illustrationStyle,
     );
   }
 
   @override
-  TeenPalette lerp(ThemeExtension<TeenPalette>? other, double t) {
+  ThemeExtension<TeenPalette> lerp(
+    ThemeExtension<TeenPalette>? other,
+    double t,
+  ) {
     if (other is! TeenPalette) return this;
     return TeenPalette(
-      themeKey: themeKey,
-      displayName: displayName,
+      key: t < .5 ? key : other.key,
+      seed: Color.lerp(seed, other.seed, t)!,
       primary: Color.lerp(primary, other.primary, t)!,
       secondary: Color.lerp(secondary, other.secondary, t)!,
       tertiary: Color.lerp(tertiary, other.tertiary, t)!,
       background: Color.lerp(background, other.background, t)!,
-      bgGradient: LinearGradient.lerp(bgGradient, other.bgGradient, t)!,
-      cardGlow: cardGlow,
-      buttonRadius: buttonRadius,
-      elevation: elevation,
-      motionScale: motionScale,
-      motionDurationMs: motionDurationMs,
-      emojiPack: emojiPack,
+      bgGradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Color.lerp(
+            bgGradient.colors.first,
+            other.bgGradient.colors.first,
+            t,
+          )!,
+          Color.lerp(bgGradient.colors.last, other.bgGradient.colors.last, t)!,
+        ],
+      ),
+      buttonRadius: _lerpDouble(buttonRadius, other.buttonRadius, t),
+      elevation: _lerpDouble(elevation, other.elevation, t),
+      motionScale: _lerpDouble(motionScale, other.motionScale, t),
+      emojiPack: emojiPack, // keep stable
       lottieSet: lottieSet,
-      illustrationStyle: illustrationStyle,
     );
   }
+
+  static double _lerpDouble(double a, double b, double t) => a + (b - a) * t;
 }
 
-/// Predefined Teen Themes
 class TeenThemes {
-  // 1. Neon Arcade
-  static const neonArcadeLight = TeenPalette(
-    themeKey: 'neon_arcade',
-    displayName: 'Neon Arcade',
-    primary: Color(0xFF3A86FF), // Electric blue
-    secondary: Color(0xFFFF006E), // Neon magenta
-    tertiary: Color(0xFFA7FF83), // Lime mint
-    background: Color(0xFF0B1023), // Ink
-    bgGradient: LinearGradient(
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
+  // 1) Neon Arcade
+  static final neonArcade = TeenPalette(
+    key: 'neon_arcade',
+    seed: const Color(0xFFFF006E), // neon magenta
+    primary: const Color(0xFF3A86FF), // electric blue
+    secondary: const Color(0xFFA7FF83), // lime mint
+    tertiary: const Color(0xFFFF006E), // neon magenta
+    background: const Color(0xFF0B1023),
+    bgGradient: const LinearGradient(
       colors: [Color(0xFFFF006E), Color(0xFF3A86FF)],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
     ),
-    cardGlow: 8.0,
-    buttonRadius: 16.0,
-    elevation: 4.0,
-    motionScale: 1.1,
-    motionDurationMs: 220,
+    buttonRadius: 16,
+    elevation: 3,
+    motionScale: 1.0,
     emojiPack: ['🎮', '⚡', '🕹️'],
-    lottieSet: {
-      'success': 'assets/lottie/neon_success.json',
-      'confetti': 'assets/lottie/neon_confetti.json',
-      'pulse': 'assets/lottie/neon_pulse.json',
-    },
-    illustrationStyle: 'neon',
+    lottieSet: ['confetti_neon', 'pulse_neon', 'success_neon'],
   );
 
-  // 2. Galaxy Pulse
-  static const galaxyPulseLight = TeenPalette(
-    themeKey: 'galaxy_pulse',
-    displayName: 'Galaxy Pulse',
-    primary: Color(0xFF6C63FF), // Ultraviolet
-    secondary: Color(0xFF1ED7C1), // Aurora teal
-    tertiary: Color(0xFFF3F6FF), // Starlight
-    background: Color(0xFF12122B), // Deep space
-    bgGradient: LinearGradient(
+  // 2) Galaxy Pulse
+  static final galaxyPulse = TeenPalette(
+    key: 'galaxy_pulse',
+    seed: const Color(0xFF6C63FF), // ultraviolet
+    primary: const Color(0xFF1ED7C1), // aurora teal
+    secondary: const Color(0xFFF3F6FF), // starlight
+    tertiary: const Color(0xFF6C63FF), // UV
+    background: const Color(0xFF12122B),
+    bgGradient: const LinearGradient(
+      colors: [Color(0xFF12122B), Color(0xFF6C63FF)],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      colors: [Color(0xFF12122B), Color(0xFF1ED7C1)],
-      stops: [0.0, 1.0],
     ),
-    cardGlow: 6.0,
-    buttonRadius: 20.0,
-    elevation: 6.0,
-    motionScale: 1.2,
-    motionDurationMs: 280,
+    buttonRadius: 18,
+    elevation: 2,
+    motionScale: 1.05,
     emojiPack: ['🌌', '🚀', '🪐'],
-    lottieSet: {
-      'success': 'assets/lottie/galaxy_success.json',
-      'confetti': 'assets/lottie/galaxy_confetti.json',
-      'pulse': 'assets/lottie/galaxy_pulse.json',
-    },
-    illustrationStyle: 'cosmic',
+    lottieSet: ['confetti_galaxy', 'pulse_galaxy', 'success_galaxy'],
   );
 
-  // 3. Street Pop
-  static const streetPopLight = TeenPalette(
-    themeKey: 'street_pop',
-    displayName: 'Street Pop',
-    primary: Color(0xFFFF5A5F), // Coral
-    secondary: Color(0xFFFFD166), // Canary
-    tertiary: Color(0xFFFAFAFA), // Cloud
-    background: Color(0xFF1F1F1F), // Graphite
-    bgGradient: LinearGradient(
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
+  // 3) Street Pop
+  static final streetPop = TeenPalette(
+    key: 'street_pop',
+    seed: const Color(0xFFFF5A5F), // coral
+    primary: const Color(0xFFFFD166), // canary
+    secondary: const Color(0xFF1F1F1F), // graphite
+    tertiary: const Color(0xFFFAFAFA), // cloud
+    background: const Color(0xFF111111),
+    bgGradient: const LinearGradient(
       colors: [Color(0xFFFF5A5F), Color(0xFFFFD166)],
-      transform: GradientRotation(0.5),
-    ),
-    cardGlow: 4.0,
-    buttonRadius: 12.0,
-    elevation: 3.0,
-    motionScale: 1.15,
-    motionDurationMs: 200,
-    emojiPack: ['🛹', '🎧', '🔥'],
-    lottieSet: {
-      'success': 'assets/lottie/street_success.json',
-      'confetti': 'assets/lottie/street_confetti.json',
-      'pulse': 'assets/lottie/street_pulse.json',
-    },
-    illustrationStyle: 'street',
-  );
-
-  // 4. Ocean Wave
-  static const oceanWaveLight = TeenPalette(
-    themeKey: 'ocean_wave',
-    displayName: 'Ocean Wave',
-    primary: Color(0xFF00D1FF), // Aqua
-    secondary: Color(0xFFFF9E7A), // Sunset peach
-    tertiary: Color(0xFFE6FAFF), // Foam
-    background: Color(0xFF002B5B), // Deep navy
-    bgGradient: LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [Color(0xFF00D1FF), Color(0xFF002B5B), Color(0xFFFF9E7A)],
-      stops: [0.0, 0.5, 1.0],
-    ),
-    cardGlow: 5.0,
-    buttonRadius: 18.0,
-    elevation: 4.0,
-    motionScale: 1.0,
-    motionDurationMs: 260,
-    emojiPack: ['🌊', '🐬', '🏄'],
-    lottieSet: {
-      'success': 'assets/lottie/ocean_success.json',
-      'confetti': 'assets/lottie/ocean_confetti.json',
-      'pulse': 'assets/lottie/ocean_pulse.json',
-    },
-    illustrationStyle: 'fluid',
-  );
-
-  // 5. Retro Pixel
-  static const retroPixelLight = TeenPalette(
-    themeKey: 'retro_pixel',
-    displayName: 'Retro Pixel',
-    primary: Color(0xFF9BBC0F), // Gameboy green
-    secondary: Color(0xFFFFA552), // Orange popup
-    tertiary: Color(0xFFE8E4C9), // Cream
-    background: Color(0xFF0F380F), // Charcoal
-    bgGradient: LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFF9BBC0F), Color(0xFF0F380F)],
     ),
-    cardGlow: 0.0, // Flat design
-    buttonRadius: 4.0, // Sharp corners
-    elevation: 0.0,
-    motionScale: 1.0,
-    motionDurationMs: 180,
-    emojiPack: ['🧩', '👾', '💾'],
-    lottieSet: {
-      'success': 'assets/lottie/retro_success.json',
-      'confetti': 'assets/lottie/retro_confetti.json',
-      'pulse': 'assets/lottie/retro_pulse.json',
-    },
-    illustrationStyle: 'pixel',
+    buttonRadius: 14,
+    elevation: 4,
+    motionScale: 1.1,
+    emojiPack: ['🛹', '🎧', '🔥'],
+    lottieSet: ['confetti_street', 'pulse_street', 'success_street'],
   );
 
-  /// Get all available themes
-  static List<TeenPalette> get allThemes => [
-        neonArcadeLight,
-        galaxyPulseLight,
-        streetPopLight,
-        oceanWaveLight,
-        retroPixelLight,
-      ];
+  // 4) Ocean Wave
+  static final oceanWave = TeenPalette(
+    key: 'ocean_wave',
+    seed: const Color(0xFF00D1FF), // aqua
+    primary: const Color(0xFFFF9E7A), // sunset peach
+    secondary: const Color(0xFF002B5B), // deep navy
+    tertiary: const Color(0xFFE6FAFF), // foam
+    background: const Color(0xFF031A2E),
+    bgGradient: const LinearGradient(
+      colors: [Color(0xFF00D1FF), Color(0xFF002B5B)],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    buttonRadius: 16,
+    elevation: 2,
+    motionScale: 0.95,
+    emojiPack: ['🌊', '🐬', '🏄'],
+    lottieSet: ['confetti_ocean', 'pulse_ocean', 'success_ocean'],
+  );
 
-  /// Get theme by key
+  // 5) Retro Pixel
+  static final retroPixel = TeenPalette(
+    key: 'retro_pixel',
+    seed: const Color(0xFF9BBC0F), // gameboy green
+    primary: const Color(0xFFFFA552), // orange popup
+    secondary: const Color(0xFF0F380F), // charcoal
+    tertiary: const Color(0xFFE8E4C9), // cream
+    background: const Color(0xFF0B1F0B),
+    bgGradient: const LinearGradient(
+      colors: [Color(0xFF0F380F), Color(0xFF9BBC0F)],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    buttonRadius: 12,
+    elevation: 3,
+    motionScale: 1.0,
+    emojiPack: ['🧩', '👾', '💾'],
+    lottieSet: ['confetti_pixel', 'pulse_pixel', 'success_pixel'],
+  );
+
   static TeenPalette getByKey(String key) {
-    return allThemes.firstWhere(
-      (theme) => theme.themeKey == key,
-      orElse: () => neonArcadeLight,
-    );
+    switch (key) {
+      case 'galaxy_pulse':
+        return galaxyPulse;
+      case 'street_pop':
+        return streetPop;
+      case 'ocean_wave':
+        return oceanWave;
+      case 'retro_pixel':
+        return retroPixel;
+      case 'neon_arcade':
+      default:
+        return neonArcade;
+    }
   }
+
+  static List<TeenPalette> get allThemes => [
+    neonArcade,
+    galaxyPulse,
+    streetPop,
+    oceanWave,
+    retroPixel,
+  ];
 }
 
 /// Extension to access teen palette from Theme
 extension TeenThemeExtension on ThemeData {
   TeenPalette get teenPalette =>
-      extension<TeenPalette>() ?? TeenThemes.neonArcadeLight;
+      extension<TeenPalette>() ?? TeenThemes.neonArcade;
 }

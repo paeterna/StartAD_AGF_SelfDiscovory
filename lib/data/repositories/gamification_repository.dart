@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/entities/gamification.dart';
 
@@ -26,15 +27,21 @@ class GamificationRepository {
   }
 
   /// Award XP and update level
-  /// Returns new profile after update
-  Future<GamificationProfile> awardXp(int xpAmount) async {
+  /// Returns new profile after update and whether level increased
+  Future<({GamificationProfile profile, bool leveledUp, int oldLevel})> awardXp({
+    required String reason,
+    required int amount,
+  }) async {
     final currentProfile = await getProfile();
 
     if (currentProfile == null) {
-      throw Exception('Gamification profile not found. User may not be initialized.');
+      throw Exception(
+        'Gamification profile not found. User may not be initialized.',
+      );
     }
 
-    final newTotalXp = currentProfile.totalXp + xpAmount;
+    final oldLevel = currentProfile.level;
+    final newTotalXp = currentProfile.totalXp + amount;
     final newLevel = _calculateLevel(newTotalXp);
 
     final updated = await _supabase
@@ -48,15 +55,42 @@ class GamificationRepository {
         .select()
         .single();
 
-    return GamificationProfile.fromJson(updated);
+    // Log telemetry event
+    await logEvent(
+      'xp_awarded',
+      metadata: {
+        'reason': reason,
+        'amount': amount,
+        'old_level': oldLevel,
+        'new_level': newLevel,
+        'total_xp': newTotalXp,
+      },
+    );
+
+    final newProfile = GamificationProfile.fromJson(updated);
+    return (
+      profile: newProfile,
+      leveledUp: newLevel > oldLevel,
+      oldLevel: oldLevel,
+    );
   }
 
   /// Calculate level from total XP
-  /// Formula: level = floor(pow(xp / 100, 0.75))
+  /// Formula: level = floor(sqrt(xp / 100)) + 1
+  /// Level 1: 0 XP
+  /// Level 2: 100 XP (1² × 100)
+  /// Level 3: 400 XP (2² × 100)
+  /// Level 5: 1,600 XP (4² × 100)
+  /// Level 10: 8,100 XP (9² × 100)
   int _calculateLevel(int xp) {
-    if (xp <= 0) return 1;
-    final level = (xp / 100.0).clamp(0, double.infinity);
-    return (level < 0 ? 0 : level).toDouble().clamp(0, double.infinity).floor() + 1;
+    if (xp < 0) return 1;
+    // Formula: level = floor(sqrt(xp / 100)) + 1
+    // sqrt(xp/100) gives us the "level - 1"
+    // e.g., 100 XP -> sqrt(1) = 1 -> level 2
+    //       400 XP -> sqrt(4) = 2 -> level 3
+    //       1,600 XP -> sqrt(16) = 4 -> level 5
+    //       8,100 XP -> sqrt(81) = 9 -> level 10
+    return math.sqrt(xp / 100.0).floor() + 1;
   }
 
   /// Update streak using database function
