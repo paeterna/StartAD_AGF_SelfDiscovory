@@ -1,0 +1,312 @@
+# Teen UX Upgrade - Implementation Plan
+
+## ✅ Completed
+
+### 1. Database Schema
+- **File**: `supabase/migrations/00016_teen_ux_gamification.sql`
+- ✅ Created `remote_config` table for centralized configuration
+- ✅ Created `gamification_profiles` table (XP, level, streaks, theme)
+- ✅ Created `badges` table for achievements
+- ✅ Created `events` table for telemetry
+- ✅ Created `experiments` table for A/B testing
+- ✅ Added RLS policies for all tables
+- ✅ Created helper functions: `calculate_level()`, `update_streak()`
+- ✅ Added trigger to auto-create gamification profile on user signup
+
+### 2. Theme System
+- **File**: `lib/common/theme/teen_palette_extension.dart`
+- ✅ Created `TeenPalette` ThemeExtension with all theme parameters
+- ✅ Defined 5 teen themes:
+  1. **Neon Arcade** - Electric blue/magenta with neon energy
+  2. **Galaxy Pulse** - Ultraviolet/teal cosmic vibes
+  3. **Street Pop** - Coral/canary urban style
+  4. **Ocean Wave** - Aqua/navy fluid motion
+  5. **Retro Pixel** - Gameboy green retro gaming
+- ✅ Each theme includes: colors, gradients, motion params, emoji packs, lottie sets
+
+### 3. Phase 1: Core Infrastructure ✅ COMPLETE
+**Files Created**: See [PHASE_1_COMPLETION_SUMMARY.md](PHASE_1_COMPLETION_SUMMARY.md) for details
+
+#### 3.1 Gamification Data Layer ✅
+- ✅ **File**: `lib/domain/entities/gamification.dart`
+  - GamificationProfile with XP, levels, streaks, theme
+  - Badge and BadgeDefinition entities
+  - XpConstants for remote config
+  - TelemetryEvent for analytics
+  - Helper classes: XpAward
+
+- ✅ **File**: `lib/data/repositories/gamification_repository.dart`
+  - Award XP and update levels
+  - Manage daily streaks
+  - Grant and check badges
+  - Log telemetry events
+  - Fetch remote config
+  - A/B testing support
+  - Leaderboard queries
+
+- ✅ **File**: `lib/application/gamification/gamification_providers.dart`
+  - Riverpod providers for all gamification state
+  - Stream providers for real-time updates
+  - Action providers (awardXp, updateStreak, awardBadge)
+  - Remote config providers
+
+- ✅ **File**: `lib/application/gamification/remote_config_service.dart`
+  - Type-safe remote config access
+  - Feature flag management
+  - XP constants fetching
+
+#### 3.2 Theme Integration ✅
+- ✅ **Updated**: `lib/app.dart`
+  - Integrated teen theme system
+  - Dynamic theme loading from user preference
+  - Fallback to default Neon Arcade theme
+
+- ✅ **File**: `lib/application/theme/theme_providers.dart`
+  - Theme state management with Riverpod
+  - ThemeController for changing themes
+  - Theme data builders from TeenPalette
+  - ThemeMode notifier
+
+- ✅ **File**: `lib/presentation/widgets/theme_picker_dialog.dart`
+  - Reusable theme picker dialog
+  - Grid view of all 5 themes
+  - Visual previews with gradients and colors
+  - Selection state with animations
+
+- ✅ **File**: `lib/presentation/features/onboarding/theme_selection_page.dart`
+  - Post-signup theme selection page
+  - Full-screen theme picker
+  - Animated theme cards
+  - Saves selection and navigates to dashboard
+
+#### 3.3 Lottie Setup ✅
+- ✅ **Updated**: `pubspec.yaml`
+  - Added `lottie: ^3.1.3` package
+  - Added `assets/lottie/` to assets
+
+- ✅ **Created**: `assets/lottie/` directory
+- ✅ **File**: `assets/lottie/README.md`
+  - Documentation for required Lottie animations
+  - Theme-specific animation requirements
+  - Sources and usage examples
+
+## 📋 TODO - Immediate Next Steps
+
+### Phase 2: Gamification Widgets (Priority 2)
+4. **Core Widgets**
+   - [ ] `lib/common/widgets/xp_bar.dart` - Animated XP progress bar
+   - [ ] `lib/common/widgets/level_badge.dart` - Level display with animations
+   - [ ] `lib/common/widgets/streak_chip.dart` - Streak counter with fire emoji
+   - [ ] `lib/common/widgets/confetti_overlay.dart` - Celebration confetti
+   - [ ] `lib/common/widgets/xp_popover.dart` - "+XP" floating notification
+
+5. **Badge System**
+   - [ ] Define badge catalog in `remote_config`
+   - [ ] `lib/features/gamification/ui/badges_sheet.dart` - Badge collection UI
+   - [ ] `lib/features/gamification/ui/badge_unlock_modal.dart` - Unlock animation
+
+### Phase 3: Dashboard Refactor (Priority 3)
+6. **New Dashboard**
+   - [ ] Refactor `lib/presentation/features/dashboard/dashboard_page.dart`
+   - [ ] Add header with theme name + streak + level
+   - [ ] Add animated XP bar
+   - [ ] Create `lib/features/dashboard/widgets/story_feed_card.dart`
+   - [ ] Create `lib/features/dashboard/widgets/weekly_digest.dart`
+   - [ ] Hook XP awards to game completion
+
+### Phase 4: Career Clusters Refactor (Priority 4)
+7. **Clusters View**
+   - [ ] Refactor `lib/presentation/features/careers/careers_page_clustered.dart`
+   - [ ] Add gradient backgrounds per theme
+   - [ ] Implement expand/collapse animations
+   - [ ] Add Hero transitions to career details
+   - [ ] Add micro-interactions (scale on tap, animated bars)
+
+### Phase 5: Roadmaps Refactor (Priority 5)
+8. **Roadmap Details**
+   - [ ] Refactor `lib/presentation/features/roadmaps/roadmap_detail_page.dart`
+   - [ ] Create `lib/features/roadmaps/widgets/phase_tabbar.dart` - Emoji tabs
+   - [ ] Create `lib/features/roadmaps/widgets/animated_step_card.dart` - Flip/expand cards
+   - [ ] Add confetti on phase completion
+   - [ ] Add "Mark done" functionality with XP rewards
+
+### Phase 6: Onboarding Stories (Priority 6)
+9. **Onboarding**
+   - [ ] Create `lib/presentation/features/onboarding/onboarding_stories_page.dart`
+   - [ ] Create 4 story cards explaining: themes, clusters, roadmaps, games
+   - [ ] Add tappable PageView with progress indicator
+   - [ ] Save `has_seen_onboarding` flag to profiles
+   - [ ] Add re-launch option in settings
+
+### Phase 7: Telemetry & A/B Testing (Priority 7)
+10. **Analytics**
+    - [ ] Create `lib/application/telemetry/telemetry_service.dart`
+    - [ ] Log events: `theme_selected`, `cluster_expanded`, `career_generate_clicked`, etc.
+    - [ ] Create `lib/application/experiments/ab_testing_service.dart`
+    - [ ] Implement bucket assignment logic
+    - [ ] Add feature flag checks throughout app
+
+## 🎨 Asset Requirements
+
+### Lottie Animations (Need to create/acquire)
+For each theme, create 3 Lottie files:
+- `assets/lottie/{theme}_success.json`
+- `assets/lottie/{theme}_confetti.json`
+- `assets/lottie/{theme}_pulse.json`
+
+**Free Lottie Resources**:
+- https://lottiefiles.com/
+- Search for: confetti, success, celebration, pulse, glow
+
+### Icons & Illustrations
+- Theme preview thumbnails
+- Badge icons (at least 10-15 badges)
+- Avatar builder parts (optional for v1)
+
+## 📊 XP Calculation Logic
+
+### Integration Points
+Update existing game completion flows to award XP:
+
+**Memory Match** (`lib/presentation/features/games/memory_match/memory_match_page.dart`):
+```dart
+// After saving results, before showing result sheet
+final xpConstants = await ref.read(remoteConfigProvider).getXpConstants();
+final deltaComposite = scores.composite - previousComposite; // Track previous
+final deltaAttention = scores.cognitionAttention - previousAttention;
+final deltaMemory = scores.cognitionMemory - previousMemory;
+
+final xpGain = xpConstants.base +
+    xpConstants.k1 * deltaComposite +
+    xpConstants.k2 * deltaAttention +
+    xpConstants.k3 * deltaMemory;
+
+await gamificationRepo.awardXp(
+  reason: 'memory_match',
+  amount: xpGain.round(),
+);
+
+// Show XP popover
+showXpPopover(context, xpGain.round());
+```
+
+**Similar integration needed for**:
+- Quiz completions
+- Assessment completions
+- Roadmap generation
+- Daily login bonuses
+
+## 🎯 Success Metrics
+
+### Technical Metrics
+- [ ] Dashboard build time < 10ms (use DevTools)
+- [ ] 60 fps maintained during animations (use Performance overlay)
+- [ ] Theme switching < 100ms
+- [ ] XP calculations < 5ms
+
+### UX Metrics (via events table)
+- [ ] Theme selection distribution
+- [ ] Streak retention rate (% users maintaining 3+ day streaks)
+- [ ] Badge unlock rate
+- [ ] Career cluster expansion rate
+
+## 🚀 Deployment Strategy
+
+### Phase Rollout
+1. **Week 1**: Database migration + theme system + basic widgets
+2. **Week 2**: Dashboard refactor + XP integration
+3. **Week 3**: Gamification full flow + badges
+4. **Week 4**: Onboarding stories + telemetry
+5. **Week 5**: Polish + A/B testing setup
+
+### A/B Test Ideas
+- Confetti vs no confetti (measure engagement)
+- XP constants (k1, k2, k3) optimization
+- Theme recommendations based on quiz results
+- Badge unlock difficulty tuning
+
+## 📖 Code Patterns
+
+### Accessing Theme
+```dart
+final teenTheme = Theme.of(context).teenPalette;
+final primaryColor = teenTheme.primary;
+final animDuration = teenTheme.motionDuration;
+```
+
+### Motion Wrapper
+```dart
+AnimatedContainer(
+  duration: teenTheme.motionDuration,
+  curve: Curves.easeOutCubic,
+  transform: Matrix4.identity()..scale(isExpanded ? 1.0 : 0.95),
+  decoration: BoxDecoration(
+    gradient: teenTheme.bgGradient,
+    borderRadius: BorderRadius.circular(teenTheme.buttonRadius),
+    boxShadow: [
+      BoxShadow(
+        color: teenTheme.primary.withOpacity(teenTheme.cardGlow * 0.1),
+        blurRadius: teenTheme.cardGlow,
+      ),
+    ],
+  ),
+  child: child,
+)
+```
+
+### XP Award
+```dart
+final repo = ref.read(gamificationRepositoryProvider);
+await repo.awardXp(
+  userId: currentUser.id,
+  reason: 'quiz_completed',
+  amount: 25,
+  metadata: {'quiz_id': quizId},
+);
+
+// Update streak
+await repo.updateStreak(currentUser.id);
+```
+
+### Event Logging
+```dart
+await ref.read(telemetryServiceProvider).logEvent(
+  kind: 'cluster_expanded',
+  metadata: {
+    'cluster_id': cluster.id,
+    'theme': currentTheme.themeKey,
+  },
+);
+```
+
+## ⚠️ Important Notes
+
+1. **Performance**: Test on low-end Android emulator (Pixel 3a API 29)
+2. **Accessibility**: All colors must pass WCAG AA contrast
+3. **Privacy**: No PII in events; aggregate analytics only
+4. **Testing**: Create integration tests for XP calculations
+5. **Fallbacks**: Gracefully degrade if Lottie fails to load
+
+## 🔧 pubspec.yaml Dependencies
+
+Add these packages:
+```yaml
+dependencies:
+  lottie: ^3.0.0
+  flutter_animate: ^4.5.0  # For easy micro-animations
+  confetti: ^0.7.0  # Confetti particles
+
+dev_dependencies:
+  # Already have flutter_test
+```
+
+## Next Immediate Action
+
+**START HERE**:
+1. Apply database migration `00016_teen_ux_gamification.sql` in Supabase
+2. Add `lottie` to `pubspec.yaml`
+3. Create gamification repository
+4. Update dashboard to show XP bar
+5. Test XP award flow after completing Memory Match
+
+This is a foundation to build upon systematically.

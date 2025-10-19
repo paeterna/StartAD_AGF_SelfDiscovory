@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 
 import 'application/auth/auth_controller.dart';
+import 'application/theme/theme_providers.dart';
+import 'common/theme/teen_palette_extension.dart';
 import 'core/providers/providers.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
@@ -65,13 +67,23 @@ class _SelfMapAppState extends ConsumerState<SelfMapApp> {
     // Determine theme mode based on user preference
     final themeMode = _getThemeMode(user?.theme);
 
+    // Watch teen palette for authenticated users
+    final teenPaletteAsync = ref.watch(currentTeenPaletteProvider);
+
+    // Build theme from teen palette or use fallback
+    final darkTheme = teenPaletteAsync.when(
+      data: (palette) => buildThemeFromPalette(palette),
+      loading: () => buildDefaultTheme(),
+      error: (_, __) => buildDefaultTheme(),
+    );
+
     return MaterialApp.router(
       title: 'SelfMap',
       debugShowCheckedModeBanner: false,
 
-      // Theme configuration
+      // Theme configuration - use teen theme system for dark mode
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
+      darkTheme: darkTheme,
       themeMode: themeMode,
 
       // Router configuration
