@@ -3,11 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../application/auth/auth_controller.dart';
+import '../../../application/gamification/gamification_providers.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/router/app_router.dart';
 import '../../../domain/entities/user.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
+import '../../widgets/theme_picker_dialog.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -50,6 +52,10 @@ class SettingsPage extends ConsumerWidget {
               ),
               onTap: () => _showLanguageDialog(context, ref, user),
             ),
+
+            // Teen Theme Picker
+            _TeenThemeSelector(),
+
             ListTile(
               leading: const Icon(Icons.brightness_6),
               title: Text(l10n.settingsTheme),
@@ -283,5 +289,59 @@ class _SectionHeader extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// Teen theme selector widget
+class _TeenThemeSelector extends ConsumerWidget {
+  const _TeenThemeSelector();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profileAsync = ref.watch(gamificationProfileProvider);
+
+    return profileAsync.when(
+      data: (profile) {
+        final themeName = _getThemeDisplayName(profile?.themeKey ?? 'neon_arcade');
+        return ListTile(
+          leading: const Icon(Icons.palette),
+          title: const Text('App Theme'),
+          subtitle: Text(themeName),
+          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+          onTap: () => showThemePickerDialog(context),
+        );
+      },
+      loading: () => ListTile(
+        leading: const Icon(Icons.palette),
+        title: const Text('App Theme'),
+        subtitle: const Text('Loading...'),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+        onTap: () => showThemePickerDialog(context),
+      ),
+      error: (_, __) => ListTile(
+        leading: const Icon(Icons.palette),
+        title: const Text('App Theme'),
+        subtitle: const Text('Neon Arcade'),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+        onTap: () => showThemePickerDialog(context),
+      ),
+    );
+  }
+
+  String _getThemeDisplayName(String themeKey) {
+    switch (themeKey) {
+      case 'neon_arcade':
+        return '🎮 Neon Arcade';
+      case 'galaxy_pulse':
+        return '🌌 Galaxy Pulse';
+      case 'street_pop':
+        return '🛹 Street Pop';
+      case 'ocean_wave':
+        return '🌊 Ocean Wave';
+      case 'retro_pixel':
+        return '👾 Retro Pixel';
+      default:
+        return '🎮 Neon Arcade';
+    }
   }
 }

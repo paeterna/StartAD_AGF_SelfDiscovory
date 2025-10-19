@@ -5,11 +5,8 @@ import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 
 import 'application/auth/auth_controller.dart';
 import 'application/theme/theme_providers.dart';
-import 'common/theme/teen_palette_extension.dart';
 import 'core/providers/providers.dart';
 import 'core/router/app_router.dart';
-import 'core/theme/app_theme.dart';
-import 'domain/entities/user.dart';
 import 'generated/l10n/app_localizations.dart';
 
 /// Custom scroll behavior for web to fix double-click issue
@@ -60,31 +57,27 @@ class _SelfMapAppState extends ConsumerState<SelfMapApp> {
   @override
   Widget build(BuildContext context) {
     final router = ref.watch(routerProvider);
-    final authState = ref.watch(authControllerProvider);
-    final user = authState.user;
     final locale = ref.watch(localeProvider);
-
-    // Determine theme mode based on user preference
-    final themeMode = _getThemeMode(user?.theme);
 
     // Watch teen palette for authenticated users
     final teenPaletteAsync = ref.watch(currentTeenPaletteProvider);
 
     // Build theme from teen palette or use fallback
-    final darkTheme = teenPaletteAsync.when(
+    final teenTheme = teenPaletteAsync.when(
       data: (palette) => buildThemeFromPalette(palette),
       loading: () => buildDefaultTheme(),
-      error: (_, __) => buildDefaultTheme(),
+      error: (_, _) => buildDefaultTheme(),
     );
 
     return MaterialApp.router(
       title: 'SelfMap',
       debugShowCheckedModeBanner: false,
 
-      // Theme configuration - use teen theme system for dark mode
-      theme: AppTheme.lightTheme,
-      darkTheme: darkTheme,
-      themeMode: themeMode,
+      // Theme configuration - use teen theme system
+      // Always use dark theme for teens (teen themes are designed for dark mode)
+      theme: teenTheme,
+      darkTheme: teenTheme,
+      themeMode: ThemeMode.dark,
 
       // Router configuration
       routerConfig: router,
@@ -97,17 +90,5 @@ class _SelfMapAppState extends ConsumerState<SelfMapApp> {
       // Fix double-click issue on web by enabling mouse drag for scrolling
       scrollBehavior: AppScrollBehavior(),
     );
-  }
-
-  ThemeMode _getThemeMode(ThemeModePreference? preference) {
-    switch (preference) {
-      case ThemeModePreference.light:
-        return ThemeMode.light;
-      case ThemeModePreference.dark:
-        return ThemeMode.dark;
-      case ThemeModePreference.system:
-      case null:
-        return ThemeMode.system;
-    }
   }
 }
