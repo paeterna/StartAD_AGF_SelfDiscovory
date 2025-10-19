@@ -8,9 +8,9 @@ import '../../presentation/features/auth/login_page.dart';
 import '../../presentation/features/auth/signup_page.dart';
 import '../../presentation/features/auth/oauth_callback_page.dart';
 import '../../presentation/features/auth/school_login_page.dart';
+import '../../presentation/features/auth/continue_signup_page.dart';
 import '../../presentation/features/assessment/assessment_page.dart';
 import '../../presentation/features/careers/careers_page_clustered.dart';
-import '../../features/careers/presentation/pages/career_tree_page.dart';
 import '../../presentation/features/dashboard/dashboard_page.dart';
 import '../../presentation/features/discover/discover_page.dart';
 import '../../presentation/features/onboarding/onboarding_page.dart';
@@ -37,13 +37,13 @@ class AppRoutes {
   static const String signup = '/auth/signup';
   static const String authCallback = '/auth/callback';
   static const String schoolLogin = '/auth/school';
+  static const String continueSignup = '/auth/continue-signup';
   static const String onboarding = '/onboarding';
   static const String dashboard = '/dashboard';
   static const String discover = '/discover';
   static const String quiz = '/quiz';
   static const String assessment = '/assessment';
   static const String careers = '/careers';
-  static const String careerTree = '/careers/tree';
   static const String roadmap = '/roadmap';
   static const String roadmapDetail = '/roadmap/detail';
   static const String settings = '/settings';
@@ -77,10 +77,12 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       // Check user role from school repository
       final isSchoolAdmin = await schoolRepository.isSchoolAdmin();
+      final hasSchool = await schoolRepository.hasSchoolAssignment();
 
       final isGoingToAuth = currentLocation.startsWith('/auth');
       final isGoingToOnboarding = currentLocation == AppRoutes.onboarding;
       final isGoingToSchool = currentLocation.startsWith('/school');
+      final isGoingToContinueSignup = currentLocation == AppRoutes.continueSignup;
       final isGoingToStatic =
           currentLocation.startsWith('/privacy') ||
           currentLocation.startsWith('/terms') ||
@@ -112,6 +114,15 @@ final routerProvider = Provider<GoRouter>((ref) {
           return AppRoutes.schoolDashboard;
         }
         return null;
+      }
+
+      // Regular student logged in but needs to complete signup (OAuth flow)
+      if (!hasSchool) {
+        // Allow continue signup page
+        if (isGoingToContinueSignup) return null;
+        // Redirect to continue signup
+        if (currentLocation == AppRoutes.continueSignup) return null;
+        return AppRoutes.continueSignup;
       }
 
       // Regular student logged in but onboarding not complete
@@ -164,6 +175,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.onboarding,
         pageBuilder: (context, state) =>
             MaterialPage(key: state.pageKey, child: const OnboardingPage()),
+      ),
+      GoRoute(
+        path: AppRoutes.continueSignup,
+        pageBuilder: (context, state) =>
+            MaterialPage(key: state.pageKey, child: const ContinueSignupPage()),
       ),
       // School auth route (no shell)
       GoRoute(
@@ -221,13 +237,6 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: AppRoutes.careers,
             pageBuilder: (context, state) =>
                 const NoTransitionPage(child: CareersPageClustered()),
-            routes: [
-              GoRoute(
-                path: 'tree',
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: CareerTreePage()),
-              ),
-            ],
           ),
           GoRoute(
             path: AppRoutes.roadmap,

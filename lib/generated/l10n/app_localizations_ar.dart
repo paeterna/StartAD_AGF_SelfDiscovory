@@ -905,6 +905,51 @@ class AppLocalizationsAr extends AppLocalizations {
   String get authSignIn => 'تسجيل الدخول';
 
   @override
+  String get authGradeLabel => 'الصف';
+
+  @override
+  String get authGradeHint => 'اختر صفك';
+
+  @override
+  String get authPleaseSelectGrade => 'يرجى اختيار الصف';
+
+  @override
+  String get authGrade9 => 'الصف التاسع';
+
+  @override
+  String get authGrade10 => 'الصف العاشر';
+
+  @override
+  String get authGrade11 => 'الصف الحادي عشر';
+
+  @override
+  String get authGrade12 => 'الصف الثاني عشر';
+
+  @override
+  String get authSchoolLabel => 'المدرسة';
+
+  @override
+  String get authSchoolHint => 'اختر المدرسة';
+
+  @override
+  String get authContinueSignupTitle => 'أكمل ملفك الشخصي';
+
+  @override
+  String get authContinueSignupWelcome => 'مرحباً!';
+
+  @override
+  String get authContinueSignupSubtitle => 'أخبرنا المزيد عنك';
+
+  @override
+  String get authNameLabel => 'الاسم';
+
+  @override
+  String get authPleaseEnterName => 'يرجى إدخال اسمك';
+
+  @override
+  String get authEmailLocked => 'البريد الإلكتروني (تم التحقق)';
+
+  @override
   String get oauthCallbackFailed => 'فشلت المصادقة. يرجى المحاولة مرة أخرى.';
 
   @override

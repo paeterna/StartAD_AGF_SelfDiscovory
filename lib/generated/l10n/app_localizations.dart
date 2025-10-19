@@ -1790,6 +1790,96 @@ abstract class AppLocalizations {
   /// **'Sign In'**
   String get authSignIn;
 
+  /// No description provided for @authGradeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade'**
+  String get authGradeLabel;
+
+  /// No description provided for @authGradeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your grade'**
+  String get authGradeHint;
+
+  /// No description provided for @authPleaseSelectGrade.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select your grade'**
+  String get authPleaseSelectGrade;
+
+  /// No description provided for @authGrade9.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 9'**
+  String get authGrade9;
+
+  /// No description provided for @authGrade10.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 10'**
+  String get authGrade10;
+
+  /// No description provided for @authGrade11.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 11'**
+  String get authGrade11;
+
+  /// No description provided for @authGrade12.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 12'**
+  String get authGrade12;
+
+  /// No description provided for @authSchoolLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'School'**
+  String get authSchoolLabel;
+
+  /// No description provided for @authSchoolHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose school'**
+  String get authSchoolHint;
+
+  /// No description provided for @authContinueSignupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Your Profile'**
+  String get authContinueSignupTitle;
+
+  /// No description provided for @authContinueSignupWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome!'**
+  String get authContinueSignupWelcome;
+
+  /// No description provided for @authContinueSignupSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Let us know a bit more about you'**
+  String get authContinueSignupSubtitle;
+
+  /// No description provided for @authNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get authNameLabel;
+
+  /// No description provided for @authPleaseEnterName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your name'**
+  String get authPleaseEnterName;
+
+  /// No description provided for @authEmailLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Email (verified)'**
+  String get authEmailLocked;
+
   /// No description provided for @oauthCallbackFailed.
   ///
   /// In en, this message translates to:

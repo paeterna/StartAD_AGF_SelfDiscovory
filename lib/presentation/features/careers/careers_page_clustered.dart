@@ -26,11 +26,6 @@ class CareersPageClustered extends ConsumerWidget {
         title: Text(l10n.careersTitle),
         actions: [
           IconButton(
-            icon: const Icon(Icons.account_tree),
-            tooltip: 'Career Tree View',
-            onPressed: () => context.push(AppRoutes.careerTree),
-          ),
-          IconButton(
             icon: const Icon(Icons.map),
             tooltip: 'My Roadmaps',
             onPressed: () => context.push(AppRoutes.roadmap),

@@ -391,6 +391,9 @@ class MemoryMatchController extends StateNotifier<MemoryMatchState> {
         composite: 0,
         cognitionMemory: 0,
         cognitionAttention: 0,
+        cognitionProblemSolving: 0,
+        cognitionQuantitative: 0,
+        cognitionSpatial: 0,
         deltaProgress: 0,
       );
     }
@@ -419,11 +422,25 @@ class MemoryMatchController extends StateNotifier<MemoryMatchState> {
     );
     final v2 = MemoryMatchScoringV2.compute(inputs);
 
+    // Derive additional cognitive traits from V2 factors
+    // Problem Solving: Strategy + Metacognition (planning & learning)
+    final cognitionProblemSolving01 = (0.6 * v2.strat + 0.4 * v2.meta).clamp(0.0, 1.0);
+
+    // Quantitative: Metacognition + Working Memory (learning & logical thinking)
+    final cognitionQuantitative01 = (0.5 * v2.meta + 0.5 * v2.wm).clamp(0.0, 1.0);
+
+    // Spatial: Speed + Consistency (quick pattern recognition)
+    final cognitionSpatial01 = (0.6 * v2.spd + 0.4 * v2.cons).clamp(0.0, 1.0);
+
     return GameScores(
       composite: v2.composite,
       cognitionMemory: v2.cognitionMemory,
       cognitionAttention: v2.cognitionAttention,
+      cognitionProblemSolving: (100 * cognitionProblemSolving01).round(),
+      cognitionQuantitative: (100 * cognitionQuantitative01).round(),
+      cognitionSpatial: (100 * cognitionSpatial01).round(),
       deltaProgress: v2.deltaProgress,
+      confidence: v2.confidence,
     );
   }
 
@@ -440,18 +457,29 @@ class GameScores {
     required this.composite,
     required this.cognitionMemory,
     required this.cognitionAttention,
+    required this.cognitionProblemSolving,
+    required this.cognitionQuantitative,
+    required this.cognitionSpatial,
     required this.deltaProgress,
+    this.confidence,
   });
 
   final int composite; // 0-100
-  final int cognitionMemory; // 0-100
-  final int cognitionAttention; // 0-100
+  final int cognitionMemory; // 0-100 (from V2: wm, strat, meta, attn)
+  final int cognitionAttention; // 0-100 (from V2: attn, spd, cons, wm)
+  final int cognitionProblemSolving; // 0-100 (from V2: strat, meta)
+  final int cognitionQuantitative; // 0-100 (from V2: meta, wm)
+  final int cognitionSpatial; // 0-100 (from V2: spd, cons)
   final int deltaProgress; // 0-20
+  final double? confidence; // 0-1 quality indicator
 
   Map<String, dynamic> toTraitScores() {
     return {
       'cognition_memory': cognitionMemory,
       'cognition_attention': cognitionAttention,
+      'cognition_problem_solving': cognitionProblemSolving,
+      'cognition_quantitative': cognitionQuantitative,
+      'cognition_spatial': cognitionSpatial,
     };
   }
 }

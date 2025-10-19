@@ -499,6 +499,9 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
           traitScores: {
             'Memory': scores.cognitionMemory,
             'Attention': scores.cognitionAttention,
+            'Problem Solving': scores.cognitionProblemSolving,
+            'Quantitative': scores.cognitionQuantitative,
+            'Spatial': scores.cognitionSpatial,
           },
           stats: {
             'Time': _formatTime(telemetry?.totalSeconds ?? 0),
@@ -599,6 +602,9 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
 
     // 5. Call Edge Function to update profile
     try {
+      // Use confidence from V2 scoring if available, otherwise default quality
+      final baseQuality = scores.confidence ?? 0.65;
+
       await supabase.functions.invoke(
         'update_profile_and_match',
         body: {
@@ -608,13 +614,31 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
               'key': 'cognition_memory',
               'mean': scores.cognitionMemory.toDouble(),
               'n': telemetry.gridPairs * 2,
-              'quality': 0.7,
+              'quality': baseQuality * 1.0, // Primary trait
             },
             {
               'key': 'cognition_attention',
               'mean': scores.cognitionAttention.toDouble(),
               'n': telemetry.gridPairs * 2,
-              'quality': 0.6,
+              'quality': baseQuality * 0.95, // Primary trait
+            },
+            {
+              'key': 'cognition_problem_solving',
+              'mean': scores.cognitionProblemSolving.toDouble(),
+              'n': telemetry.gridPairs * 2,
+              'quality': baseQuality * 0.75, // Derived trait
+            },
+            {
+              'key': 'cognition_quantitative',
+              'mean': scores.cognitionQuantitative.toDouble(),
+              'n': telemetry.gridPairs * 2,
+              'quality': baseQuality * 0.7, // Derived trait
+            },
+            {
+              'key': 'cognition_spatial',
+              'mean': scores.cognitionSpatial.toDouble(),
+              'n': telemetry.gridPairs * 2,
+              'quality': baseQuality * 0.8, // Derived trait
             },
           ],
           'instrument': 'Memory Match',

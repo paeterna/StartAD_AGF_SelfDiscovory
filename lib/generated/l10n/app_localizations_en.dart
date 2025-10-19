@@ -914,6 +914,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authSignIn => 'Sign In';
 
   @override
+  String get authGradeLabel => 'Grade';
+
+  @override
+  String get authGradeHint => 'Select your grade';
+
+  @override
+  String get authPleaseSelectGrade => 'Please select your grade';
+
+  @override
+  String get authGrade9 => 'Grade 9';
+
+  @override
+  String get authGrade10 => 'Grade 10';
+
+  @override
+  String get authGrade11 => 'Grade 11';
+
+  @override
+  String get authGrade12 => 'Grade 12';
+
+  @override
+  String get authSchoolLabel => 'School';
+
+  @override
+  String get authSchoolHint => 'Choose school';
+
+  @override
+  String get authContinueSignupTitle => 'Complete Your Profile';
+
+  @override
+  String get authContinueSignupWelcome => 'Welcome!';
+
+  @override
+  String get authContinueSignupSubtitle => 'Let us know a bit more about you';
+
+  @override
+  String get authNameLabel => 'Name';
+
+  @override
+  String get authPleaseEnterName => 'Please enter your name';
+
+  @override
+  String get authEmailLocked => 'Email (verified)';
+
+  @override
   String get oauthCallbackFailed => 'Authentication failed. Please try again.';
 
   @override

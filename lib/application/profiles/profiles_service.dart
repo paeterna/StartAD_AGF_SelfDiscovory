@@ -18,7 +18,7 @@ class ProfilesService {
     final response = await _supabase
         .from('profiles')
         .select(
-          'id, display_name, locale, theme, onboarding_complete, created_at',
+          'id, display_name, locale, theme, onboarding_complete, grade, created_at',
         )
         .eq('id', userId)
         .maybeSingle();
@@ -32,6 +32,7 @@ class ProfilesService {
     String? locale, // 'en' | 'ar'
     String? theme, // 'system' | 'light' | 'dark'
     bool? onboardingComplete,
+    int? grade, // 9-12
   }) async {
     final userId = _supabase.auth.currentUser?.id;
     if (userId == null) {
@@ -44,6 +45,12 @@ class ProfilesService {
     if (theme != null) updates['theme'] = theme;
     if (onboardingComplete != null) {
       updates['onboarding_complete'] = onboardingComplete;
+    }
+    if (grade != null) {
+      if (grade < 9 || grade > 12) {
+        throw ArgumentError('Grade must be between 9 and 12');
+      }
+      updates['grade'] = grade;
     }
 
     if (updates.isEmpty) return;
@@ -65,6 +72,7 @@ class UserProfile {
     required this.locale,
     required this.theme,
     required this.onboardingComplete,
+    this.grade,
     required this.createdAt,
   });
 
@@ -73,6 +81,7 @@ class UserProfile {
   final String locale; // 'en' | 'ar'
   final String theme; // 'system' | 'light' | 'dark'
   final bool onboardingComplete;
+  final int? grade; // 9-12 or null
   final DateTime createdAt;
 
   factory UserProfile.fromJson(Map<String, dynamic> json) {
@@ -82,6 +91,7 @@ class UserProfile {
       locale: json['locale'] as String,
       theme: json['theme'] as String,
       onboardingComplete: json['onboarding_complete'] as bool,
+      grade: json['grade'] as int?,
       createdAt: DateTime.parse(json['created_at'] as String),
     );
   }
@@ -93,6 +103,7 @@ class UserProfile {
       'locale': locale,
       'theme': theme,
       'onboarding_complete': onboardingComplete,
+      'grade': grade,
       'created_at': createdAt.toIso8601String(),
     };
   }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../application/auth/auth_controller.dart';
+import '../../../application/profiles/profiles_providers.dart';
 import '../../../application/school/school_providers.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/utils/validators.dart';
@@ -27,6 +28,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   School? _selectedSchool;
+  int? _selectedGrade;
 
   @override
   void dispose() {
@@ -51,6 +53,18 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(l10n.authPleaseSelectSchool),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    // Validate grade selection
+    if (_selectedGrade == null) {
+      debugPrint('🔴 [SIGNUP] Grade selection required');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l10n.authPleaseSelectGrade),
           backgroundColor: Colors.red,
         ),
       );
@@ -88,6 +102,12 @@ class _SignupPageState extends ConsumerState<SignupPage> {
               schoolId: _selectedSchool!.id,
             );
         debugPrint('✅ [SIGNUP] School assignment successful');
+
+        // Save grade
+        await ref.read(profilesServiceProvider).updateProfile(
+          grade: _selectedGrade,
+        );
+        debugPrint('✅ [SIGNUP] Grade saved: $_selectedGrade');
       }
 
       if (mounted) {
@@ -137,6 +157,35 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     }
   }
 
+  Widget _buildGradeSelection(AppLocalizations l10n) {
+    return DropdownButtonFormField<int>(
+      initialValue: _selectedGrade,
+      decoration: InputDecoration(
+        labelText: l10n.authGradeLabel,
+        prefixIcon: const Icon(Icons.grade_outlined),
+        border: const OutlineInputBorder(),
+        hintText: l10n.authGradeHint,
+      ),
+      items: [9, 10, 11, 12].map((grade) {
+        return DropdownMenuItem<int>(
+          value: grade,
+          child: Text('${l10n.authGradeLabel} $grade'),
+        );
+      }).toList(),
+      validator: (value) {
+        if (value == null) {
+          return l10n.authPleaseSelectGrade;
+        }
+        return null;
+      },
+      onChanged: (grade) {
+        setState(() {
+          _selectedGrade = grade;
+        });
+      },
+    );
+  }
+
   Widget _buildSchoolSelection(AppLocalizations l10n) {
     final schoolsAsync = ref.watch(activeSchoolsProvider);
 
@@ -148,9 +197,11 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           data: (schools) {
             return DropdownButtonFormField<School>(
               initialValue: _selectedSchool,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.school_outlined),
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.authSchoolLabel,
+                prefixIcon: const Icon(Icons.school_outlined),
+                border: const OutlineInputBorder(),
+                hintText: l10n.authSchoolHint,
               ),
               items: schools.map((school) {
                 return DropdownMenuItem<School>(
@@ -306,6 +357,10 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                         enabled: !authState.isLoading,
                       ),
                       const SizedBox(height: 24),
+
+                      // Grade selection
+                      _buildGradeSelection(l10n),
+                      const SizedBox(height: 16),
 
                       // School selection
                       _buildSchoolSelection(l10n),

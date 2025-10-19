@@ -253,6 +253,22 @@ class SchoolRepository {
     return role == 'school_admin';
   }
 
+  /// Check if current user has a school assignment (for OAuth signup flow)
+  Future<bool> hasSchoolAssignment() async {
+    final userId = _supabase.auth.currentUser?.id;
+    if (userId == null) return false;
+
+    final profile = await _supabase
+        .from('profiles')
+        .select('school_id')
+        .eq('id', userId)
+        .maybeSingle();
+
+    if (profile == null) return false;
+
+    return profile['school_id'] != null;
+  }
+
   /// Update student's school assignment
   Future<void> assignStudentToSchool({
     required String userId,
