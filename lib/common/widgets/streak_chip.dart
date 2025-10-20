@@ -176,7 +176,7 @@ class CompactStreakChip extends StatelessWidget {
     if (streakDays == 0) return '💨';
     if (streakDays >= 30) return '🔥🔥🔥';
     if (streakDays >= 14) return '🔥🔥';
-    if (streakDays >= 7) return '🔥';
+    if (streakDays >= 1) return '🔥';
     return '✨';
   }
 

@@ -14,6 +14,7 @@ import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 import '../../widgets/radar_traits_card.dart';
 import '../../widgets/ai_insights_dashboard_card.dart';
+import '../gamification/badges_sheet.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({super.key});
@@ -51,6 +52,11 @@ class DashboardPage extends ConsumerWidget {
               },
               loading: () => const SizedBox.shrink(),
               error: (_, __) => const SizedBox.shrink(),
+            ),
+            IconButton(
+              icon: const Icon(Icons.emoji_events),
+              tooltip: 'Badges',
+              onPressed: () => BadgesSheet.show(context),
             ),
             IconButton(
               icon: const Icon(Icons.settings),

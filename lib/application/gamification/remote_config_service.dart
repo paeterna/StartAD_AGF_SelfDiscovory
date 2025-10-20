@@ -99,6 +99,15 @@ class RemoteConfigService {
     final value = await getValue(key);
     return value as Map<String, dynamic>? ?? fallback;
   }
+
+  // ============================================================================
+  // Badge Configuration
+  // ============================================================================
+
+  /// Get badge catalog from remote config
+  Future<Map<String, dynamic>?> getBadgeCatalog() async {
+    return await getMap('badge_catalog');
+  }
 }
 
 // ============================================================================

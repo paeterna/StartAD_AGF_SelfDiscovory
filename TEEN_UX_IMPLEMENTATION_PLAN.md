@@ -1,5 +1,25 @@
 # Teen UX Upgrade - Implementation Plan
 
+## 📊 Progress Summary
+
+**Phases Completed**: 3 / 7
+- ✅ Phase 1: Core Infrastructure (100%)
+- ✅ Phase 2: Gamification Widgets (100%)
+- ✅ Phase 2.5: Badge System (100%)
+- ✅ Phase 3: Dashboard Refactor (75% - story feed/weekly digest cancelled)
+- ⏳ Phase 4: Career Clusters Refactor (0%)
+- ⏳ Phase 5: Roadmaps Refactor (0%)
+- ⏳ Phase 6: Onboarding Stories (0%)
+- ⏳ Phase 7: Telemetry & A/B Testing (0%)
+
+**Key Achievements**:
+- Complete gamification system with XP, levels, streaks
+- 15 badges with unlock animations and collection UI
+- Memory Match & Quiz XP integration
+- Dashboard with live streak/level display
+- Theme system with 5 teen themes
+- Confetti celebrations and XP popovers
+
 ## ✅ Completed
 
 ### 1. Database Schema
@@ -121,22 +141,59 @@
 
 **Total**: 5 files, ~1,551 lines, 13 widget variants
 
-## 📋 TODO - Immediate Next Steps
+### Phase 2.5: Badge System ✅ COMPLETE
+**Files Created**: Badge catalog migration, badge UI, and integration services
 
-### Phase 2.5: Badge System (Priority 2.5)
-5. **Badge System**
-   - [ ] Define badge catalog in `remote_config`
-   - [ ] `lib/features/gamification/ui/badges_sheet.dart` - Badge collection UI
-   - [ ] `lib/features/gamification/ui/badge_unlock_modal.dart` - Unlock animation
+5. **Badge System** ✅
+   - ✅ **Migration**: `supabase/migrations/00017_badge_catalog.sql`
+     - 15 badge definitions in remote_config
+     - Tiers: bronze, silver, gold, platinum
+     - Categories: activity, streak, level, time, achievement
 
-### Phase 3: Dashboard Refactor (Priority 3)
-6. **New Dashboard**
-   - [ ] Refactor `lib/presentation/features/dashboard/dashboard_page.dart`
-   - [ ] Add header with theme name + streak + level
-   - [ ] Add animated XP bar
-   - [ ] Create `lib/features/dashboard/widgets/story_feed_card.dart`
-   - [ ] Create `lib/features/dashboard/widgets/weekly_digest.dart`
-   - [ ] Hook XP awards to game completion
+   - ✅ **File**: `lib/presentation/features/gamification/badges_sheet.dart`
+     - Badge collection UI with grid layout
+     - Locked/unlocked state display
+     - Tier-based coloring and sorting
+     - Badge detail modal with progress info
+
+   - ✅ **File**: `lib/presentation/features/gamification/badge_unlock_modal.dart`
+     - Animated badge reveal with confetti
+     - Tier-specific glow effects
+     - Scale and rotation animations
+     - Full-screen celebration modal
+
+   - ✅ **File**: `lib/application/gamification/badge_checker.dart`
+     - Badge eligibility checking service
+     - Activity-based badge awards
+     - Streak, level, and time-based badges
+     - Automatic badge granting logic
+
+   - ✅ **File**: `lib/application/gamification/gamification_service.dart`
+     - High-level gamification orchestration
+     - XP + badge checking combined
+     - Memory Match integration
+     - Quiz completion integration
+     - Roadmap generation rewards
+     - Streak milestone celebrations
+
+   - ✅ **Updated**: `lib/presentation/features/dashboard/dashboard_page.dart`
+     - Added badge collection button (trophy icon) in app bar
+
+   - ✅ **Updated**: `lib/application/gamification/xp_calculator.dart`
+     - Added quiz XP calculation
+     - Added career exploration constants
+
+### Phase 3: Dashboard Refactor ✅ PARTIALLY COMPLETE
+6. **Dashboard Updates** (Modified scope - story feed & weekly digest cancelled)
+   - ✅ Refactored `lib/presentation/features/dashboard/dashboard_page.dart`
+   - ✅ Added header with streak + level badges
+   - ✅ Theme name displayed in settings page
+   - ✅ Static circular XP progress indicator (animated XP bar not needed)
+   - ❌ Story feed - CANCELLED per user request
+   - ❌ Weekly digest - CANCELLED per user request
+   - ✅ XP awards hooked to Memory Match
+   - ✅ XP calculator supports quizzes and all activities
+   - ✅ Badge collection accessible from dashboard
 
 ### Phase 4: Career Clusters Refactor (Priority 4)
 7. **Clusters View**

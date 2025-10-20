@@ -9,6 +9,8 @@ class XpCalculator {
   static const int assessmentComplete = 100;
   static const int roadmapGenerated = 75;
   static const int badgeUnlock = 100;
+  static const int quizBase = 30;
+  static const int careerExploration = 15;
 
   // Streak milestones
   static const int weekStreak = 100;
