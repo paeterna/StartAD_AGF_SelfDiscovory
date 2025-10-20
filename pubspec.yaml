@@ -45,6 +45,9 @@ dependencies:
   # Icons
   cupertino_icons: ^1.0.8
 
+  # Web interop (for Wasm compatibility)
+  web: ^1.1.0
+
   riverpod: ^2.5.1
 dev_dependencies:
   flutter_test:

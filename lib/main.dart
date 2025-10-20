@@ -1,13 +1,10 @@
-// dart:html is required for web-specific URL manipulation (history API)
-// ignore: avoid_web_libraries_in_flutter, deprecated_member_use
-import 'dart:html' as html show window;
-
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:web/web.dart' as web;
 
 import 'app.dart';
 import 'core/providers/providers.dart';
@@ -36,8 +33,8 @@ Future<void> _consumeOAuthCallbackIfAny() async {
   // This prevents the token from lingering in the address bar
   // and avoids 404s on manual refresh
   try {
-    final currentPath = html.window.location.pathname ?? '/';
-    html.window.history.replaceState(null, '', currentPath);
+    final currentPath = web.window.location.pathname;
+    web.window.history.replaceState(null, '', currentPath);
     debugPrint('✓ URL cleaned: $currentPath');
   } on Exception catch (e) {
     debugPrint('URL cleanup error: $e');
