@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../domain/entities/gamification.dart';
+import '../../../domain/entities/gamification.dart' as gam;
 import '../../../common/widgets/confetti_overlay.dart';
 
 /// Modal dialog showing badge unlock with celebration animation
@@ -10,12 +10,12 @@ class BadgeUnlockModal extends StatefulWidget {
     super.key,
   });
 
-  final BadgeDefinition badgeDefinition;
+  final gam.BadgeDefinition badgeDefinition;
 
   /// Show the badge unlock modal with confetti
   static Future<void> show(
     BuildContext context, {
-    required BadgeDefinition badgeDefinition,
+    required gam.BadgeDefinition badgeDefinition,
   }) {
     return showDialog(
       context: context,

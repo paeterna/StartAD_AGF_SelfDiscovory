@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../data/repositories/gamification_repository.dart';
 import '../../domain/entities/gamification.dart';
+import 'remote_config_service.dart';
+import 'gamification_service.dart';
 
 // ============================================================================
 // Repository Provider
@@ -248,3 +250,13 @@ final AutoDisposeFutureProviderFamily<String, String> experimentBucketProvider =
       final repo = ref.watch(gamificationRepositoryProvider);
       return repo.getExperimentBucket(experimentKey);
     });
+
+// ============================================================================
+// Gamification Service
+// ============================================================================
+
+/// High-level gamification service that combines XP and badge logic
+final gamificationServiceProvider = Provider<GamificationService>((ref) {
+  final repository = ref.watch(gamificationRepositoryProvider);
+  return GamificationService(repository);
+});

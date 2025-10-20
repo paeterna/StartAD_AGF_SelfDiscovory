@@ -6,11 +6,8 @@ import 'dart:developer' as developer;
 
 import '../../../../application/activity/activity_providers.dart';
 import '../../../../application/gamification/gamification_providers.dart';
-import '../../../../application/gamification/xp_calculator.dart';
 import '../../../../application/scoring/scoring_providers.dart';
 import '../../../../application/traits/traits_providers.dart';
-import '../../../../common/widgets/confetti_overlay.dart';
-import '../../../../common/widgets/xp_popover.dart';
 import '../../../../data/repositories/gamification_repository.dart';
 import '../../../../generated/l10n/app_localizations.dart';
 import '../../../widgets/gradient_background.dart';
@@ -569,57 +566,25 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
     if (telemetry == null) return;
 
     try {
-      // Calculate XP earned
-      final xpGained = XpCalculator.calculateMemoryMatchXp(
-        scores,
-        telemetry.totalSeconds,
+      // Use the gamification service which handles XP + badges
+      final gamificationService = ref.read(gamificationServiceProvider);
+
+      await gamificationService.handleMemoryMatchCompletion(
+        context: context,
+        score: scores.composite.round(),
+        timeSeconds: telemetry.totalSeconds,
+        scores: scores,
       );
 
-      // Get gamification repository
-      final gamificationRepo = ref.read(gamificationRepositoryProvider);
-
-      // Award XP
-      final result = await gamificationRepo.awardXp(
-        reason: 'memory_match',
-        amount: xpGained,
-      );
-
-      if (!mounted) return;
-
-      // Show confetti celebration
-      showConfetti(context);
-
-      // Delay slightly for confetti to start
-      await Future<void>.delayed(const Duration(milliseconds: 300));
-
-      if (!mounted) return;
-
-      // Show XP popover
-      showXpPopover(
-        context,
-        xpAmount: xpGained,
-        reason: 'Memory Match Complete',
-      );
-
-      // If leveled up, show special celebration
-      if (result.leveledUp) {
-        await Future<void>.delayed(const Duration(milliseconds: 1500));
-        if (!mounted) return;
-
-        showConfettiCelebration(
-          context,
-          title: 'Level ${result.profile.level}!',
-          subtitle: 'You\'re getting better every day!',
-          emoji: '🎉',
-        );
-      }
+      // Invalidate providers to refresh UI
+      ref.invalidate(gamificationProfileProvider);
     } on Exception catch (error, stackTrace) {
       developer.log(
-        'Failed to award XP',
+        'Failed to award XP and badges',
         error: error,
         stackTrace: stackTrace,
       );
-      // Don't block the user if XP fails - just log it
+      // Don't block the user if gamification fails - just log it
     }
   }
 

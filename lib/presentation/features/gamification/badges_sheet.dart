@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../application/gamification/gamification_providers.dart';
-import '../../../domain/entities/gamification.dart';
+import '../../../application/gamification/remote_config_service.dart';
+import '../../../domain/entities/gamification.dart' as gam;
 
 /// Bottom sheet displaying user's badge collection
 /// Shows earned badges and locked badges with progress indicators
@@ -121,8 +122,8 @@ class BadgesSheet extends ConsumerWidget {
                         final isEarned = earnedKeys.contains(badgeKey);
                         final badge = earnedBadges.firstWhere(
                           (b) => b.badgeKey == badgeKey,
-                          orElse: () => Badge(
-                            id: '',
+                          orElse: () => gam.Badge(
+                            id: 0,
                             userId: '',
                             badgeKey: badgeKey,
                             earnedAt: DateTime.now(),
@@ -172,8 +173,8 @@ class _BadgeCard extends StatelessWidget {
     required this.isEarned,
   });
 
-  final BadgeDefinition badgeDefinition;
-  final Badge? badge;
+  final gam.BadgeDefinition badgeDefinition;
+  final gam.Badge? badge;
   final bool isEarned;
 
   @override
@@ -287,7 +288,7 @@ class _BadgeCard extends StatelessWidget {
   }
 
   void _showBadgeDetail(BuildContext context) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => _BadgeDetailDialog(
         badgeDefinition: badgeDefinition,
@@ -305,8 +306,8 @@ class _BadgeDetailDialog extends StatelessWidget {
     required this.isEarned,
   });
 
-  final BadgeDefinition badgeDefinition;
-  final Badge? badge;
+  final gam.BadgeDefinition badgeDefinition;
+  final gam.Badge? badge;
   final bool isEarned;
 
   @override
@@ -500,7 +501,7 @@ class _BadgeDetailDialog extends StatelessWidget {
 }
 
 /// Provider for badge catalog from remote config
-final badgeCatalogProvider = FutureProvider<Map<String, BadgeDefinition>>((ref) async {
+final badgeCatalogProvider = FutureProvider<Map<String, gam.BadgeDefinition>>((ref) async {
   final remoteConfig = ref.watch(remoteConfigServiceProvider);
   final catalogJson = await remoteConfig.getBadgeCatalog();
 
@@ -509,7 +510,7 @@ final badgeCatalogProvider = FutureProvider<Map<String, BadgeDefinition>>((ref) 
   return catalogJson.map(
     (key, value) => MapEntry(
       key,
-      BadgeDefinition.fromJson(value as Map<String, dynamic>),
+      gam.BadgeDefinition.fromJson(value as Map<String, dynamic>),
     ),
   );
 });
