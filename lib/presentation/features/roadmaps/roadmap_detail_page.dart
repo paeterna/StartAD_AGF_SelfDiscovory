@@ -208,13 +208,14 @@ class _RoadmapHeader extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Row(
+          Wrap(
+            spacing: 12,
+            runSpacing: 8,
             children: [
               _InfoChip(
                 icon: Icons.schedule,
                 label: roadmap.estimatedDuration,
               ),
-              const SizedBox(width: 12),
               _InfoChip(
                 icon: Icons.attach_money,
                 label: roadmap.salaryRange,
@@ -256,11 +257,15 @@ class _InfoChip extends StatelessWidget {
             color: theme.colorScheme.onPrimary,
           ),
           const SizedBox(width: 4),
-          Text(
-            label,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onPrimary,
-              fontWeight: FontWeight.w500,
+          Flexible(
+            child: Text(
+              label,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onPrimary,
+                fontWeight: FontWeight.w500,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
             ),
           ),
         ],
