@@ -201,27 +201,32 @@ class _ProfileProgressCard extends ConsumerWidget {
     final completenessAsync = ref.watch(profileCompletenessProvider);
     final l10n = AppLocalizations.of(context)!;
 
+    // Get completeness value, default to 0 while loading
+    final completeness = completenessAsync.valueOrNull ?? 0.0;
+    final percent = completeness.round();
+    final level = percent < 30
+        ? l10n.dashboardProgressJustStarted
+        : percent < 60
+            ? l10n.dashboardProgressGettingThere
+            : percent < 90
+                ? l10n.dashboardProgressAlmostDone
+                : l10n.dashboardProgressComplete;
+
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: completenessAsync.when(
-          data: (completeness) {
-            final percent = completeness.round();
-            final level = percent < 30
-                ? l10n.dashboardProgressJustStarted
-                : percent < 60
-                    ? l10n.dashboardProgressGettingThere
-                    : percent < 90
-                        ? l10n.dashboardProgressAlmostDone
-                        : l10n.dashboardProgressComplete;
-
-            final colorScheme = Theme.of(context).colorScheme;
-
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Circular progress indicator
-                SizedBox(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Circular progress indicator
+            TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: 0.0, end: completeness / 100.0),
+              duration: const Duration(milliseconds: 1000),
+              curve: Curves.easeOutCubic,
+              builder: (context, animatedValue, child) {
+                return SizedBox(
                   width: 120,
                   height: 120,
                   child: Stack(
@@ -242,7 +247,7 @@ class _ProfileProgressCard extends ConsumerWidget {
                         width: 120,
                         height: 120,
                         child: CircularProgressIndicator(
-                          value: completeness / 100.0,
+                          value: animatedValue,
                           strokeWidth: 8,
                           // color: colorScheme.primary,
                         ),
@@ -258,7 +263,7 @@ class _ProfileProgressCard extends ConsumerWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '$percent%',
+                            '${(animatedValue * 100).round()}%',
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -269,46 +274,29 @@ class _ProfileProgressCard extends ConsumerWidget {
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 16),
-
-                // Status label
-                Text(
-                  'Profile',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        // color: colorScheme.secondary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  level,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onSurface.withValues(alpha: 0.6),
-                      ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            );
-          },
-          loading: () => const Padding(
-            padding: EdgeInsets.all(20),
-            child: CircularProgressIndicator(),
-          ),
-          error: (error, stackTrace) => Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.error_outline, size: 40, color: Colors.red),
-                const SizedBox(height: 8),
-                Text(
-                  'Error',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
+                );
+              },
             ),
-          ),
+            const SizedBox(height: 16),
+
+            // Status label
+            Text(
+              'Profile',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    // color: colorScheme.secondary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              level,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );
@@ -351,52 +339,59 @@ class _GamificationCard extends ConsumerWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 // Circular progress indicator
-                SizedBox(
-                  width: 120,
-                  height: 120,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      // Background circle
-                      SizedBox(
-                        width: 120,
-                        height: 120,
-                        child: CircularProgressIndicator(
-                          value: 1.0,
-                          strokeWidth: 8,
-                          color: colorScheme.primary.withValues(alpha: 0.1),
-                        ),
-                      ),
-                      // Progress circle
-                      SizedBox(
-                        width: 120,
-                        height: 120,
-                        child: CircularProgressIndicator(
-                          value: progress,
-                          strokeWidth: 8,
-                          color: colorScheme.primary,
-                        ),
-                      ),
-                      // Center content
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
+                TweenAnimationBuilder<double>(
+                  tween: Tween<double>(begin: 0.0, end: progress),
+                  duration: const Duration(milliseconds: 1000),
+                  curve: Curves.easeOutCubic,
+                  builder: (context, animatedValue, child) {
+                    return SizedBox(
+                      width: 120,
+                      height: 120,
+                      child: Stack(
+                        alignment: Alignment.center,
                         children: [
-                          Icon(
-                            Icons.military_tech,
-                            size: 32,
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Level ${profile.level}',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                          // Background circle
+                          SizedBox(
+                            width: 120,
+                            height: 120,
+                            child: CircularProgressIndicator(
+                              value: 1.0,
+                              strokeWidth: 8,
+                              color: colorScheme.primary.withValues(alpha: 0.1),
                             ),
+                          ),
+                          // Progress circle
+                          SizedBox(
+                            width: 120,
+                            height: 120,
+                            child: CircularProgressIndicator(
+                              value: animatedValue,
+                              strokeWidth: 8,
+                              color: colorScheme.primary,
+                            ),
+                          ),
+                          // Center content
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.military_tech,
+                                size: 32,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                'Level ${profile.level}',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 16),
 
@@ -452,22 +447,26 @@ class _GamificationCard extends ConsumerWidget {
               ],
             );
           },
-          loading: () => const Padding(
-            padding: EdgeInsets.all(20),
-            child: CircularProgressIndicator(),
+          loading: () => SizedBox(
+            height: 200,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           ),
-          error: (error, _) => Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.error_outline, size: 40, color: Colors.red),
-                const SizedBox(height: 8),
-                Text(
-                  'Error',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
+          error: (error, _) => SizedBox(
+            height: 200,
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.error_outline, size: 40, color: Colors.red),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Error',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
