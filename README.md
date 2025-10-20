@@ -1,10 +1,12 @@
 # Masar (مسار) - Discover Your Future
 
-A comprehensive Flutter web platform designed to help high-school students explore their interests, discover career paths, and plan their future through AI-powered insights and interactive assessments.
+A comprehensive gamified Flutter web platform designed to help high-school students explore their interests, discover career paths, and plan their future through AI-powered insights, interactive assessments, and engaging games.
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![Flutter](https://img.shields.io/badge/Flutter-3.8.1-02569B?logo=flutter)
-![License](https://img.shields.io/badge/license-Proprietary-red)
+![Dart](https://img.shields.io/badge/Dart-3.8.1-0175C2?logo=dart)
+![Supabase](https://img.shields.io/badge/Supabase-2.8.0-3FCF8E?logo=supabase)
+![License](https://img.shields.io/badge/license-MIT-green)
 ![Deployment](https://img.shields.io/badge/deployed-Netlify-00C7B7?logo=netlify)
 
 ## 🌐 Live Demo
@@ -31,7 +33,7 @@ A comprehensive Flutter web platform designed to help high-school students explo
 
 #### 🔐 **Authentication & User Management**
 - Email/password authentication with Supabase
-- OAuth integration (Google, Apple)
+- OAuth integration (Google)
 - Password reset flow
 - Session management with JWT tokens
 - Profile management with avatar support
@@ -41,15 +43,36 @@ A comprehensive Flutter web platform designed to help high-school students explo
 - Forced-choice assessments for rapid trait identification
 - Real-time progress tracking
 - Personalized welcome experience
+- Theme selection from 5 teen-friendly themes
 - Direct integration with feature scoring system
 
+#### 🎮 **Gamification System**
+- **XP & Leveling**: Earn experience points from activities, level up with visual celebrations
+- **Daily Streaks**: Track consecutive days of engagement with fire emoji indicators
+- **Badge System**: 15 unlockable badges across 4 tiers (Bronze, Silver, Gold, Platinum)
+  - Activity badges (First Steps, Quiz Master, Memory Master)
+  - Streak badges (Week Warrior, Month Champion)
+  - Level badges (Rising Star, Elite Explorer)
+  - Time-based badges (Early Bird, Night Owl)
+- **Confetti Celebrations**: Animated celebrations for achievements
+- **XP Popovers**: Real-time feedback showing XP earned
+- **Badge Unlock Animations**: Tier-specific animations with glow effects
+- **Theme Switching**: Choose from 5 unique teen themes:
+  - **Neon Arcade**: Electric blue/magenta with neon energy
+  - **Galaxy Pulse**: Ultraviolet/teal cosmic vibes
+  - **Street Pop**: Coral/canary urban style
+  - **Ocean Wave**: Aqua/navy fluid motion
+  - **Retro Pixel**: Gameboy green retro gaming
+
 #### 📊 **Student Dashboard**
-- **Progress Tracking**: Visual progress bars showing completion percentage
-- **Daily Streaks**: Gamified streak system to encourage consistency
+- **Gamification Header**: Live XP, level, and streak display with animated badges
+- **Circular Progress Indicators**: Smooth animated circles showing profile completion and level progress
+- **Theme Display**: Current theme shown with ability to change in settings
 - **Radar Chart**: Multi-dimensional visualization of RIASEC + cognitive traits
 - **Quick Actions**: Direct access to assessments, games, and careers
-- **Activity Feed**: Recent completions and achievements
+- **Badge Collection**: Trophy button to view all earned and locked badges
 - **Profile Completeness**: Real-time indicator based on assessment confidence
+- **Responsive Layout**: Adapts to desktop and mobile views
 
 #### 🧪 **Discovery & Assessments**
 - **Personality Quizzes**:
@@ -59,16 +82,23 @@ A comprehensive Flutter web platform designed to help high-school students explo
   - Dynamic quiz loading from JSON
 - **Interactive Mini-Games**:
   - **Memory Match**: Tests cognitive memory and attention with difficulty levels
-  - **Pattern Recognition**: Spatial reasoning challenges
-  - **Reaction Time**: Processing speed measurements
-  - Real-time telemetry tracking
-  - Immediate scoring and feedback
+    - Teen-friendly loading animations with emoji and cycling messages
+    - XP rewards based on performance (100-300 XP)
+    - Badge unlocks for completing games
+    - Confetti celebrations on completion
+    - Real-time telemetry tracking
+    - Immediate scoring and feedback
+    - Parallel processing for optimal performance
 
 #### 🎯 **Career Exploration**
-- **Career Tree View**:
-  - Hierarchical visualization of 100+ careers
+- **Career Clusters View**:
+  - Hierarchical visualization of 100+ careers grouped by clusters
   - Color-coded match scores (0-100%)
-  - Glassmorphism UI design
+  - **Theme-aware gradients**: Unique gradients per cluster using theme colors
+  - **Smooth animations**: Scale effects on tap, expand/collapse with AnimatedSize
+  - **Animated progress bars**: Match scores animate from 0 to actual value
+  - **Hover micro-interactions**: Subtle scale effect on career items
+  - **Hero transitions**: Smooth navigation to career details with shared elements
   - Category-based organization (STEM, Creative, Business, Healthcare, etc.)
 - **Advanced Filtering**:
   - Search by career name
@@ -77,7 +107,7 @@ A comprehensive Flutter web platform designed to help high-school students explo
   - Real-time filter updates
 - **Career Details**:
   - Comprehensive career information
-  - Match score explanation
+  - Match score explanation with visual indicators
   - Required skills and education
   - Salary ranges and job outlook
   - Related careers suggestions
@@ -103,11 +133,13 @@ A comprehensive Flutter web platform designed to help high-school students explo
   - Progress tracking toward next insight
 
 #### 🗺️ **Career Roadmaps**
-- Step-by-step career planning
-- Educational requirements
-- Skill development milestones
-- Timeline visualization
-- Resource links and recommendations
+- **AI-Generated Roadmaps**: Personalized step-by-step career planning
+- **Hero Transitions**: Smooth animations from career cards to roadmap details
+- **Responsive Layout**: Info chips (duration, salary) wrap dynamically on smaller screens
+- **Educational Requirements**: Detailed pathways and milestones
+- **Skill Development**: Structured learning progression
+- **Timeline Visualization**: Visual roadmap with phases
+- **Resource Links**: Curated recommendations and next steps
 
 #### 🏫 **School Integration** (Admin Mode)
 - **School Dashboard**:
@@ -145,8 +177,9 @@ A comprehensive Flutter web platform designed to help high-school students explo
 
 #### 📱 **Progressive Web App (PWA)**
 - Installable on mobile and desktop
-- Offline support for assessments
 - Native-like app experience
+- PWA manifest configuration
+- Offline support (planned)
 - Push notifications (planned)
 
 ## 🏗 Architecture
@@ -570,7 +603,7 @@ Output includes:
 
 4. **Authentication**:
    - Email/password with Supabase Auth
-   - OAuth providers (Google, Apple)
+   - OAuth providers (Google)
    - JWT token management
    - Automatic session refresh
 
@@ -626,7 +659,30 @@ Comprehensive documentation is available:
 - **[SCHOOL_INTEGRATION_STATUS.md](SCHOOL_INTEGRATION_STATUS.md)**: School admin features
 - **[COHORT_AVERAGES_IMPLEMENTATION.md](COHORT_AVERAGES_IMPLEMENTATION.md)**: Cohort analytics
 - **[RADAR_AND_ASSESSMENTS.md](RADAR_AND_ASSESSMENTS.md)**: Assessment system details
+- **[TEEN_UX_IMPLEMENTATION_PLAN.md](TEEN_UX_IMPLEMENTATION_PLAN.md)**: Gamification & UX upgrades
+- **[UX_IMPROVEMENTS_SUMMARY.md](UX_IMPROVEMENTS_SUMMARY.md)**: Performance optimizations
 - **[lib/features/careers/README.md](lib/features/careers/README.md)**: Career tree feature docs
+
+## ⚡ Performance & UX Enhancements
+
+### Gamification Optimizations
+- **Parallel Badge Checking**: 3-5x faster (100-200ms vs 500-1000ms) through concurrent processing
+- **Loading Animations**: Eliminated "stuck" feeling with teen-friendly loading overlays
+  - Pulsing emoji animations
+  - Rotating dots with gradient opacity
+  - Cycling messages every 1.5 seconds
+- **Confetti System**: Optimized particle rendering for smooth celebrations
+
+### Animation System
+- **TweenAnimationBuilder**: Smooth, controlled animations for circular progress and radar charts
+- **Hero Transitions**: Seamless navigation between screens with shared elements
+- **Theme-Aware Gradients**: Dynamic gradients based on selected teen theme
+- **Micro-interactions**: Scale effects, hover states, and animated progress bars
+
+### Responsive Design
+- **Wrap Widgets**: Dynamic layout adjustments for smaller screens
+- **Flexible Components**: Text truncation and overflow handling
+- **Adaptive Shell**: Desktop and mobile optimized layouts
 
 ## 🧪 Testing
 
