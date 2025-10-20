@@ -7,7 +7,7 @@ import '../../core/utils/feature_labels.dart';
 import '../../data/models/radar_data.dart';
 
 /// Widget displaying a radar chart of user's trait profile vs cohort average
-class RadarTraitsCard extends ConsumerStatefulWidget {
+class RadarTraitsCard extends ConsumerWidget {
   const RadarTraitsCard({
     super.key,
     this.family,
@@ -26,41 +26,7 @@ class RadarTraitsCard extends ConsumerStatefulWidget {
   final bool showLegend;
 
   @override
-  ConsumerState<RadarTraitsCard> createState() => _RadarTraitsCardState();
-}
-
-class _RadarTraitsCardState extends ConsumerState<RadarTraitsCard>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 1500),
-      vsync: this,
-    );
-    _animation = CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOutCubic,
-    );
-    // Start animation after a short delay
-    Future.delayed(const Duration(milliseconds: 300), () {
-      if (mounted) {
-        _animationController.forward();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final radarDataAsync = ref.watch(radarDataByFamilyProvider);
 
     return Card(
@@ -80,7 +46,7 @@ class _RadarTraitsCardState extends ConsumerState<RadarTraitsCard>
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    widget.title ?? _getDefaultTitle(),
+                    title ?? _getDefaultTitle(),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -107,7 +73,7 @@ class _RadarTraitsCardState extends ConsumerState<RadarTraitsCard>
                       height: 300,
                       child: _buildRadarChart(context, dataPoints),
                     ),
-                    if (widget.showLegend) ...[
+                    if (showLegend) ...[
                       const SizedBox(height: 16),
                       _buildLegend(context),
                     ],
@@ -148,8 +114,8 @@ class _RadarTraitsCardState extends ConsumerState<RadarTraitsCard>
   }
 
   String _getDefaultTitle() {
-    if (widget.family == null) return 'Your Trait Profile';
-    switch (widget.family!.toLowerCase()) {
+    if (family == null) return 'Your Trait Profile';
+    switch (family!.toLowerCase()) {
       case 'riasec':
         return 'Career Interests (RIASEC)';
       case 'cognition':
@@ -163,8 +129,8 @@ class _RadarTraitsCardState extends ConsumerState<RadarTraitsCard>
 
   List<RadarDataPoint> _getFilteredData(RadarDataByFamily dataByFamily) {
     // If family is specified, return only that family
-    if (widget.family != null) {
-      switch (widget.family!.toLowerCase()) {
+    if (family != null) {
+      switch (family!.toLowerCase()) {
         case 'cognition':
           return dataByFamily.cognition;
         case 'traits':
@@ -217,69 +183,64 @@ class _RadarTraitsCardState extends ConsumerState<RadarTraitsCard>
     BuildContext context,
     List<RadarDataPoint> dataPoints,
   ) {
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        return RadarChart(
-          RadarChartData(
-            radarShape: RadarShape.polygon,
-            radarBorderData: BorderSide(
-              color: Theme.of(context).dividerColor,
-              width: 2,
-            ),
-            tickBorderData: BorderSide(
-              color: Theme.of(context).dividerColor.withValues(alpha: 0.5),
-            ),
-            gridBorderData: BorderSide(
-              color: Theme.of(context).dividerColor.withValues(alpha: 0.3),
-              width: 1,
-            ),
-            tickCount: 5,
-            ticksTextStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-              fontSize: 10,
-              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
-            ),
-            titleTextStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-            ),
-            getTitle: (index, angle) {
-              if (index >= dataPoints.length) {
-                return const RadarChartTitle(text: '');
-              }
-              // Use short label without family prefix
-              final shortLabel = getShortFeatureLabel(dataPoints[index].featureKey);
-              return RadarChartTitle(
-                text: _abbreviateLabel(shortLabel),
-              );
-            },
-            dataSets: [
-              // User scores - animated from 0 to actual value
-              RadarDataSet(
-                fillColor: Theme.of(
-                  context,
-                ).colorScheme.primary.withValues(alpha: 0.2),
-                borderColor: Theme.of(context).colorScheme.primary,
-                borderWidth: 2,
-                entryRadius: 3,
-                dataEntries: dataPoints
-                    .map((point) => RadarEntry(value: point.userScore * _animation.value))
-                    .toList(),
-              ),
-              // Cohort average - animated from 0 to actual value
-              RadarDataSet(
-                fillColor: Colors.grey.withValues(alpha: 0.1),
-                borderColor: Colors.grey,
-                borderWidth: 2,
-                entryRadius: 0,
-                dataEntries: dataPoints
-                    .map((point) => RadarEntry(value: point.cohortMean * _animation.value))
-                    .toList(),
-              ),
-            ],
+    return RadarChart(
+      RadarChartData(
+        radarShape: RadarShape.polygon,
+        radarBorderData: BorderSide(
+          color: Theme.of(context).dividerColor,
+          width: 2,
+        ),
+        tickBorderData: BorderSide(
+          color: Theme.of(context).dividerColor.withValues(alpha: 0.5),
+        ),
+        gridBorderData: BorderSide(
+          color: Theme.of(context).dividerColor.withValues(alpha: 0.3),
+          width: 1,
+        ),
+        tickCount: 5,
+        ticksTextStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
+          fontSize: 10,
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+        ),
+        titleTextStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
+        ),
+        getTitle: (index, angle) {
+          if (index >= dataPoints.length) {
+            return const RadarChartTitle(text: '');
+          }
+          // Use short label without family prefix
+          final shortLabel = getShortFeatureLabel(dataPoints[index].featureKey);
+          return RadarChartTitle(
+            text: _abbreviateLabel(shortLabel),
+          );
+        },
+        dataSets: [
+          // User scores
+          RadarDataSet(
+            fillColor: Theme.of(
+              context,
+            ).colorScheme.primary.withValues(alpha: 0.2),
+            borderColor: Theme.of(context).colorScheme.primary,
+            borderWidth: 2,
+            entryRadius: 3,
+            dataEntries: dataPoints
+                .map((point) => RadarEntry(value: point.userScore))
+                .toList(),
           ),
-        );
-      },
+          // Cohort average
+          RadarDataSet(
+            fillColor: Colors.grey.withValues(alpha: 0.1),
+            borderColor: Colors.grey,
+            borderWidth: 2,
+            entryRadius: 0,
+            dataEntries: dataPoints
+                .map((point) => RadarEntry(value: point.cohortMean))
+                .toList(),
+          ),
+        ],
+      ),
     );
   }
 
