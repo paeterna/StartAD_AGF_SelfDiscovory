@@ -50,37 +50,41 @@ class GamificationService {
       );
     }
 
-    // Check for badges
-    final badges = <BadgeDefinition>[];
+    // Check for badges in parallel for better performance
+    final badgeChecks = <Future<List<BadgeDefinition>>>[];
 
     if (profile.totalXp == xpGained) {
-      badges.addAll(await _badgeChecker.checkActivityBadges(
+      badgeChecks.add(_badgeChecker.checkActivityBadges(
         activityType: 'first_activity',
         metadata: {},
       ));
     }
 
     if (scores.composite >= 100) {
-      badges.addAll(await _badgeChecker.checkActivityBadges(
+      badgeChecks.add(_badgeChecker.checkActivityBadges(
         activityType: 'perfect_score',
         metadata: {},
       ));
     }
 
     if (timeSeconds < 30) {
-      badges.addAll(await _badgeChecker.checkActivityBadges(
+      badgeChecks.add(_badgeChecker.checkActivityBadges(
         activityType: 'memory_match_fast',
         metadata: {},
       ));
     }
 
-    badges.addAll(await _badgeChecker.checkTimeBadges(
+    badgeChecks.add(_badgeChecker.checkTimeBadges(
       activityTime: DateTime.now(),
     ));
 
     if (result.leveledUp) {
-      badges.addAll(await _badgeChecker.checkLevelBadges(result.profile.level));
+      badgeChecks.add(_badgeChecker.checkLevelBadges(result.profile.level));
     }
+
+    // Run all badge checks in parallel
+    final badgeResults = await Future.wait(badgeChecks);
+    final badges = badgeResults.expand((list) => list).toList();
 
     // Show level up modal
     if (result.leveledUp && context.mounted) {
@@ -134,29 +138,34 @@ class GamificationService {
       );
     }
 
-    final badges = <BadgeDefinition>[];
+    // Check for badges in parallel for better performance
+    final badgeChecks = <Future<List<BadgeDefinition>>>[];
 
     if (result.profile.totalXp == xpGained) {
-      badges.addAll(await _badgeChecker.checkActivityBadges(
+      badgeChecks.add(_badgeChecker.checkActivityBadges(
         activityType: 'first_activity',
         metadata: {},
       ));
     }
 
     if (correctAnswers == totalQuestions) {
-      badges.addAll(await _badgeChecker.checkActivityBadges(
+      badgeChecks.add(_badgeChecker.checkActivityBadges(
         activityType: 'perfect_score',
         metadata: {},
       ));
     }
 
-    badges.addAll(await _badgeChecker.checkTimeBadges(
+    badgeChecks.add(_badgeChecker.checkTimeBadges(
       activityTime: DateTime.now(),
     ));
 
     if (result.leveledUp) {
-      badges.addAll(await _badgeChecker.checkLevelBadges(result.profile.level));
+      badgeChecks.add(_badgeChecker.checkLevelBadges(result.profile.level));
     }
+
+    // Run all badge checks in parallel
+    final badgeResults = await Future.wait(badgeChecks);
+    final badges = badgeResults.expand((list) => list).toList();
 
     if (result.leveledUp && context.mounted) {
       await Future<void>.delayed(const Duration(milliseconds: 1500));

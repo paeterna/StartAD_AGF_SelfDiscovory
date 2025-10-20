@@ -8,6 +8,7 @@ import '../../../../application/activity/activity_providers.dart';
 import '../../../../application/gamification/gamification_providers.dart';
 import '../../../../application/scoring/scoring_providers.dart';
 import '../../../../application/traits/traits_providers.dart';
+import '../../../../common/widgets/celebration_loading.dart';
 import '../../../../data/repositories/gamification_repository.dart';
 import '../../../../generated/l10n/app_localizations.dart';
 import '../../../widgets/gradient_background.dart';
@@ -483,22 +484,41 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
     final scores = controller.calculateScores();
     final telemetry = controller.getTelemetry();
 
+    // Show loading overlay immediately for better UX
+    final loadingOverlay = CelebrationLoadingOverlay.show(
+      context,
+      message: 'Processing your results...',
+      emoji: '🎮',
+    );
+
     try {
-      // Submit to database
-      await _submitGameResults(scores, telemetry);
+      // Run database submission and XP/badges in parallel for speed
+      await Future.wait([
+        _submitGameResults(scores, telemetry),
+        Future<void>.delayed(const Duration(milliseconds: 100)).then((_) async {
+          if (!mounted) return;
+          await _awardXpAndCelebrate(scores, telemetry);
+        }),
+      ]);
 
-      if (!mounted) return;
-
-      // Award XP and show celebration
-      await _awardXpAndCelebrate(scores, telemetry);
-
-      if (!mounted) return;
+      if (!mounted) {
+        loadingOverlay.remove();
+        return;
+      }
 
       // Invalidate providers to refresh dashboard data
       ref.invalidate(discoveryProgressProvider);
       ref.invalidate(profileCompletenessProvider);
       ref.invalidate(radarDataByFamilyProvider);
       ref.invalidate(gamificationProfileProvider);
+
+      // Small delay to ensure animations are visible
+      await Future<void>.delayed(const Duration(milliseconds: 400));
+
+      // Remove loading overlay
+      loadingOverlay.remove();
+
+      if (!mounted) return;
 
       // Show result sheet
       await showModalBottomSheet<void>(
@@ -536,6 +556,9 @@ class _MemoryMatchPageState extends ConsumerState<MemoryMatchPage> {
         ),
       );
     } on Exception catch (error, stackTrace) {
+      // Remove loading overlay
+      loadingOverlay.remove();
+
       developer.log(
         'Failed to submit game results',
         error: error,
