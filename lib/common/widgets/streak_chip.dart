@@ -172,14 +172,6 @@ class CompactStreakChip extends StatelessWidget {
     required this.streakDays,
   });
 
-  String _getFireEmoji() {
-    if (streakDays == 0) return '💨';
-    if (streakDays >= 30) return '🔥🔥🔥';
-    if (streakDays >= 14) return '🔥🔥';
-    if (streakDays >= 1) return '🔥';
-    return '✨';
-  }
-
   @override
   Widget build(BuildContext context) {
     final teenTheme = Theme.of(context).extension<TeenPalette>()!;
@@ -197,9 +189,10 @@ class CompactStreakChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            _getFireEmoji(),
-            style: const TextStyle(fontSize: 12),
+          Icon(
+            Icons.local_fire_department,
+            size: 16,
+            color: streakDays >= 7 ? Colors.orange : teenTheme.tertiary,
           ),
           const SizedBox(width: 4),
           Text(

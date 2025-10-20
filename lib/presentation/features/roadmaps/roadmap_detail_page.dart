@@ -173,11 +173,17 @@ class _RoadmapHeader extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      roadmap.careerTitle,
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        color: theme.colorScheme.onPrimary,
-                        fontWeight: FontWeight.bold,
+                    Hero(
+                      tag: 'career-title-${roadmap.careerId}',
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Text(
+                          roadmap.careerTitle,
+                          style: theme.textTheme.headlineSmall?.copyWith(
+                            color: theme.colorScheme.onPrimary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 4),

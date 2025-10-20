@@ -195,13 +195,27 @@
    - ✅ XP calculator supports quizzes and all activities
    - ✅ Badge collection accessible from dashboard
 
-### Phase 4: Career Clusters Refactor (Priority 4)
+### Phase 4: Career Clusters Refactor (Priority 4) ✅
 7. **Clusters View**
-   - [ ] Refactor `lib/presentation/features/careers/careers_page_clustered.dart`
-   - [ ] Add gradient backgrounds per theme
-   - [ ] Implement expand/collapse animations
-   - [ ] Add Hero transitions to career details
-   - [ ] Add micro-interactions (scale on tap, animated bars)
+   - [x] Refactor `lib/presentation/features/careers/careers_page_clustered.dart`
+   - [x] Add gradient backgrounds per theme
+   - [x] Implement expand/collapse animations
+   - [x] Add Hero transitions to career details
+   - [x] Add micro-interactions (scale on tap, animated bars)
+
+**Status**: Complete
+**Files Modified**:
+- `lib/presentation/features/careers/careers_page_clustered.dart` - Added theme-aware gradients, AnimatedSize, scale animations, Hero transitions
+- `lib/presentation/features/roadmaps/roadmap_detail_page.dart` - Added matching Hero tags for smooth transitions
+
+**Features Implemented**:
+- Cluster cards now use theme-aware gradients (primary, secondary, tertiary colors)
+- Scale animation (1.0 → 0.95) on cluster card tap
+- AnimatedSize for smooth expand/collapse with theme-aware motion scale
+- Animated progress bars in career items (800ms easeOutCubic animation)
+- Scale on hover micro-interaction for career cards (1.0 → 1.02)
+- Hero transitions for career title (`career-title-{careerId}`)
+- Hero transitions for match score circle (`career-score-{careerId}`)
 
 ### Phase 5: Roadmaps Refactor (Priority 5)
 8. **Roadmap Details**
