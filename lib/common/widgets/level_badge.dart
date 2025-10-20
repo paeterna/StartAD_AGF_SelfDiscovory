@@ -36,26 +36,34 @@ class _LevelBadgeState extends State<LevelBadge>
 
     _scaleAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween<double>(begin: 1.0, end: 1.1)
-            .chain(CurveTween(curve: Curves.easeOut)),
+        tween: Tween<double>(
+          begin: 1.0,
+          end: 1.1,
+        ).chain(CurveTween(curve: Curves.easeOut)),
         weight: 1,
       ),
       TweenSequenceItem(
-        tween: Tween<double>(begin: 1.1, end: 1.0)
-            .chain(CurveTween(curve: Curves.easeIn)),
+        tween: Tween<double>(
+          begin: 1.1,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.easeIn)),
         weight: 1,
       ),
     ]).animate(_controller);
 
     _glowAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween<double>(begin: 0.5, end: 1.0)
-            .chain(CurveTween(curve: Curves.easeOut)),
+        tween: Tween<double>(
+          begin: 0.5,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.easeOut)),
         weight: 1,
       ),
       TweenSequenceItem(
-        tween: Tween<double>(begin: 1.0, end: 0.5)
-            .chain(CurveTween(curve: Curves.easeIn)),
+        tween: Tween<double>(
+          begin: 1.0,
+          end: 0.5,
+        ).chain(CurveTween(curve: Curves.easeIn)),
         weight: 1,
       ),
     ]).animate(_controller);
@@ -109,12 +117,10 @@ class _LevelBadgeState extends State<LevelBadge>
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: teenTheme.primary.withOpacity(
+                    color: teenTheme.primary.withValues(alpha: 
                       widget.animate ? _glowAnimation.value * 0.6 : 0.4,
                     ),
-                    blurRadius: widget.animate
-                        ? _glowAnimation.value * 20
-                        : 10,
+                    blurRadius: widget.animate ? _glowAnimation.value * 20 : 10,
                     spreadRadius: widget.animate ? _glowAnimation.value * 4 : 2,
                   ),
                 ],
@@ -126,7 +132,7 @@ class _LevelBadgeState extends State<LevelBadge>
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withValues(alpha: 0.3),
                         width: 2,
                       ),
                     ),
@@ -144,7 +150,7 @@ class _LevelBadgeState extends State<LevelBadge>
                             color: Colors.white,
                             shadows: [
                               Shadow(
-                                color: Colors.black.withOpacity(0.3),
+                                color: Colors.black.withValues(alpha: 0.3),
                                 blurRadius: 4,
                               ),
                             ],
@@ -156,11 +162,11 @@ class _LevelBadgeState extends State<LevelBadge>
                             style: TextStyle(
                               fontSize: widget.size * 0.15,
                               fontWeight: FontWeight.w600,
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.white.withValues(alpha: 0.9),
                               letterSpacing: 1.2,
                               shadows: [
                                 Shadow(
-                                  color: Colors.black.withOpacity(0.3),
+                                  color: Colors.black.withValues(alpha: 0.3),
                                   blurRadius: 2,
                                 ),
                               ],
@@ -205,7 +211,7 @@ class CompactLevelBadge extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
         border: Border.all(
-          color: Colors.white.withOpacity(0.5),
+          color: Colors.white.withValues(alpha: 0.5),
           width: 1.5,
         ),
       ),

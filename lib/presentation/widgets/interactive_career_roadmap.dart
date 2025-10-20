@@ -60,7 +60,7 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap>
         gradient: LinearGradient(
           colors: [
             Theme.of(context).primaryColor,
-            Theme.of(context).primaryColor.withOpacity(0.7),
+            Theme.of(context).primaryColor.withValues(alpha: 0.7),
           ],
         ),
         borderRadius: BorderRadius.circular(16),
@@ -108,7 +108,7 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.white.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
@@ -163,7 +163,7 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap>
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: isExpanded ? color.withOpacity(0.1) : Colors.white,
+              color: isExpanded ? color.withValues(alpha: 0.1) : Colors.white,
               border: Border.all(
                 color: isExpanded ? color : Colors.grey.shade300,
                 width: isExpanded ? 2 : 1,
@@ -172,7 +172,7 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap>
               boxShadow: isExpanded
                   ? [
                       BoxShadow(
-                        color: color.withOpacity(0.3),
+                        color: color.withValues(alpha: 0.3),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -188,7 +188,7 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap>
                       width: 56,
                       height: 56,
                       decoration: BoxDecoration(
-                        color: color.withOpacity(0.2),
+                        color: color.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Center(
@@ -232,7 +232,7 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap>
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: color.withOpacity(0.2),
+                        color: color.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
@@ -278,13 +278,13 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap>
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  color.withOpacity(0.5),
+                  color.withValues(alpha: 0.5),
                   _getPhaseColor(
                     widget
                         .roadmap
                         .phases[widget.roadmap.phases.indexOf(phase) + 1]
                         .type,
-                  ).withOpacity(0.5),
+                  ).withValues(alpha: 0.5),
                 ],
               ),
             ),
@@ -355,7 +355,7 @@ class _InteractiveCareerRoadmapState extends State<InteractiveCareerRoadmap>
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: color.withOpacity(0.2),
+                      color: color.withValues(alpha: 0.2),
                       shape: BoxShape.circle,
                     ),
                     child: Center(

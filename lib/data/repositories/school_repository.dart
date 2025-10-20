@@ -159,7 +159,7 @@ class SchoolRepository {
         'get_user_email',
         params: {'p_user_id': userId},
       );
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('⚠️ [SCHOOL_REPO] Could not fetch email: $e');
       // Email is optional, continue without it
     }
@@ -172,7 +172,7 @@ class SchoolRepository {
         params: {'p_user_id': userId},
       );
       profileCompletion = completionResponse;
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('⚠️ [SCHOOL_REPO] Could not fetch profile completion: $e');
     }
 
@@ -192,7 +192,7 @@ class SchoolRepository {
           overallStrength = scores.reduce((a, b) => a + b) / scores.length;
         }
       }
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('⚠️ [SCHOOL_REPO] Could not fetch feature scores: $e');
     }
 
@@ -214,7 +214,7 @@ class SchoolRepository {
           activityResponse['completed_at'] as String,
         );
       }
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('⚠️ [SCHOOL_REPO] Could not fetch last activity: $e');
     }
 

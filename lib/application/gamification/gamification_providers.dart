@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../data/repositories/gamification_repository.dart';
 import '../../domain/entities/gamification.dart';
-import 'remote_config_service.dart';
 import 'gamification_service.dart';
 
 // ============================================================================
@@ -123,21 +122,22 @@ final AutoDisposeFutureProvider<Map<String, dynamic>> clusterLabelsProvider =
 /// Award XP to user
 /// Call this after completing activities (games, quizzes, roadmap steps)
 /// Returns record with profile, leveledUp status, and oldLevel
-final awardXpProvider = Provider<
-  Future<({GamificationProfile profile, bool leveledUp, int oldLevel})>
-  Function({required String reason, required int amount})
->((ref) {
-  return ({required String reason, required int amount}) async {
-    final repo = ref.read(gamificationRepositoryProvider);
-    final result = await repo.awardXp(reason: reason, amount: amount);
+final awardXpProvider =
+    Provider<
+      Future<({GamificationProfile profile, bool leveledUp, int oldLevel})>
+      Function({required String reason, required int amount})
+    >((ref) {
+      return ({required String reason, required int amount}) async {
+        final repo = ref.read(gamificationRepositoryProvider);
+        final result = await repo.awardXp(reason: reason, amount: amount);
 
-    // Invalidate profile cache to trigger UI update
-    ref.invalidate(gamificationProfileProvider);
-    ref.invalidate(gamificationProfileSyncProvider);
+        // Invalidate profile cache to trigger UI update
+        ref.invalidate(gamificationProfileProvider);
+        ref.invalidate(gamificationProfileSyncProvider);
 
-    return result;
-  };
-});
+        return result;
+      };
+    });
 
 // ============================================================================
 // Streak Actions

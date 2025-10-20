@@ -39,7 +39,7 @@ class AuthRepositoryImpl implements AuthRepository {
       DateTime? createdAt;
       try {
         createdAt = DateTime.parse(supabaseUser.createdAt);
-      } catch (e) {
+      } on Exception catch (e) {
         debugPrint('🔴 [AUTH_REPO] Error parsing createdAt: $e');
         createdAt = DateTime.now();
       }
@@ -59,7 +59,7 @@ class AuthRepositoryImpl implements AuthRepository {
         createdAt: createdAt,
         lastLoginAt: DateTime.now(),
       );
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 [AUTH_REPO] Error in _toDomainUser: $e');
       // Return minimal user object if all else fails
       return User(
@@ -91,7 +91,7 @@ class AuthRepositoryImpl implements AuthRepository {
         DateTime? createdAt;
         try {
           createdAt = DateTime.parse(profileResponse['created_at'] as String);
-        } catch (e) {
+        } on Exception catch (e) {
           debugPrint(
             '🔴 [AUTH_REPO] Error parsing created_at from profile: $e',
           );
@@ -150,7 +150,7 @@ class AuthRepositoryImpl implements AuthRepository {
         DateTime? createdAt;
         try {
           createdAt = DateTime.parse(supabaseUser.createdAt);
-        } catch (e) {
+        } on Exception catch (e) {
           debugPrint('🔴 [AUTH_REPO] Error parsing createdAt in fallback: $e');
           createdAt = DateTime.now();
         }

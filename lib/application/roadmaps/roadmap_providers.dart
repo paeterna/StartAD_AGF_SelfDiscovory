@@ -116,7 +116,7 @@ class RoadmapGenerationNotifier extends StateNotifier<AsyncValue<String>> {
     try {
       await _repository.deleteRoadmap(roadmapId);
       return true;
-    } catch (e) {
+    } on Exception {
       return false;
     }
   }

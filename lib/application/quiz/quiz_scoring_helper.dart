@@ -23,7 +23,7 @@ class QuizScoringHelper {
       if (instrument != null && instrument.contains('riasec')) {
         try {
           canonicalKey = riasecToCanonical(item.featureKey);
-        } catch (e) {
+        } on Exception catch (e) {
           throw StateError(
             'Invalid RIASEC key in quiz item ${item.id}: "${item.featureKey}". '
             'Error: $e',
@@ -33,7 +33,7 @@ class QuizScoringHelper {
         // IPIP-50 Big Five to canonical traits mapping
         try {
           canonicalKey = bigFiveToCanonical(item.featureKey);
-        } catch (e) {
+        } on Exception catch (e) {
           throw StateError(
             'Invalid Big Five key in quiz item ${item.id}: "${item.featureKey}". '
             'Error: $e',

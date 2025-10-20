@@ -12,7 +12,7 @@ import 'xp_calculator.dart';
 /// Combines XP awards, badge checking, and celebration UI
 class GamificationService {
   GamificationService(this._repository)
-      : _badgeChecker = BadgeChecker(_repository);
+    : _badgeChecker = BadgeChecker(_repository);
 
   final GamificationRepository _repository;
   final BadgeChecker _badgeChecker;
@@ -54,29 +54,37 @@ class GamificationService {
     final badgeChecks = <Future<List<BadgeDefinition>>>[];
 
     if (profile.totalXp == xpGained) {
-      badgeChecks.add(_badgeChecker.checkActivityBadges(
-        activityType: 'first_activity',
-        metadata: {},
-      ));
+      badgeChecks.add(
+        _badgeChecker.checkActivityBadges(
+          activityType: 'first_activity',
+          metadata: {},
+        ),
+      );
     }
 
     if (scores.composite >= 100) {
-      badgeChecks.add(_badgeChecker.checkActivityBadges(
-        activityType: 'perfect_score',
-        metadata: {},
-      ));
+      badgeChecks.add(
+        _badgeChecker.checkActivityBadges(
+          activityType: 'perfect_score',
+          metadata: {},
+        ),
+      );
     }
 
     if (timeSeconds < 30) {
-      badgeChecks.add(_badgeChecker.checkActivityBadges(
-        activityType: 'memory_match_fast',
-        metadata: {},
-      ));
+      badgeChecks.add(
+        _badgeChecker.checkActivityBadges(
+          activityType: 'memory_match_fast',
+          metadata: {},
+        ),
+      );
     }
 
-    badgeChecks.add(_badgeChecker.checkTimeBadges(
-      activityTime: DateTime.now(),
-    ));
+    badgeChecks.add(
+      _badgeChecker.checkTimeBadges(
+        activityTime: DateTime.now(),
+      ),
+    );
 
     if (result.leveledUp) {
       badgeChecks.add(_badgeChecker.checkLevelBadges(result.profile.level));
@@ -142,22 +150,28 @@ class GamificationService {
     final badgeChecks = <Future<List<BadgeDefinition>>>[];
 
     if (result.profile.totalXp == xpGained) {
-      badgeChecks.add(_badgeChecker.checkActivityBadges(
-        activityType: 'first_activity',
-        metadata: {},
-      ));
+      badgeChecks.add(
+        _badgeChecker.checkActivityBadges(
+          activityType: 'first_activity',
+          metadata: {},
+        ),
+      );
     }
 
     if (correctAnswers == totalQuestions) {
-      badgeChecks.add(_badgeChecker.checkActivityBadges(
-        activityType: 'perfect_score',
-        metadata: {},
-      ));
+      badgeChecks.add(
+        _badgeChecker.checkActivityBadges(
+          activityType: 'perfect_score',
+          metadata: {},
+        ),
+      );
     }
 
-    badgeChecks.add(_badgeChecker.checkTimeBadges(
-      activityTime: DateTime.now(),
-    ));
+    badgeChecks.add(
+      _badgeChecker.checkTimeBadges(
+        activityTime: DateTime.now(),
+      ),
+    );
 
     if (result.leveledUp) {
       badgeChecks.add(_badgeChecker.checkLevelBadges(result.profile.level));
@@ -211,10 +225,12 @@ class GamificationService {
 
     final badges = <BadgeDefinition>[];
 
-    badges.addAll(await _badgeChecker.checkActivityBadges(
-      activityType: 'roadmap_generated',
-      metadata: {'total_roadmaps': 1},
-    ));
+    badges.addAll(
+      await _badgeChecker.checkActivityBadges(
+        activityType: 'roadmap_generated',
+        metadata: {'total_roadmaps': 1},
+      ),
+    );
 
     if (result.leveledUp) {
       badges.addAll(await _badgeChecker.checkLevelBadges(result.profile.level));
@@ -248,7 +264,9 @@ class GamificationService {
     final profile = await _repository.getProfile();
     if (profile == null) return;
 
-    final milestoneXp = XpCalculator.calculateStreakMilestoneXp(profile.currentStreak);
+    final milestoneXp = XpCalculator.calculateStreakMilestoneXp(
+      profile.currentStreak,
+    );
     if (milestoneXp != null) {
       await _repository.awardXp(
         reason: 'streak_milestone',
@@ -262,12 +280,16 @@ class GamificationService {
           showXpPopover(
             context,
             xpAmount: milestoneXp,
-            reason: XpCalculator.getStreakMilestoneMessage(profile.currentStreak),
+            reason: XpCalculator.getStreakMilestoneMessage(
+              profile.currentStreak,
+            ),
           );
         }
       }
 
-      final badges = await _badgeChecker.checkStreakBadges(profile.currentStreak);
+      final badges = await _badgeChecker.checkStreakBadges(
+        profile.currentStreak,
+      );
 
       for (final badge in badges) {
         await Future<void>.delayed(const Duration(milliseconds: 500));

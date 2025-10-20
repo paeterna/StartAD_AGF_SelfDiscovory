@@ -41,7 +41,7 @@ class BatchSubmissionHelper {
     // Validate all keys are canonical before submitting
     try {
       assertCanonicalKeys(scoringOutput.means0to100.keys);
-    } catch (e) {
+    } on Exception catch (e) {
       throw BatchSubmissionException(
         'Non-canonical feature keys detected in scoring output',
         e,
@@ -113,7 +113,7 @@ class BatchSubmissionHelper {
         'Database error: ${e.message}',
         e,
       );
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('❌ Unexpected error during batch submission: $e');
       throw BatchSubmissionException(
         'Unexpected error during submission',
@@ -183,7 +183,7 @@ class ActivityRunHelper {
     // Validate all trait score keys are canonical
     try {
       assertCanonicalKeys(traitScores.keys);
-    } catch (e) {
+    } on Exception {
       throw ArgumentError(
         'Non-canonical feature keys in traitScores: ${traitScores.keys.join(", ")}',
       );

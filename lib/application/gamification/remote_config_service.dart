@@ -106,7 +106,7 @@ class RemoteConfigService {
 
   /// Get badge catalog from remote config
   Future<Map<String, dynamic>?> getBadgeCatalog() async {
-    return await getMap('badge_catalog');
+    return getMap('badge_catalog');
   }
 }
 

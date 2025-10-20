@@ -207,10 +207,10 @@ class _ProfileProgressCard extends ConsumerWidget {
     final level = percent < 30
         ? l10n.dashboardProgressJustStarted
         : percent < 60
-            ? l10n.dashboardProgressGettingThere
-            : percent < 90
-                ? l10n.dashboardProgressAlmostDone
-                : l10n.dashboardProgressComplete;
+        ? l10n.dashboardProgressGettingThere
+        : percent < 90
+        ? l10n.dashboardProgressAlmostDone
+        : l10n.dashboardProgressComplete;
 
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -283,17 +283,17 @@ class _ProfileProgressCard extends ConsumerWidget {
             Text(
               'Profile',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    // color: colorScheme.secondary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
+                // color: colorScheme.secondary,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
             const SizedBox(height: 4),
             Text(
               level,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onSurface.withValues(alpha: 0.6),
-                  ),
+                color: colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
               textAlign: TextAlign.center,
             ),
           ],
@@ -332,7 +332,10 @@ class _GamificationCard extends ConsumerWidget {
 
             // Calculate progress manually
             final progress = profile.xpNeededForCurrentLevel > 0
-                ? (profile.totalXp / profile.xpNeededForCurrentLevel).clamp(0.0, 1.0)
+                ? (profile.totalXp / profile.xpNeededForCurrentLevel).clamp(
+                    0.0,
+                    1.0,
+                  )
                 : 0.0;
 
             return Column(
@@ -399,15 +402,15 @@ class _GamificationCard extends ConsumerWidget {
                 Text(
                   '${profile.totalXp} XP',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   '${profile.xpNeededForCurrentLevel - profile.currentXp} to Level ${profile.level + 1}',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onSurface.withValues(alpha: 0.6),
-                      ),
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
                   textAlign: TextAlign.center,
                 ),
 

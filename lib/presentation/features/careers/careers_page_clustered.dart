@@ -70,80 +70,6 @@ class CareersPageClustered extends ConsumerWidget {
       ),
     );
   }
-
-  // Mock data for demonstration
-  Widget _buildMockClusters(BuildContext context) {
-    final mockClusters = [
-      CareerClusterGroup(
-        id: 'technology',
-        name: 'Technology',
-        description: 'Software, AI, Data, and Digital Innovation',
-        icon: '💻',
-        topCareers: [
-          const Career(
-            id: '00000000-0000-0000-0000-000000000001',
-            title: 'Software Developer',
-            description: 'Build apps and software solutions',
-            tags: [],
-            matchScore: 95,
-            cluster: 'Technology',
-          ),
-          const Career(
-            id: '00000000-0000-0000-0000-000000000002',
-            title: 'Data Scientist',
-            description: 'Analyze data and build AI models',
-            tags: [],
-            matchScore: 88,
-            cluster: 'Technology',
-          ),
-          const Career(
-            id: '00000000-0000-0000-0000-000000000003',
-            title: 'UX Designer',
-            description: 'Design user-friendly digital experiences',
-            tags: [],
-            matchScore: 82,
-            cluster: 'Technology',
-          ),
-        ],
-        maxMatchScore: 95,
-      ),
-      CareerClusterGroup(
-        id: 'healthcare',
-        name: 'Healthcare',
-        description: 'Medical, Nursing, and Health Services',
-        icon: '🏥',
-        topCareers: [
-          const Career(
-            id: '00000000-0000-0000-0000-000000000004',
-            title: 'Doctor',
-            description: 'Diagnose and treat patients',
-            tags: [],
-            matchScore: 78,
-            cluster: 'Healthcare',
-          ),
-          const Career(
-            id: '00000000-0000-0000-0000-000000000005',
-            title: 'Pharmacist',
-            description: 'Dispense medications and advise patients',
-            tags: [],
-            matchScore: 75,
-            cluster: 'Healthcare',
-          ),
-          const Career(
-            id: '00000000-0000-0000-0000-000000000006',
-            title: 'Physical Therapist',
-            description: 'Help patients recover mobility',
-            tags: [],
-            matchScore: 72,
-            cluster: 'Healthcare',
-          ),
-        ],
-        maxMatchScore: 78,
-      ),
-    ];
-
-    return _ClusterList(clusters: mockClusters);
-  }
 }
 
 /// List of career clusters
@@ -284,7 +210,9 @@ class _ClusterCardState extends ConsumerState<_ClusterCard>
           child: Card(
             elevation: teenTheme?.elevation ?? 2,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(teenTheme?.buttonRadius ?? 16),
+              borderRadius: BorderRadius.circular(
+                teenTheme?.buttonRadius ?? 16,
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -312,71 +240,74 @@ class _ClusterCardState extends ConsumerState<_ClusterCard>
                       children: [
                         // Icon
                         Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.primary.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Center(
-                      child: Text(
-                        widget.cluster.icon,
-                        style: const TextStyle(fontSize: 32),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
+                          width: 56,
+                          height: 56,
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.primary.withValues(
+                              alpha: 0.2,
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Center(
+                            child: Text(
+                              widget.cluster.icon,
+                              style: const TextStyle(fontSize: 32),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
 
-                  // Info
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.cluster.name,
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          widget.cluster.description,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.trending_up,
-                              size: 16,
-                              color: _getMatchColor(
-                                widget.cluster.maxMatchScore,
-                              ),
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              'Best Match: ${widget.cluster.maxMatchScore}%',
-                              style: theme.textTheme.labelMedium?.copyWith(
-                                color: _getMatchColor(
-                                  widget.cluster.maxMatchScore,
+                        // Info
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.cluster.name,
+                                style: theme.textTheme.titleLarge?.copyWith(
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                fontWeight: FontWeight.bold,
                               ),
-                            ),
-                          ],
+                              const SizedBox(height: 4),
+                              Text(
+                                widget.cluster.description,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.trending_up,
+                                    size: 16,
+                                    color: _getMatchColor(
+                                      widget.cluster.maxMatchScore,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'Best Match: ${widget.cluster.maxMatchScore}%',
+                                    style: theme.textTheme.labelMedium
+                                        ?.copyWith(
+                                          color: _getMatchColor(
+                                            widget.cluster.maxMatchScore,
+                                          ),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        // Expand icon
+                        Icon(
+                          _isExpanded ? Icons.expand_less : Icons.expand_more,
+                          color: theme.colorScheme.primary,
                         ),
                       ],
-                    ),
-                  ),
-
-                  // Expand icon
-                  Icon(
-                    _isExpanded ? Icons.expand_less : Icons.expand_more,
-                    color: theme.colorScheme.primary,
-                  ),
-                ],
                     ),
                   ),
                 ),
@@ -384,7 +315,8 @@ class _ClusterCardState extends ConsumerState<_ClusterCard>
                 // Careers list with animated expand/collapse
                 AnimatedSize(
                   duration: Duration(
-                    milliseconds: (300 * (teenTheme?.motionScale ?? 1.0)).round(),
+                    milliseconds: (300 * (teenTheme?.motionScale ?? 1.0))
+                        .round(),
                   ),
                   curve: Curves.easeInOut,
                   child: Padding(
@@ -410,17 +342,18 @@ class _ClusterCardState extends ConsumerState<_ClusterCard>
                               // TODO: Navigate to full cluster view
                             },
                             icon: const Icon(Icons.arrow_forward),
-                            label: Text('View all ${widget.cluster.name} careers'),
+                            label: Text(
+                              'View all ${widget.cluster.name} careers',
+                            ),
                           ),
                         ],
                       ],
                     ),
                   ),
                 ),
-                ],
-              ),
+              ],
             ),
-
+          ),
         );
       },
     );
@@ -488,12 +421,16 @@ class _CareerItemState extends State<_CareerItem>
       vsync: this,
     );
 
-    _progressAnimation = Tween<double>(
-      begin: 0.0,
-      end: widget.career.matchScore / 100.0,
-    ).animate(
-      CurvedAnimation(parent: _progressController, curve: Curves.easeOutCubic),
-    );
+    _progressAnimation =
+        Tween<double>(
+          begin: 0.0,
+          end: widget.career.matchScore / 100.0,
+        ).animate(
+          CurvedAnimation(
+            parent: _progressController,
+            curve: Curves.easeOutCubic,
+          ),
+        );
 
     // Start animation after a short delay
     Future.delayed(const Duration(milliseconds: 100), () {
@@ -531,7 +468,9 @@ class _CareerItemState extends State<_CareerItem>
         child: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+            color: theme.colorScheme.surfaceContainerHighest.withValues(
+              alpha: 0.5,
+            ),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: theme.colorScheme.outline.withValues(alpha: 0.2),
@@ -601,7 +540,9 @@ class _CareerItemState extends State<_CareerItem>
                     icon: const Icon(Icons.auto_awesome),
                     tooltip: 'Generate AI Roadmap',
                     style: IconButton.styleFrom(
-                      backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.1),
+                      backgroundColor: theme.colorScheme.primary.withValues(
+                        alpha: 0.1,
+                      ),
                       foregroundColor: theme.colorScheme.primary,
                     ),
                   ),
@@ -617,7 +558,8 @@ class _CareerItemState extends State<_CareerItem>
                     borderRadius: BorderRadius.circular(4),
                     child: LinearProgressIndicator(
                       value: _progressAnimation.value,
-                      backgroundColor: theme.colorScheme.surfaceContainerHighest,
+                      backgroundColor:
+                          theme.colorScheme.surfaceContainerHighest,
                       valueColor: AlwaysStoppedAnimation<Color>(matchColor),
                       minHeight: 6,
                     ),

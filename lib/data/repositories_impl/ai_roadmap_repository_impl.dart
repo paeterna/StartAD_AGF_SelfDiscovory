@@ -50,7 +50,7 @@ class AIRoadmapRepositoryImpl implements AIRoadmapRepository {
 
       final roadmapId = data['roadmap_id'] as String;
       return roadmapId;
-    } catch (e) {
+    } on Exception catch (e) {
       if (e is RoadmapLimitExceededException ||
           e is RoadmapAlreadyExistsException ||
           e is AIGenerationFailedException) {
@@ -76,7 +76,7 @@ class AIRoadmapRepositoryImpl implements AIRoadmapRepository {
       }
 
       return _mapToEntity(response);
-    } catch (e) {
+    } on Exception catch (e) {
       throw Exception('Error fetching roadmap: $e');
     }
   }
@@ -101,7 +101,7 @@ class AIRoadmapRepositoryImpl implements AIRoadmapRepository {
 
       final roadmapId = roadmapResponse['id'] as String;
       return getRoadmapById(roadmapId);
-    } catch (e) {
+    } on Exception catch (e) {
       throw Exception('Error fetching roadmap for career: $e');
     }
   }
@@ -120,7 +120,7 @@ class AIRoadmapRepositoryImpl implements AIRoadmapRepository {
           .maybeSingle();
 
       return response != null;
-    } catch (e) {
+    } on Exception catch (e) {
       throw Exception('Error checking roadmap existence: $e');
     }
   }
@@ -148,7 +148,7 @@ class AIRoadmapRepositoryImpl implements AIRoadmapRepository {
           .eq('user_id', userId);
 
       return (response as List).length;
-    } catch (e) {
+    } on Exception catch (e) {
       throw Exception('Error counting roadmaps: $e');
     }
   }
@@ -157,7 +157,7 @@ class AIRoadmapRepositoryImpl implements AIRoadmapRepository {
   Future<void> deleteRoadmap(String roadmapId) async {
     try {
       await _supabase.from('user_career_roadmaps').delete().eq('id', roadmapId);
-    } catch (e) {
+    } on Exception catch (e) {
       throw Exception('Error deleting roadmap: $e');
     }
   }
@@ -173,7 +173,7 @@ class AIRoadmapRepositoryImpl implements AIRoadmapRepository {
           .delete()
           .eq('user_id', userId)
           .eq('career_id', careerId);
-    } catch (e) {
+    } on Exception catch (e) {
       throw Exception('Error deleting roadmap for career: $e');
     }
   }

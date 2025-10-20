@@ -114,17 +114,19 @@ class _ConfettiOverlayState extends State<ConfettiOverlay>
         sin(angle) * speed - 300, // Shoot upward
       );
 
-      _particles.add(ConfettiParticle(
-        position: Offset(
-          _random.nextDouble() * 400,
-          500, // Start from bottom
+      _particles.add(
+        ConfettiParticle(
+          position: Offset(
+            _random.nextDouble() * 400,
+            500, // Start from bottom
+          ),
+          velocity: velocity,
+          rotation: _random.nextDouble() * 2 * pi,
+          rotationSpeed: _random.nextDouble() * 10 - 5,
+          color: colors[_random.nextInt(colors.length)],
+          size: 6 + _random.nextDouble() * 8,
         ),
-        velocity: velocity,
-        rotation: _random.nextDouble() * 2 * pi,
-        rotationSpeed: _random.nextDouble() * 10 - 5,
-        color: colors[_random.nextInt(colors.length)],
-        size: 6 + _random.nextDouble() * 8,
-      ));
+      );
     }
   }
 
@@ -146,8 +148,8 @@ class _ConfettiOverlayState extends State<ConfettiOverlay>
         builder: (context, child) {
           // Update particles
           if (_controller.isAnimating) {
-            final dt = 1 / 60; // Assume 60fps
-            for (var particle in _particles) {
+            const dt = 1 / 60; // Assume 60fps
+            for (final particle in _particles) {
               particle.update(dt);
             }
           }
@@ -169,11 +171,11 @@ class _ConfettiPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    for (var particle in particles) {
+    for (final particle in particles) {
       if (particle.opacity <= 0) continue;
 
       final paint = Paint()
-        ..color = particle.color.withOpacity(particle.opacity)
+        ..color = particle.color.withValues(alpha: particle.opacity)
         ..style = PaintingStyle.fill;
 
       canvas.save();
@@ -293,8 +295,8 @@ class _ConfettiCelebrationState extends State<ConfettiCelebration>
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        teenTheme.primary.withOpacity(0.95),
-                        teenTheme.secondary.withOpacity(0.95),
+                        teenTheme.primary.withValues(alpha: 0.95),
+                        teenTheme.secondary.withValues(alpha: 0.95),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -302,7 +304,7 @@ class _ConfettiCelebrationState extends State<ConfettiCelebration>
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: teenTheme.primary.withOpacity(0.5),
+                        color: teenTheme.primary.withValues(alpha: 0.5),
                         blurRadius: 24,
                         spreadRadius: 4,
                       ),
@@ -331,7 +333,7 @@ class _ConfettiCelebrationState extends State<ConfettiCelebration>
                           widget.subtitle!,
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white.withOpacity(0.9),
+                            color: Colors.white.withValues(alpha: 0.9),
                           ),
                           textAlign: TextAlign.center,
                         ),

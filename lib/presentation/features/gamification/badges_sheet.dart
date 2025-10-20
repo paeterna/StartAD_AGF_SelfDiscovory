@@ -39,7 +39,7 @@ class BadgesSheet extends ConsumerWidget {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: theme.colorScheme.onSurface.withOpacity(0.3),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -69,7 +69,7 @@ class BadgesSheet extends ConsumerWidget {
                         data: (badges) => Text(
                           '${badges.length} earned',
                           style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurface.withOpacity(0.7),
+                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                           ),
                         ),
                         loading: () => const SizedBox.shrink(),
@@ -95,7 +95,9 @@ class BadgesSheet extends ConsumerWidget {
                 return badgesAsync.when(
                   data: (earnedBadges) {
                     // Get earned badge keys for quick lookup
-                    final earnedKeys = earnedBadges.map((b) => b.badgeKey).toSet();
+                    final earnedKeys = earnedBadges
+                        .map((b) => b.badgeKey)
+                        .toSet();
 
                     // Sort: earned first, then by tier
                     final sortedCatalog = catalog.entries.toList()
@@ -103,17 +105,20 @@ class BadgesSheet extends ConsumerWidget {
                         final aEarned = earnedKeys.contains(a.key);
                         final bEarned = earnedKeys.contains(b.key);
                         if (aEarned != bEarned) return aEarned ? -1 : 1;
-                        return _tierValue(a.value.tier).compareTo(_tierValue(b.value.tier));
+                        return _tierValue(
+                          a.value.tier,
+                        ).compareTo(_tierValue(b.value.tier));
                       });
 
                     return GridView.builder(
                       padding: const EdgeInsets.all(20),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 0.85,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 0.85,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                          ),
                       itemCount: sortedCatalog.length,
                       itemBuilder: (context, index) {
                         final entry = sortedCatalog[index];
@@ -138,7 +143,8 @@ class BadgesSheet extends ConsumerWidget {
                       },
                     );
                   },
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
                   error: (error, _) => Center(
                     child: Text('Error loading badges: $error'),
                   ),
@@ -157,11 +163,16 @@ class BadgesSheet extends ConsumerWidget {
 
   int _tierValue(String tier) {
     switch (tier) {
-      case 'platinum': return 0;
-      case 'gold': return 1;
-      case 'silver': return 2;
-      case 'bronze': return 3;
-      default: return 4;
+      case 'platinum':
+        return 0;
+      case 'gold':
+        return 1;
+      case 'silver':
+        return 2;
+      case 'bronze':
+        return 3;
+      default:
+        return 4;
     }
   }
 }
@@ -190,14 +201,14 @@ class _BadgeCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: isEarned
-                ? tierColor.withOpacity(0.5)
-                : theme.colorScheme.outline.withOpacity(0.2),
+                ? tierColor.withValues(alpha: 0.5)
+                : theme.colorScheme.outline.withValues(alpha: 0.2),
             width: 2,
           ),
           boxShadow: isEarned
               ? [
                   BoxShadow(
-                    color: tierColor.withOpacity(0.2),
+                    color: tierColor.withValues(alpha: 0.2),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -215,14 +226,14 @@ class _BadgeCard extends StatelessWidget {
                   badgeDefinition.iconPath,
                   style: TextStyle(
                     fontSize: 48,
-                    color: isEarned ? null : Colors.grey.withOpacity(0.3),
+                    color: isEarned ? null : Colors.grey.withValues(alpha: 0.3),
                   ),
                 ),
                 if (!isEarned)
                   Icon(
                     Icons.lock,
                     size: 28,
-                    color: theme.colorScheme.onSurface.withOpacity(0.4),
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
                   ),
               ],
             ),
@@ -237,7 +248,7 @@ class _BadgeCard extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: isEarned
                       ? theme.colorScheme.onSurface
-                      : theme.colorScheme.onSurface.withOpacity(0.5),
+                      : theme.colorScheme.onSurface.withValues(alpha: 0.5),
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 2,
@@ -250,10 +261,12 @@ class _BadgeCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
-                color: isEarned ? tierColor.withOpacity(0.2) : Colors.transparent,
+                color: isEarned
+                    ? tierColor.withValues(alpha: 0.2)
+                    : Colors.transparent,
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: isEarned ? tierColor : Colors.grey.withOpacity(0.3),
+                  color: isEarned ? tierColor : Colors.grey.withValues(alpha: 0.3),
                   width: 1,
                 ),
               ),
@@ -331,8 +344,8 @@ class _BadgeDetailDialog extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isEarned
-                    ? tierColor.withOpacity(0.1)
-                    : Colors.grey.withOpacity(0.1),
+                    ? tierColor.withValues(alpha: 0.1)
+                    : Colors.grey.withValues(alpha: 0.1),
                 border: Border.all(
                   color: isEarned ? tierColor : Colors.grey,
                   width: 3,
@@ -346,7 +359,7 @@ class _BadgeDetailDialog extends StatelessWidget {
                       badgeDefinition.iconPath,
                       style: TextStyle(
                         fontSize: 56,
-                        color: isEarned ? null : Colors.grey.withOpacity(0.3),
+                        color: isEarned ? null : Colors.grey.withValues(alpha: 0.3),
                       ),
                     ),
                     if (!isEarned)
@@ -375,7 +388,7 @@ class _BadgeDetailDialog extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: tierColor.withOpacity(0.2),
+                color: tierColor.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: tierColor, width: 1),
               ),
@@ -410,14 +423,14 @@ class _BadgeDetailDialog extends StatelessWidget {
                   Icon(
                     Icons.info_outline,
                     size: 16,
-                    color: theme.colorScheme.onSurface.withOpacity(0.7),
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                   const SizedBox(width: 8),
                   Flexible(
                     child: Text(
                       badgeDefinition.condition,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurface.withOpacity(0.7),
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -432,7 +445,7 @@ class _BadgeDetailDialog extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: tierColor.withOpacity(0.1),
+                  color: tierColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -501,7 +514,9 @@ class _BadgeDetailDialog extends StatelessWidget {
 }
 
 /// Provider for badge catalog from remote config
-final badgeCatalogProvider = FutureProvider<Map<String, gam.BadgeDefinition>>((ref) async {
+final badgeCatalogProvider = FutureProvider<Map<String, gam.BadgeDefinition>>((
+  ref,
+) async {
   final remoteConfig = ref.watch(remoteConfigServiceProvider);
   final catalogJson = await remoteConfig.getBadgeCatalog();
 

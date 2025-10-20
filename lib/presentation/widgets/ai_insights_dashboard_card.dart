@@ -90,7 +90,7 @@ class AIInsightsDashboardCard extends ConsumerWidget {
                   label: Text(skill),
                   backgroundColor: Theme.of(
                     context,
-                  ).primaryColor.withOpacity(0.1),
+                  ).primaryColor.withValues(alpha: 0.1),
                   labelStyle: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w500,

@@ -65,7 +65,7 @@ class _SchoolLoginPageState extends ConsumerState<SchoolLoginPage> {
       if (mounted) {
         context.go('/school/dashboard');
       }
-    } catch (e) {
+    } on Exception catch (e) {
       setState(() {
         _errorMessage = 'Login failed: ${e.toString()}';
         _isLoading = false;

@@ -40,7 +40,7 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
       }
 
       return insight;
-    } catch (e) {
+    } on Exception catch (e) {
       throw Exception('Error generating AI insight: $e');
     }
   }
@@ -61,7 +61,7 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
       }
 
       return _mapToEntity(response);
-    } catch (e) {
+    } on Exception catch (e) {
       throw Exception('Error fetching latest insight: $e');
     }
   }
@@ -78,7 +78,7 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
       return (response as List)
           .map((json) => _mapToEntity(json as Map<String, dynamic>))
           .toList();
-    } catch (e) {
+    } on Exception catch (e) {
       throw Exception('Error fetching insights: $e');
     }
   }
@@ -94,7 +94,7 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
           .single();
 
       return response;
-    } catch (e) {
+    } on Exception catch (e) {
       throw Exception('Error checking insight eligibility: $e');
     }
   }
@@ -103,7 +103,7 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
   Future<void> deleteInsight(String insightId) async {
     try {
       await _supabase.from('ai_career_insights').delete().eq('id', insightId);
-    } catch (e) {
+    } on Exception catch (e) {
       throw Exception('Error deleting insight: $e');
     }
   }
@@ -121,7 +121,7 @@ class AIInsightRepositoryImpl implements AIInsightRepository {
       }
 
       return _mapToEntity(response);
-    } catch (e) {
+    } on Exception {
       return null;
     }
   }

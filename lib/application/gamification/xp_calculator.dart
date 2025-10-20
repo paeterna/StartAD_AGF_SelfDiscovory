@@ -139,7 +139,7 @@ class XpCalculator {
     if (currentLevel >= 999) return 0;
     final nextLevel = currentLevel + 1;
     // Inverse of level formula: xp = (level - 1)^2 * 100
-    return ((nextLevel - 1) * (nextLevel - 1) * 100);
+    return (nextLevel - 1) * (nextLevel - 1) * 100;
   }
 
   /// Calculate XP needed from current XP to next level
@@ -150,7 +150,9 @@ class XpCalculator {
 
   /// Calculate current level progress (0.0 to 1.0)
   static double calculateLevelProgress(int currentXp, int currentLevel) {
-    final xpForCurrent = currentLevel == 1 ? 0 : xpForNextLevel(currentLevel - 1);
+    final xpForCurrent = currentLevel == 1
+        ? 0
+        : xpForNextLevel(currentLevel - 1);
     final xpForNext = xpForNextLevel(currentLevel);
     final xpIntoLevel = currentXp - xpForCurrent;
     final xpNeeded = xpForNext - xpForCurrent;
@@ -207,10 +209,14 @@ class XpCalculator {
       case 'profile_complete':
         return 'Profile Complete';
       default:
-        return reason.replaceAll('_', ' ').split(' ').map((word) {
-          if (word.isEmpty) return word;
-          return word[0].toUpperCase() + word.substring(1);
-        }).join(' ');
+        return reason
+            .replaceAll('_', ' ')
+            .split(' ')
+            .map((word) {
+              if (word.isEmpty) return word;
+              return word[0].toUpperCase() + word.substring(1);
+            })
+            .join(' ');
     }
   }
 }

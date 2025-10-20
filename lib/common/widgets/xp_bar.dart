@@ -54,13 +54,16 @@ class _XpBarState extends State<XpBar> with SingleTickerProviderStateMixin {
         ? (widget.currentXp / widget.xpForNextLevel).clamp(0.0, 1.0)
         : 0.0;
 
-    _progressAnimation = Tween<double>(
-      begin: _previousProgress,
-      end: newProgress,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeOutCubic,
-    ));
+    _progressAnimation =
+        Tween<double>(
+          begin: _previousProgress,
+          end: newProgress,
+        ).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: Curves.easeOutCubic,
+          ),
+        );
 
     _previousProgress = newProgress;
 
@@ -115,10 +118,10 @@ class _XpBarState extends State<XpBar> with SingleTickerProviderStateMixin {
             return Container(
               height: widget.height,
               decoration: BoxDecoration(
-                color: teenTheme.background.withOpacity(0.3),
+                color: teenTheme.background.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(widget.height / 2),
                 border: Border.all(
-                  color: teenTheme.primary.withOpacity(0.3),
+                  color: teenTheme.primary.withValues(alpha: 0.3),
                   width: 1,
                 ),
               ),
@@ -140,7 +143,7 @@ class _XpBarState extends State<XpBar> with SingleTickerProviderStateMixin {
                         borderRadius: BorderRadius.circular(widget.height / 2),
                         boxShadow: [
                           BoxShadow(
-                            color: teenTheme.primary.withOpacity(0.5),
+                            color: teenTheme.primary.withValues(alpha: 0.5),
                             blurRadius: 8,
                             spreadRadius: 0,
                           ),
@@ -156,16 +159,17 @@ class _XpBarState extends State<XpBar> with SingleTickerProviderStateMixin {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              Colors.white.withOpacity(0.0),
-                              Colors.white.withOpacity(0.3),
-                              Colors.white.withOpacity(0.0),
+                              Colors.white.withValues(alpha: 0.0),
+                              Colors.white.withValues(alpha: 0.3),
+                              Colors.white.withValues(alpha: 0.0),
                             ],
                             stops: const [0.0, 0.5, 1.0],
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                           ),
-                          borderRadius:
-                              BorderRadius.circular(widget.height / 2),
+                          borderRadius: BorderRadius.circular(
+                            widget.height / 2,
+                          ),
                         ),
                       ),
                     ),
@@ -183,7 +187,7 @@ class _XpBarState extends State<XpBar> with SingleTickerProviderStateMixin {
                           shadows: _progressAnimation.value > 0.5
                               ? [
                                   Shadow(
-                                    color: Colors.black.withOpacity(0.5),
+                                    color: Colors.black.withValues(alpha: 0.5),
                                     blurRadius: 2,
                                   ),
                                 ]
@@ -225,7 +229,7 @@ class CompactXpBar extends StatelessWidget {
     return Container(
       height: height,
       decoration: BoxDecoration(
-        color: teenTheme.background.withOpacity(0.3),
+        color: teenTheme.background.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(height / 2),
       ),
       child: FractionallySizedBox(

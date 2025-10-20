@@ -102,7 +102,7 @@ class _CelebrationLoadingState extends State<CelebrationLoading>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return Container(
+    return ColoredBox(
       color: colorScheme.surface.withValues(alpha: 0.95),
       child: Center(
         child: Column(

@@ -60,7 +60,8 @@ class GamificationProfile {
       (xpForNextLevel - totalXp).clamp(0, double.infinity).toInt();
 
   /// Current XP within the current level (for XP bar display)
-  int get currentXp => (totalXp - xpForCurrentLevel).clamp(0, double.infinity).toInt();
+  int get currentXp =>
+      (totalXp - xpForCurrentLevel).clamp(0, double.infinity).toInt();
 
   /// XP needed to progress through current level
   int get xpNeededForCurrentLevel =>

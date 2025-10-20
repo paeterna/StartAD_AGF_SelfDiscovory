@@ -125,7 +125,7 @@ class ActivityService {
           await aiService.generateInsight(userId);
         }
       }
-    } catch (e) {
+    } on Exception catch (e) {
       // Silently fail - don't block activity completion
       print('Auto-generation failed: $e');
     }

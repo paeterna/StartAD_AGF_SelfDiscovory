@@ -116,7 +116,7 @@ class AICareerRecommendationsCard extends ConsumerWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: _getMatchColor(career.matchScore).withOpacity(0.2),
+                      color: _getMatchColor(career.matchScore).withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(
@@ -156,7 +156,7 @@ class AICareerRecommendationsCard extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.05),
+                  color: Theme.of(context).primaryColor.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(

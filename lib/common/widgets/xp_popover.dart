@@ -36,19 +36,24 @@ class _XpPopoverState extends State<XpPopover>
     );
 
     // Slide up animation
-    _slideAnimation = Tween<Offset>(
-      begin: Offset.zero,
-      end: const Offset(0, -1.5),
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeOutCubic,
-    ));
+    _slideAnimation =
+        Tween<Offset>(
+          begin: Offset.zero,
+          end: const Offset(0, -1.5),
+        ).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: Curves.easeOutCubic,
+          ),
+        );
 
     // Fade in then out
     _fadeAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween<double>(begin: 0.0, end: 1.0)
-            .chain(CurveTween(curve: Curves.easeIn)),
+        tween: Tween<double>(
+          begin: 0.0,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.easeIn)),
         weight: 20,
       ),
       TweenSequenceItem(
@@ -56,8 +61,10 @@ class _XpPopoverState extends State<XpPopover>
         weight: 60,
       ),
       TweenSequenceItem(
-        tween: Tween<double>(begin: 1.0, end: 0.0)
-            .chain(CurveTween(curve: Curves.easeOut)),
+        tween: Tween<double>(
+          begin: 1.0,
+          end: 0.0,
+        ).chain(CurveTween(curve: Curves.easeOut)),
         weight: 20,
       ),
     ]).animate(_controller);
@@ -65,13 +72,17 @@ class _XpPopoverState extends State<XpPopover>
     // Scale pop animation
     _scaleAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween<double>(begin: 0.5, end: 1.2)
-            .chain(CurveTween(curve: Curves.elasticOut)),
+        tween: Tween<double>(
+          begin: 0.5,
+          end: 1.2,
+        ).chain(CurveTween(curve: Curves.elasticOut)),
         weight: 30,
       ),
       TweenSequenceItem(
-        tween: Tween<double>(begin: 1.2, end: 1.0)
-            .chain(CurveTween(curve: Curves.easeOut)),
+        tween: Tween<double>(
+          begin: 1.2,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.easeOut)),
         weight: 20,
       ),
       TweenSequenceItem(
@@ -119,7 +130,7 @@ class _XpPopoverState extends State<XpPopover>
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: teenTheme.primary.withOpacity(0.6),
+                  color: teenTheme.primary.withValues(alpha: 0.6),
                   blurRadius: 16,
                   spreadRadius: 2,
                 ),
@@ -147,7 +158,7 @@ class _XpPopoverState extends State<XpPopover>
                     '• ${widget.reason}',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                     ),
                   ),
                 ],
@@ -218,15 +229,15 @@ class XpGainedCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            teenTheme.primary.withOpacity(0.2),
-            teenTheme.secondary.withOpacity(0.2),
+            teenTheme.primary.withValues(alpha: 0.2),
+            teenTheme.secondary.withValues(alpha: 0.2),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: teenTheme.primary.withOpacity(0.5),
+          color: teenTheme.primary.withValues(alpha: 0.5),
           width: 2,
         ),
       ),
@@ -316,10 +327,10 @@ class CompactXpIndicator extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: teenTheme.primary.withOpacity(0.15),
+        color: teenTheme.primary.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: teenTheme.primary.withOpacity(0.3),
+          color: teenTheme.primary.withValues(alpha: 0.3),
           width: 1,
         ),
       ),

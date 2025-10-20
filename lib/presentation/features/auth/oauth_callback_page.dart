@@ -26,7 +26,7 @@ class _OAuthCallbackPageState extends ConsumerState<OAuthCallbackPage> {
     debugPrint('🔵 [OAUTH_CALLBACK] Handling OAuth callback...');
 
     // Wait a moment for Supabase to process the auth tokens from URL
-    await Future.delayed(const Duration(milliseconds: 1500));
+    await Future<void>.delayed(const Duration(milliseconds: 1500));
 
     try {
       // Refresh the auth state to get the current user
@@ -63,7 +63,7 @@ class _OAuthCallbackPageState extends ConsumerState<OAuthCallbackPage> {
           );
         }
       }
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 [OAUTH_CALLBACK] Error: $e');
       if (mounted) {
         final l10n = AppLocalizations.of(context)!;

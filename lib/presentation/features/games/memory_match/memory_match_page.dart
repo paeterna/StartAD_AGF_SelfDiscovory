@@ -9,7 +9,6 @@ import '../../../../application/gamification/gamification_providers.dart';
 import '../../../../application/scoring/scoring_providers.dart';
 import '../../../../application/traits/traits_providers.dart';
 import '../../../../common/widgets/celebration_loading.dart';
-import '../../../../data/repositories/gamification_repository.dart';
 import '../../../../generated/l10n/app_localizations.dart';
 import '../../../widgets/gradient_background.dart';
 import 'memory_match_controller.dart';

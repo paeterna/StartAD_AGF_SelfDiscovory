@@ -35,13 +35,17 @@ class _StreakChipState extends State<StreakChip>
 
     _flameAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween<double>(begin: 1.0, end: 1.15)
-            .chain(CurveTween(curve: Curves.easeInOut)),
+        tween: Tween<double>(
+          begin: 1.0,
+          end: 1.15,
+        ).chain(CurveTween(curve: Curves.easeInOut)),
         weight: 1,
       ),
       TweenSequenceItem(
-        tween: Tween<double>(begin: 1.15, end: 1.0)
-            .chain(CurveTween(curve: Curves.easeInOut)),
+        tween: Tween<double>(
+          begin: 1.15,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.easeInOut)),
         weight: 1,
       ),
     ]).animate(_controller);
@@ -96,21 +100,21 @@ class _StreakChipState extends State<StreakChip>
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              streakColor.withOpacity(0.2),
-              streakColor.withOpacity(0.1),
+              streakColor.withValues(alpha: 0.2),
+              streakColor.withValues(alpha: 0.1),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: streakColor.withOpacity(0.5),
+            color: streakColor.withValues(alpha: 0.5),
             width: 1.5,
           ),
           boxShadow: widget.streakDays > 0
               ? [
                   BoxShadow(
-                    color: streakColor.withOpacity(0.3),
+                    color: streakColor.withValues(alpha: 0.3),
                     blurRadius: 8,
                     spreadRadius: 0,
                   ),
@@ -152,7 +156,7 @@ class _StreakChipState extends State<StreakChip>
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: streakColor.withOpacity(0.8),
+                  color: streakColor.withValues(alpha: 0.8),
                 ),
               ),
             ],
@@ -179,10 +183,10 @@ class CompactStreakChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: teenTheme.primary.withOpacity(0.15),
+        color: teenTheme.primary.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: teenTheme.primary.withOpacity(0.3),
+          color: teenTheme.primary.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
@@ -229,15 +233,15 @@ class StreakMilestone extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            teenTheme.primary.withOpacity(0.2),
-            teenTheme.secondary.withOpacity(0.2),
+            teenTheme.primary.withValues(alpha: 0.2),
+            teenTheme.secondary.withValues(alpha: 0.2),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: teenTheme.primary.withOpacity(0.5),
+          color: teenTheme.primary.withValues(alpha: 0.5),
           width: 2,
         ),
       ),

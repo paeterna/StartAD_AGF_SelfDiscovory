@@ -28,7 +28,8 @@ class GamificationRepository {
 
   /// Award XP and update level
   /// Returns new profile after update and whether level increased
-  Future<({GamificationProfile profile, bool leveledUp, int oldLevel})> awardXp({
+  Future<({GamificationProfile profile, bool leveledUp, int oldLevel})>
+  awardXp({
     required String reason,
     required int amount,
   }) async {

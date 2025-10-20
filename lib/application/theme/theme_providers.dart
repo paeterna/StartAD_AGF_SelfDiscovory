@@ -187,7 +187,7 @@ ThemeData buildDarkThemeFromPalette(TeenPalette palette) {
     primary: palette.primary,
     onPrimary: _onColor(palette.primary),
     primaryContainer: Color.alphaBlend(
-      palette.primary.withOpacity(.14),
+      palette.primary.withValues(alpha: .14),
       const Color(0xFF0E1224),
     ),
     onPrimaryContainer: _onColor(palette.primary),
@@ -195,7 +195,7 @@ ThemeData buildDarkThemeFromPalette(TeenPalette palette) {
     secondary: palette.secondary,
     onSecondary: _onColor(palette.secondary),
     secondaryContainer: Color.alphaBlend(
-      palette.secondary.withOpacity(.16),
+      palette.secondary.withValues(alpha: .16),
       const Color(0xFF0E1224),
     ),
     onSecondaryContainer: _onColor(palette.secondary),
@@ -203,17 +203,13 @@ ThemeData buildDarkThemeFromPalette(TeenPalette palette) {
     tertiary: palette.tertiary,
     onTertiary: _onColor(palette.tertiary),
     tertiaryContainer: Color.alphaBlend(
-      palette.tertiary.withOpacity(.14),
+      palette.tertiary.withValues(alpha: .14),
       const Color(0xFF0E1224),
     ),
     onTertiaryContainer: _onColor(palette.tertiary),
-
-    // Deep, neutral surfaces (let neon accents pop)
-    background: palette.background, // from TeenPalette
-    onBackground: const Color(0xFFECECEC),
     surface: const Color(0xFF0E1224), // slightly lighter than bg
     onSurface: const Color(0xFFECECEC),
-    surfaceVariant: const Color(0xFF1A2033),
+    surfaceContainerHighest: const Color(0xFF1A2033),
     onSurfaceVariant: const Color(0xFFB7C0CF),
 
     // System tokens
@@ -231,7 +227,7 @@ ThemeData buildDarkThemeFromPalette(TeenPalette palette) {
     useMaterial3: true,
     brightness: Brightness.dark,
     colorScheme: scheme,
-    scaffoldBackgroundColor: scheme.background,
+    scaffoldBackgroundColor: scheme.surface,
     appBarTheme: _appBar(palette, scheme),
     iconTheme: IconThemeData(color: scheme.tertiary),
     primaryIconTheme: IconThemeData(color: scheme.tertiary),
@@ -267,7 +263,7 @@ ThemeData buildLightThemeFromPalette(TeenPalette palette) {
     primary: palette.primary,
     onPrimary: _onColor(palette.primary),
     primaryContainer: Color.alphaBlend(
-      palette.primary.withOpacity(.10),
+      palette.primary.withValues(alpha: .10),
       Colors.white,
     ),
     onPrimaryContainer: _onColor(palette.primary),
@@ -275,7 +271,7 @@ ThemeData buildLightThemeFromPalette(TeenPalette palette) {
     secondary: palette.secondary,
     onSecondary: _onColor(palette.secondary),
     secondaryContainer: Color.alphaBlend(
-      palette.secondary.withOpacity(.12),
+      palette.secondary.withValues(alpha: .12),
       Colors.white,
     ),
     onSecondaryContainer: _onColor(palette.secondary),
@@ -283,17 +279,13 @@ ThemeData buildLightThemeFromPalette(TeenPalette palette) {
     tertiary: palette.tertiary,
     onTertiary: _onColor(palette.tertiary),
     tertiaryContainer: Color.alphaBlend(
-      palette.tertiary.withOpacity(.10),
+      palette.tertiary.withValues(alpha: .10),
       Colors.white,
     ),
     onTertiaryContainer: _onColor(palette.tertiary),
-
-    // Clean, bright surfaces
-    background: Colors.white,
-    onBackground: const Color(0xFF0F1224),
     surface: Colors.white,
     onSurface: const Color(0xFF0F1224),
-    surfaceVariant: const Color(0xFFE8EBF5),
+    surfaceContainerHighest: const Color(0xFFE8EBF5),
     onSurfaceVariant: const Color(0xFF4B556A),
 
     // System tokens
@@ -311,7 +303,7 @@ ThemeData buildLightThemeFromPalette(TeenPalette palette) {
     useMaterial3: true,
     brightness: Brightness.light,
     colorScheme: scheme,
-    scaffoldBackgroundColor: scheme.background,
+    scaffoldBackgroundColor: scheme.surface,
     appBarTheme: _appBar(palette, scheme),
     iconTheme: IconThemeData(color: scheme.tertiary),
     primaryIconTheme: IconThemeData(color: scheme.tertiary),

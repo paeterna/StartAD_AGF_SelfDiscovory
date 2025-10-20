@@ -48,30 +48,39 @@ class _BadgeUnlockModalState extends State<BadgeUnlockModal>
     // Badge scales up with bounce
     _scaleAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween<double>(begin: 0.0, end: 1.2)
-            .chain(CurveTween(curve: Curves.easeOut)),
+        tween: Tween<double>(
+          begin: 0.0,
+          end: 1.2,
+        ).chain(CurveTween(curve: Curves.easeOut)),
         weight: 40,
       ),
       TweenSequenceItem(
-        tween: Tween<double>(begin: 1.2, end: 0.9)
-            .chain(CurveTween(curve: Curves.easeInOut)),
+        tween: Tween<double>(
+          begin: 1.2,
+          end: 0.9,
+        ).chain(CurveTween(curve: Curves.easeInOut)),
         weight: 20,
       ),
       TweenSequenceItem(
-        tween: Tween<double>(begin: 0.9, end: 1.0)
-            .chain(CurveTween(curve: Curves.easeOut)),
+        tween: Tween<double>(
+          begin: 0.9,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.easeOut)),
         weight: 40,
       ),
     ]).animate(_controller);
 
     // Slight rotation for dynamic effect
-    _rotationAnimation = Tween<double>(
-      begin: -0.1,
-      end: 0.1,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.elasticOut,
-    ));
+    _rotationAnimation =
+        Tween<double>(
+          begin: -0.1,
+          end: 0.1,
+        ).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: Curves.elasticOut,
+          ),
+        );
 
     // Pulsing glow effect
     _glowAnimation = TweenSequence<double>([
@@ -168,7 +177,9 @@ class _BadgeUnlockModalState extends State<BadgeUnlockModal>
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: tierColor.withValues(alpha: _glowAnimation.value * 0.6),
+                                color: tierColor.withValues(
+                                  alpha: _glowAnimation.value * 0.6,
+                                ),
                                 blurRadius: 40 * _glowAnimation.value,
                                 spreadRadius: 10 * _glowAnimation.value,
                               ),
@@ -210,7 +221,10 @@ class _BadgeUnlockModalState extends State<BadgeUnlockModal>
 
                 // Tier badge
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     color: tierColor.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(16),
