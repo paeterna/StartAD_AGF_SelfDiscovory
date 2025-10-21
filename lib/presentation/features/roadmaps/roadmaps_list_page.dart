@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../application/roadmaps/roadmap_providers.dart';
 import '../../../core/router/app_router.dart';
 import '../../widgets/gradient_background.dart';
+import '../../widgets/logo_app_bar.dart';
 
 /// Page showing all of a user's AI-generated career roadmaps
 class RoadmapsListPage extends ConsumerWidget {
@@ -16,9 +17,8 @@ class RoadmapsListPage extends ConsumerWidget {
 
     return GradientBackground(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('My Career Roadmaps'),
-          elevation: 0,
+        appBar: const LogoAppBar(
+          title: 'My Career Roadmaps',
         ),
         body: roadmapsAsync.when(
           data: (roadmaps) {

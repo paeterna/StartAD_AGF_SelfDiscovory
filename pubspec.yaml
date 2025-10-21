@@ -1,5 +1,5 @@
 name: startad_agf_selfdiscovery
-description: "Masar - A self-discovery platform for high-school students"
+description: "Wejha - A self-discovery platform for high-school students"
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -77,6 +77,6 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/lottie/
-    - .env
+    # - .env
     # Note: .env should NOT be an asset - it's for local dev only
     # Environment variables are set in Netlify dashboard

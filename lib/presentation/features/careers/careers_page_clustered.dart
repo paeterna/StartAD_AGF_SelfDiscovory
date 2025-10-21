@@ -9,6 +9,7 @@ import '../../../core/router/app_router.dart';
 import '../../../application/roadmaps/roadmap_providers.dart';
 import '../../../application/scoring/scoring_providers.dart';
 import '../../../common/theme/teen_palette_extension.dart';
+import '../../widgets/logo_app_bar.dart';
 
 /// Cluster-first careers page
 ///
@@ -23,8 +24,8 @@ class CareersPageClustered extends ConsumerWidget {
     final clustersAsync = ref.watch(careerClusterGroupsProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.careersTitle),
+      appBar: LogoAppBar(
+        title: l10n.careersTitle,
         actions: [
           IconButton(
             icon: const Icon(Icons.map),

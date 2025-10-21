@@ -180,10 +180,11 @@ class _Rail extends StatelessWidget {
       indicatorColor: theme.colorScheme.secondaryContainer,
       leading: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child: Icon(
-          Icons.school,
-          size: compact ? 32 : 40,
-          color: theme.colorScheme.primary,
+        child: Image.asset(
+          'assets/images/logo.png',
+          width: compact ? 48 : 64,
+          height: compact ? 48 : 64,
+          fit: BoxFit.contain,
         ),
       ),
       trailing: compact

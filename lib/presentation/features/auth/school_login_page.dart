@@ -101,10 +101,10 @@ class _SchoolLoginPageState extends ConsumerState<SchoolLoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       // Header
-                      Icon(
-                        Icons.school,
-                        size: 64,
-                        color: theme.colorScheme.primary,
+                      Image.asset(
+                        'assets/images/logo.png',
+                        height: 80,
+                        width: 80,
                       ),
                       const SizedBox(height: 16),
                       Text(

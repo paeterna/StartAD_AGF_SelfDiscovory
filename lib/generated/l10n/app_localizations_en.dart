@@ -9,10 +9,10 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'Masar';
+  String get appName => 'Wejha';
 
   @override
-  String get welcomeMessage => 'Welcome to Masar';
+  String get welcomeMessage => 'Welcome to Wejha';
 
   @override
   String get tagline => 'Discover Your Future';
@@ -110,7 +110,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingSkipButton => 'Skip';
 
   @override
-  String get welcomeTitle => 'Welcome to Masar! 🚀';
+  String get welcomeTitle => 'Welcome to Wejha! 🚀';
 
   @override
   String get welcomeSubtitle => 'Discover who you are and where you\'re going';
@@ -544,7 +544,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsTermsOfUse => 'Terms of Use';
 
   @override
-  String get settingsAbout => 'About Masar';
+  String get settingsAbout => 'About Wejha';
 
   @override
   String get settingsSupportSection => 'Support';
@@ -592,11 +592,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get termsAccept => 'I agree to the Terms of Use';
 
   @override
-  String get aboutTitle => 'About Masar';
+  String get aboutTitle => 'About Wejha';
 
   @override
   String get aboutDescription =>
-      'Masar is a self-discovery platform designed to help high school students explore their interests, discover careers, and plan their future.';
+      'Wejha is a self-discovery platform designed to help high school students explore their interests, discover careers, and plan their future.';
 
   @override
   String aboutVersion(String version) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/gradient_background.dart';
+import '../../widgets/logo_app_bar.dart';
 
 class PrivacyPage extends StatelessWidget {
   const PrivacyPage({super.key});
@@ -8,7 +9,7 @@ class PrivacyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GradientBackground(
       child: Scaffold(
-        appBar: AppBar(title: const Text('Privacy Policy')),
+        appBar: const LogoAppBar(title: 'Privacy Policy'),
         body: const SingleChildScrollView(
           padding: EdgeInsets.all(24),
           child: Column(
@@ -25,7 +26,7 @@ class PrivacyPage extends StatelessWidget {
               ),
               SizedBox(height: 24),
               Text(
-                'Masar is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information.',
+                'Wejha is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information.',
               ),
               SizedBox(height: 16),
               Text(
@@ -75,7 +76,7 @@ class PrivacyPage extends StatelessWidget {
               ),
               SizedBox(height: 24),
               Text(
-                'For questions about this policy, please contact us at privacy@masar.app',
+                'For questions about this policy, please contact us at privacy@wejha.app',
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ],

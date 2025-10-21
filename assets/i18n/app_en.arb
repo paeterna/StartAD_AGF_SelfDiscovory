@@ -1,12 +1,12 @@
 {
   "@@locale": "en",
 
-  "appName": "Masar",
+  "appName": "Wejha",
   "@appName": {
     "description": "Application name"
   },
 
-  "welcomeMessage": "Welcome to Masar",
+  "welcomeMessage": "Welcome to Wejha",
   "@welcomeMessage": {
     "description": "Welcome message on splash"
   },
@@ -53,7 +53,7 @@
   "onboardingFinishButton": "Finish",
   "onboardingSkipButton": "Skip",
 
-  "welcomeTitle": "Welcome to Masar! 🚀",
+  "welcomeTitle": "Welcome to Wejha! 🚀",
   "welcomeSubtitle": "Discover who you are and where you're going",
   "welcomeGetStartedButton": "Let's Get Started! ✨",
   "welcomeQuickTitle": "Quick & Fun",
@@ -236,7 +236,7 @@
   "settingsPrivacySection": "Privacy & Legal",
   "settingsPrivacyPolicy": "Privacy Policy",
   "settingsTermsOfUse": "Terms of Use",
-  "settingsAbout": "About Masar",
+  "settingsAbout": "About Wejha",
   "settingsSupportSection": "Support",
   "settingsFeedback": "Send Feedback",
   "settingsReportIssue": "Report an Issue",
@@ -260,8 +260,8 @@
   "termsTitle": "Terms of Use",
   "termsAccept": "I agree to the Terms of Use",
 
-  "aboutTitle": "About Masar",
-  "aboutDescription": "Masar is a self-discovery platform designed to help high school students explore their interests, discover careers, and plan their future.",
+  "aboutTitle": "About Wejha",
+  "aboutDescription": "Wejha is a self-discovery platform designed to help high school students explore their interests, discover careers, and plan their future.",
   "aboutVersion": "Version {version}",
   "@aboutVersion": {
     "placeholders": {

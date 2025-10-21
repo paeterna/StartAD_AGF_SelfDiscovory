@@ -9,10 +9,10 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get appName => 'مسار';
+  String get appName => 'وجهة';
 
   @override
-  String get welcomeMessage => 'مرحباً بك في مسار';
+  String get welcomeMessage => 'مرحباً بك في وجهة';
 
   @override
   String get tagline => 'اكتشف مستقبلك';
@@ -109,7 +109,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onboardingSkipButton => 'تخطي';
 
   @override
-  String get welcomeTitle => 'مرحباً بك في مسار! 🚀';
+  String get welcomeTitle => 'مرحباً بك في وجهة! 🚀';
 
   @override
   String get welcomeSubtitle => 'اكتشف من أنت وإلى أين تتجه';
@@ -133,7 +133,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get welcomePlanTitle => 'خطط لمستقبلك';
 
   @override
-  String get welcomePlanDescription => 'احصل على مسارات مهنية مخصصة';
+  String get welcomePlanDescription => 'احصل على وجهات مهنية مخصصة';
 
   @override
   String get onboardingQuestion1 => 'عندما أواجه مشكلة، أفضل أن:';
@@ -414,7 +414,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get roadmapTitle => 'خارطة الطريق';
 
   @override
-  String get roadmapSubtitle => 'مسارك الشخصي نحو النجاح';
+  String get roadmapSubtitle => 'وجهتك الشخصية نحو النجاح';
 
   @override
   String get roadmapSelectCareer => 'اختر مهنة لرؤية خارطة الطريق';
@@ -541,7 +541,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsTermsOfUse => 'شروط الاستخدام';
 
   @override
-  String get settingsAbout => 'حول مسار';
+  String get settingsAbout => 'حول وجهة';
 
   @override
   String get settingsSupportSection => 'الدعم';
@@ -589,11 +589,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get termsAccept => 'أوافق على شروط الاستخدام';
 
   @override
-  String get aboutTitle => 'حول مسار';
+  String get aboutTitle => 'حول وجهة';
 
   @override
   String get aboutDescription =>
-      'مسار هي منصة اكتشاف الذات مصممة لمساعدة طلاب المدارس الثانوية على استكشاف اهتماماتهم واكتشاف المهن والتخطيط لمستقبلهم.';
+      'وجهة هي منصة اكتشاف الذات مصممة لمساعدة طلاب المدارس الثانوية على استكشاف اهتماماتهم واكتشاف المهن والتخطيط لمستقبلهم.';
 
   @override
   String aboutVersion(String version) {
@@ -716,7 +716,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get quizRiasecLearning2 => 'بيئات العمل التي تناسبك أكثر';
 
   @override
-  String get quizRiasecLearning3 => 'المسارات المهنية التي تتماشى مع اهتماماتك';
+  String get quizRiasecLearning3 => 'الوجهات المهنية التي تتماشى مع اهتماماتك';
 
   @override
   String get quizRiasecLearning4 => 'كيف تقارن مع الآخرين في فئتك العمرية';
@@ -1021,7 +1021,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get helpDialogTitle => 'تحتاج مساعدة؟';
 
   @override
-  String get helpDialogWelcome => 'مرحباً بك في رحلة اكتشاف مسارك المهني!';
+  String get helpDialogWelcome => 'مرحباً بك في رحلة اكتشاف وجهتك المهنية!';
 
   @override
   String get helpDialogTip1 => '• أكمل التقييمات لبناء ملفك الشخصي';

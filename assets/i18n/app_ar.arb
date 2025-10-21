@@ -1,8 +1,8 @@
 {
   "@@locale": "ar",
 
-  "appName": "مسار",
-  "welcomeMessage": "مرحباً بك في مسار",
+  "appName": "وجهة",
+  "welcomeMessage": "مرحباً بك في وجهة",
   "tagline": "اكتشف مستقبلك",
 
   "authLoginTitle": "تسجيل الدخول",
@@ -36,7 +36,7 @@
   "onboardingFinishButton": "إنهاء",
   "onboardingSkipButton": "تخطي",
 
-  "welcomeTitle": "مرحباً بك في مسار! 🚀",
+  "welcomeTitle": "مرحباً بك في وجهة! 🚀",
   "welcomeSubtitle": "اكتشف من أنت وإلى أين تتجه",
   "welcomeGetStartedButton": "لنبدأ! ✨",
   "welcomeQuickTitle": "سريع وممتع",
@@ -44,7 +44,7 @@
   "welcomeDiscoverTitle": "اكتشف نفسك",
   "welcomeDiscoverDescription": "اعثر على نقاط قوتك الفريدة",
   "welcomePlanTitle": "خطط لمستقبلك",
-  "welcomePlanDescription": "احصل على مسارات مهنية مخصصة",
+  "welcomePlanDescription": "احصل على وجهات مهنية مخصصة",
 
   "onboardingQuestion1": "عندما أواجه مشكلة، أفضل أن:",
   "onboardingQ1Option1": "أحللها منطقياً",
@@ -140,7 +140,7 @@
   "clusterBusinessFinance": "الأعمال والمالية",
 
   "roadmapTitle": "خارطة الطريق",
-  "roadmapSubtitle": "مسارك الشخصي نحو النجاح",
+  "roadmapSubtitle": "وجهتك الشخصية نحو النجاح",
   "roadmapSelectCareer": "اختر مهنة لرؤية خارطة الطريق",
   "roadmapProgressLabel": "التقدم",
   "roadmapProgressValue": "{completed} من {total} خطوات",
@@ -183,7 +183,7 @@
   "settingsPrivacySection": "الخصوصية والقانون",
   "settingsPrivacyPolicy": "سياسة الخصوصية",
   "settingsTermsOfUse": "شروط الاستخدام",
-  "settingsAbout": "حول مسار",
+  "settingsAbout": "حول وجهة",
   "settingsSupportSection": "الدعم",
   "settingsFeedback": "إرسال ملاحظات",
   "settingsReportIssue": "الإبلاغ عن مشكلة",
@@ -202,8 +202,8 @@
   "termsTitle": "شروط الاستخدام",
   "termsAccept": "أوافق على شروط الاستخدام",
 
-  "aboutTitle": "حول مسار",
-  "aboutDescription": "مسار هي منصة اكتشاف الذات مصممة لمساعدة طلاب المدارس الثانوية على استكشاف اهتماماتهم واكتشاف المهن والتخطيط لمستقبلهم.",
+  "aboutTitle": "حول وجهة",
+  "aboutDescription": "وجهة هي منصة اكتشاف الذات مصممة لمساعدة طلاب المدارس الثانوية على استكشاف اهتماماتهم واكتشاف المهن والتخطيط لمستقبلهم.",
   "aboutVersion": "الإصدار {version}",
 
   "errorTitle": "عذراً!",
@@ -250,7 +250,7 @@
 
   "quizRiasecLearning1": "ملف اهتماماتك المهنية عبر 6 أبعاد",
   "quizRiasecLearning2": "بيئات العمل التي تناسبك أكثر",
-  "quizRiasecLearning3": "المسارات المهنية التي تتماشى مع اهتماماتك",
+  "quizRiasecLearning3": "الوجهات المهنية التي تتماشى مع اهتماماتك",
   "quizRiasecLearning4": "كيف تقارن مع الآخرين في فئتك العمرية",
 
   "quizIpip50Learning1": "ملف شخصيتك للعوامل الخمسة الكبرى",
@@ -359,7 +359,7 @@
   "errorGenericWithMessage": "خطأ: {error}",
 
   "helpDialogTitle": "تحتاج مساعدة؟",
-  "helpDialogWelcome": "مرحباً بك في رحلة اكتشاف مسارك المهني!",
+  "helpDialogWelcome": "مرحباً بك في رحلة اكتشاف وجهتك المهنية!",
   "helpDialogTip1": "• أكمل التقييمات لبناء ملفك الشخصي",
   "helpDialogTip2": "• استكشف المهن التي تناسب اهتماماتك",
   "helpDialogTip3": "• اتبع خارطة طريقك الشخصية",

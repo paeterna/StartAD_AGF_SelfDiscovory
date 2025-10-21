@@ -1,4 +1,4 @@
-# Masar (مسار) - Discover Your Future
+# Wejha (وجهة) - Discover Your Future
 
 A comprehensive gamified Flutter web platform designed to help high-school students explore their interests, discover career paths, and plan their future through AI-powered insights, interactive assessments, and engaging games.
 
@@ -641,7 +641,7 @@ See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for detailed instructions.
 
 ### PWA Installation
 
-Users can install Masar as a Progressive Web App:
+Users can install Wejha as a Progressive Web App:
 1. Visit the site in Chrome/Edge
 2. Click the install icon in the address bar
 3. Confirm installation
@@ -742,8 +742,8 @@ This project is developed as part of the **AI Sandbox Challenge**, under the pri
 
 ## 📧 Contact
 
-- **Email**: support@masar.app
-- **Website**: www.masar.app
+- **Email**: support@wejha.app
+- **Website**: www.wejha.app
 
 ---
 

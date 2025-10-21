@@ -10,6 +10,7 @@ import '../../../domain/entities/user.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 import '../../widgets/theme_picker_dialog.dart';
+import '../../widgets/logo_app_bar.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -22,7 +23,7 @@ class SettingsPage extends ConsumerWidget {
 
     return GradientBackground(
       child: Scaffold(
-        appBar: AppBar(title: Text(l10n.settingsTitle)),
+        appBar: LogoAppBar(title: l10n.settingsTitle),
         body: ListView(
           children: [
             // Profile section

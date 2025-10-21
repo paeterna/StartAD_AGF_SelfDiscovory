@@ -101,13 +101,13 @@ abstract class AppLocalizations {
   /// Application name
   ///
   /// In en, this message translates to:
-  /// **'Masar'**
+  /// **'Wejha'**
   String get appName;
 
   /// Welcome message on splash
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Masar'**
+  /// **'Welcome to Wejha'**
   String get welcomeMessage;
 
   /// App tagline
@@ -293,7 +293,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Masar! 🚀'**
+  /// **'Welcome to Wejha! 🚀'**
   String get welcomeTitle;
 
   /// No description provided for @welcomeSubtitle.
@@ -1103,7 +1103,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsAbout.
   ///
   /// In en, this message translates to:
-  /// **'About Masar'**
+  /// **'About Wejha'**
   String get settingsAbout;
 
   /// No description provided for @settingsSupportSection.
@@ -1193,13 +1193,13 @@ abstract class AppLocalizations {
   /// No description provided for @aboutTitle.
   ///
   /// In en, this message translates to:
-  /// **'About Masar'**
+  /// **'About Wejha'**
   String get aboutTitle;
 
   /// No description provided for @aboutDescription.
   ///
   /// In en, this message translates to:
-  /// **'Masar is a self-discovery platform designed to help high school students explore their interests, discover careers, and plan their future.'**
+  /// **'Wejha is a self-discovery platform designed to help high school students explore their interests, discover careers, and plan their future.'**
   String get aboutDescription;
 
   /// No description provided for @aboutVersion.

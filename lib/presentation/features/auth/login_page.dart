@@ -226,18 +226,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           const LanguageSwitcher(),
                         ],
                       ),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 16),
 
-                      // Logo/Title
-                      Text(
-                        l10n.appName,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width < 400
-                              ? 36
-                              : 48, // Responsive font size
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
+                      // Logo
+                      Image.asset(
+                        'assets/images/logo.png',
+                        height: 250,
+                        width: 250,
                       ),
                       const SizedBox(height: 8),
                       Text(
@@ -245,7 +240,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         style: Theme.of(context).textTheme.titleMedium,
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 48),
+                      const SizedBox(height: 8),
 
                       // Email field
                       TextFormField(

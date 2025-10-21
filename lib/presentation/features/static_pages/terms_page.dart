@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/gradient_background.dart';
+import '../../widgets/logo_app_bar.dart';
 
 class TermsPage extends StatelessWidget {
   const TermsPage({super.key});
@@ -8,7 +9,7 @@ class TermsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GradientBackground(
       child: Scaffold(
-        appBar: AppBar(title: const Text('Terms of Use')),
+        appBar: const LogoAppBar(title: 'Terms of Use'),
         body: const SingleChildScrollView(
           padding: EdgeInsets.all(24),
           child: Column(
@@ -25,7 +26,7 @@ class TermsPage extends StatelessWidget {
               ),
               SizedBox(height: 24),
               Text(
-                'By using Masar, you agree to these Terms of Use. Please read them carefully.',
+                'By using Wejha, you agree to these Terms of Use. Please read them carefully.',
               ),
               SizedBox(height: 16),
               Text(
@@ -34,7 +35,7 @@ class TermsPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'You agree to use Masar only for lawful purposes and in accordance with these Terms. You must not use Masar in any way that violates applicable laws or regulations.',
+                'You agree to use Wejha only for lawful purposes and in accordance with these Terms. You must not use Wejha in any way that violates applicable laws or regulations.',
               ),
               SizedBox(height: 16),
               Text(
@@ -52,7 +53,7 @@ class TermsPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'All content provided through Masar is for informational purposes only. Career recommendations are suggestions based on your inputs and should not be considered professional advice.',
+                'All content provided through Wejha is for informational purposes only. Career recommendations are suggestions based on your inputs and should not be considered professional advice.',
               ),
               SizedBox(height: 16),
               Text(
@@ -61,7 +62,7 @@ class TermsPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'Masar is provided "as is" without warranties of any kind. We are not liable for any decisions made based on information provided by the platform.',
+                'Wejha is provided "as is" without warranties of any kind. We are not liable for any decisions made based on information provided by the platform.',
               ),
               SizedBox(height: 16),
               Text(
@@ -70,11 +71,11 @@ class TermsPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'We reserve the right to modify these Terms at any time. Continued use of Masar after changes constitutes acceptance of the new Terms.',
+                'We reserve the right to modify these Terms at any time. Continued use of Wejha after changes constitutes acceptance of the new Terms.',
               ),
               SizedBox(height: 24),
               Text(
-                'For questions about these terms, please contact us at legal@masar.app',
+                'For questions about these terms, please contact us at legal@wejha.app',
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ],

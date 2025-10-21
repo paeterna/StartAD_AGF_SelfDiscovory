@@ -7,6 +7,7 @@ import '../../../application/roadmaps/roadmap_providers.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../../core/router/app_router.dart';
 import '../../widgets/gradient_background.dart';
+import '../../widgets/logo_app_bar.dart';
 
 class CareersPage extends ConsumerWidget {
   const CareersPage({super.key});
@@ -18,8 +19,8 @@ class CareersPage extends ConsumerWidget {
 
     return GradientBackground(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(l10n.careersTitle),
+        appBar: LogoAppBar(
+          title: l10n.careersTitle,
         ),
         body: Column(
           children: [

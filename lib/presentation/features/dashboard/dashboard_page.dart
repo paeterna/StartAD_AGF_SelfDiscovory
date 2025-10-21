@@ -14,6 +14,7 @@ import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
 import '../../widgets/radar_traits_card.dart';
 import '../../widgets/ai_insights_dashboard_card.dart';
+import '../../widgets/logo_app_bar.dart';
 import '../gamification/badges_sheet.dart';
 
 class DashboardPage extends ConsumerWidget {
@@ -28,8 +29,8 @@ class DashboardPage extends ConsumerWidget {
 
     return GradientBackground(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(l10n.dashboardTitle),
+        appBar: LogoAppBar(
+          title: l10n.dashboardTitle,
           actions: [
             // New streak and level widgets
             profileAsync.when(

@@ -264,19 +264,19 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // Title
+                      // Logo
+                      Image.asset(
+                        'assets/images/logo.png',
+                        height: 120,
+                        width: 120,
+                      ),
+                      const SizedBox(height: 16),
                       Text(
                         l10n.authSignupTitle,
                         style: const TextStyle(
-                          fontSize: 32,
+                          fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        l10n.tagline,
-                        style: Theme.of(context).textTheme.titleMedium,
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 32),

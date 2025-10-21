@@ -7,6 +7,7 @@ import '../../../core/assets/app_icons.dart';
 import '../../../core/widgets/app_icon.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../widgets/gradient_background.dart';
+import '../../widgets/logo_app_bar.dart';
 
 class DiscoverPage extends ConsumerWidget {
   const DiscoverPage({super.key, this.initialTabIndex = 0});
@@ -19,7 +20,7 @@ class DiscoverPage extends ConsumerWidget {
 
     return GradientBackground(
       child: Scaffold(
-        appBar: AppBar(title: Text(l10n.discoverTitle)),
+        appBar: LogoAppBar(title: l10n.discoverTitle),
         body: DefaultTabController(
           length: 2,
           initialIndex: initialTabIndex,
